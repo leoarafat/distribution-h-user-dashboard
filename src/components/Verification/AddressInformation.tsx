@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Input, Form, Select, Row, Col } from "antd";
 
-const AddressInformation = ({ data, onChange }) => {
+const AddressInformation = ({ data, onChange }: any) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue(data.address);
   }, [data.address, form]);
 
-  const handleChange = (changedValues) => {
+  const handleChange = (changedValues: any) => {
     onChange("address", { ...data.address, ...changedValues });
   };
 

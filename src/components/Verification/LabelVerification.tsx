@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { Input, Form, Row, Col } from "antd";
 
-const LabelVerification = ({ data, onChange }) => {
+const LabelVerification = ({ data, onChange }: any) => {
   const [form] = Form.useForm();
 
-  const handleChange = (changedValues) => {
+  const handleChange = (changedValues: any) => {
     onChange("label", { ...data.label, ...changedValues });
   };
 

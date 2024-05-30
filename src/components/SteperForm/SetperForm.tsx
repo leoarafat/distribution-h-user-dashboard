@@ -51,13 +51,17 @@ const StepperForm = () => {
     setCurrent(current - 1);
   };
 
-  const handleDataChange = (step, data) => {
+  const handleDataChange = (step: any, data: any) => {
     const updatedFormData = { ...formData, [step]: data };
     setFormData(updatedFormData);
     // Save updated form data to localStorage
     localStorage.setItem("formData", JSON.stringify(updatedFormData));
   };
-
+  const handleSubmit = async () => {
+    message.success("Processing complete!");
+    // Clear localStorage when done
+    localStorage.removeItem("formData");
+  };
   const StepComponent = steps[current].component;
 
   return (
@@ -89,9 +93,7 @@ const StepperForm = () => {
             <Button
               type="primary"
               onClick={() => {
-                message.success("Processing complete!");
-                // Clear localStorage when done
-                localStorage.removeItem("formData");
+                handleSubmit;
               }}
             >
               Done

@@ -1,6 +1,4 @@
-import React from "react";
-
-const ReviewConfirm = ({ data }) => {
+const ReviewConfirm = ({ data }: any) => {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <div className="mb-6">
