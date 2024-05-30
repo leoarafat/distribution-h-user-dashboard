@@ -21,12 +21,13 @@ import Profile from "@/pages/Profile";
 import PromoCode from "@/pages/PromoCode";
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
-
 import SubCategory from "@/pages/SubCategory";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import UserManagement from "@/pages/UserManagement";
 import VerifyEmail from "@/pages/VerifyEmail";
+import DashboardHomes from "@/collected/DashboardHome/DashboardHome";
 import { createBrowserRouter } from "react-router-dom";
+import StepperForm from "@/components/SteperForm/SetperForm";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,15 @@ const router = createBrowserRouter([
         path: "/product-management",
         element: <ProductManagement />,
       },
+      {
+        path: "/test",
+        element: <DashboardHomes />,
+      },
+      {
+        path: "/test1",
+        element: <StepperForm />,
+      },
+
       {
         path: "/notifications",
         element: <NotificationList />,

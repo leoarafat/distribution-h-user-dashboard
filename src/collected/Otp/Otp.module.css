@@ -1,0 +1,121 @@
+.otpContainer {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+}
+.formContainer {
+  padding: 50px;
+  width: 510px;
+  height: 554px;
+  border-left: 2px solid #818181;
+}
+.otpInput {
+  width: 50px;
+  height: 70px;
+}
+
+.rememberAndPass {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 102px;
+  height: 116px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.illustration {
+  width: 100%;
+  height: 100%;
+  max-width: 810px;
+}
+
+.otpTextHeader{
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 50px;
+  color: #333333;
+  cursor: pointer;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.verifyButton{
+  color: var(--White, #fff);
+  font-family: Raleway;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 16px 100px;
+  border-radius: 8px;
+  height: 100%;
+  background: var(
+    --Black-BG,
+    linear-gradient(180deg, #787878 0%, #434343 0.01%, #000 100%)
+  );
+}
+
+.otpFormContainer{
+  
+}
+.otpInputFild{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 60px !important;
+  font-size: 40px;
+  height: 78px;
+}
+
+/* responsive code here */
+@media screen and (max-width: 768px) {
+  .otpContainer{
+    flex-direction: column;
+  }
+  .formContainer {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0px 25px;
+  }
+  .logoContainer {
+    margin-bottom: 0;
+  }
+  .logo {
+    margin-top: 60px;
+  }
+  .illustration {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+}

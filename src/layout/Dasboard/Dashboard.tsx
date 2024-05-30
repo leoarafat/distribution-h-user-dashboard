@@ -183,7 +183,7 @@ const Dashboard = () => {
           overflow: "auto",
           height: "100vh",
           zIndex: 2,
-          backgroundColor: "#5B52A3",
+          backgroundColor: "#001529",
         }}
         trigger={null}
       >
@@ -193,7 +193,7 @@ const Dashboard = () => {
         </Link>
         <Menu
           mode="inline"
-          style={{ background: "#5B52A3", color: "white" }}
+          style={{ background: "#001529", color: "white" }}
           defaultSelectedKeys={["1"]}
         >
           {menuItems.map((item, index) =>
@@ -248,7 +248,7 @@ const Dashboard = () => {
       <Layout>
         <Header
           style={{
-            background: "#5B52A3",
+            background: "#001529",
             height: "80px",
             display: "flex",
             justifyContent: "flex-end",
