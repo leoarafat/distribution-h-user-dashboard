@@ -15,7 +15,7 @@ const Login = () => {
     if (isSuccess) {
       if (data) {
         toast.success("Login Successfully");
-        storeUserInfo({ accessToken: data?.data });
+        storeUserInfo({ accessToken: data?.data?.accessToken });
         navigate("/");
       }
     }

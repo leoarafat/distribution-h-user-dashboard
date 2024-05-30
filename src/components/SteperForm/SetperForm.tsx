@@ -1,12 +1,16 @@
-// import { useState, useEffect } from "react";
-// import { Button, message, Steps, Layout } from "antd";
+// import React, { useState, useEffect } from "react";
+// import {
+//   Button,
+//   Typography,
+//   Stepper,
+//   Step,
+//   StepLabel,
+//   Grid,
+// } from "@material-ui/core";
 // import ProfileVerification from "../Verification/ProfileVerification";
 // import AddressInformation from "../Verification/AddressInformation";
 // import LabelVerification from "../Verification/LabelVerification";
 // import ReviewConfirm from "../Verification/ReviewConfirm";
-
-// const { Header, Content } = Layout;
-// const { Step } = Steps;
 
 // const steps = [
 //   {
@@ -28,14 +32,13 @@
 // ];
 
 // const StepperForm = () => {
-//   const [current, setCurrent] = useState(0);
+//   const [activeStep, setActiveStep] = useState(0);
 //   const [formData, setFormData] = useState({
 //     profile: {},
 //     address: {},
 //     label: {},
 //   });
 
-//   // Load saved form data from localStorage on component mount
 //   useEffect(() => {
 //     const savedData = localStorage.getItem("formData");
 //     if (savedData) {
@@ -43,65 +46,68 @@
 //     }
 //   }, []);
 
-//   const next = () => {
-//     setCurrent(current + 1);
+//   const handleNext = () => {
+//     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 //   };
 
-//   const prev = () => {
-//     setCurrent(current - 1);
+//   const handleBack = () => {
+//     setActiveStep((prevActiveStep) => prevActiveStep - 1);
 //   };
 
-//   const handleDataChange = (step: any, data: any) => {
+//   const handleDataChange = (step, data) => {
 //     const updatedFormData = { ...formData, [step]: data };
 //     setFormData(updatedFormData);
-//     // Save updated form data to localStorage
 //     localStorage.setItem("formData", JSON.stringify(updatedFormData));
 //   };
+
 //   const handleSubmit = async () => {
-//     message.success("Processing complete!");
-//     // Clear localStorage when done
+//     // Process submission
 //     localStorage.removeItem("formData");
 //   };
-//   const StepComponent = steps[current].component;
+
+//   const StepComponent = steps[activeStep].component;
 
 //   return (
-//     <Layout className="min-h-screen">
-//       <Header className="bg-gray-900 text-white flex items-center justify-center">
-//         <h1 className="text-2xl font-bold">Verification Process</h1>
-//       </Header>
-//       <Content className="p-8 bg-gray-100">
-//         <Steps current={current} className="mb-8">
-//           {steps.map((item) => (
-//             <Step key={item.title} title={item.title} />
-//           ))}
-//         </Steps>
-//         <div className="bg-white p-8 rounded-lg shadow-md">
-//           <StepComponent data={formData} onChange={handleDataChange} />
-//         </div>
-//         <div className="flex justify-end mt-8">
-//           {current > 0 && (
-//             <Button className="mr-2" onClick={() => prev()}>
-//               Previous
-//             </Button>
-//           )}
-//           {current < steps.length - 1 && (
-//             <Button type="primary" onClick={() => next()}>
-//               Next
-//             </Button>
-//           )}
-//           {current === steps.length - 1 && (
-//             <Button
-//               type="primary"
-//               onClick={() => {
-//                 handleSubmit;
-//               }}
-//             >
-//               Done
-//             </Button>
-//           )}
-//         </div>
-//       </Content>
-//     </Layout>
+//     <Grid container direction="column">
+//       <Typography variant="h4" align="center" gutterBottom>
+//         Verification Process
+//       </Typography>
+//       <Stepper activeStep={activeStep} alternativeLabel>
+//         {steps.map((step) => (
+//           <Step key={step.title}>
+//             <StepLabel>{step.title}</StepLabel>
+//           </Step>
+//         ))}
+//       </Stepper>
+//       <div style={{ flexGrow: 1, marginBottom: 20 }}>
+//         <StepComponent data={formData} onChange={handleDataChange} />
+//       </div>
+//       <div style={{ textAlign: "right" }}>
+//         <Button disabled={activeStep === 0} onClick={handleBack}>
+//           Back
+//         </Button>
+//         {activeStep < steps.length - 1 && (
+//           <Button
+//             variant="contained"
+//             color="primary"
+//             onClick={handleNext}
+//             style={{ marginLeft: 10 }}
+//           >
+//             Next
+//           </Button>
+//         )}
+//         {activeStep === steps.length - 1 && (
+//           <Button
+//             variant="contained"
+//             color="primary"
+//             onClick={handleSubmit}
+//             style={{ marginLeft: 10 }}
+//           >
+//             Done
+//           </Button>
+//         )}
+//       </div>
+//     </Grid>
 //   );
 // };
 
@@ -119,6 +125,7 @@ import ProfileVerification from "../Verification/ProfileVerification";
 import AddressInformation from "../Verification/AddressInformation";
 import LabelVerification from "../Verification/LabelVerification";
 import ReviewConfirm from "../Verification/ReviewConfirm";
+import { base64ToFile, fileToBase64 } from "./UtilsStepper";
 
 const steps = [
   {
@@ -140,6 +147,33 @@ const steps = [
 ];
 
 const StepperForm = () => {
+  // const [activeStep, setActiveStep] = useState(0);
+  // const [formData, setFormData] = useState({
+  //   profile: {},
+  //   address: {},
+  //   label: {},
+  // });
+
+  // useEffect(() => {
+  //   const savedData = localStorage.getItem("formData");
+  //   if (savedData) {
+  //     setFormData(JSON.parse(savedData));
+  //   }
+  // }, []);
+
+  // const handleNext = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // };
+
+  // const handleBack = () => {
+  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  // };
+
+  // const handleDataChange = (step, data) => {
+  //   const updatedFormData = { ...formData, [step]: data };
+  //   setFormData(updatedFormData);
+  //   localStorage.setItem("formData", JSON.stringify(updatedFormData));
+  // };
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     profile: {},
@@ -150,7 +184,30 @@ const StepperForm = () => {
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
     if (savedData) {
-      setFormData(JSON.parse(savedData));
+      const parsedData = JSON.parse(savedData);
+
+      if (parsedData.profile.profileImage) {
+        parsedData.profile.profileImage = base64ToFile(
+          parsedData.profile.profileImage,
+          "profileImage",
+          "image/jpeg"
+        );
+      }
+      if (parsedData.profile.nidFront) {
+        parsedData.profile.nidFront = base64ToFile(
+          parsedData.profile.nidFront,
+          "nidFront",
+          "image/jpeg"
+        );
+      }
+      if (parsedData.profile.nidBack) {
+        parsedData.profile.nidBack = base64ToFile(
+          parsedData.profile.nidBack,
+          "nidBack",
+          "image/jpeg"
+        );
+      }
+      setFormData(parsedData);
     }
   }, []);
 
@@ -162,12 +219,22 @@ const StepperForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleDataChange = (step, data) => {
+  const handleDataChange = async (step, data) => {
     const updatedFormData = { ...formData, [step]: data };
+
+    if (data.profileImage instanceof File) {
+      data.profileImage = await fileToBase64(data.profileImage);
+    }
+    if (data.nidFront instanceof File) {
+      data.nidFront = await fileToBase64(data.nidFront);
+    }
+    if (data.nidBack instanceof File) {
+      data.nidBack = await fileToBase64(data.nidBack);
+    }
+
     setFormData(updatedFormData);
     localStorage.setItem("formData", JSON.stringify(updatedFormData));
   };
-
   const handleSubmit = async () => {
     // Process submission
     localStorage.removeItem("formData");
