@@ -1,5 +1,5 @@
 {
-  "name": "razco-food-dashboard",
+  "name": "User Dashboard",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@reduxjs/toolkit": "^2.2.5",
     "antd": "^5.16.0",
     "axios": "^1.7.1",
