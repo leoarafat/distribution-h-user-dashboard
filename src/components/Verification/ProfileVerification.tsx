@@ -7,7 +7,6 @@ const ProfileVerification = ({ data, onChange }: any) => {
   const [profilePictureFileList, setProfilePictureFileList] = useState([]);
   const [nidFrontFileList, setNidFrontFileList] = useState([]);
   const [nidBackFileList, setNidBackFileList] = useState([]);
-
   useEffect(() => {
     form.setFieldsValue(data.profile);
     if (data.profile.profilePicture && data.profile.profilePicture.fileList) {
@@ -27,7 +26,14 @@ const ProfileVerification = ({ data, onChange }: any) => {
 
   return (
     <Form layout="vertical" form={form} onValuesChange={handleChange}>
-      <Row gutter={16} style={{ marginBottom: "16px" }}>
+      <Row
+        gutter={16}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "16px",
+        }}
+      >
         <Col span={3}>
           <Form.Item label="Upload Profile Picture" name="profilePicture">
             <Upload
@@ -35,10 +41,11 @@ const ProfileVerification = ({ data, onChange }: any) => {
               beforeUpload={() => false}
               maxCount={1}
               fileList={profilePictureFileList}
+              style={{ width: "300px", height: "300px" }}
             >
               <div>
-                <UploadOutlined style={{ fontSize: "40px" }} />
-                <div style={{ fontSize: "20px" }}>Upload</div>
+                <UploadOutlined style={{ fontSize: "40px" }} />{" "}
+                <div style={{ fontSize: "20px" }}>Upload</div>{" "}
               </div>
             </Upload>
           </Form.Item>
