@@ -23,10 +23,8 @@ import {
   useMyProfileQuery,
   useNotificationsQuery,
 } from "@/redux/slices/admin/settingApi";
-import { imageURL, socketURL } from "@/redux/api/baseApi";
+import { imageURL } from "@/redux/api/baseApi";
 const { Header, Sider, Content } = Layout;
-import io from "socket.io-client";
-import { useEffect, useMemo } from "react";
 
 const menuItems = [
   {
@@ -37,6 +35,11 @@ const menuItems = [
   {
     path: "/product-management",
     title: "Product Management",
+    icon: <ShoppingCart size={18} />,
+  },
+  {
+    path: "/verify",
+    title: "Onboarding",
     icon: <ShoppingCart size={18} />,
   },
   {
@@ -145,26 +148,9 @@ const Dashboard = () => {
     navigate("/auth/login");
   }
 
-  const { data: notifications, refetch } = useNotificationsQuery({});
+  const { data: notifications } = useNotificationsQuery({});
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
-
-  const socket = useMemo(() => io(socketURL), []);
-
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Connected to socket server");
-    });
-    // console.log("Test");
-    socket.on("admin-notifications", (notification) => {
-      //console.log("New notification:", notification);
-      refetch();
-    });
-
-    // return () => {
-    //   socket.disconnect();
-    // };
-  }, []);
 
   if (!isUser) {
     navigate("/auth/login");

@@ -42,12 +42,9 @@ const router = createBrowserRouter([
         path: "/product-management",
         element: <ProductManagement />,
       },
+
       {
-        path: "/test",
-        element: <DashboardHomes />,
-      },
-      {
-        path: "/test1",
+        path: "/verify",
         element: <StepperForm />,
       },
 
