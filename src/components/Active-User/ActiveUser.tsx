@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -8,16 +9,12 @@ import {
   Input,
   Link,
 } from "@material-ui/core";
-import bgImage from "../../assets/otp.jpg";
+
+import { useNavigate } from "react-router-dom";
+import { useVerifyMutation } from "@/redux/slices/admin/userApi";
+import toast from "react-hot-toast";
 
 const useStyles = makeStyles((theme) => ({
-  //   root: {
-  //     height: "100vh",
-  //     backgroundImage: `url(${bgImage})`,
-  //     backgroundSize: "cover",
-  //     backgroundPosition: "center",
-  //     backgroundColor: "#f0f0f0",
-  //   },
   paper: {
     padding: theme.spacing(4),
     textAlign: "center",
@@ -59,8 +56,27 @@ const Verify = () => {
   const classes = useStyles();
   const [codes, setCodes] = useState(["", "", "", ""]);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const activation_token = localStorage.getItem("activationToken");
+  const navigate = useNavigate();
+  const [verify, { isLoading, data, isSuccess, error }] = useVerifyMutation();
 
-  const handleChange = (index, value) => {
+  useEffect(() => {
+    if (isSuccess && data) {
+      toast.success("Register Successful");
+      localStorage.setItem("accessToken", data?.data?.accessToken);
+      localStorage.removeItem("activationToken");
+      navigate("/");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      } else {
+        console.error("Login error:", error);
+      }
+    }
+  }, [isSuccess, data, error, navigate]);
+  const handleChange = (index: any, value: any) => {
     if (value.length > 1) {
       value = value.slice(-1);
     }
@@ -70,25 +86,27 @@ const Verify = () => {
 
     // Move focus to the next input field
     if (value !== "" && index < inputRefs.length - 1) {
+      //@ts-ignore
       inputRefs[index + 1].current.focus();
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Add verification logic here
     const code = codes.join("");
-    console.log("Verification code:", code);
-    // Example: Navigate to another page after successful verification
+    const codeData = {
+      activation_code: code,
+      activation_token,
+    };
+    try {
+      await verify(codeData);
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
   };
 
   return (
-    <Grid
-      container
-      className={classes.root}
-      justify="center"
-      alignItems="center"
-    >
+    <Grid container justify="center" alignItems="center">
       <Grid item xs={10} sm={8} md={6}>
         <Paper className={classes.paper}>
           <Typography variant="h5" component="h2" className={classes.title}>
@@ -120,10 +138,10 @@ const Verify = () => {
               className={classes.button}
               disabled={codes.some((code) => code === "")}
             >
-              Verify
+              {isLoading ? "Verifying..." : "Verify"}
             </Button>
             <Typography variant="body2" className={classes.goBack}>
-              <Link href="/register">Go back</Link>
+              <Link href="/auth/register">Go back</Link>
             </Typography>
           </form>
         </Paper>

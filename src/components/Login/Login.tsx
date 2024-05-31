@@ -1,16 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Checkbox,
   FormControlLabel,
   Grid,
-  Link,
   Paper,
   TextField,
   Typography,
 } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAdminLoginMutation } from "@/redux/slices/admin/adminManageApi";
 import { storeUserInfo } from "@/redux/services/auth.service";
 import toast from "react-hot-toast";
@@ -67,12 +66,12 @@ const Login = () => {
     }
   }, [isSuccess, data, error, navigate]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
     try {
       await adminLogin({ email: email.value, password: password.value });
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.message);
     }
   };
@@ -127,12 +126,10 @@ const Login = () => {
             </Button>
             <Grid container direction="column" alignItems="center">
               <Grid item>
-                <Link href="/auth/forget-password" variant="body2">
-                  Forgot password?
-                </Link>
+                <Link to="/auth/forget-password">Forgot password?</Link>
               </Grid>
               <Grid item>
-                <Link href="/auth/register" variant="body2">
+                <Link to="/auth/register">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
