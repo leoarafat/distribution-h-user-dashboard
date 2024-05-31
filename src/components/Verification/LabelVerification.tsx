@@ -1,131 +1,116 @@
 import { Grid, TextField } from "@material-ui/core";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BsCloudUpload } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 
 const LabelVerification = ({ data, onChange }: any) => {
-  // useEffect(() => {
-  //   // Set initial form values
-  // }, []);
-
-  // const handleChange = (e: { target: { name: any; value: any } }) => {
-  //   const { name, value } = e.target;
-  //   onChange("label", { ...data.label, [name]: value });
-  // };
-  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
-  const [nidFront, setNidFront] = useState(null);
-  const [nidBack, setNidBack] = useState(null);
+  const [dashboardImage, setDashboardImage] = useState(null);
+  const [copyRightImage, setCoyRightImage] = useState(null);
 
   useEffect(() => {
-    if (data.profile.profileImage) {
-      const file = data.profile.profileImage;
+    if (data?.label.dashboardImage) {
+      const file = data?.label.dashboardImage;
       if (file instanceof Blob) {
         file.preview = URL.createObjectURL(file);
-        setSelectedProfileImage(file);
+        setDashboardImage(file);
       }
     }
-    if (data.profile.nidFront) {
-      const file = data.profile.nidFront;
+    if (data?.label.copyRightImage) {
+      const file = data?.label.copyRightImage;
       if (file instanceof Blob) {
         file.preview = URL.createObjectURL(file);
-        setNidFront(file);
-      }
-    }
-    if (data.profile.nidBack) {
-      const file = data.profile.nidBack;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setNidBack(file);
+        setCoyRightImage(file as any);
       }
     }
 
     return () => {
-      if (selectedProfileImage && selectedProfileImage.preview) {
-        URL.revokeObjectURL(selectedProfileImage.preview);
+      if (dashboardImage && dashboardImage.preview) {
+        URL.revokeObjectURL(dashboardImage.preview);
       }
-      if (nidFront && nidFront.preview) {
-        URL.revokeObjectURL(nidFront.preview);
-      }
-      if (nidBack && nidBack.preview) {
-        URL.revokeObjectURL(nidBack.preview);
+      if (copyRightImage && copyRightImage.preview) {
+        URL.revokeObjectURL(copyRightImage.preview);
       }
     };
-  }, [data.profile, nidBack, nidFront, selectedProfileImage]);
+  }, [
+    copyRightImage,
+    dashboardImage,
+    data?.label.dashboardImage,
+    data?.label.copyRightImage,
+  ]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    onChange("label", { ...data.label, [name]: value });
+    onChange("label", { ...data?.label, [name]: value });
   };
 
-  const handleProfileImageUpload = (event: any) => {
+  const handleDashboardImageImageUpload = (event: any) => {
     const file = event.target.files[0];
     if (file instanceof Blob) {
       file.preview = URL.createObjectURL(file);
-      setSelectedProfileImage(file as any);
-      onChange("profile", { ...data.profile, profileImage: file });
+      setDashboardImage(file as any);
+      onChange("label", { ...data?.label, dashboardImage: file });
     }
   };
 
-  const handleNidFront = (event: any) => {
+  const handleCopyRightImage = (event: any) => {
     const file = event.target.files[0];
     if (file instanceof Blob) {
       file.preview = URL.createObjectURL(file);
-      setNidFront(file as any);
-      onChange("profile", { ...data.profile, nidFront: file });
+      setCoyRightImage(file as any);
+      onChange("label", { ...data?.label, copyRightImage: file });
     }
   };
 
-  const handleProfileRemoveImage = () => {
-    if (selectedProfileImage) {
-      URL.revokeObjectURL(selectedProfileImage.preview);
-      setSelectedProfileImage(null);
-      onChange("profile", { ...data.profile, profileImage: null });
+  const handleDashboardRemoveImage = () => {
+    if (dashboardImage) {
+      URL.revokeObjectURL(dashboardImage.preview);
+      setDashboardImage(null);
+      onChange("label", { ...data?.label, dashboardImage: null });
     }
   };
 
-  const handleFrontRemoveImage = () => {
-    if (nidFront) {
-      URL.revokeObjectURL(nidFront.preview);
-      setNidFront(null);
-      onChange("profile", { ...data.profile, nidFront: null });
+  const handleCopyRightRemoveImage = () => {
+    if (copyRightImage) {
+      URL.revokeObjectURL(copyRightImage.preview);
+      setCoyRightImage(null);
+      onChange("label", { ...data?.label, copyRightImage: null });
     }
   };
 
   return (
     <form>
       <Grid container spacing={3}>
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-around items-center w-full">
           {/* Profile Picture */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
-            <h4 className="mb-2 text-sm">Upload Profile Picture</h4>
-            {selectedProfileImage ? (
+            <h4 className="mb-2 text-sm">Upload Dashboard Image</h4>
+            {dashboardImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={selectedProfileImage?.preview}
-                  alt="Profile Picture"
-                  className="w-[300px] h-[200px]"
+                  src={dashboardImage?.preview}
+                  alt="Dashboard Picture"
+                  className="w-[350px] h-[200px]"
                 />
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-                  onClick={handleProfileRemoveImage}
+                  onClick={handleDashboardRemoveImage}
                 >
                   <MdClose />
                 </button>
               </div>
             ) : (
               <label
-                htmlFor="profile-upload"
-                className="upload w-[230px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
+                htmlFor="dashboard_upload"
+                className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
               >
                 <input
-                  id="profile-upload"
+                  id="dashboard_upload"
                   type="file"
                   accept="image/*"
-                  name="profileImage"
+                  name="dashboardImage"
                   style={{ display: "none" }}
-                  onChange={handleProfileImageUpload}
-                  required
+                  onChange={handleDashboardImageImageUpload}
                 />
                 <BsCloudUpload />
               </label>
@@ -134,34 +119,34 @@ const LabelVerification = ({ data, onChange }: any) => {
 
           {/* NID Front Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
-            <h4 className="mb-2 text-sm">Upload NID Front</h4>
-            {nidFront ? (
+            <h4 className="mb-2 text-sm">Upload Copyright Image</h4>
+            {copyRightImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={nidFront.preview}
-                  alt="NID Front"
-                  className="w-[300px] h-[200px]"
+                  src={copyRightImage.preview}
+                  alt="Copyright Image"
+                  className="w-[350px] h-[200px]"
                 />
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-                  onClick={handleFrontRemoveImage}
+                  onClick={handleCopyRightRemoveImage}
                 >
                   <MdClose />
                 </button>
               </div>
             ) : (
               <label
-                htmlFor="nid-front-upload"
-                className="upload w-[230px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
+                htmlFor="copyright"
+                className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
               >
                 <input
-                  id="nid-front-upload"
+                  id="copyright"
                   type="file"
                   accept="image/*"
-                  name="nidFront"
+                  name="copyRightImage"
                   style={{ display: "none" }}
-                  onChange={handleNidFront}
+                  onChange={handleCopyRightImage}
                   required
                 />
                 <BsCloudUpload />
@@ -169,33 +154,43 @@ const LabelVerification = ({ data, onChange }: any) => {
             )}
           </div>
         </div>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             name="companyName"
             label="Company Name"
             variant="outlined"
             fullWidth
-            value={data.label.companyName}
+            value={data?.label.companyName}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             name="labelName"
             label="Label Name"
             variant="outlined"
             fullWidth
-            value={data.label.labelName}
+            value={data?.label.labelName}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             name="youtubeChannel"
             label="YouTube Channel Link"
             variant="outlined"
             fullWidth
             value={data.label.youtubeChannel}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            name="subscriber"
+            label="Total Subscriber"
+            variant="outlined"
+            fullWidth
+            value={data.label.subscriber}
             onChange={handleChange}
           />
         </Grid>

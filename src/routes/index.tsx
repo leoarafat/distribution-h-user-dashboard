@@ -11,7 +11,6 @@ import EditProduct from "@/pages/EditProduct";
 import FAQPage from "@/pages/FAQ";
 import Feedback from "@/pages/Feedback";
 import ForgetPassword from "@/pages/ForgetPassword";
-import Login from "@/pages/Login";
 import MakeAdmin from "@/pages/MakeAdmin";
 import NotificationList from "@/pages/Notification";
 import OrderManagement from "@/pages/OrderManagement";
@@ -28,6 +27,9 @@ import VerifyEmail from "@/pages/VerifyEmail";
 import DashboardHomes from "@/collected/DashboardHome/DashboardHome";
 import { createBrowserRouter } from "react-router-dom";
 import StepperForm from "@/components/SteperForm/SetperForm";
+import Login from "@/components/Login/Login";
+import Register from "@/components/Register/Register";
+import Verify from "@/components/Active-User/ActiveUser";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +139,14 @@ const router = createBrowserRouter([
       {
         path: "/auth/login",
         element: <Login />,
+      },
+      {
+        path: "/auth/register",
+        element: <Register />,
+      },
+      {
+        path: "/auth/verify",
+        element: <Verify />,
       },
       {
         path: "/auth/forget-password",

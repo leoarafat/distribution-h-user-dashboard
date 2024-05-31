@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
 import { Grid, TextField } from "@material-ui/core";
-import { MdOutlineFileUpload, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
+import { getUserInfo } from "@/redux/services/auth.service";
 const ProfileVerification = ({ data, onChange }) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
 
   useEffect(() => {
-    if (data.profile.profileImage) {
-      const file = data.profile.profileImage;
+    if (data?.profile?.profileImage) {
+      const file = data?.profile.profileImage;
       if (file instanceof Blob) {
         file.preview = URL.createObjectURL(file);
         setSelectedProfileImage(file);
       }
     }
-    if (data.profile.nidFront) {
-      const file = data.profile.nidFront;
+    if (data?.profile.nidFront) {
+      const file = data?.profile.nidFront;
       if (file instanceof Blob) {
         file.preview = URL.createObjectURL(file);
         setNidFront(file);
       }
     }
-    if (data.profile.nidBack) {
-      const file = data.profile.nidBack;
+    if (data?.profile.nidBack) {
+      const file = data?.profile.nidBack;
       if (file instanceof Blob) {
         file.preview = URL.createObjectURL(file);
         setNidBack(file);
@@ -41,11 +42,11 @@ const ProfileVerification = ({ data, onChange }) => {
         URL.revokeObjectURL(nidBack.preview);
       }
     };
-  }, [data.profile, nidBack, nidFront, selectedProfileImage]);
+  }, [data?.profile, nidBack, nidFront, selectedProfileImage]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    onChange("profile", { ...data.profile, [name]: value });
+    onChange("profile", { ...data?.profile, [name]: value });
   };
 
   const handleProfileImageUpload = (event: any) => {
@@ -53,7 +54,7 @@ const ProfileVerification = ({ data, onChange }) => {
     if (file instanceof Blob) {
       file.preview = URL.createObjectURL(file);
       setSelectedProfileImage(file as any);
-      onChange("profile", { ...data.profile, profileImage: file });
+      onChange("profile", { ...data?.profile, profileImage: file });
     }
   };
 
@@ -62,7 +63,7 @@ const ProfileVerification = ({ data, onChange }) => {
     if (file instanceof Blob) {
       file.preview = URL.createObjectURL(file);
       setNidFront(file as any);
-      onChange("profile", { ...data.profile, nidFront: file });
+      onChange("profile", { ...data?.profile, nidFront: file });
     }
   };
 
@@ -71,7 +72,7 @@ const ProfileVerification = ({ data, onChange }) => {
     if (file instanceof Blob) {
       file.preview = URL.createObjectURL(file);
       setNidBack(file as any);
-      onChange("profile", { ...data.profile, nidBack: file });
+      onChange("profile", { ...data?.profile, nidBack: file });
     }
   };
 
@@ -79,7 +80,7 @@ const ProfileVerification = ({ data, onChange }) => {
     if (selectedProfileImage) {
       URL.revokeObjectURL(selectedProfileImage.preview);
       setSelectedProfileImage(null);
-      onChange("profile", { ...data.profile, profileImage: null });
+      onChange("profile", { ...data?.profile, profileImage: null });
     }
   };
 
@@ -87,7 +88,7 @@ const ProfileVerification = ({ data, onChange }) => {
     if (nidFront) {
       URL.revokeObjectURL(nidFront.preview);
       setNidFront(null);
-      onChange("profile", { ...data.profile, nidFront: null });
+      onChange("profile", { ...data?.profile, nidFront: null });
     }
   };
 
@@ -95,9 +96,10 @@ const ProfileVerification = ({ data, onChange }) => {
     if (nidBack) {
       URL.revokeObjectURL(nidBack.preview);
       setNidBack(null);
-      onChange("profile", { ...data.profile, nidBack: null });
+      onChange("profile", { ...data?.profile, nidBack: null });
     }
   };
+  const user = getUserInfo();
 
   return (
     <form>
@@ -240,6 +242,7 @@ const ProfileVerification = ({ data, onChange }) => {
             label="Email"
             variant="outlined"
             fullWidth
+            disabled
             value={data.profile.email || ""}
             onChange={handleChange}
           />

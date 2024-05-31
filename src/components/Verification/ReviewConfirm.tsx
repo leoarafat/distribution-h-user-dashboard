@@ -1,120 +1,179 @@
-// const ReviewConfirm = ({ data }: any) => {
-//   return (
-//     <div className="bg-white p-8 rounded-lg shadow-lg">
-//       <div className="mb-6">
-//         <h3 className="text-xl font-semibold text-gray-800 mb-4">
-//           Label Details
-//         </h3>
-//         <p>
-//           <span className="font-medium text-gray-600">Company Names:</span>{" "}
-//           {data.label.companyName}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">Label Names:</span>{" "}
-//           {data.label.labelName}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">
-//             YouTube Channel Link:
-//           </span>{" "}
-//           <a
-//             href={data.label.youtubeChannel}
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="text-blue-600 hover:underline"
-//           >
-//             {data.label.youtubeChannel}
-//           </a>
-//         </p>
-//       </div>
-//       <div className="mb-6">
-//         <h3 className="text-xl font-semibold text-gray-800 mb-4">
-//           Account Details
-//         </h3>
-//         <p>
-//           <span className="font-medium text-gray-600">Email:</span>{" "}
-//           {data.profile.email}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">Phone:</span>{" "}
-//           {data.profile.phoneNumber}
-//         </p>
-//       </div>
-//       <div>
-//         <h3 className="text-xl font-semibold text-gray-800 mb-4">
-//           Address Details
-//         </h3>
-//         <p>
-//           <span className="font-medium text-gray-600">Address:</span>{" "}
-//           {data.address.address}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">City:</span>{" "}
-//           {data.address.city}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">State:</span>{" "}
-//           {data.address.state}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">Country:</span>{" "}
-//           {data.address.country}
-//         </p>
-//         <p>
-//           <span className="font-medium text-gray-600">Post Code:</span>{" "}
-//           {data.address.postCode}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
+import React from "react";
+import {
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  makeStyles,
+} from "@material-ui/core";
 
-import { Typography } from "@material-ui/core";
+const useStyles = makeStyles((theme) => ({
+  card: {
+    maxWidth: 200,
+    margin: "auto",
+    marginBottom: theme.spacing(2),
+  },
+  media: {
+    height: 140,
+  },
+}));
 
-// export default ReviewConfirm;
 const ReviewConfirm = ({ data }: any) => {
+  const classes = useStyles();
+
   return (
     <div>
-      <Typography variant="h5">Label Details</Typography>
-      <Typography>
-        <strong>Company Names:</strong> {data.label.companyName}
+      <Typography variant="h5" gutterBottom>
+        Label Details
       </Typography>
-      <Typography>
-        <strong>Label Names:</strong> {data.label.labelName}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Company Name:</strong> {data.label.companyName}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Label Name:</strong> {data.label.labelName}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>
+            <strong>YouTube Channel Link:</strong>{" "}
+            <a
+              href={data.label.youtubeChannel}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {data.label.youtubeChannel}
+            </a>
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Typography variant="h5" gutterBottom>
+        Account Details
       </Typography>
-      <Typography>
-        <strong>YouTube Channel Link:</strong>{" "}
-        <a
-          href={data.label.youtubeChannel}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {data.label.youtubeChannel}
-        </a>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Email:</strong> {data.profile.email}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Phone:</strong> {data.profile.phoneNumber}
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Typography variant="h5" gutterBottom>
+        Address Details
       </Typography>
-      <Typography variant="h5">Account Details</Typography>
-      <Typography>
-        <strong>Email:</strong> {data.profile.email}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Address:</strong> {data.address.address}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>City:</strong> {data.address.city}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>State:</strong> {data.address.state}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Country:</strong> {data.address.country}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Typography>
+            <strong>Post Code:</strong> {data.address.postCode}
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Typography variant="h5" gutterBottom>
+        Images
       </Typography>
-      <Typography>
-        <strong>Phone:</strong> {data.profile.phoneNumber}
-      </Typography>
-      <Typography variant="h5">Address Details</Typography>
-      <Typography>
-        <strong>Address:</strong> {data.address.address}
-      </Typography>
-      <Typography>
-        <strong>City:</strong> {data.address.city}
-      </Typography>
-      <Typography>
-        <strong>State:</strong> {data.address.state}
-      </Typography>
-      <Typography>
-        <strong>Country:</strong> {data.address.country}
-      </Typography>
-      <Typography>
-        <strong>Post Code:</strong> {data.address.postCode}
-      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={3}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={URL.createObjectURL(data.profile.profileImage)}
+              title="Profile Image"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary">
+                Profile Image
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={URL.createObjectURL(data.profile.nidFront)}
+              title="NID Front Image"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary">
+                NID Front Image
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={URL.createObjectURL(data.profile.nidBack)}
+              title="NID Back Image"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary">
+                NID Back Image
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={URL.createObjectURL(data.label.dashboardImage)}
+              title="Dashboard Image"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary">
+                Dashboard Image
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={URL.createObjectURL(data.label.copyRightImage)}
+              title="Copy Right Image"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary">
+                Copy Right Image
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </div>
   );
 };

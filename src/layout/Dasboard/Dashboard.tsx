@@ -25,7 +25,7 @@ import {
 } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 const { Header, Sider, Content } = Layout;
-
+import { CiMusicNote1 } from "react-icons/ci";
 const menuItems = [
   {
     path: "/",
@@ -40,7 +40,7 @@ const menuItems = [
   {
     path: "/verify",
     title: "Onboarding",
-    icon: <ShoppingCart size={18} />,
+    icon: <CiMusicNote1 size={18} />,
   },
   {
     path: "/add-product",
@@ -175,11 +175,11 @@ const Dashboard = () => {
       >
         <Link to={"/"}>
           {" "}
-          <img src={logo} alt="" className="mx-auto mb-8 mt-5" />
+          <img src={logo} alt="" className="mx-auto h-[50px]  mb-8 mt-5" />
         </Link>
         <Menu
           mode="inline"
-          style={{ background: "#001529", color: "white" }}
+          style={{ background: "#100530", color: "white" }}
           defaultSelectedKeys={["1"]}
         >
           {menuItems.map((item, index) =>

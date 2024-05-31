@@ -12,7 +12,7 @@ import AddressInformation from "../Verification/AddressInformation";
 import LabelVerification from "../Verification/LabelVerification";
 import ReviewConfirm from "../Verification/ReviewConfirm";
 import { base64ToFile, fileToBase64 } from "./UtilsStepper";
-import { FaUserTag } from "react-icons/fa";
+
 const steps = [
   {
     title: "Profile Verification",
@@ -66,6 +66,20 @@ const StepperForm = () => {
           "image/jpeg"
         );
       }
+      if (parsedData.label.dashboardImage) {
+        parsedData.label.dashboardImage = base64ToFile(
+          parsedData.label.dashboardImage,
+          "dashboardImage",
+          "image/jpeg"
+        );
+      }
+      if (parsedData.label.copyRightImage) {
+        parsedData.label.copyRightImage = base64ToFile(
+          parsedData.label.copyRightImage,
+          "copyRightImage",
+          "image/jpeg"
+        );
+      }
       setFormData(parsedData);
     }
   }, []);
@@ -76,7 +90,8 @@ const StepperForm = () => {
 
   const handleBack = () => {
     if (activeStep === 1) {
-      // Force window reload to show the updated images
+      window.location.reload();
+    } else if (activeStep === 3) {
       window.location.reload();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -94,6 +109,12 @@ const StepperForm = () => {
     }
     if (data.nidBack instanceof File) {
       data.nidBack = await fileToBase64(data.nidBack);
+    }
+    if (data.dashboardImage instanceof File) {
+      data.dashboardImage = await fileToBase64(data.dashboardImage);
+    }
+    if (data.copyRightImage instanceof File) {
+      data.copyRightImage = await fileToBase64(data.copyRightImage);
     }
 
     setFormData(updatedFormData);
@@ -142,7 +163,7 @@ const StepperForm = () => {
             onClick={handleSubmit}
             style={{ marginLeft: 10 }}
           >
-            Done
+            Let's Verify
           </Button>
         )}
       </div>
