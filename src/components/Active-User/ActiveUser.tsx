@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   goBack: {
     marginTop: theme.spacing(2),
-    color: "#666", // Adjust the color of the "Go Back" link
+    color: "#666",
   },
 }));
 
