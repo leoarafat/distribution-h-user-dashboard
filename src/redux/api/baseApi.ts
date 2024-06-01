@@ -8,7 +8,7 @@ const authToken = getFromLocalStorage(authKey);
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000",
+    baseUrl: "http://localhost:5000",
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
@@ -16,6 +16,6 @@ export const baseApi = createApi({
 });
 export const imageURL = "http://localhost:5000";
 export const baseUrl = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:5000",
 });
-export const socketURL = "http://localhost:8000";
+export const socketURL = "http://localhost:5000";

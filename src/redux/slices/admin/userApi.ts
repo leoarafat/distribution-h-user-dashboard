@@ -21,11 +21,29 @@ export const userApi = baseApi.injectEndpoints({
     }),
     profileVerify: build.mutation({
       query: (data) => ({
-        url: `/profile-verify`,
+        url: `/user/profile-verify`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: [tagTypes.user],
+    }),
+    labelVerify: build.mutation({
+      query: (data) => ({
+        url: `/user/label-verify`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+    profile: build.query({
+      query: () => {
+        return {
+          url: `/user/profile`,
+          method: "GET",
+        };
+      },
+
+      providesTags: [tagTypes.user],
     }),
   }),
 });
@@ -34,4 +52,6 @@ export const {
   useRegisterMutation,
   useVerifyMutation,
   useProfileVerifyMutation,
+  useLabelVerifyMutation,
+  useProfileQuery,
 } = userApi;

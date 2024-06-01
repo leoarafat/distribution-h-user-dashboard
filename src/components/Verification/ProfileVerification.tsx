@@ -1,46 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
+import { useProfileQuery } from "@/redux/slices/admin/userApi";
 
 const ProfileVerification = ({ data, onChange }) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
+  const imageURL = "http://localhost:5000/";
 
-  const handleChange = (e: any) => {
+  const { data: profileData } = useProfileQuery({});
+
+  useEffect(() => {
+    if (profileData?.data) {
+      onChange("profile", {
+        ...data?.profile,
+        name: profileData.data.name || "",
+        phoneNumber: profileData.data.phoneNumber || "",
+        email: profileData.data.email || "",
+      });
+      setSelectedProfileImage(profileData.data.image || null);
+      setNidFront(profileData.data.nidFront || null);
+      setNidBack(profileData.data.nidBack || null);
+    }
+  }, [profileData, onChange, data?.profile]);
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    onChange("profile", { ...data?.profile, [name]: value });
+    onChange("profile", { ...data.profile, [name]: value });
   };
 
-  const handleProfileImageUpload = (event: any) => {
+  const handleProfileImageUpload = (event) => {
     const file = event.target.files[0];
     setSelectedProfileImage(file);
-    onChange("profile", { ...data?.profile, profileImage: file });
+    onChange("profile", { ...data.profile, profileImage: file });
   };
 
-  const handleNidFront = (event: any) => {
+  const handleNidFront = (event) => {
     const file = event.target.files[0];
-    setNidFront(file as any);
-    onChange("profile", { ...data?.profile, nidFront: file });
+    setNidFront(file);
+    onChange("profile", { ...data.profile, nidFront: file });
   };
 
-  const handleNidBack = (event: any) => {
+  const handleNidBack = (event) => {
     const file = event.target.files[0];
-    setNidBack(file as any);
-    onChange("profile", { ...data?.profile, nidBack: file });
+    setNidBack(file);
+    onChange("profile", { ...data.profile, nidBack: file });
   };
 
   const handleProfileRemoveImage = () => {
     setSelectedProfileImage(null);
+    onChange("profile", { ...data.profile, profileImage: null });
   };
 
   const handleFrontRemoveImage = () => {
     setNidFront(null);
+    onChange("profile", { ...data.profile, nidFront: null });
   };
 
   const handleBackRemoveImage = () => {
     setNidBack(null);
+    onChange("profile", { ...data.profile, nidBack: null });
   };
 
   return (
@@ -50,10 +71,14 @@ const ProfileVerification = ({ data, onChange }) => {
           {/* Profile Picture */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
             <h4 className="mb-2 text-sm">Upload Profile Picture</h4>
-            {selectedProfileImage ? (
+            {selectedProfileImage || profileData?.data?.image ? (
               <div className="relative w-3/4">
                 <img
-                  src={URL.createObjectURL(selectedProfileImage)}
+                  src={
+                    profileData?.data?.image
+                      ? `${imageURL}${profileData?.data?.image}`
+                      : URL.createObjectURL(selectedProfileImage)
+                  }
                   alt="Profile Picture"
                   className="w-[300px] h-[200px]"
                 />
@@ -87,10 +112,14 @@ const ProfileVerification = ({ data, onChange }) => {
           {/* NID Front Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
             <h4 className="mb-2 text-sm">Upload NID Front</h4>
-            {nidFront ? (
+            {nidFront || profileData?.data?.nidFront ? (
               <div className="relative w-3/4">
                 <img
-                  src={URL.createObjectURL(nidFront)}
+                  src={
+                    profileData?.data?.nidFront
+                      ? `${imageURL}${profileData?.data?.nidFront}`
+                      : URL.createObjectURL(nidFront)
+                  }
                   alt="NID Front"
                   className="w-[300px] h-[200px]"
                 />
@@ -122,12 +151,16 @@ const ProfileVerification = ({ data, onChange }) => {
           </div>
 
           {/* NID Back Image Uploader */}
-          <div className="flex items-center justify-center flex-col p-3">
+          <div className="image_upload flex items-center justify-center flex-col p-3">
             <h4 className="mb-2 text-sm">Upload NID Back</h4>
-            {nidBack ? (
+            {nidBack || profileData?.data?.nidBack ? (
               <div className="relative w-3/4">
                 <img
-                  src={URL.createObjectURL(nidBack)}
+                  src={
+                    profileData?.data?.nidBack
+                      ? `${imageURL}${profileData?.data?.nidBack}`
+                      : URL.createObjectURL(nidBack)
+                  }
                   alt="NID Back"
                   className="w-[300px] h-[200px]"
                 />
@@ -174,7 +207,7 @@ const ProfileVerification = ({ data, onChange }) => {
             label="Phone Number"
             variant="outlined"
             fullWidth
-            value={data.profile.phoneNumber || ""}
+            value={data.profile.phoneNumber}
             onChange={handleChange}
           />
         </Grid>

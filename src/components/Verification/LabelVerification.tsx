@@ -7,37 +7,6 @@ const LabelVerification = ({ data, onChange }: any) => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [copyRightImage, setCoyRightImage] = useState(null);
 
-  useEffect(() => {
-    if (data?.label.dashboardImage) {
-      const file = data?.label.dashboardImage;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setDashboardImage(file);
-      }
-    }
-    if (data?.label.copyRightImage) {
-      const file = data?.label.copyRightImage;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setCoyRightImage(file as any);
-      }
-    }
-
-    return () => {
-      if (dashboardImage && dashboardImage.preview) {
-        URL.revokeObjectURL(dashboardImage.preview);
-      }
-      if (copyRightImage && copyRightImage.preview) {
-        URL.revokeObjectURL(copyRightImage.preview);
-      }
-    };
-  }, [
-    copyRightImage,
-    dashboardImage,
-    data?.label.dashboardImage,
-    data?.label.copyRightImage,
-  ]);
-
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     onChange("label", { ...data?.label, [name]: value });
@@ -45,36 +14,25 @@ const LabelVerification = ({ data, onChange }: any) => {
 
   const handleDashboardImageImageUpload = (event: any) => {
     const file = event.target.files[0];
-    if (file instanceof Blob) {
-      file.preview = URL.createObjectURL(file);
-      setDashboardImage(file as any);
-      onChange("label", { ...data?.label, dashboardImage: file });
-    }
+
+    setDashboardImage(file as any);
+    onChange("label", { ...data?.label, dashboardImage: file });
   };
 
   const handleCopyRightImage = (event: any) => {
     const file = event.target.files[0];
-    if (file instanceof Blob) {
-      file.preview = URL.createObjectURL(file);
-      setCoyRightImage(file as any);
-      onChange("label", { ...data?.label, copyRightImage: file });
-    }
+    setCoyRightImage(file as any);
+    onChange("label", { ...data?.label, copyRightImage: file });
   };
 
   const handleDashboardRemoveImage = () => {
-    if (dashboardImage) {
-      URL.revokeObjectURL(dashboardImage.preview);
-      setDashboardImage(null);
-      onChange("label", { ...data?.label, dashboardImage: null });
-    }
+    setDashboardImage(null);
+    onChange("label", { ...data?.label, dashboardImage: null });
   };
 
   const handleCopyRightRemoveImage = () => {
-    if (copyRightImage) {
-      URL.revokeObjectURL(copyRightImage.preview);
-      setCoyRightImage(null);
-      onChange("label", { ...data?.label, copyRightImage: null });
-    }
+    setCoyRightImage(null);
+    onChange("label", { ...data?.label, copyRightImage: null });
   };
 
   return (
@@ -87,7 +45,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             {dashboardImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={dashboardImage?.preview}
+                  src={URL.createObjectURL(dashboardImage)}
                   alt="Dashboard Picture"
                   className="w-[350px] h-[200px]"
                 />
@@ -123,7 +81,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             {copyRightImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={copyRightImage.preview}
+                  src={URL.createObjectURL(copyRightImage)}
                   alt="Copyright Image"
                   className="w-[350px] h-[200px]"
                 />
