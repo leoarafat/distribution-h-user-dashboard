@@ -19,15 +19,19 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
-    // updateSubCategory: build.mutation({
-    //   query: ({ id, formData }) => ({
-    //     url: `/subcategory/${id}`,
-    //     method: "PATCH",
-    //     body: formData,
-    //   }),
-    //   invalidatesTags: [tagTypes.subCategory],
-    // }),
+    profileVerify: build.mutation({
+      query: (data) => ({
+        url: `/profile-verify`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useRegisterMutation, useVerifyMutation } = userApi;
+export const {
+  useRegisterMutation,
+  useVerifyMutation,
+  useProfileVerifyMutation,
+} = userApi;

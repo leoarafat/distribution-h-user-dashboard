@@ -39,53 +39,18 @@ const StepperForm = () => {
     address: {},
     label: {},
   });
+  const sendFormData = new FormData();
+  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
+  const [nidFront, setNidFront] = useState(null);
+  const [nidBack, setNidBack] = useState(null);
 
   useEffect(() => {
-    const savedData = localStorage.getItem("formData");
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-
-      if (parsedData.profile.profileImage) {
-        parsedData.profile.profileImage = base64ToFile(
-          parsedData.profile.profileImage,
-          "profileImage",
-          "image/jpeg"
-        );
-      }
-      if (parsedData.profile.nidFront) {
-        parsedData.profile.nidFront = base64ToFile(
-          parsedData.profile.nidFront,
-          "nidFront",
-          "image/jpeg"
-        );
-      }
-      if (parsedData.profile.nidBack) {
-        parsedData.profile.nidBack = base64ToFile(
-          parsedData.profile.nidBack,
-          "nidBack",
-          "image/jpeg"
-        );
-      }
-      if (parsedData.label.dashboardImage) {
-        parsedData.label.dashboardImage = base64ToFile(
-          parsedData.label.dashboardImage,
-          "dashboardImage",
-          "image/jpeg"
-        );
-      }
-      if (parsedData.label.copyRightImage) {
-        parsedData.label.copyRightImage = base64ToFile(
-          parsedData.label.copyRightImage,
-          "copyRightImage",
-          "image/jpeg"
-        );
-      }
-      setFormData(parsedData);
-    }
-  }, []);
-
+    setSelectedProfileImage(formData?.profile?.profileImage);
+  }, [formData?.profile]);
+  console.log(selectedProfileImage);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log(formData);
   };
 
   const handleBack = () => {
@@ -101,27 +66,9 @@ const StepperForm = () => {
   const handleDataChange = async (step: any, data: any) => {
     const updatedFormData = { ...formData, [step]: data };
 
-    if (data.profileImage instanceof File) {
-      data.profileImage = await fileToBase64(data.profileImage);
-    }
-    if (data.nidFront instanceof File) {
-      data.nidFront = await fileToBase64(data.nidFront);
-    }
-    if (data.nidBack instanceof File) {
-      data.nidBack = await fileToBase64(data.nidBack);
-    }
-    if (data.dashboardImage instanceof File) {
-      data.dashboardImage = await fileToBase64(data.dashboardImage);
-    }
-    if (data.copyRightImage instanceof File) {
-      data.copyRightImage = await fileToBase64(data.copyRightImage);
-    }
-
     setFormData(updatedFormData);
-    localStorage.setItem("formData", JSON.stringify(updatedFormData));
   };
   const handleSubmit = async () => {
-    // Process submission
     localStorage.removeItem("formData");
   };
 

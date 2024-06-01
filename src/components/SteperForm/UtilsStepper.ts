@@ -7,17 +7,6 @@ export const fileToBase64 = (file) => {
   });
 };
 
-// export const base64ToFile = (base64, filename, mimeType) => {
-//   const arr = base64 && base64?.split(",");
-//   const mime = arr[0]?.match(/:(.*?);/)[1] || mimeType;
-//   const bstr = atob(arr[1]);
-//   let n = bstr.length;
-//   const u8arr = new Uint8Array(n);
-//   while (n--) {
-//     u8arr[n] = bstr?.charCodeAt(n);
-//   }
-//   return new File([u8arr], filename, { type: mime });
-// };
 export const base64ToFile = (base64, filename, mimeType) => {
   if (typeof base64 !== "string") {
     console.error("Invalid base64 input:", base64);

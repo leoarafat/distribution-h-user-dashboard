@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewConfirm = ({ data }: any) => {
   const classes = useStyles();
-
+  console.log(data);
   return (
     <div>
       <Typography variant="h5" gutterBottom>
@@ -103,76 +103,104 @@ const ReviewConfirm = ({ data }: any) => {
         Images
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={URL.createObjectURL(data.profile.profileImage)}
-              title="Profile Image"
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                Profile Image
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={URL.createObjectURL(data.profile.nidFront)}
-              title="NID Front Image"
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                NID Front Image
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={URL.createObjectURL(data.profile.nidBack)}
-              title="NID Back Image"
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                NID Back Image
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={URL.createObjectURL(data.label.dashboardImage)}
-              title="Dashboard Image"
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                Dashboard Image
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={3}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={URL.createObjectURL(data.label.copyRightImage)}
-              title="Copy Right Image"
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                Copy Right Image
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+        {data && (
+          <>
+            {data.profile && data.profile.profileImage ? (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image={URL.createObjectURL(data.profile.profileImage)}
+                    title="Profile Image"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      Profile Image
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ) : (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      Image not found
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+
+            {data.profile && data.profile.nidFront && (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image={URL.createObjectURL(data.profile.nidFront)}
+                    title="NID Front Image"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      NID Front Image
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+
+            {data.profile && data.profile.nidBack && (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image={URL.createObjectURL(data.profile.nidBack)}
+                    title="NID Back Image"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      NID Back Image
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+
+            {data.label && data.label.dashboardImage && (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image={URL.createObjectURL(data.label.dashboardImage)}
+                    title="Dashboard Image"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      Dashboard Image
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+
+            {data.label && data.label.copyRightImage && (
+              <Grid item xs={12} sm={3}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.media}
+                    image={URL.createObjectURL(data.label.copyRightImage)}
+                    title="Copy Right Image"
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary">
+                      Copy Right Image
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+          </>
+        )}
       </Grid>
     </div>
   );

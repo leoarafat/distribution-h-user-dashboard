@@ -1,48 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
-import { getUserInfo } from "@/redux/services/auth.service";
+
 const ProfileVerification = ({ data, onChange }) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-
-  useEffect(() => {
-    if (data?.profile?.profileImage) {
-      const file = data?.profile.profileImage;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setSelectedProfileImage(file);
-      }
-    }
-    if (data?.profile.nidFront) {
-      const file = data?.profile.nidFront;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setNidFront(file);
-      }
-    }
-    if (data?.profile.nidBack) {
-      const file = data?.profile.nidBack;
-      if (file instanceof Blob) {
-        file.preview = URL.createObjectURL(file);
-        setNidBack(file);
-      }
-    }
-
-    return () => {
-      if (selectedProfileImage && selectedProfileImage.preview) {
-        URL.revokeObjectURL(selectedProfileImage.preview);
-      }
-      if (nidFront && nidFront.preview) {
-        URL.revokeObjectURL(nidFront.preview);
-      }
-      if (nidBack && nidBack.preview) {
-        URL.revokeObjectURL(nidBack.preview);
-      }
-    };
-  }, [data?.profile, nidBack, nidFront, selectedProfileImage]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -51,55 +15,33 @@ const ProfileVerification = ({ data, onChange }) => {
 
   const handleProfileImageUpload = (event: any) => {
     const file = event.target.files[0];
-    if (file instanceof Blob) {
-      file.preview = URL.createObjectURL(file);
-      setSelectedProfileImage(file as any);
-      onChange("profile", { ...data?.profile, profileImage: file });
-    }
+    setSelectedProfileImage(file);
+    onChange("profile", { ...data?.profile, profileImage: file });
   };
 
   const handleNidFront = (event: any) => {
     const file = event.target.files[0];
-    if (file instanceof Blob) {
-      file.preview = URL.createObjectURL(file);
-      setNidFront(file as any);
-      onChange("profile", { ...data?.profile, nidFront: file });
-    }
+    setNidFront(file as any);
+    onChange("profile", { ...data?.profile, nidFront: file });
   };
 
   const handleNidBack = (event: any) => {
     const file = event.target.files[0];
-    if (file instanceof Blob) {
-      file.preview = URL.createObjectURL(file);
-      setNidBack(file as any);
-      onChange("profile", { ...data?.profile, nidBack: file });
-    }
+    setNidBack(file as any);
+    onChange("profile", { ...data?.profile, nidBack: file });
   };
 
   const handleProfileRemoveImage = () => {
-    if (selectedProfileImage) {
-      URL.revokeObjectURL(selectedProfileImage.preview);
-      setSelectedProfileImage(null);
-      onChange("profile", { ...data?.profile, profileImage: null });
-    }
+    setSelectedProfileImage(null);
   };
 
   const handleFrontRemoveImage = () => {
-    if (nidFront) {
-      URL.revokeObjectURL(nidFront.preview);
-      setNidFront(null);
-      onChange("profile", { ...data?.profile, nidFront: null });
-    }
+    setNidFront(null);
   };
 
   const handleBackRemoveImage = () => {
-    if (nidBack) {
-      URL.revokeObjectURL(nidBack.preview);
-      setNidBack(null);
-      onChange("profile", { ...data?.profile, nidBack: null });
-    }
+    setNidBack(null);
   };
-  const user = getUserInfo();
 
   return (
     <form>
@@ -111,7 +53,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {selectedProfileImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={selectedProfileImage?.preview}
+                  src={URL.createObjectURL(selectedProfileImage)}
                   alt="Profile Picture"
                   className="w-[300px] h-[200px]"
                 />
@@ -148,7 +90,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {nidFront ? (
               <div className="relative w-3/4">
                 <img
-                  src={nidFront.preview}
+                  src={URL.createObjectURL(nidFront)}
                   alt="NID Front"
                   className="w-[300px] h-[200px]"
                 />
@@ -185,7 +127,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {nidBack ? (
               <div className="relative w-3/4">
                 <img
-                  src={nidBack.preview}
+                  src={URL.createObjectURL(nidBack)}
                   alt="NID Back"
                   className="w-[300px] h-[200px]"
                 />

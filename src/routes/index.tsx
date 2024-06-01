@@ -24,12 +24,13 @@ import SubCategory from "@/pages/SubCategory";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import UserManagement from "@/pages/UserManagement";
 import VerifyEmail from "@/pages/VerifyEmail";
-import DashboardHomes from "@/collected/DashboardHome/DashboardHome";
+
 import { createBrowserRouter } from "react-router-dom";
 import StepperForm from "@/components/SteperForm/SetperForm";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Register/Register";
 import Verify from "@/components/Active-User/ActiveUser";
+import Test from "@/pages/Test";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/verify",
         element: <StepperForm />,
+      },
+      {
+        path: "/test",
+        element: <Test />,
       },
 
       {
