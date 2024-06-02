@@ -30,13 +30,13 @@ const AddressInformation = ({ data, onChange }: any) => {
   }, [profileData, initialSetupDone, onChange]);
 
   const handleChange = useCallback(
-    (e) => {
+    (e: any) => {
       const { name, value } = e.target;
       onChange("address", { ...data.address, [name]: value });
     },
     [onChange, data.address]
   );
-
+  const countries = ["Bangladesh", "India", "United States", "United Kingdom"];
   return (
     <form>
       <Grid container spacing={3}>
@@ -48,7 +48,11 @@ const AddressInformation = ({ data, onChange }: any) => {
               onChange={handleChange}
               name="country"
             >
-              <MenuItem value="Bangladesh">Bangladesh</MenuItem>
+              {countries.map((country: string, index: number) => (
+                <MenuItem key={index} value={country}>
+                  {country}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>

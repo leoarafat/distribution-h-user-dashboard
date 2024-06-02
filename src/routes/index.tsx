@@ -24,13 +24,17 @@ import SubCategory from "@/pages/SubCategory";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import UserManagement from "@/pages/UserManagement";
 import VerifyEmail from "@/pages/VerifyEmail";
-
-import { createBrowserRouter } from "react-router-dom";
 import StepperForm from "@/components/SteperForm/SetperForm";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Register/Register";
 import Verify from "@/components/Active-User/ActiveUser";
 import Test from "@/pages/Test";
+
+import { createBrowserRouter } from "react-router-dom";
+import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
+import Uploads from "@/components/Uplaods/Uploads";
+import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
+import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 
 const router = createBrowserRouter([
   {
@@ -39,13 +43,44 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <DashboardHome />,
+        element: (
+          <IsVerifiedRoutes>
+            <DashboardHome />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/upload",
+        element: (
+          <IsVerifiedRoutes>
+            <Uploads />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/single",
+        element: (
+          <IsVerifiedRoutes>
+            <UploadSingle />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/album",
+        element: (
+          <IsVerifiedRoutes>
+            <UploadAlbum />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/product-management",
-        element: <ProductManagement />,
+        element: (
+          <IsVerifiedRoutes>
+            <ProductManagement />
+          </IsVerifiedRoutes>
+        ),
       },
-
       {
         path: "/verify",
         element: <StepperForm />,
@@ -54,82 +89,157 @@ const router = createBrowserRouter([
         path: "/test",
         element: <Test />,
       },
-
       {
         path: "/notifications",
-        element: <NotificationList />,
+        element: (
+          <IsVerifiedRoutes>
+            <NotificationList />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/add-product",
-        element: <AddProduct />,
+        element: (
+          <IsVerifiedRoutes>
+            <AddProduct />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/edit-product/:id",
-        element: <EditProduct />,
+        element: (
+          <IsVerifiedRoutes>
+            <EditProduct />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/order-management",
-        element: <OrderManagement />,
+        element: (
+          <IsVerifiedRoutes>
+            <OrderManagement />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/user-management",
-        element: <UserManagement />,
+        element: (
+          <IsVerifiedRoutes>
+            <UserManagement />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/categories/category",
-        element: <Category />,
+        element: (
+          <IsVerifiedRoutes>
+            <Category />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/categories/sub-category",
-        element: <SubCategory />,
+        element: (
+          <IsVerifiedRoutes>
+            <SubCategory />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/create-offer",
-        element: <CreateOffer />,
+        element: (
+          <IsVerifiedRoutes>
+            <CreateOffer />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/promo-code",
-        element: <PromoCode />,
+        element: (
+          <IsVerifiedRoutes>
+            <PromoCode />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/feedback",
-        element: <Feedback />,
+        element: (
+          <IsVerifiedRoutes>
+            <Feedback />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/make-admin",
-        element: <MakeAdmin />,
+        element: (
+          <IsVerifiedRoutes>
+            <MakeAdmin />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/cover",
-        element: <CoverPage />,
+        element: (
+          <IsVerifiedRoutes>
+            <CoverPage />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings",
-        element: <Settings />,
+        element: (
+          <IsVerifiedRoutes>
+            <Settings />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/terms-and-conditions",
-        element: <TermsAndCondition />,
+        element: (
+          <IsVerifiedRoutes>
+            <TermsAndCondition />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/privacy-policy",
-        element: <PrivacyPolicy />,
+        element: (
+          <IsVerifiedRoutes>
+            <PrivacyPolicy />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/about",
-        element: <About />,
+        element: (
+          <IsVerifiedRoutes>
+            <About />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/faq",
-        element: <FAQPage />,
+        element: (
+          <IsVerifiedRoutes>
+            <FAQPage />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/profile",
-        element: <Profile />,
+        element: (
+          <IsVerifiedRoutes>
+            <Profile />
+          </IsVerifiedRoutes>
+        ),
       },
       {
         path: "/settings/change-password",
-        element: <ChangePassword />,
+        element: (
+          <IsVerifiedRoutes>
+            <ChangePassword />
+          </IsVerifiedRoutes>
+        ),
       },
     ],
   },

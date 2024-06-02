@@ -69,16 +69,28 @@ const LabelVerification = ({ data, onChange }: any) => {
     <form>
       <Grid container spacing={3}>
         <div className="flex justify-around items-center w-full">
-          {/* Profile Picture */}
+          {/* Dashboard Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
             <h4 className="mb-2 text-sm">Upload Dashboard Image</h4>
-            {dashboardImage ? (
+            {dashboardImage || profileData?.data?.dashboardScreenShot ? (
               <div className="relative w-3/4">
-                <img
-                  src={`${imageURL}${profileData?.data?.dashboardScreenShot}`}
-                  alt="Dashboard Picture"
-                  className="w-[350px] h-[200px]"
-                />
+                {typeof dashboardImage === "object" ? (
+                  <img
+                    src={
+                      dashboardImage
+                        ? URL.createObjectURL(dashboardImage)
+                        : null
+                    }
+                    alt="Dashboard Picture"
+                    className="w-[350px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={`${imageURL}${profileData?.data?.dashboardScreenShot}`}
+                    alt="Dashboard Picture"
+                    className="w-[350px] h-[200px]"
+                  />
+                )}
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
@@ -105,16 +117,28 @@ const LabelVerification = ({ data, onChange }: any) => {
             )}
           </div>
 
-          {/* NID Front Image Uploader */}
+          {/* Copyright Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
             <h4 className="mb-2 text-sm">Upload Copyright Image</h4>
-            {copyRightImage ? (
+            {copyRightImage || profileData?.data?.copyrightNoticeImage ? (
               <div className="relative w-3/4">
-                <img
-                  src={`${imageURL}${profileData?.data?.copyrightNoticeImage}`}
-                  alt="Copyright Image"
-                  className="w-[350px] h-[200px]"
-                />
+                {typeof copyRightImage === "object" ? (
+                  <img
+                    src={
+                      copyRightImage
+                        ? URL.createObjectURL(copyRightImage)
+                        : null
+                    }
+                    alt="Copyright Image"
+                    className="w-[350px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={`${imageURL}${profileData?.data?.copyrightNoticeImage}`}
+                    alt="Copyright Image"
+                    className="w-[350px] h-[200px]"
+                  />
+                )}
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
@@ -148,7 +172,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             label="Chanel NAme"
             variant="outlined"
             fullWidth
-            value={profileData?.data?.channelName || ""}
+            value={data?.label?.channelName || ""}
             onChange={handleChange}
           />
         </Grid>
@@ -170,7 +194,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             variant="outlined"
             type="number"
             fullWidth
-            value={profileData?.data?.subscribeCount || ""}
+            value={data?.label?.subscribeCount || ""}
             onChange={handleChange}
           />
         </Grid>
@@ -181,7 +205,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             variant="outlined"
             type="number"
             fullWidth
-            value={profileData?.data?.videosCount || ""}
+            value={data?.label?.videosCount || ""}
             onChange={handleChange}
           />
         </Grid>

@@ -17,8 +17,10 @@ import {
   useAddressVerifyMutation,
   useLabelVerifyMutation,
   useProfileVerifyMutation,
+  useVerifyUserMutation,
 } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   {
@@ -53,25 +55,35 @@ const StepperForm = () => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (formData.profile) {
+      //@ts-ignore
       setSelectedProfileImage(formData.profile.profileImage);
+      //@ts-ignore
       setNidFront(formData.profile.nidFront);
+      //@ts-ignore
       setNidBack(formData.profile.nidBack);
+      //@ts-ignore
       setUserName(formData.profile.name);
+      //@ts-ignore
       setPhone(formData.profile.phoneNumber);
     }
 
     if (formData.label) {
+      //@ts-ignore
       setCopyRightImage(formData.label.copyRightImage);
+      //@ts-ignore
       setDashboardImage(formData.label.dashboardImage);
     }
   }, [formData]);
-  console.log(formData);
-  const [verifyProfile] = useProfileVerifyMutation();
-  const [labelVerify] = useLabelVerifyMutation();
-  const [addressVerify] = useAddressVerifyMutation();
+
+  const [verifyProfile, { isLoading: profileLoading }] =
+    useProfileVerifyMutation();
+  const [labelVerify, { isLoading: labelLoading }] = useLabelVerifyMutation();
+  const [addressVerify, { isLoading: addressLoading }] =
+    useAddressVerifyMutation();
+  const [verifyUser, { isLoading: verifyLoading }] = useVerifyUserMutation();
 
   const handleNext = async () => {
     if (
@@ -102,7 +114,17 @@ const StepperForm = () => {
       }
     }
 
-    if (activeStep === 1 && formData.address) {
+    if (
+      activeStep === 1 &&
+      //@ts-ignore
+      formData.address?.state &&
+      //@ts-ignore
+      formData.address?.city &&
+      //@ts-ignore
+      formData.address?.country &&
+      //@ts-ignore
+      formData.address?.address
+    ) {
       try {
         const result = await addressVerify(formData.address);
 
@@ -118,18 +140,28 @@ const StepperForm = () => {
 
     if (
       activeStep === 2 &&
+      //@ts-ignore
       formData.label?.channelUrl &&
+      //@ts-ignore
       formData.label?.channelName &&
+      //@ts-ignore
       formData.label?.subscribeCount &&
+      //@ts-ignore
       formData.label?.videosCount
     ) {
       try {
         const labelFormData = new FormData();
+        //@ts-ignore
         labelFormData.append("subscribeCount", formData.label.subscribeCount);
+        //@ts-ignore
         labelFormData.append("videosCount", formData.label.videosCount);
+        //@ts-ignore
         labelFormData.append("channelName", formData.label.channelName);
+        //@ts-ignore
         labelFormData.append("channelUrl", formData.label.channelUrl);
+        //@ts-ignore
         labelFormData.append("copyrightNoticeImage", copyRightImage);
+        //@ts-ignore
         labelFormData.append("dashboardScreenShot", dashboardImage);
 
         const result = await labelVerify(labelFormData).unwrap();
@@ -149,13 +181,24 @@ const StepperForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleDataChange = (step, data) => {
+  const handleDataChange = (step: any, data: any) => {
     const updatedFormData = { ...formData, [step]: data };
     setFormData(updatedFormData);
   };
 
-  const handleSubmit = () => {
-    localStorage.removeItem("formData");
+  const handleSubmit = async () => {
+    try {
+      const result = await verifyUser({});
+      if (result?.data?.success) {
+        toast.success("Congratulations. Verify Successful");
+        navigate("/");
+      } else {
+        toast.error("Verification failed. Please try again later.");
+      }
+    } catch (error: any) {
+      toast.error("An error occurred while verifying. Please try again later.");
+      console.error("Error during verification:", error.message);
+    }
   };
 
   const StepComponent = steps[activeStep].component;
@@ -186,7 +229,9 @@ const StepperForm = () => {
             onClick={handleNext}
             style={{ marginLeft: 10 }}
           >
-            Next
+            {profileLoading || labelLoading || addressLoading
+              ? "Saving.."
+              : "Save & Go Next"}
           </Button>
         )}
         {activeStep === steps.length - 1 && (
@@ -196,7 +241,7 @@ const StepperForm = () => {
             onClick={handleSubmit}
             style={{ marginLeft: 10 }}
           >
-            Let's Verify
+            {verifyLoading ? "Verifying..." : "Let's Verify"}
           </Button>
         )}
       </div>

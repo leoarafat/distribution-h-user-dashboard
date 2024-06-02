@@ -1,12 +1,10 @@
-import { Avatar, Badge, Layout, Menu, Popover } from "antd";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Avatar, Badge, Layout, Menu } from "antd";
 import {
   Bell,
-  Container,
-  Image,
   LayoutDashboard,
   ListOrdered,
   LogOut,
-  MessageSquareReply,
   Plus,
   Settings,
   ShieldPlus,
@@ -14,6 +12,10 @@ import {
   SquareMenu,
   Tag,
   Users,
+  Container,
+  Image,
+  MessageSquareReply,
+  Music4Icon,
 } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -24,23 +26,22 @@ import {
   useNotificationsQuery,
 } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
-const { Header, Sider, Content } = Layout;
 import { CiMusicNote1 } from "react-icons/ci";
+import useVerification from "@/utils/isVerified";
+
+const { Header, Sider, Content } = Layout;
+const { SubMenu } = Menu;
+
 const menuItems = [
   {
-    path: "/",
-    title: "Dashboard",
-    icon: <LayoutDashboard size={18} />,
+    path: "/upload",
+    title: "Upload Music",
+    icon: <Music4Icon size={18} />,
   },
   {
     path: "/product-management",
     title: "Product Management",
     icon: <ShoppingCart size={18} />,
-  },
-  {
-    path: "/verify",
-    title: "Onboarding",
-    icon: <CiMusicNote1 size={18} />,
   },
   {
     path: "/add-product",
@@ -89,7 +90,6 @@ const menuItems = [
     title: "Feedback",
     icon: <MessageSquareReply size={18} />,
   },
-
   {
     path: "/settings",
     title: "Settings",
@@ -139,11 +139,18 @@ const menuItems = [
   },
 ];
 
-const { SubMenu } = Menu;
+const onboardingItem = {
+  path: "/verify",
+  title: "Onboarding",
+  icon: <CiMusicNote1 size={18} />,
+};
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const isUser = isLoggedIn();
+  const userInfo = useVerification();
+  const isVerifiedUser = userInfo?.isVerified;
+
   if (!isUser) {
     navigate("/auth/login");
   }
@@ -155,10 +162,13 @@ const Dashboard = () => {
   if (!isUser) {
     navigate("/auth/login");
   }
+
   const handleLogout = () => {
     removeUserInfo(authKey);
     navigate("/auth/login");
   };
+
+  const filteredMenuItems = isVerifiedUser ? menuItems : [onboardingItem];
 
   return (
     <Layout>
@@ -174,15 +184,15 @@ const Dashboard = () => {
         trigger={null}
       >
         <Link to={"/"}>
-          {" "}
-          <img src={logo} alt="" className="mx-auto h-[50px]  mb-8 mt-5" />
+          <img src={logo} alt="" className="mx-auto h-[50px] mb-8 mt-5" />
         </Link>
         <Menu
           mode="inline"
           style={{ background: "#100530", color: "white" }}
           defaultSelectedKeys={["1"]}
         >
-          {menuItems.map((item, index) =>
+          {filteredMenuItems.map((item, index) =>
+            //@ts-ignore
             item.subMenu ? (
               <SubMenu
                 key={`sub-${index}`}
@@ -190,21 +200,24 @@ const Dashboard = () => {
                 style={{ color: "#fff", fontSize: "16px" }}
                 title={item.title}
               >
-                {item.subMenu.map((subItem, subIndex) => (
-                  <Menu.Item
-                    key={`sub-${index}-${subIndex}`}
-                    icon={subItem.icon}
-                    style={{
-                      color: "#fff",
-                      fontSize: "16px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <Link to={`${item.path}${subItem.path}`}>
-                      {subItem.title}
-                    </Link>
-                  </Menu.Item>
-                ))}
+                {
+                  //@ts-ignore
+                  item.subMenu.map((subItem, subIndex) => (
+                    <Menu.Item
+                      key={`sub-${index}-${subIndex}`}
+                      icon={subItem.icon}
+                      style={{
+                        color: "#fff",
+                        fontSize: "16px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <Link to={`${item.path}${subItem.path}`}>
+                        {subItem.title}
+                      </Link>
+                    </Menu.Item>
+                  ))
+                }
               </SubMenu>
             ) : (
               <Menu.Item
@@ -220,15 +233,17 @@ const Dashboard = () => {
               </Menu.Item>
             )
           )}
-          <Menu.Item
-            key="500"
-            className=""
-            icon={<LogOut size={20} />}
-            style={{ color: "#fff", fontSize: "16px" }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Menu.Item>
+          {isVerifiedUser && (
+            <Menu.Item
+              key="500"
+              className=""
+              icon={<LogOut size={20} />}
+              style={{ color: "#fff", fontSize: "16px" }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Menu.Item>
+          )}
         </Menu>
       </Sider>
       <Layout>
@@ -241,28 +256,30 @@ const Dashboard = () => {
           }}
         >
           <div className="flex items-center gap-5">
-            {" "}
-            <Badge count={notifications?.unreadNotifications}>
-              <Link to={"/notifications"}>
-                <Bell size={30} color="#fff" />
-              </Link>
-            </Badge>
-            <div className="flex items-center gap-2">
-              <Link to={"/settings/profile"}>
-                {" "}
-                <Avatar
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    backgroundColor: "#87d068",
-                  }}
-                  src={`${imageURL}/${myProfile?.profileImage}`}
-                />
-              </Link>
-              <Link to={"/settings/profile"}>
-                <h2 className="text-lg text-white">{myProfile?.name}</h2>
-              </Link>
-            </div>
+            {isVerifiedUser && (
+              <>
+                <Badge count={notifications?.unreadNotifications}>
+                  <Link to={"/notifications"}>
+                    <Bell size={30} color="#fff" />
+                  </Link>
+                </Badge>
+                <div className="flex items-center gap-2">
+                  <Link to={"/settings/profile"}>
+                    <Avatar
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        backgroundColor: "#87d068",
+                      }}
+                      src={`${imageURL}/${myProfile?.profileImage}`}
+                    />
+                  </Link>
+                  <Link to={"/settings/profile"}>
+                    <h2 className="text-lg text-white">{myProfile?.name}</h2>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </Header>
         <Content
@@ -271,7 +288,7 @@ const Dashboard = () => {
             height: `calc(100vh - 80px)`,
           }}
         >
-          <div className="bg-white h-[calc(100vh-100px)] m-2 rounded p-3  overflow-y-auto">
+          <div className="bg-white h-[calc(100vh-100px)] m-2 rounded p-3 overflow-y-auto">
             <Outlet />
           </div>
         </Content>
@@ -279,4 +296,5 @@ const Dashboard = () => {
     </Layout>
   );
 };
+
 export default Dashboard;
