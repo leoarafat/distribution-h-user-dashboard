@@ -1,5 +1,7 @@
+import { imageURL } from "@/redux/api/baseApi";
+import { useProfileQuery } from "@/redux/slices/admin/userApi";
 import { Grid, TextField } from "@material-ui/core";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BsCloudUpload } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 
@@ -7,11 +9,39 @@ const LabelVerification = ({ data, onChange }: any) => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [copyRightImage, setCoyRightImage] = useState(null);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    onChange("label", { ...data?.label, [name]: value });
-  };
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   onChange("label", { ...data?.label, [name]: value });
+  // };
+  const { data: profileData } = useProfileQuery({});
+  const [initialSetupDone, setInitialSetupDone] = useState(false);
 
+  useEffect(() => {
+    if (profileData?.data && !initialSetupDone) {
+      const initialProfileData = {
+        videosCount: profileData.data.videosCount || "",
+        subscribeCount: profileData.data.subscribeCount || "",
+        channelName: profileData.data.channelName || "",
+        channelUrl: profileData.data.channelUrl || "",
+        copyRightImage: profileData.data.copyrightNoticeImage || null,
+        dashboardImage: profileData.data.dashboardScreenShot || null,
+      };
+
+      onChange("label", initialProfileData);
+      setDashboardImage(profileData.data.dashboardScreenShot || null);
+      setCoyRightImage(profileData.data.copyrightNoticeImage || null);
+
+      setInitialSetupDone(true);
+    }
+  }, [profileData, initialSetupDone, onChange]);
+
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      onChange("label", { ...data.label, [name]: value });
+    },
+    [onChange, data.label]
+  );
   const handleDashboardImageImageUpload = (event: any) => {
     const file = event.target.files[0];
 
@@ -45,7 +75,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             {dashboardImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={URL.createObjectURL(dashboardImage)}
+                  src={`${imageURL}${profileData?.data?.dashboardScreenShot}`}
                   alt="Dashboard Picture"
                   className="w-[350px] h-[200px]"
                 />
@@ -81,7 +111,7 @@ const LabelVerification = ({ data, onChange }: any) => {
             {copyRightImage ? (
               <div className="relative w-3/4">
                 <img
-                  src={URL.createObjectURL(copyRightImage)}
+                  src={`${imageURL}${profileData?.data?.copyrightNoticeImage}`}
                   alt="Copyright Image"
                   className="w-[350px] h-[200px]"
                 />
@@ -114,71 +144,44 @@ const LabelVerification = ({ data, onChange }: any) => {
         </div>
         <Grid item xs={6}>
           <TextField
-            name="companyName"
-            label="Company Name"
+            name="channelName"
+            label="Chanel NAme"
             variant="outlined"
             fullWidth
-            value={data?.label.companyName}
+            value={profileData?.data?.channelName || ""}
             onChange={handleChange}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
-            name="labelName"
-            label="Label Name"
+            name="channelUrl"
+            label="Chanel URL"
             variant="outlined"
             fullWidth
-            value={data?.label.labelName}
+            value={data?.label.channelUrl || ""}
             onChange={handleChange}
           />
         </Grid>
+
         <Grid item xs={6}>
           <TextField
-            name="youtubeChannel"
-            label="YouTube Channel Link"
-            variant="outlined"
-            fullWidth
-            value={data.label.youtubeChannel}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            name="subscriber"
+            name="subscribeCount"
             label="Total Subscriber"
             variant="outlined"
+            type="number"
             fullWidth
-            value={data.label.subscriber}
+            value={profileData?.data?.subscribeCount || ""}
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={6}>
           <TextField
-            name="email"
-            label="Email"
+            name="videosCount"
+            label="Videos Subscriber"
             variant="outlined"
+            type="number"
             fullWidth
-            value={data.label.email}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            name="phoneNumber"
-            label="Phone Number"
-            variant="outlined"
-            fullWidth
-            value={data.label.phoneNumber}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            name="address"
-            label="Address"
-            variant="outlined"
-            fullWidth
-            value={data.label.address}
+            value={profileData?.data?.videosCount || ""}
             onChange={handleChange}
           />
         </Grid>

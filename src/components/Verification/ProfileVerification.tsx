@@ -82,11 +82,23 @@ const ProfileVerification = ({ data, onChange }) => {
             <h4 className="mb-2 text-sm">Upload Profile Picture</h4>
             {selectedProfileImage || profileData?.data?.image ? (
               <div className="relative w-3/4">
-                <img
-                  src={`${imageURL}${profileData?.data?.image}`}
-                  alt="Profile Picture"
-                  className="w-[300px] h-[200px]"
-                />
+                {typeof selectedProfileImage === "object" ? (
+                  <img
+                    src={
+                      selectedProfileImage
+                        ? URL.createObjectURL(selectedProfileImage)
+                        : null
+                    }
+                    alt="PROFILE IMAGE"
+                    className="w-[300px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={`${imageURL}${profileData?.data?.image}`}
+                    alt="PROFILE IMAGE"
+                    className="w-[300px] h-[200px]"
+                  />
+                )}
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
@@ -97,14 +109,14 @@ const ProfileVerification = ({ data, onChange }) => {
               </div>
             ) : (
               <label
-                htmlFor="profile-upload"
+                htmlFor="profile-image-upload"
                 className="upload w-[230px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
               >
                 <input
-                  id="profile-upload"
+                  id="profile-image-upload"
                   type="file"
                   accept="image/*"
-                  name="profileImage"
+                  name="image"
                   style={{ display: "none" }}
                   onChange={handleProfileImageUpload}
                   required
@@ -119,11 +131,19 @@ const ProfileVerification = ({ data, onChange }) => {
             <h4 className="mb-2 text-sm">Upload NID Front</h4>
             {nidFront || profileData?.data?.nidFront ? (
               <div className="relative w-3/4">
-                <img
-                  src={`${imageURL}${profileData?.data?.nidFront}`}
-                  alt="NID Front"
-                  className="w-[300px] h-[200px]"
-                />
+                {typeof nidFront === "object" ? (
+                  <img
+                    src={nidFront ? URL.createObjectURL(nidFront) : null}
+                    alt="NID Front"
+                    className="w-[300px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={`${imageURL}${profileData?.data?.nidFront}`}
+                    alt="NID Front"
+                    className="w-[300px] h-[200px]"
+                  />
+                )}
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
@@ -156,11 +176,19 @@ const ProfileVerification = ({ data, onChange }) => {
             <h4 className="mb-2 text-sm">Upload NID Back</h4>
             {nidBack || profileData?.data?.nidBack ? (
               <div className="relative w-3/4">
-                <img
-                  src={`${imageURL}${profileData?.data?.nidBack}`}
-                  alt="NID Back"
-                  className="w-[300px] h-[200px]"
-                />
+                {typeof nidBack === "object" ? (
+                  <img
+                    src={nidBack ? URL.createObjectURL(nidBack) : null}
+                    alt="NID Back"
+                    className="w-[300px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={`${imageURL}${profileData?.data?.nidBack}`}
+                    alt="NID Back"
+                    className="w-[300px] h-[200px]"
+                  />
+                )}
                 <button
                   type="button"
                   className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"

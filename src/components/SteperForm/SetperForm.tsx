@@ -46,7 +46,6 @@ const StepperForm = () => {
     address: {},
     label: {},
   });
-  const labelFormData = new FormData();
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
@@ -54,58 +53,25 @@ const StepperForm = () => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
-  const [subscribeCount, setSubscribeCount] = useState("");
-  const [videosCount, setVideosCount] = useState("");
-  const [channelName, setChannelName] = useState("");
-  const [channelUrl, setChannelUrl] = useState("");
-  const profileFormData = new FormData();
-  // console.log(formData.address);
+
   useEffect(() => {
     if (formData.profile) {
-      //@ts-ignore
       setSelectedProfileImage(formData.profile.profileImage);
-      //@ts-ignore
       setNidFront(formData.profile.nidFront);
-      //@ts-ignore
       setNidBack(formData.profile.nidBack);
-      //@ts-ignore
       setUserName(formData.profile.name);
-      //@ts-ignore
       setPhone(formData.profile.phoneNumber);
     }
 
     if (formData.label) {
-      //@ts-ignore
       setCopyRightImage(formData.label.copyRightImage);
-      //@ts-ignore
       setDashboardImage(formData.label.dashboardImage);
     }
   }, [formData]);
-
+  console.log(formData);
   const [verifyProfile] = useProfileVerifyMutation();
   const [labelVerify] = useLabelVerifyMutation();
   const [addressVerify] = useAddressVerifyMutation();
-  if (selectedProfileImage) {
-    profileFormData.append("image", selectedProfileImage);
-  }
-  if (nidFront) {
-    profileFormData.append("nidFront", nidFront);
-  }
-  if (nidBack) {
-    profileFormData.append("nidBack", nidBack);
-  }
-  if (copyRightImage) {
-    labelFormData.append("copyrightNoticeImage", copyRightImage);
-  }
-  if (dashboardImage) {
-    labelFormData.append("dashboardScreenShot", dashboardImage);
-  }
-  if (userName) {
-    profileFormData.append("name", userName);
-  }
-  if (phoneNumber) {
-    profileFormData.append("phoneNumber", phoneNumber);
-  }
 
   const handleNext = async () => {
     if (
@@ -117,6 +83,13 @@ const StepperForm = () => {
       phoneNumber
     ) {
       try {
+        const profileFormData = new FormData();
+        profileFormData.append("image", selectedProfileImage);
+        profileFormData.append("nidFront", nidFront);
+        profileFormData.append("nidBack", nidBack);
+        profileFormData.append("name", userName);
+        profileFormData.append("phoneNumber", phoneNumber);
+
         const result = await verifyProfile(profileFormData).unwrap();
 
         if (result?.success === true) {
@@ -126,13 +99,12 @@ const StepperForm = () => {
         }
       } catch (error: any) {
         toast.error("Profile verification failed:", error?.message);
-        // return;
       }
     }
+
     if (activeStep === 1 && formData.address) {
-      const { address } = formData;
       try {
-        const result = await addressVerify(address);
+        const result = await addressVerify(formData.address);
 
         if (result?.data?.success === true) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -146,29 +118,29 @@ const StepperForm = () => {
 
     if (
       activeStep === 2 &&
-      subscribeCount &&
-      videosCount &&
-      channelName &&
-      channelUrl
+      formData.label?.channelUrl &&
+      formData.label?.channelName &&
+      formData.label?.subscribeCount &&
+      formData.label?.videosCount
     ) {
-      const labelFormData = new FormData();
-      labelFormData.append("subscribeCount", subscribeCount);
-      labelFormData.append("videosCount", videosCount);
-      labelFormData.append("channelName", channelName);
-      labelFormData.append("channelUrl", channelUrl);
-      labelFormData.append("copyrightNoticeImage", copyRightImage);
-      labelFormData.append("dashboardScreenShot", dashboardImage);
-
       try {
+        const labelFormData = new FormData();
+        labelFormData.append("subscribeCount", formData.label.subscribeCount);
+        labelFormData.append("videosCount", formData.label.videosCount);
+        labelFormData.append("channelName", formData.label.channelName);
+        labelFormData.append("channelUrl", formData.label.channelUrl);
+        labelFormData.append("copyrightNoticeImage", copyRightImage);
+        labelFormData.append("dashboardScreenShot", dashboardImage);
+
         const result = await labelVerify(labelFormData).unwrap();
+
         if (result?.success === true) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
           toast.error("Please provide required fields");
         }
       } catch (error: any) {
-        toast.error("Label verification failed:", error);
-        return;
+        toast.error("Label verification failed:", error?.message);
       }
     }
   };
@@ -177,12 +149,12 @@ const StepperForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleDataChange = async (step: any, data: any) => {
+  const handleDataChange = (step, data) => {
     const updatedFormData = { ...formData, [step]: data };
-
     setFormData(updatedFormData);
   };
-  const handleSubmit = async () => {
+
+  const handleSubmit = () => {
     localStorage.removeItem("formData");
   };
 
