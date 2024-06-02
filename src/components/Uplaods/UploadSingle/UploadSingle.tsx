@@ -70,11 +70,6 @@ const UploadSingle = () => {
   const [audioFile, setAudioFile] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const handleRadioChange = (event) => {
-    const newValue = event.target.value;
-    setSelectedValue((prevValue) => (prevValue === newValue ? null : newValue));
-  };
-
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -109,7 +104,7 @@ const UploadSingle = () => {
       <>
         {fields.map((field, index) => (
           <Grid key={field.id} container spacing={2} alignItems="center">
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Controller
                 name={`${fieldArrayName}[${index}].${name}`}
                 control={control}
@@ -148,16 +143,6 @@ const UploadSingle = () => {
             </Grid>
           </Grid>
         ))}
-        <Box mt={2} mb={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => append({ [name]: "" })}
-            startIcon={<Add />}
-          >
-            Add Another
-          </Button>
-        </Box>
       </>
     );
   };
@@ -532,7 +517,7 @@ const UploadSingle = () => {
                 )}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Controller
                 name="advancePurchaseDate"
                 control={control}
@@ -550,7 +535,6 @@ const UploadSingle = () => {
                 )}
               />
             </Grid>
-
             <Grid item xs={6}>
               {renderArrayFields("writer", "Writer Name", "writerName")}
             </Grid>
@@ -567,7 +551,6 @@ const UploadSingle = () => {
             <Grid item xs={6}>
               {renderArrayFields("producer", "Producer Name", "producerName")}
             </Grid>
-
             {/* Radio fields */}
             <Grid item xs={6}>
               <FormControl component="fieldset">
