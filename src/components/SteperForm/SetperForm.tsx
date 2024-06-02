@@ -12,7 +12,7 @@ import ProfileVerification from "../Verification/ProfileVerification";
 import AddressInformation from "../Verification/AddressInformation";
 import LabelVerification from "../Verification/LabelVerification";
 import ReviewConfirm from "../Verification/ReviewConfirm";
-import { base64ToFile, fileToBase64 } from "./UtilsStepper";
+
 import {
   useLabelVerifyMutation,
   useProfileVerifyMutation,
@@ -54,6 +54,7 @@ const StepperForm = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
   const profileFormData = new FormData();
+  console.log(formData.profile);
   useEffect(() => {
     if (formData.profile) {
       //@ts-ignore
@@ -95,6 +96,13 @@ const StepperForm = () => {
   if (dashboardImage) {
     labelFormData.append("dashboardScreenShot", dashboardImage);
   }
+  if (userName) {
+    profileFormData.append("name", userName);
+  }
+  if (phoneNumber) {
+    profileFormData.append("phoneNumber", phoneNumber);
+  }
+
   const handleNext = async () => {
     if (
       activeStep === 0 &&
@@ -104,10 +112,9 @@ const StepperForm = () => {
       userName &&
       phoneNumber
     ) {
-      console.log("Have");
       try {
         const result = await verifyProfile(profileFormData).unwrap();
-        console.log(result);
+
         if (result?.success === true) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {

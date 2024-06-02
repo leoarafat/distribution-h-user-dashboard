@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
@@ -8,28 +8,37 @@ const ProfileVerification = ({ data, onChange }) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-  const imageURL = "http://localhost:5000/";
+  const imageURL = "http://localhost:8000/";
 
   const { data: profileData } = useProfileQuery({});
-
+  const [initialSetupDone, setInitialSetupDone] = useState(false);
+  console.log(data);
   useEffect(() => {
-    if (profileData?.data) {
-      onChange("profile", {
-        ...data?.profile,
+    if (profileData?.data && !initialSetupDone) {
+      const initialProfileData = {
         name: profileData.data.name || "",
         phoneNumber: profileData.data.phoneNumber || "",
         email: profileData.data.email || "",
-      });
+        profileImage: profileData.data.image || null,
+        nidFront: profileData.data.nidFront || null,
+        nidBack: profileData.data.nidBack || null,
+      };
+
+      onChange("profile", initialProfileData);
       setSelectedProfileImage(profileData.data.image || null);
       setNidFront(profileData.data.nidFront || null);
       setNidBack(profileData.data.nidBack || null);
+      setInitialSetupDone(true);
     }
-  }, [profileData, onChange, data?.profile]);
+  }, [profileData, initialSetupDone, onChange]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    onChange("profile", { ...data.profile, [name]: value });
-  };
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      onChange("profile", { ...data.profile, [name]: value });
+    },
+    [onChange, data.profile]
+  );
 
   const handleProfileImageUpload = (event) => {
     const file = event.target.files[0];
@@ -74,11 +83,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {selectedProfileImage || profileData?.data?.image ? (
               <div className="relative w-3/4">
                 <img
-                  src={
-                    profileData?.data?.image
-                      ? `${imageURL}${profileData?.data?.image}`
-                      : URL.createObjectURL(selectedProfileImage)
-                  }
+                  src={`${imageURL}${profileData?.data?.image}`}
                   alt="Profile Picture"
                   className="w-[300px] h-[200px]"
                 />
@@ -115,11 +120,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {nidFront || profileData?.data?.nidFront ? (
               <div className="relative w-3/4">
                 <img
-                  src={
-                    profileData?.data?.nidFront
-                      ? `${imageURL}${profileData?.data?.nidFront}`
-                      : URL.createObjectURL(nidFront)
-                  }
+                  src={`${imageURL}${profileData?.data?.nidFront}`}
                   alt="NID Front"
                   className="w-[300px] h-[200px]"
                 />
@@ -156,11 +157,7 @@ const ProfileVerification = ({ data, onChange }) => {
             {nidBack || profileData?.data?.nidBack ? (
               <div className="relative w-3/4">
                 <img
-                  src={
-                    profileData?.data?.nidBack
-                      ? `${imageURL}${profileData?.data?.nidBack}`
-                      : URL.createObjectURL(nidBack)
-                  }
+                  src={`${imageURL}${profileData?.data?.nidBack}`}
                   alt="NID Back"
                   className="w-[300px] h-[200px]"
                 />
@@ -207,7 +204,7 @@ const ProfileVerification = ({ data, onChange }) => {
             label="Phone Number"
             variant="outlined"
             fullWidth
-            value={data.profile.phoneNumber}
+            value={data.profile.phoneNumber || ""}
             onChange={handleChange}
           />
         </Grid>
