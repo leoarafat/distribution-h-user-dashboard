@@ -35,6 +35,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    addressVerify: build.mutation({
+      query: (data) => ({
+        url: `/user/address-verify`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     profile: build.query({
       query: () => {
         return {
@@ -54,4 +62,5 @@ export const {
   useProfileVerifyMutation,
   useLabelVerifyMutation,
   useProfileQuery,
+  useAddressVerifyMutation,
 } = userApi;

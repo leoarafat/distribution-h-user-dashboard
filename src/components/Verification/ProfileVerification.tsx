@@ -12,7 +12,7 @@ const ProfileVerification = ({ data, onChange }) => {
 
   const { data: profileData } = useProfileQuery({});
   const [initialSetupDone, setInitialSetupDone] = useState(false);
-  console.log(data);
+
   useEffect(() => {
     if (profileData?.data && !initialSetupDone) {
       const initialProfileData = {

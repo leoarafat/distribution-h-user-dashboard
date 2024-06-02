@@ -14,6 +14,7 @@ import LabelVerification from "../Verification/LabelVerification";
 import ReviewConfirm from "../Verification/ReviewConfirm";
 
 import {
+  useAddressVerifyMutation,
   useLabelVerifyMutation,
   useProfileVerifyMutation,
 } from "@/redux/slices/admin/userApi";
@@ -53,8 +54,12 @@ const StepperForm = () => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
+  const [subscribeCount, setSubscribeCount] = useState("");
+  const [videosCount, setVideosCount] = useState("");
+  const [channelName, setChannelName] = useState("");
+  const [channelUrl, setChannelUrl] = useState("");
   const profileFormData = new FormData();
-  console.log(formData.profile);
+  // console.log(formData.address);
   useEffect(() => {
     if (formData.profile) {
       //@ts-ignore
@@ -77,10 +82,9 @@ const StepperForm = () => {
     }
   }, [formData]);
 
-  // console.log(selectedProfileImage, nidBack, nidFront);
-  const [verifyProfile, { isLoading: profileLoading }] =
-    useProfileVerifyMutation();
-  const [labelVerify, { isLoading: labelLoading }] = useLabelVerifyMutation();
+  const [verifyProfile] = useProfileVerifyMutation();
+  const [labelVerify] = useLabelVerifyMutation();
+  const [addressVerify] = useAddressVerifyMutation();
   if (selectedProfileImage) {
     profileFormData.append("image", selectedProfileImage);
   }
@@ -125,9 +129,33 @@ const StepperForm = () => {
         // return;
       }
     }
+    if (activeStep === 1 && formData.address) {
+      const { address } = formData;
+      try {
+        const result = await addressVerify(address);
 
-    if (activeStep === 2 && copyRightImage && dashboardImage) {
+        if (result?.data?.success === true) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+          toast.error("Failed to update address");
+        }
+      } catch (error: any) {
+        toast.error("Error updating address:", error?.message);
+      }
+    }
+
+    if (
+      activeStep === 2 &&
+      subscribeCount &&
+      videosCount &&
+      channelName &&
+      channelUrl
+    ) {
       const labelFormData = new FormData();
+      labelFormData.append("subscribeCount", subscribeCount);
+      labelFormData.append("videosCount", videosCount);
+      labelFormData.append("channelName", channelName);
+      labelFormData.append("channelUrl", channelUrl);
       labelFormData.append("copyrightNoticeImage", copyRightImage);
       labelFormData.append("dashboardScreenShot", dashboardImage);
 
