@@ -1,5 +1,4 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { tagTypes } from "@/redux/tag-types";
 
 export const settingApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +8,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: policyData,
       }),
-      invalidatesTags: [tagTypes.policy],
+      invalidatesTags: ["policy"],
     }),
     createTermsConditions: build.mutation({
       query: (policyData) => ({
@@ -17,7 +16,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: policyData,
       }),
-      invalidatesTags: [tagTypes.terms],
+      invalidatesTags: ["terms"],
     }),
     createAboutUs: build.mutation({
       query: (policyData) => ({
@@ -25,7 +24,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: policyData,
       }),
-      invalidatesTags: [tagTypes.about],
+      invalidatesTags: ["about"],
     }),
     createFaq: build.mutation({
       query: (policyData) => ({
@@ -33,7 +32,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: policyData,
       }),
-      invalidatesTags: [tagTypes.faq],
+      invalidatesTags: ["faq"],
     }),
     getPrivacyPolicy: build.query({
       query: (arg: Record<string, any>) => {
@@ -49,7 +48,7 @@ export const settingApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.policy],
+      providesTags: ["policy"],
     }),
     getAboutUs: build.query({
       query: (arg: Record<string, any>) => {
@@ -65,7 +64,7 @@ export const settingApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.about],
+      providesTags: ["about"],
     }),
     getTermsConditions: build.query({
       query: (arg: Record<string, any>) => {
@@ -81,7 +80,7 @@ export const settingApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.terms],
+      providesTags: ["terms"],
     }),
     myProfile: build.query({
       query: () => {
@@ -90,7 +89,7 @@ export const settingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.profile],
+      providesTags: ["profile"],
     }),
     faqs: build.query({
       query: () => {
@@ -99,7 +98,7 @@ export const settingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.faq],
+      providesTags: ["faq"],
     }),
     notifications: build.query({
       query: () => {
@@ -108,7 +107,7 @@ export const settingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.notification],
+      providesTags: ["notification"],
     }),
     updateProfile: build.mutation({
       query: (data) => ({
@@ -116,7 +115,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.profile],
+      invalidatesTags: ["profile"],
     }),
     updateTermsConditions: build.mutation({
       query: ({ ...content }) => ({
@@ -124,7 +123,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: content,
       }),
-      invalidatesTags: [tagTypes.terms],
+      invalidatesTags: ["terms"],
     }),
     updatePrivacyPolicy: build.mutation({
       query: ({ ...content }) => ({
@@ -132,7 +131,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: content,
       }),
-      invalidatesTags: [tagTypes.policy],
+      invalidatesTags: ["policy"],
     }),
     updateAboutUs: build.mutation({
       query: ({ ...content }) => ({
@@ -140,7 +139,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: content,
       }),
-      invalidatesTags: [tagTypes.about],
+      invalidatesTags: ["about"],
     }),
     changePassword: build.mutation({
       query: (userData) => ({
@@ -148,7 +147,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: userData,
       }),
-      invalidatesTags: [tagTypes.password],
+      invalidatesTags: ["forget"],
     }),
     forgetPassword: build.mutation({
       query: (data) => ({
@@ -156,7 +155,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.forget],
+      invalidatesTags: ["forget"],
     }),
     resetPassword: build.mutation({
       query: (data) => ({
@@ -164,7 +163,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.reset],
+      invalidatesTags: ["reset"],
     }),
     verifyEmail: build.mutation({
       query: (data) => ({
@@ -172,7 +171,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.verify],
+      invalidatesTags: ["verify"],
     }),
     updateFaq: build.mutation({
       query: ({ id, question, answer }) => ({
@@ -180,7 +179,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: { question, answer },
       }),
-      invalidatesTags: [tagTypes.faq],
+      invalidatesTags: ["faq"],
     }),
     deleteFaq: build.mutation({
       query: (id) => ({
@@ -188,7 +187,7 @@ export const settingApi = baseApi.injectEndpoints({
         method: "DELETE",
         body: id,
       }),
-      invalidatesTags: [tagTypes.faq],
+      invalidatesTags: ["faq"],
     }),
     dashboardOverview: build.query({
       query: () => {
@@ -197,7 +196,7 @@ export const settingApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.dashboard],
+      providesTags: ["dashboard"],
     }),
   }),
 });

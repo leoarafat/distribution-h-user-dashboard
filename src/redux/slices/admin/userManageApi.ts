@@ -1,5 +1,4 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { tagTypes } from "@/redux/tag-types";
 
 export const userManagementApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -17,7 +16,7 @@ export const userManagementApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.user],
+      providesTags: ["user"],
     }),
 
     updateUserStatus: build.mutation({
@@ -26,7 +25,7 @@ export const userManagementApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
   }),
 });

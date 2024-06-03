@@ -1,31 +1,30 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { tagTypes } from "@/redux/tag-types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation({
       query: (data) => ({
-        url: `user/register`,
+        url: `/user/register`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     userLogin: build.mutation({
       query: (loginData) => ({
-        url: `user/login`,
+        url: `/user/login`,
         method: "POST",
         body: loginData,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     verify: build.mutation({
       query: (data) => ({
-        url: `user/activate-user`,
+        url: `/user/activate-user`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     profileVerify: build.mutation({
       query: (data) => ({
@@ -33,7 +32,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     labelVerify: build.mutation({
       query: (data) => ({
@@ -41,7 +40,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     addressVerify: build.mutation({
       query: (data) => ({
@@ -49,14 +48,14 @@ export const userApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     verifyUser: build.mutation({
       query: () => ({
         url: `/user/verify-profile`,
         method: "PATCH",
       }),
-      invalidatesTags: [tagTypes.user],
+      invalidatesTags: ["user"],
     }),
     profile: build.query({
       query: () => {
@@ -66,7 +65,7 @@ export const userApi = baseApi.injectEndpoints({
         };
       },
 
-      providesTags: [tagTypes.user],
+      providesTags: ["user"],
     }),
   }),
 });

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { tagTypesList } from "../tag-types";
+
 import { getFromLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import axios from "axios";
+import { tagsList } from "../tag-types";
 const authToken = getFromLocalStorage(authKey);
 
 export const baseApi = createApi({
@@ -12,7 +13,7 @@ export const baseApi = createApi({
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
-  tagTypes: tagTypesList,
+  tagTypes: tagsList,
 });
 export const imageURL = "http://localhost:7000";
 export const baseUrl = axios.create({

@@ -1,5 +1,4 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { tagTypes } from "@/redux/tag-types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -9,7 +8,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         body: loginData,
       }),
-      invalidatesTags: [tagTypes.admin],
+      invalidatesTags: ["admin"],
     }),
     makeAdmin: build.mutation({
       query: (adminData) => ({
@@ -17,7 +16,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         body: adminData,
       }),
-      invalidatesTags: [tagTypes.admin],
+      invalidatesTags: ["admin"],
     }),
     getAllAdmins: build.query({
       query: (arg: Record<string, any>) => {
@@ -33,21 +32,21 @@ export const userApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.admin],
+      providesTags: ["admin"],
     }),
     myProfile: build.query({
       query: () => ({
         url: "user/profile",
         method: "GET",
       }),
-      providesTags: [tagTypes.admin],
+      providesTags: ["admin"],
     }),
     deleteAdmin: build.mutation({
       query: (id) => ({
         url: `user/delete-admin/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.admin],
+      invalidatesTags: ["admin"],
     }),
   }),
 });
