@@ -4,9 +4,6 @@ import {
   Bell,
   LogOut,
   Settings,
-  ShieldPlus,
-  Users,
-  Image,
   Music4Icon,
   Settings2Icon,
   YoutubeIcon,
@@ -21,6 +18,7 @@ import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
 import { RiPlayListAddFill } from "react-icons/ri";
 const { Header, Sider, Content } = Layout;
+import { MdAttachMoney } from "react-icons/md";
 const { SubMenu } = Menu;
 
 const menuItems = [
@@ -45,9 +43,9 @@ const menuItems = [
     icon: <Music4Icon size={18} />,
   },
   {
-    path: "/user-management",
-    title: "User Management",
-    icon: <Users size={18} />,
+    path: "/financial",
+    title: "Financial",
+    icon: <MdAttachMoney size={18} />,
   },
 
   {

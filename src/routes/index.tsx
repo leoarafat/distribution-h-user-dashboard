@@ -38,6 +38,7 @@ import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 import YoutubeManage from "@/components/Youtube/Youtube";
 import MyUploads from "@/components/MyUploads/MyUploads";
+import Financial from "@/components/Financial/Financial";
 
 const router = createBrowserRouter([
   {
@@ -116,10 +117,10 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/cover",
+        path: "/financial",
         element: (
           <IsVerifiedRoutes>
-            <CoverPage />
+            <Financial />
           </IsVerifiedRoutes>
         ),
       },
