@@ -61,36 +61,31 @@ const Profile = () => {
     ? profileData?.data?.image
     : `${imageURL}/${profileData?.data?.image}`;
 
-  const onFinish = async (values: any) => {
-    try {
-      const formData = new FormData();
-      if (image) {
-        formData.append("profileImage", image);
-      }
-      if (values?.name) {
-        formData.append("name", values?.name);
-      }
-      if (values?.phoneNumber) {
-        formData.append("phoneNumber", values?.phoneNumber);
-      }
-      if (values?.address) {
-        formData.append("address", values?.address);
-      }
-      if (values?.gender) {
-        formData.append("gender", values?.gender);
-      }
+  const onFinish = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    if (image) {
+      formData.append("profileImage", image);
+    }
+    formData.append("name", formData.get("name"));
+    formData.append("phoneNumber", formData.get("phoneNumber"));
+    formData.append("address", formData.get("address"));
+    formData.append("city", formData.get("city"));
+    formData.append("country", formData.get("country"));
+    formData.append("postalCode", formData.get("postalCode"));
 
+    try {
       const res = await updateProfile(formData);
 
       if (res?.data?.success === true) {
         toast.success("Profile Update Successful");
       }
-    } catch (error: any) {
-      toast.error(error?.message);
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
-  const handleImageChange = (e: any) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     const url = URL.createObjectURL(file);
@@ -198,8 +193,32 @@ const Profile = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Location"
+                label="Address"
                 defaultValue={initialFormValues?.address}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="City"
+                defaultValue={initialFormValues?.city}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Country"
+                defaultValue={initialFormValues?.country}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Postal Code"
+                defaultValue={initialFormValues?.postCode}
                 fullWidth
                 InputProps={{ readOnly: true }}
               />
@@ -235,9 +254,33 @@ const Profile = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Location"
+                  label="Address"
                   defaultValue={initialFormValues?.address}
                   name="address"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="City"
+                  defaultValue={initialFormValues?.city}
+                  name="city"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Country"
+                  defaultValue={initialFormValues?.country}
+                  name="country"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Postal Code"
+                  defaultValue={initialFormValues?.postCode}
+                  name="postCode"
                   fullWidth
                 />
               </Grid>
