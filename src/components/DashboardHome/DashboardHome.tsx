@@ -5,10 +5,6 @@ import {
   Paper,
   Grid,
   CircularProgress,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
   IconButton,
   Button,
   Select,
@@ -19,19 +15,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Divider,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
+import Stack from "@mui/material/Stack";
+import { HighlightItemData } from "@mui/x-charts/context";
+import { BarChart as XBarChart, BarChartProps } from "@mui/x-charts/BarChart";
+import { PieChart, PieChartProps } from "@mui/x-charts/PieChart";
 import {
-  LineChart,
-  Line,
+  ResponsiveContainer,
   CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-  BarChart,
   Bar,
+  ComposedChart,
+  BarChart,
 } from "recharts";
 
 const data = {
@@ -87,9 +87,51 @@ const viewsRevenueData = {
 
 const DashboardHome = () => {
   const [filter, setFilter] = useState("weekly");
+  const [highlightedItem, setHighlightedItem] =
+    useState<HighlightItemData | null>(null);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
+  };
+
+  const currentData = data[filter].map((d) => d.value);
+  const currentLabels = data[filter].map((d) => d.name);
+
+  const barChartsProps: BarChartProps = {
+    series: [
+      {
+        data: currentData,
+        id: "sync",
+        highlightScope: { highlighted: "item", faded: "global" },
+      },
+    ],
+    xAxis: [{ scaleType: "band", data: currentLabels }],
+    height: 300,
+    slotProps: {
+      legend: {
+        hidden: true,
+      },
+    },
+  };
+
+  const pieChartProps: PieChartProps = {
+    series: [
+      {
+        id: "sync",
+        data: data[filter].map((d) => ({
+          value: d.value,
+          label: d.name,
+          id: d.name,
+        })),
+        highlightScope: { highlighted: "item", faded: "global" },
+      },
+    ],
+    height: 300,
+    slotProps: {
+      legend: {
+        hidden: true,
+      },
+    },
   };
 
   return (
@@ -122,19 +164,22 @@ const DashboardHome = () => {
         >
           <Typography variant="h4">Total 0.35</Typography>
         </Box>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart
-            data={data[filter]}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          >
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-          </LineChart>
-        </ResponsiveContainer>
+        <Stack
+          direction={{ xs: "column", xl: "row" }}
+          spacing={1}
+          sx={{ width: "100%" }}
+        >
+          <XBarChart
+            {...barChartsProps}
+            highlightedItem={highlightedItem}
+            onHighlightChange={setHighlightedItem}
+          />
+          <PieChart
+            {...pieChartProps}
+            highlightedItem={highlightedItem}
+            onHighlightChange={setHighlightedItem}
+          />
+        </Stack>
       </Paper>
 
       {/* Total Views and Revenue */}
@@ -222,7 +267,7 @@ const DashboardHome = () => {
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
-          {/* Last 6 Approved Tracks */}
+          {/* Correction Requested Songs */}
           <Paper sx={{ padding: 2 }}>
             <Box
               sx={{
@@ -288,7 +333,7 @@ const DashboardHome = () => {
                   </Typography>
                   <Divider sx={{ marginY: 1 }} />
                   <Typography variant="body2" align="right">
-                    Regards, Ans Music Limited
+                    Regards, Be Musix
                   </Typography>
                 </Box>
               ))}
