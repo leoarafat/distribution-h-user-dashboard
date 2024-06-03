@@ -8,7 +8,7 @@ const ProfileVerification = ({ data, onChange }) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-  const imageURL = "http://localhost:8000/";
+  const imageURL = "http://localhost:7000/";
 
   const { data: profileData } = useProfileQuery({});
   const [initialSetupDone, setInitialSetupDone] = useState(false);
