@@ -37,6 +37,7 @@ import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 import YoutubeManage from "@/components/Youtube/Youtube";
+import MyUploads from "@/components/MyUploads/MyUploads";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <ArtistLabelManagement />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads",
+        element: (
+          <IsVerifiedRoutes>
+            <MyUploads />
           </IsVerifiedRoutes>
         ),
       },

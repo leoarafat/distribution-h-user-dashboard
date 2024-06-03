@@ -2,18 +2,11 @@
 import { Avatar, Badge, Layout, Menu } from "antd";
 import {
   Bell,
-  ListOrdered,
   LogOut,
-  Plus,
   Settings,
   ShieldPlus,
-  ShoppingCart,
-  SquareMenu,
-  Tag,
   Users,
-  Container,
   Image,
-  MessageSquareReply,
   Music4Icon,
   Settings2Icon,
   YoutubeIcon,
@@ -22,14 +15,11 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { isLoggedIn, removeUserInfo } from "@/redux/services/auth.service";
 import { authKey } from "@/constants/storageKey";
-import {
-  useMyProfileQuery,
-  useNotificationsQuery,
-} from "@/redux/slices/admin/settingApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
-
+import { RiPlayListAddFill } from "react-icons/ri";
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -37,7 +27,7 @@ const menuItems = [
   {
     path: "/upload",
     title: "Upload Music",
-    icon: <Music4Icon size={18} />,
+    icon: <RiPlayListAddFill size={18} />,
   },
   {
     path: "/artist-management",
@@ -50,57 +40,16 @@ const menuItems = [
     icon: <YoutubeIcon size={18} />,
   },
   {
-    path: "/product-management",
-    title: "Product Management",
-    icon: <ShoppingCart size={18} />,
-  },
-  {
-    path: "/add-product",
-    title: "Add Products",
-    icon: <Plus size={18} />,
-  },
-  {
-    path: "/order-management",
-    title: "Order Management",
-    icon: <ListOrdered size={18} />,
+    path: "/my-uploads",
+    title: "My Uploads",
+    icon: <Music4Icon size={18} />,
   },
   {
     path: "/user-management",
     title: "User Management",
     icon: <Users size={18} />,
   },
-  {
-    path: "/categories",
-    title: "Categories",
-    icon: <SquareMenu size={18} color="#fff" />,
-    subMenu: [
-      {
-        path: "/category",
-        title: "Categories",
-        icon: "",
-      },
-      {
-        path: "/sub-category",
-        title: "Sub Category",
-        icon: "",
-      },
-    ],
-  },
-  {
-    path: "/create-offer",
-    title: "Create Offer",
-    icon: <Tag size={18} />,
-  },
-  {
-    path: "/promo-code",
-    title: "Promo Code",
-    icon: <Container size={18} />,
-  },
-  {
-    path: "/feedback",
-    title: "Feedback",
-    icon: <MessageSquareReply size={18} />,
-  },
+
   {
     path: "/settings",
     title: "Settings",
@@ -166,7 +115,6 @@ const Dashboard = () => {
     navigate("/auth/login");
   }
 
-  const { data: notifications } = useNotificationsQuery({});
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
 
@@ -269,7 +217,7 @@ const Dashboard = () => {
           <div className="flex items-center gap-5">
             {isVerifiedUser && (
               <>
-                <Badge count={notifications?.unreadNotifications}>
+                <Badge count={11}>
                   <Link to={"/notifications"}>
                     <Bell size={30} color="#fff" />
                   </Link>
