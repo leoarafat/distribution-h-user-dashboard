@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -6,22 +6,29 @@ import {
   Typography,
   Grid,
   IconButton,
-  Menu,
-  MenuItem,
   Container,
   Box,
+  TextField,
+  Select,
+  MenuItem,
+  Pagination,
+  Button,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const AlbumCard = ({ album }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleEdit = () => {
+    console.log("Edit", album.name);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleDelete = () => {
+    console.log("Delete", album.name);
+  };
+
+  const handleView = () => {
+    console.log("View", album.name);
   };
 
   return (
@@ -31,6 +38,7 @@ const AlbumCard = ({ album }) => {
         flexDirection: "row",
         marginBottom: 2,
         boxShadow: 3,
+        width: "100%",
       }}
     >
       <CardMedia
@@ -58,24 +66,17 @@ const AlbumCard = ({ album }) => {
           <Typography component="div" variant="h5">
             {album.name}
           </Typography>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleMenuClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem onClick={handleMenuClose}>View</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
-          </Menu>
+          <Box>
+            <IconButton onClick={handleView}>
+              <VisibilityIcon />
+            </IconButton>
+            <IconButton onClick={handleEdit}>
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Grid container spacing={1} sx={{ marginTop: 1 }}>
           <Grid item xs={4}>
@@ -135,6 +136,10 @@ const AlbumList = ({ albums }) => {
 };
 
 const SuccessRelease = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("name");
+  const [page, setPage] = useState(1);
+
   const albums = [
     {
       image:
@@ -174,12 +179,76 @@ const SuccessRelease = () => {
     },
   ];
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+  };
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const filteredAlbums = albums
+    .filter((album) =>
+      album.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === "name") {
+        return a.name.localeCompare(b.name);
+      } else if (sortOption === "createdBy") {
+        return a.createdBy.localeCompare(b.createdBy);
+      }
+      return 0;
+    });
+
+  const albumsPerPage = 2;
+  const displayedAlbums = filteredAlbums.slice(
+    (page - 1) * albumsPerPage,
+    page * albumsPerPage
+  );
+
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
         Success Release
       </Typography>
-      <AlbumList albums={albums} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 2,
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          sx={{ width: "40%" }}
+        />
+        <Select
+          value={sortOption}
+          onChange={handleSortChange}
+          variant="outlined"
+          sx={{ width: "40%" }}
+        >
+          <MenuItem value="name">Sort by Name</MenuItem>
+          <MenuItem value="createdBy">Sort by Created By</MenuItem>
+        </Select>
+      </Box>
+      <AlbumList albums={displayedAlbums} />
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+        <Pagination
+          count={Math.ceil(filteredAlbums.length / albumsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
     </Container>
   );
 };

@@ -56,26 +56,6 @@ const menuItems = [
     icon: <Settings size={18} color="#fff" />,
     subMenu: [
       {
-        path: "/terms-and-conditions",
-        title: "Terms and Conditions",
-        icon: "",
-      },
-      {
-        path: "/privacy-policy",
-        title: "Privacy Policy",
-        icon: "",
-      },
-      {
-        path: "/about",
-        title: "About",
-        icon: "",
-      },
-      {
-        path: "/faq",
-        title: "FAQ",
-        icon: "",
-      },
-      {
         path: "/profile",
         title: "Profile",
         icon: "",
@@ -86,16 +66,6 @@ const menuItems = [
         icon: "",
       },
     ],
-  },
-  {
-    path: "/make-admin",
-    title: "Make Admin",
-    icon: <ShieldPlus size={18} />,
-  },
-  {
-    path: "/cover",
-    title: "Cover Page",
-    icon: <Image size={18} />,
   },
 ];
 

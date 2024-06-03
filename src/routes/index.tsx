@@ -100,22 +100,12 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      {
-        path: "/product-management",
-        element: (
-          <IsVerifiedRoutes>
-            <ProductManagement />
-          </IsVerifiedRoutes>
-        ),
-      },
+
       {
         path: "/verify",
         element: <StepperForm />,
       },
-      {
-        path: "/test",
-        element: <Test />,
-      },
+
       {
         path: "/notifications",
         element: (
@@ -124,86 +114,7 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      {
-        path: "/add-product",
-        element: (
-          <IsVerifiedRoutes>
-            <AddProduct />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/edit-product/:id",
-        element: (
-          <IsVerifiedRoutes>
-            <EditProduct />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/order-management",
-        element: (
-          <IsVerifiedRoutes>
-            <OrderManagement />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/user-management",
-        element: (
-          <IsVerifiedRoutes>
-            <UserManagement />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/categories/category",
-        element: (
-          <IsVerifiedRoutes>
-            <Category />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/categories/sub-category",
-        element: (
-          <IsVerifiedRoutes>
-            <SubCategory />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/create-offer",
-        element: (
-          <IsVerifiedRoutes>
-            <CreateOffer />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/promo-code",
-        element: (
-          <IsVerifiedRoutes>
-            <PromoCode />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/feedback",
-        element: (
-          <IsVerifiedRoutes>
-            <Feedback />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/make-admin",
-        element: (
-          <IsVerifiedRoutes>
-            <MakeAdmin />
-          </IsVerifiedRoutes>
-        ),
-      },
+
       {
         path: "/cover",
         element: (

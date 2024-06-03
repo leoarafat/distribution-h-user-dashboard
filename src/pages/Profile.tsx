@@ -1,13 +1,22 @@
-import { Edit, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  Button,
+  TextField,
+  Grid,
+  Container,
+  Typography,
+  IconButton,
+  Avatar,
+  Box,
+  CircularProgress,
+} from "@mui/material";
+import { Edit, Upload } from "lucide-react";
+import toast from "react-hot-toast";
 import {
   useMyProfileQuery,
   useUpdateProfileMutation,
 } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
-import toast from "react-hot-toast";
 
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -32,13 +41,25 @@ const Profile = () => {
       }
     }
   }, [error, isSuccess]);
+
   if (profileLoading) {
-    return <p>Loading...</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
-  const src = profileData?.data?.profileImage?.startsWith("https")
-    ? profileData?.data?.profileImage
-    : `${imageURL}/${profileData?.data?.profileImage}`;
+  const src = profileData?.data?.image?.startsWith("https")
+    ? profileData?.data?.image
+    : `${imageURL}/${profileData?.data?.image}`;
 
   const onFinish = async (values: any) => {
     try {
@@ -49,8 +70,8 @@ const Profile = () => {
       if (values?.name) {
         formData.append("name", values?.name);
       }
-      if (values?.phone) {
-        formData.append("phone", values?.phone);
+      if (values?.phoneNumber) {
+        formData.append("phoneNumber", values?.phoneNumber);
       }
       if (values?.address) {
         formData.append("address", values?.address);
@@ -77,19 +98,31 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-2/4 mx-auto">
-      <div className="text-center bg-base p-4 rounded">
-        <div className="flex justify-end">
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          textAlign: "center",
+          padding: 4,
+          borderRadius: 2,
+          boxShadow: 3,
+          marginTop: 4,
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {!openEdit && (
-            <button
-              className="text-primary"
-              onClick={() => setOpenEdit(!openEdit)}
-            >
+            <IconButton onClick={() => setOpenEdit(!openEdit)}>
               <Edit size={20} />
-            </button>
+            </IconButton>
           )}
-        </div>
-        <div className="relative w-28 h-28 mx-auto">
+        </Box>
+        <Box
+          sx={{
+            position: "relative",
+            width: 112,
+            height: 112,
+            margin: "0 auto",
+          }}
+        >
           {openEdit ? (
             <div>
               <input
@@ -97,109 +130,127 @@ const Profile = () => {
                 type="file"
                 className="hidden"
                 id="imageUpload"
+                style={{ display: "none" }}
               />
               <label
                 htmlFor="imageUpload"
-                className="w-28 h-28 border relative cursor-pointer "
+                style={{
+                  position: "relative",
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                }}
               >
-                <img
+                <Avatar
                   src={imagePreview ? imagePreview : src}
-                  alt=""
-                  className="w-28 h-28 rounded-full "
+                  sx={{ width: 112, height: 112 }}
                 />
-                <div className="absolute top-16 -left-2">
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderRadius: "50%",
+                    padding: 1,
+                  }}
+                >
                   <Upload color="#fff" />
-                </div>
+                </Box>
               </label>
             </div>
           ) : (
-            <img
-              src={src}
-              alt=""
-              className="w-28 h-28 rounded-full inline-block"
-            />
+            <Avatar src={src} sx={{ width: 112, height: 112 }} />
           )}
-        </div>
-        <h2 className="text-2xl mt-10">{initialFormValues?.name}</h2>
-      </div>
+        </Box>
+        <Typography variant="h4" sx={{ marginTop: 2 }}>
+          {initialFormValues?.name}
+        </Typography>
+      </Box>
 
-      <div>
+      <Box sx={{ marginTop: 4 }}>
         {!openEdit ? (
-          <Form layout="vertical" initialValues={initialFormValues}>
-            <Row
-              gutter={{
-                xs: 8,
-                lg: 15,
-              }}
-            >
-              <Col span={12}>
-                <Form.Item label="Name" name="name">
-                  <Input size="large" readOnly />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Email" name="email">
-                  <Input size="large" readOnly />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item label="Phone Number" name="phone">
-                  <Input size="large" readOnly />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item label="Location" name="address">
-                  <Input size="large" readOnly />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Name"
+                defaultValue={initialFormValues?.name}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Email"
+                defaultValue={initialFormValues?.email}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Phone Number"
+                defaultValue={initialFormValues?.phoneNumber}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Location"
+                defaultValue={initialFormValues?.address}
+                fullWidth
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+          </Grid>
         ) : (
-          <Form
-            layout="vertical"
-            initialValues={initialFormValues}
-            onFinish={onFinish}
-          >
-            <Row
-              gutter={{
-                xs: 8,
-                lg: 15,
-              }}
-            >
-              <Col span={12}>
-                <Form.Item label="Name" name="name">
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Email" name="email">
-                  <Input size="large" readOnly />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item label="Phone Number" name="phone">
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item label="Location" name="address">
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item>
-              <Button
-                type="primary"
-                className="bg-secondary h-10 text-lg"
-                htmlType="submit"
-              >
+          <form onSubmit={onFinish}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Name"
+                  defaultValue={initialFormValues?.name}
+                  name="name"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Email"
+                  defaultValue={initialFormValues?.email}
+                  name="email"
+                  fullWidth
+                  InputProps={{ readOnly: true }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Phone Number"
+                  defaultValue={initialFormValues?.phoneNumber}
+                  name="phoneNumber"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Location"
+                  defaultValue={initialFormValues?.address}
+                  name="address"
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <Box sx={{ textAlign: "center", marginTop: 4 }}>
+              <Button type="submit" variant="contained" color="primary">
                 {isLoading ? "Saving.." : "Save changes"}
               </Button>
-            </Form.Item>
-          </Form>
+            </Box>
+          </form>
         )}
-      </div>
-    </div>
+      </Box>
+    </Container>
   );
 };
 
