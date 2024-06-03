@@ -16,6 +16,7 @@ import {
   MessageSquareReply,
   Music4Icon,
   Settings2Icon,
+  YoutubeIcon,
 } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -42,6 +43,11 @@ const menuItems = [
     path: "/artist-management",
     title: "Artist & Label Manage",
     icon: <Settings2Icon size={18} />,
+  },
+  {
+    path: "/youtube-request",
+    title: "Youtube Request",
+    icon: <YoutubeIcon size={18} />,
   },
   {
     path: "/product-management",

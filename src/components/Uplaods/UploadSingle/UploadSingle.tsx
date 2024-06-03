@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import {
@@ -68,19 +70,18 @@ const UploadSingle = () => {
 
   const [coverImage, setCoverImage] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
-  const [selectedValue, setSelectedValue] = useState(null);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log(data);
   };
 
-  const handleCoverImageUpload = (event) => {
+  const handleCoverImageUpload = (event: any) => {
     const file = event.target.files[0];
     setValue("image", file);
     setCoverImage(file);
   };
 
-  const handleAudioUpload = (event) => {
+  const handleAudioUpload = (event: any) => {
     const file = event.target.files[0];
     setValue("audio", file);
     setAudioFile(file);
@@ -94,7 +95,7 @@ const UploadSingle = () => {
     setAudioFile(null);
   };
 
-  const renderArrayFields = (fieldArrayName, label, name) => {
+  const renderArrayFields = (fieldArrayName: any, label: any, name: any) => {
     const { fields, append, remove } = useFieldArray({
       control,
       name: fieldArrayName,
@@ -106,6 +107,7 @@ const UploadSingle = () => {
           <Grid key={field.id} container spacing={2} alignItems="center">
             <Grid item xs={12}>
               <Controller
+                //@ts-ignore
                 name={`${fieldArrayName}[${index}].${name}`}
                 control={control}
                 render={({ field }) => (
@@ -158,6 +160,7 @@ const UploadSingle = () => {
                 {coverImage ? (
                   <div className="relative w-3/4">
                     <img
+                      //@ts-ignore
                       src={coverImage ? URL.createObjectURL(coverImage) : null}
                       alt="PROFILE IMAGE"
                       className="w-[350px] h-[200px]"

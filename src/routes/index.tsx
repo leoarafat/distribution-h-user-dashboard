@@ -36,6 +36,7 @@ import Uploads from "@/components/Uplaods/Uploads";
 import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
+import YoutubeManage from "@/components/Youtube/Youtube";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <ArtistLabelManagement />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/youtube-request",
+        element: (
+          <IsVerifiedRoutes>
+            <YoutubeManage />
           </IsVerifiedRoutes>
         ),
       },

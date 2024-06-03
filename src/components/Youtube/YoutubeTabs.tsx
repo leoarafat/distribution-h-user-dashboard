@@ -2,7 +2,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-export default function ColorTabs({ value, handleChange }) {
+export default function YoutubeColorTabs({ value, handleChange }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Tabs
@@ -12,8 +12,9 @@ export default function ColorTabs({ value, handleChange }) {
         indicatorColor="secondary"
         aria-label="secondary tabs example"
       >
-        <Tab value="one" label="Label Manage" />
-        <Tab value="two" label="Artist Manage" />
+        <Tab value="one" label="Claim Release" />
+        <Tab value="two" label="Artist Channel Request" />
+        <Tab value="three" label="WhiteList Request" />
       </Tabs>
     </Box>
   );
