@@ -2,7 +2,6 @@
 import { Avatar, Badge, Layout, Menu } from "antd";
 import {
   Bell,
-  LayoutDashboard,
   ListOrdered,
   LogOut,
   Plus,
@@ -16,6 +15,7 @@ import {
   Image,
   MessageSquareReply,
   Music4Icon,
+  Settings2Icon,
 } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -37,6 +37,11 @@ const menuItems = [
     path: "/upload",
     title: "Upload Music",
     icon: <Music4Icon size={18} />,
+  },
+  {
+    path: "/artist-management",
+    title: "Artist & Label Manage",
+    icon: <Settings2Icon size={18} />,
   },
   {
     path: "/product-management",
@@ -179,7 +184,7 @@ const Dashboard = () => {
           overflow: "auto",
           height: "100vh",
           zIndex: 2,
-          backgroundColor: "#001529",
+          backgroundColor: "#5B52A3",
         }}
         trigger={null}
       >
@@ -188,7 +193,7 @@ const Dashboard = () => {
         </Link>
         <Menu
           mode="inline"
-          style={{ background: "#100530", color: "white" }}
+          style={{ background: "#5B52A3", color: "white" }}
           defaultSelectedKeys={["1"]}
         >
           {filteredMenuItems.map((item, index) =>
@@ -249,7 +254,7 @@ const Dashboard = () => {
       <Layout>
         <Header
           style={{
-            background: "#001529",
+            background: "#5B52A3",
             height: "80px",
             display: "flex",
             justifyContent: "flex-end",
@@ -271,7 +276,7 @@ const Dashboard = () => {
                         height: "40px",
                         backgroundColor: "#87d068",
                       }}
-                      src={`${imageURL}/${myProfile?.profileImage}`}
+                      src={`${imageURL}/${myProfile?.image}`}
                     />
                   </Link>
                   <Link to={"/settings/profile"}>

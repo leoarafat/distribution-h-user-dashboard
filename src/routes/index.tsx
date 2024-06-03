@@ -35,6 +35,7 @@ import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
 import Uploads from "@/components/Uplaods/Uploads";
 import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
+import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <UploadAlbum />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/artist-management",
+        element: (
+          <IsVerifiedRoutes>
+            <ArtistLabelManagement />
           </IsVerifiedRoutes>
         ),
       },
