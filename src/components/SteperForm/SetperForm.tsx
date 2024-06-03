@@ -16,11 +16,13 @@ import ReviewConfirm from "../Verification/ReviewConfirm";
 import {
   useAddressVerifyMutation,
   useLabelVerifyMutation,
+  useProfileQuery,
   useProfileVerifyMutation,
   useVerifyUserMutation,
 } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/utils/Loader";
 
 const steps = [
   {
@@ -55,6 +57,7 @@ const StepperForm = () => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
+  const { data: profileData, isLoading } = useProfileQuery({});
   const navigate = useNavigate();
   useEffect(() => {
     if (formData.profile) {
@@ -200,7 +203,9 @@ const StepperForm = () => {
       console.error("Error during verification:", error.message);
     }
   };
-
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
   const StepComponent = steps[activeStep].component;
 
   return (

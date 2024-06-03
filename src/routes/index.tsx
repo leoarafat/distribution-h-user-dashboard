@@ -28,6 +28,7 @@ import Legal from "@/components/Legal/Legal";
 import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
 import DashboardHome from "@/components/DashboardHome/DashboardHome";
+import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -93,7 +94,11 @@ const router = createBrowserRouter([
 
       {
         path: "/verify",
-        element: <StepperForm />,
+        element: (
+          <PrivateRoutes>
+            <StepperForm />
+          </PrivateRoutes>
+        ),
       },
 
       {

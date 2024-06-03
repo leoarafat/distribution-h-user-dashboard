@@ -141,7 +141,6 @@ const DashboardHome = () => {
 
   const currentData = data[filter].map((d) => d.value);
   const currentLabels = data[filter].map((d) => d.name);
-  const viewsRevenueLabels = viewsRevenueData[filter].map((d) => d.name);
 
   const barChartsProps: BarChartProps = {
     series: [
@@ -159,20 +158,19 @@ const DashboardHome = () => {
       },
     },
   };
-  const viewsRevenueDataProps: BarChartProps = {
+
+  const pieChartProps: PieChartProps = {
     series: [
       {
         id: "sync",
-        data: viewsRevenueData[filter].map((d) => d.views),
-        highlightScope: { highlighted: "item", faded: "global" },
-      },
-      {
-        id: "sync",
-        data: viewsRevenueData[filter].map((d) => d.revenue),
+        data: data[filter].map((d) => ({
+          value: d.value,
+          label: d.name,
+          id: d.name,
+        })),
         highlightScope: { highlighted: "item", faded: "global" },
       },
     ],
-    xAxis: [{ scaleType: "band", data: viewsRevenueLabels }],
     height: 300,
     slotProps: {
       legend: {
@@ -231,7 +229,7 @@ const DashboardHome = () => {
             onHighlightChange={setHighlightedItem}
           />
           <PieChart
-            {...barChartsProps}
+            {...pieChartProps}
             highlightedItem={highlightedItem}
             onHighlightChange={setHighlightedItem}
           />
@@ -256,7 +254,6 @@ const DashboardHome = () => {
           </BarChart>
         </ResponsiveContainer>
       </Paper>
-
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           {/* Last 6 Approved Tracks */}

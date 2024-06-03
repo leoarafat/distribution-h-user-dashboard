@@ -11,6 +11,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.user],
     }),
+    userLogin: build.mutation({
+      query: (loginData) => ({
+        url: `user/login`,
+        method: "POST",
+        body: loginData,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
     verify: build.mutation({
       query: (data) => ({
         url: `user/activate-user`,
@@ -71,4 +79,5 @@ export const {
   useProfileQuery,
   useAddressVerifyMutation,
   useVerifyUserMutation,
+  useUserLoginMutation,
 } = userApi;

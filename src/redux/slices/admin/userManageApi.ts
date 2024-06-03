@@ -17,7 +17,7 @@ export const userManagementApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: [tagTypes.status],
+      providesTags: [tagTypes.user],
     }),
 
     updateUserStatus: build.mutation({
@@ -26,7 +26,7 @@ export const userManagementApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: [tagTypes.status],
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });

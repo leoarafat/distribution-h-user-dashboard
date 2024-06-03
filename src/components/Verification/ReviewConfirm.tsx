@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
 import { imageURL } from "@/redux/api/baseApi";
+import Loader from "@/utils/Loader";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -24,7 +25,7 @@ const ReviewConfirm = () => {
   const classes = useStyles();
   const { data: profileData, isLoading } = useProfileQuery({});
   if (isLoading) {
-    return <p>Loading..</p>;
+    return <Loader />;
   }
 
   return (

@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link, useNavigate } from "react-router-dom";
-import { useAdminLoginMutation } from "@/redux/slices/admin/adminManageApi";
 import { storeUserInfo } from "@/redux/services/auth.service";
 import toast from "react-hot-toast";
 import loginImage from "../../assets/login.jpg"; // Import your login image here
+import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [adminLogin, { isLoading, data, isSuccess, error }] =
-    useAdminLoginMutation();
+  const [userLogin, { isLoading, data, isSuccess, error }] =
+    useUserLoginMutation();
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -70,7 +70,7 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = e.target.elements;
     try {
-      await adminLogin({ email: email.value, password: password.value });
+      await userLogin({ email: email.value, password: password.value });
     } catch (err: any) {
       toast.error(err.message);
     }
