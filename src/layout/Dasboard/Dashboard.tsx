@@ -7,6 +7,8 @@ import {
   Music4Icon,
   Settings2Icon,
   YoutubeIcon,
+  HelpCircleIcon,
+  LayoutDashboard,
 } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -20,8 +22,14 @@ import { RiPlayListAddFill } from "react-icons/ri";
 const { Header, Sider, Content } = Layout;
 import { MdAttachMoney } from "react-icons/md";
 const { SubMenu } = Menu;
-
+import { CiCircleInfo } from "react-icons/ci";
+import { GrTransaction } from "react-icons/gr";
 const menuItems = [
+  {
+    path: "/",
+    title: "Dashboard",
+    icon: <LayoutDashboard size={18} />,
+  },
   {
     path: "/upload",
     title: "Upload Music",
@@ -46,6 +54,21 @@ const menuItems = [
     path: "/financial",
     title: "Financial",
     icon: <MdAttachMoney size={18} />,
+  },
+  {
+    path: "/legal",
+    title: "Legal",
+    icon: <CiCircleInfo size={18} />,
+  },
+  {
+    path: "/help",
+    title: "Help",
+    icon: <HelpCircleIcon size={18} />,
+  },
+  {
+    path: "/manage-account",
+    title: "Manage Account",
+    icon: <GrTransaction size={18} />,
   },
 
   {
@@ -111,7 +134,7 @@ const Dashboard = () => {
         trigger={null}
       >
         <Link to={"/"}>
-          <img src={logo} alt="" className="mx-auto h-[50px] mb-8 mt-5" />
+          <img src={logo} alt="" className="mx-auto  mb-8 mt-5" />
         </Link>
         <Menu
           mode="inline"

@@ -1,35 +1,20 @@
 import Auth from "@/layout/Auth/Auth";
 import Dashboard from "@/layout/Dasboard/Dashboard";
 import About from "@/pages/About";
-import AddProduct from "@/pages/AddProduct";
-import Category from "@/pages/Category";
 import ChangePassword from "@/pages/ChangePassword";
-import CoverPage from "@/pages/CoverPage";
-import CreateOffer from "@/pages/CreateOffer";
-import DashboardHome from "@/pages/DashboardHome";
-import EditProduct from "@/pages/EditProduct";
 import FAQPage from "@/pages/FAQ";
-import Feedback from "@/pages/Feedback";
 import ForgetPassword from "@/pages/ForgetPassword";
-import MakeAdmin from "@/pages/MakeAdmin";
 import NotificationList from "@/pages/Notification";
-import OrderManagement from "@/pages/OrderManagement";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import ProductManagement from "@/pages/ProductManagement";
 import Profile from "@/pages/Profile";
-import PromoCode from "@/pages/PromoCode";
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
-import SubCategory from "@/pages/SubCategory";
 import TermsAndCondition from "@/pages/TermsAndCondition";
-import UserManagement from "@/pages/UserManagement";
 import VerifyEmail from "@/pages/VerifyEmail";
 import StepperForm from "@/components/SteperForm/SetperForm";
 import Login from "@/components/Login/Login";
 import Register from "@/components/Register/Register";
 import Verify from "@/components/Active-User/ActiveUser";
-import Test from "@/pages/Test";
-
 import { createBrowserRouter } from "react-router-dom";
 import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
 import Uploads from "@/components/Uplaods/Uploads";
@@ -39,6 +24,10 @@ import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelM
 import YoutubeManage from "@/components/Youtube/Youtube";
 import MyUploads from "@/components/MyUploads/MyUploads";
 import Financial from "@/components/Financial/Financial";
+import Legal from "@/components/Legal/Legal";
+import HelpPage from "@/components/Help/Help";
+import ManageAccount from "@/components/ManageAccount/ManageAccount";
+import DashboardHome from "@/components/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +101,30 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <NotificationList />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/legal",
+        element: (
+          <IsVerifiedRoutes>
+            <Legal />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/help",
+        element: (
+          <IsVerifiedRoutes>
+            <HelpPage />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/manage-account",
+        element: (
+          <IsVerifiedRoutes>
+            <ManageAccount />
           </IsVerifiedRoutes>
         ),
       },
