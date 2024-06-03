@@ -25,10 +25,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import Loader from "@/utils/Loader";
 
 const generateMonthlyData = () => {
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; // Months are 0 indexed
   const months = [];
   for (let i = 1; i <= 12; i++) {
     let month = i < 10 ? "0" + i : i.toString();
@@ -74,18 +74,7 @@ const Financial = () => {
   };
 
   if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <Loader />;
   }
 
   return (
