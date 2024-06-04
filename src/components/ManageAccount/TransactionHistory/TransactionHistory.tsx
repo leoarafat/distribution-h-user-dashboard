@@ -58,17 +58,11 @@ const TransactionHistory = () => {
     setModalOpen(false);
   };
   return (
-    <Box
-      m={3}
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      width="100%"
-    >
+    <Box m={3} display="flex" flexDirection="column" alignItems="center">
       <Paper
         sx={{
           padding: 3,
-          width: "100%",
+          width: "100vw",
           maxWidth: "1200px",
           display: "flex",
           flexDirection: "column",
