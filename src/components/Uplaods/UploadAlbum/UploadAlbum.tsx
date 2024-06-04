@@ -14,10 +14,10 @@ import {
   CardContent,
   FormControlLabel,
 } from "@mui/material";
-import { Add, Remove, PhotoCamera, Audiotrack } from "@mui/icons-material";
+import { Add, Remove, PhotoCamera } from "@mui/icons-material";
 import { MdClose } from "react-icons/md";
 import { RadioGroup, FormLabel, Radio } from "@material-ui/core";
-
+import AlbumIcon from "@mui/icons-material/Album";
 const UploadAlbum = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -154,7 +154,9 @@ const UploadAlbum = () => {
           <Grid container spacing={3}>
             <div className="flex justify-around items-center w-full">
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload Cover Image</h4>
+                <h4 className="mb-2 text-sm font-semibold">
+                  Upload Cover Image
+                </h4>
                 {coverImage ? (
                   <div className="relative w-3/4">
                     <img
@@ -191,7 +193,7 @@ const UploadAlbum = () => {
               </div>
 
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload Audio</h4>
+                <h4 className="mb-2 text-sm font-semibold">Upload Album</h4>
                 {audioFile ? (
                   <div className="relative w-3/4">
                     <audio
@@ -228,7 +230,7 @@ const UploadAlbum = () => {
                       onChange={handleAudioUpload}
                       required
                     />
-                    <Audiotrack style={{ fontSize: 100 }} />
+                    <AlbumIcon style={{ fontSize: 100 }} />
                   </label>
                 )}
               </div>

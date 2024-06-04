@@ -156,7 +156,9 @@ const UploadSingle = () => {
           <Grid container spacing={3}>
             <div className="flex justify-around items-center w-full">
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload Cover Image</h4>
+                <h4 className="mb-2 text-sm font-semibold">
+                  Upload Cover Image
+                </h4>
                 {coverImage ? (
                   <div className="relative w-3/4">
                     <img
@@ -193,7 +195,7 @@ const UploadSingle = () => {
               </div>
 
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload Audio</h4>
+                <h4 className="mb-2 text-sm font-semibold">Upload Audio</h4>
                 {audioFile ? (
                   <div className="relative w-3/4">
                     <audio

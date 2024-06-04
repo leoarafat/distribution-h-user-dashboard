@@ -25,7 +25,7 @@ const LatestVideo = () => {
         style={{ display: "block", margin: "4px 0" }}
         className="p-3 border "
       >
-        <Link to={"/upload"}>
+        <Link to={"/release-video"}>
           {" "}
           <div className="flex justify-center items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
             <LibraryAddIcon sx={{ fontSize: 60 }} />

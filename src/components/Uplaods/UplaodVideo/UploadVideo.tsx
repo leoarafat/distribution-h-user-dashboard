@@ -154,7 +154,7 @@ const UploadVideo = () => {
           <Grid container spacing={3}>
             <div className="flex justify-around items-center w-full">
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload Thumbnail</h4>
+                <h4 className="mb-2 text-sm font-semibold">Upload Thumbnail</h4>
                 {thumbnail ? (
                   <div className="relative w-3/4">
                     <img
@@ -191,7 +191,7 @@ const UploadVideo = () => {
               </div>
 
               <div className="image_upload flex items-center justify-center flex-col p-3">
-                <h4 className="mb-2 text-sm">Upload video</h4>
+                <h4 className="mb-2 text-sm font-semibold">Upload video</h4>
                 {videoFile ? (
                   <div className="relative w-3/4">
                     <video
