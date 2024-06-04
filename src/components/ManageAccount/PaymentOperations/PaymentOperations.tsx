@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Paper,
   Typography,
   Button,
   CircularProgress,
+  Divider,
 } from "@mui/material";
 import dayjs from "dayjs";
-import PaymentMethodModal from "../ManageAccount/PaymentMethodModal/PaymentMethodModal";
+import { Link } from "react-router-dom";
+import PaymentMethodModal from "../PaymentMethodModal/PaymentMethodModal";
 
-const RevenueComponent = () => {
-  const allTimeRevenue = 14619;
-  const earnedSince = dayjs("2022-03-01");
+const PaymentOperations = () => {
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       const mockBalance = Math.floor(Math.random() * 200);
@@ -31,83 +32,79 @@ const RevenueComponent = () => {
     <Box
       m={3}
       display="flex"
-      justifyContent="space-around"
-      alignItems="stretch"
+      justifyContent="center"
+      alignItems="center"
       width="100%"
     >
       <Paper
         sx={{
-          padding: 2,
-          width: "45%",
+          padding: 3,
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           boxShadow: 3,
           borderRadius: 2,
+          backgroundColor: "#f9f9f9",
         }}
       >
         <Typography variant="h5" gutterBottom>
-          Revenue of All Time
+          Available Balance
         </Typography>
-        <Typography variant="h3" color="primary" gutterBottom>
-          {allTimeRevenue.toLocaleString("en-US", {
-            style: "currency",
-            currency: "EUR",
-          })}
+        <Typography variant="h4" color="primary" gutterBottom>
+          {currentMonthBalance !== null
+            ? currentMonthBalance.toLocaleString("en-US", {
+                style: "currency",
+                currency: "EUR",
+              })
+            : "€0.00"}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          Earned since <b>{earnedSince.format("MMMM, YYYY")}</b>
+          Available balance on {dayjs().format("DD MMMM YYYY")}
         </Typography>
-      </Paper>
-      <Paper
-        sx={{
-          padding: 2,
-          width: "45%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          boxShadow: 3,
-          borderRadius: 2,
-        }}
-      >
+        <Divider sx={{ width: "100%", my: 2 }} />
         <Typography variant="h6" gutterBottom>
-          Current Month Balance
+          Be Musix
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Payment method: <b>Payoneer</b>
         </Typography>
         {currentMonthBalance === null ? (
           <CircularProgress />
         ) : (
           <>
-            <Typography
-              variant="h4"
-              color={currentMonthBalance >= 100 ? "success.main" : "error.main"}
-              gutterBottom
-            >
-              {currentMonthBalance.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              })}
-            </Typography>
             <Button
               variant="contained"
               color="primary"
               disabled={currentMonthBalance < 100}
               onClick={handleRequestPayment}
-              sx={{ mt: 2, width: "60%" }}
+              sx={{ mt: 2, width: "50%" }}
             >
               Request Payment
             </Button>
             {currentMonthBalance < 100 && (
-              <Typography sx={{ mt: 2, width: "60%" }}>
+              <Typography
+                variant="body2"
+                color="error"
+                sx={{ mt: 2, textAlign: "center" }}
+              >
                 Payment not available: your balance must exceed the contractual
-                threshold of 100.00 $.
+                threshold of 100.00 €.
               </Typography>
             )}
           </>
         )}
+        <Divider sx={{ width: "100%", my: 2 }} />
+        <Link
+          to="/transaction-history"
+          className="hover:text-blue-600 mt-2 text-blue-800"
+        >
+          Transaction history & invoices
+        </Link>
       </Paper>
       <PaymentMethodModal open={modalOpen} onClose={handleCloseModal} />
     </Box>
   );
 };
 
-export default RevenueComponent;
+export default PaymentOperations;

@@ -1,15 +1,11 @@
 import Auth from "@/layout/Auth/Auth";
 import Dashboard from "@/layout/Dasboard/Dashboard";
-import About from "@/pages/About";
 import ChangePassword from "@/pages/ChangePassword";
-import FAQPage from "@/pages/FAQ";
 import ForgetPassword from "@/pages/ForgetPassword";
 import NotificationList from "@/pages/Notification";
-import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Profile from "@/pages/Profile";
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
-import TermsAndCondition from "@/pages/TermsAndCondition";
 import VerifyEmail from "@/pages/VerifyEmail";
 import StepperForm from "@/components/SteperForm/SetperForm";
 import Login from "@/components/Login/Login";
@@ -32,6 +28,8 @@ import AnalyticsPage from "@/components/Analytics/AnalyticsPage";
 import FinancialAnalytics from "@/components/Financial/FinancialAnalytics";
 import FinancialReports from "@/components/Financial/FinancialReports";
 import AccountDetails from "@/components/ManageAccount/AccountDetails/AccountDetails";
+import PaymentOperations from "@/components/ManageAccount/PaymentOperations/PaymentOperations";
+import TransactionHistory from "@/components/ManageAccount/TransactionHistory/TransactionHistory";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +143,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/transaction-history",
+        element: (
+          <IsVerifiedRoutes>
+            <TransactionHistory />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
         path: "/manage-account/my-account",
         element: (
           <IsVerifiedRoutes>
@@ -153,14 +159,6 @@ const router = createBrowserRouter([
         ),
       },
 
-      // {
-      //   path: "/financial",
-      //   element: (
-      //     <IsVerifiedRoutes>
-      //       <Financial />
-      //     </IsVerifiedRoutes>
-      //   ),
-      // },
       {
         path: "/financial/financial-reports",
         element: (
@@ -178,6 +176,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/financial/financial-operations",
+        element: (
+          <IsVerifiedRoutes>
+            <PaymentOperations />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
         path: "/settings",
         element: (
           <IsVerifiedRoutes>
@@ -185,38 +191,7 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      {
-        path: "/settings/terms-and-conditions",
-        element: (
-          <IsVerifiedRoutes>
-            <TermsAndCondition />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/settings/privacy-policy",
-        element: (
-          <IsVerifiedRoutes>
-            <PrivacyPolicy />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/settings/about",
-        element: (
-          <IsVerifiedRoutes>
-            <About />
-          </IsVerifiedRoutes>
-        ),
-      },
-      {
-        path: "/settings/faq",
-        element: (
-          <IsVerifiedRoutes>
-            <FAQPage />
-          </IsVerifiedRoutes>
-        ),
-      },
+
       {
         path: "/settings/profile",
         element: (

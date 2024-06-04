@@ -80,6 +80,11 @@ const menuItems = [
     icon: <MdAttachMoney size={18} color="#fff" />,
     subMenu: [
       {
+        path: "/financial-operations",
+        title: "Payment & operation",
+        icon: "",
+      },
+      {
         path: "/financial-reports",
         title: "Financial Reports",
         icon: "",

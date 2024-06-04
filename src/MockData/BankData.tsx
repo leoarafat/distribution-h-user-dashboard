@@ -69,3 +69,71 @@ export const mobileBankingProviders = [
   "SureCash",
   "UPay",
 ];
+
+export // Mock transaction history data
+const transactions = [
+  {
+    date: "May 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00386451 of Royalties for Q1 2024",
+    operations: "-1 948.32 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Mar 31, 2024",
+    type: "Royalties",
+    description: "Q1 2024",
+    operations: "1 948.32 €",
+    balance: "1 948.32 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  {
+    date: "Feb 1, 2024",
+    type: "Payment",
+    description: "Payment BLVS00375113 of Royalties for Q4 2023",
+    operations: "-2 255.48 €",
+    balance: "0.00 €",
+  },
+  // More mock data entries
+];
