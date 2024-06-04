@@ -21,15 +21,16 @@ import Uploads from "@/components/Uplaods/Uploads";
 import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
-import YoutubeManage from "@/components/Youtube/Youtube";
 import MyUploads from "@/components/MyUploads/MyUploads";
-import Financial from "@/components/Financial/Financial";
 import Legal from "@/components/Legal/Legal";
 import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
 import DashboardHome from "@/components/DashboardHome/DashboardHome";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import UploadVideo from "@/components/Uplaods/UplaodVideo/UploadVideo";
+import AnalyticsPage from "@/components/Analytics/AnalyticsPage";
+import FinancialAnalytics from "@/components/Financial/FinancialAnalytics";
+import FinancialReports from "@/components/Financial/FinancialReports";
 
 const router = createBrowserRouter([
   {
@@ -92,14 +93,14 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      // {
-      //   path: "/youtube-request",
-      //   element: (
-      //     <IsVerifiedRoutes>
-      //       <YoutubeManage />
-      //     </IsVerifiedRoutes>
-      //   ),
-      // },
+      {
+        path: "/analytics",
+        element: (
+          <IsVerifiedRoutes>
+            <AnalyticsPage />
+          </IsVerifiedRoutes>
+        ),
+      },
 
       {
         path: "/verify",
@@ -143,11 +144,27 @@ const router = createBrowserRouter([
         ),
       },
 
+      // {
+      //   path: "/financial",
+      //   element: (
+      //     <IsVerifiedRoutes>
+      //       <Financial />
+      //     </IsVerifiedRoutes>
+      //   ),
+      // },
       {
-        path: "/financial",
+        path: "/financial/financial-reports",
         element: (
           <IsVerifiedRoutes>
-            <Financial />
+            <FinancialReports />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/financial/financial-analytics",
+        element: (
+          <IsVerifiedRoutes>
+            <FinancialAnalytics />
           </IsVerifiedRoutes>
         ),
       },

@@ -25,6 +25,8 @@ import { MdAttachMoney } from "react-icons/md";
 const { SubMenu } = Menu;
 import { CiCircleInfo } from "react-icons/ci";
 import { GrTransaction } from "react-icons/gr";
+import { Analytics } from "@mui/icons-material";
+import { SiSimpleanalytics } from "react-icons/si";
 const menuItems = [
   {
     path: "/",
@@ -52,16 +54,27 @@ const menuItems = [
     icon: <Settings2Icon size={18} />,
   },
 
-  // {
-  //   path: "/youtube-request",
-  //   title: "Youtube Request",
-  //   icon: <YoutubeIcon size={18} />,
-  // },
-
   {
     path: "/financial",
     title: "Financial",
-    icon: <MdAttachMoney size={18} />,
+    icon: <MdAttachMoney size={18} color="#fff" />,
+    subMenu: [
+      {
+        path: "/financial-reports",
+        title: "Financial Reports",
+        icon: "",
+      },
+      {
+        path: "/financial-analytics",
+        title: "Financial Analytics",
+        icon: "",
+      },
+    ],
+  },
+  {
+    path: "/analytics",
+    title: "Analytics",
+    icon: <SiSimpleanalytics size={18} />,
   },
   {
     path: "/legal",
@@ -86,7 +99,7 @@ const menuItems = [
     subMenu: [
       {
         path: "/profile",
-        title: "Profile",
+        title: "Manage Profile",
         icon: "",
       },
       {
