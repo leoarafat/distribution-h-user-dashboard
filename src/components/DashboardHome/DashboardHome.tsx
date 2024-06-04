@@ -17,11 +17,13 @@ import {
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 import FinancialCharts from "../Financial/FinancialCharts";
+import RevenueComponent from "../Financial/RevenueComponent";
 
 const DashboardHome = () => {
   return (
     <Box sx={{ padding: 3 }}>
       {/* Analytics Visual */}
+      <RevenueComponent />
       <FinancialCharts />
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
