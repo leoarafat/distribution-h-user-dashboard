@@ -66,9 +66,7 @@ const PaymentOperations = () => {
         <Typography variant="h6" gutterBottom>
           Be Musix
         </Typography>
-        <Typography variant="body1" gutterBottom>
-          Payment method: <b>Payoneer</b>
-        </Typography>
+
         {currentMonthBalance === null ? (
           <CircularProgress />
         ) : (
@@ -88,8 +86,8 @@ const PaymentOperations = () => {
                 color="error"
                 sx={{ mt: 2, textAlign: "center" }}
               >
-                Payment not available: your balance must exceed the contractual
-                threshold of 100.00 €.
+                <span className="font-bold">Payment not available:</span> your
+                balance must exceed the contractual threshold of 100.00 €.
               </Typography>
             )}
           </>

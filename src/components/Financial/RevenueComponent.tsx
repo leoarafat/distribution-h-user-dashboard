@@ -98,8 +98,8 @@ const RevenueComponent = () => {
             </Button>
             {currentMonthBalance < 100 && (
               <Typography sx={{ mt: 2, width: "60%" }}>
-                Payment not available: your balance must exceed the contractual
-                threshold of 100.00 $.
+                <span className="font-bold">Payment not available:</span> your
+                balance must exceed the contractual threshold of 100.00 $.
               </Typography>
             )}
           </>

@@ -110,8 +110,8 @@ const TransactionHistory = () => {
                 color="error"
                 sx={{ mt: 2, textAlign: "center" }}
               >
-                Payment not available: your balance must exceed the contractual
-                threshold of 100.00 €.
+                <span className="font-bold">Payment not available:</span> your
+                balance must exceed the contractual threshold of 100.00 €.
               </Typography>
             )}
           </>
