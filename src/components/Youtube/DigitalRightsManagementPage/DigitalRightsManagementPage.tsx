@@ -4,16 +4,13 @@ import {
   Typography,
   Card,
   CardContent,
-  CardActions,
-  Button,
   Grid,
 } from "@mui/material";
-import {
-  Facebook,
-  YouTube,
-  VideoLibrary,
-  FacebookOutlined,
-} from "@mui/icons-material";
+import { Facebook, YouTube } from "@mui/icons-material";
+import { useState } from "react";
+import TikTokClaim from "@/components/Legal/TikTok/TikTokClaim";
+import YoutubeClaim from "@/components/Legal/Youtube/YoutubeClaim";
+import FacebookClaim from "@/components/Legal/FaceBook/FaceBookClaim";
 
 const services = [
   {
@@ -24,42 +21,53 @@ const services = [
       />
     ),
     title: "TikTok Manual Claim",
+    type: "tiktok",
   },
   {
-    icon: <Facebook style={{ fontSize: 60 }} />,
+    icon: (
+      <img
+        className="ml-16 w-[60px] h-[60px]"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
+      />
+    ),
     title: "Facebook Claim Release",
+    type: "facebook",
   },
   {
-    icon: <YouTube style={{ fontSize: 60 }} />,
+    icon: (
+      <img
+        className="ml-16 w-[90px] h-[60px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+      />
+    ),
     title: "YouTube Claim Release",
+    type: "youtube",
   },
-  //   {
-  //     icon: <YouTube style={{ fontSize: 60 }} />,
-  //     title: "YouTube Video Takedown",
-  //   },
-  //   {
-  //     icon: <VideoLibrary style={{ fontSize: 60 }} />,
-  //     title: "YouTube Manual Claim",
-  //   },
-  //   {
-  //     icon: <FacebookOutlined style={{ fontSize: 60 }} />,
-  //     title: "Facebook Page Whitelist",
-  //   },
 ];
 
 const DigitalRightsManagementPage = () => {
+  const [claimType, setClaimType] = useState("tiktok");
+
   return (
     <Box
       sx={{
         minHeight: "100vh",
         padding: "2rem 0",
         color: "#fff",
+        height: "100vh",
       }}
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {services.map((service, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid
+              onClick={() => setClaimType(service.type)}
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={index}
+            >
               <Card
                 sx={{
                   height: "100%",
@@ -67,6 +75,7 @@ const DigitalRightsManagementPage = () => {
                   flexDirection: "column",
                   alignItems: "center",
                   backgroundColor: "#f9f9f9",
+                  cursor: "pointer",
                   color: "#000",
                   padding: 2,
                   boxShadow: 3,
@@ -86,6 +95,9 @@ const DigitalRightsManagementPage = () => {
             </Grid>
           ))}
         </Grid>
+        {claimType === "tiktok" && <TikTokClaim />}
+        {claimType === "facebook" && <FacebookClaim />}
+        {claimType === "youtube" && <YoutubeClaim />}
       </Container>
     </Box>
   );
