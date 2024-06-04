@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ReviewConfirm = () => {
   const classes = useStyles();
   const { data: profileData, isLoading } = useProfileQuery({});
+  console.log(profileData);
   if (isLoading) {
     return <Loader />;
   }
@@ -164,6 +165,18 @@ const ReviewConfirm = () => {
                 <CardContent>
                   <Typography variant="body2" color="textSecondary">
                     Copy Right Image
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.media}
+                  image={`${imageURL}${profileData?.data?.signature}`}
+                  title="Signature"
+                />
+                <CardContent>
+                  <Typography variant="body2" color="textSecondary">
+                    Signature
                   </Typography>
                 </CardContent>
               </Card>

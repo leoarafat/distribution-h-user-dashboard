@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { imageURL } from "@/redux/api/baseApi";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
 import { Grid, TextField } from "@material-ui/core";
@@ -9,10 +10,6 @@ const LabelVerification = ({ data, onChange }: any) => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [copyRightImage, setCoyRightImage] = useState(null);
 
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   onChange("label", { ...data?.label, [name]: value });
-  // };
   const { data: profileData } = useProfileQuery({});
   const [initialSetupDone, setInitialSetupDone] = useState(false);
 
@@ -36,7 +33,7 @@ const LabelVerification = ({ data, onChange }: any) => {
   }, [profileData, initialSetupDone, onChange]);
 
   const handleChange = useCallback(
-    (e) => {
+    (e: any) => {
       const { name, value } = e.target;
       onChange("label", { ...data.label, [name]: value });
     },
@@ -76,6 +73,7 @@ const LabelVerification = ({ data, onChange }: any) => {
               <div className="relative w-3/4">
                 {typeof dashboardImage === "object" ? (
                   <img
+                    //@ts-ignore
                     src={
                       dashboardImage
                         ? URL.createObjectURL(dashboardImage)
@@ -124,6 +122,7 @@ const LabelVerification = ({ data, onChange }: any) => {
               <div className="relative w-3/4">
                 {typeof copyRightImage === "object" ? (
                   <img
+                    //@ts-ignore
                     src={
                       copyRightImage
                         ? URL.createObjectURL(copyRightImage)
@@ -190,7 +189,7 @@ const LabelVerification = ({ data, onChange }: any) => {
         <Grid item xs={6}>
           <TextField
             name="subscribeCount"
-            label="Total Subscriber"
+            label="Subscribe Count"
             variant="outlined"
             type="number"
             fullWidth
@@ -201,7 +200,7 @@ const LabelVerification = ({ data, onChange }: any) => {
         <Grid item xs={6}>
           <TextField
             name="videosCount"
-            label="Videos Subscriber"
+            label="Videos Count"
             variant="outlined"
             type="number"
             fullWidth

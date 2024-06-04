@@ -15,14 +15,14 @@ import ReviewConfirm from "../Verification/ReviewConfirm";
 
 import {
   useAddressVerifyMutation,
+  useAgreementVerifyMutation,
   useLabelVerifyMutation,
-  useProfileQuery,
   useProfileVerifyMutation,
   useVerifyUserMutation,
 } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Loader from "@/utils/Loader";
+import AgreementPage from "../Verification/Agreement";
 
 const steps = [
   {
@@ -38,6 +38,10 @@ const steps = [
     component: LabelVerification,
   },
   {
+    title: "Agreement",
+    component: AgreementPage,
+  },
+  {
     title: "Review & Confirm",
     component: ReviewConfirm,
   },
@@ -49,15 +53,17 @@ const StepperForm = () => {
     profile: {},
     address: {},
     label: {},
+    agreement: {},
   });
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
   const [copyRightImage, setCopyRightImage] = useState(null);
   const [dashboardImage, setDashboardImage] = useState(null);
+  const [signature, setSignature] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
-  const { data: profileData, isLoading } = useProfileQuery({});
+
   const navigate = useNavigate();
   useEffect(() => {
     if (formData.profile) {
@@ -79,6 +85,10 @@ const StepperForm = () => {
       //@ts-ignore
       setDashboardImage(formData.label.dashboardImage);
     }
+    if (formData?.agreement) {
+      //@ts-ignore
+      setSignature(formData?.agreement?.signature);
+    }
   }, [formData]);
 
   const [verifyProfile, { isLoading: profileLoading }] =
@@ -87,6 +97,8 @@ const StepperForm = () => {
   const [addressVerify, { isLoading: addressLoading }] =
     useAddressVerifyMutation();
   const [verifyUser, { isLoading: verifyLoading }] = useVerifyUserMutation();
+  const [agreementVerify, { isLoading: agreementLoading }] =
+    useAgreementVerifyMutation();
 
   const handleNext = async () => {
     if (
@@ -178,6 +190,24 @@ const StepperForm = () => {
         toast.error("Label verification failed:", error?.message);
       }
     }
+    //@ts-ignore
+    if (activeStep === 3 && formData?.agreement) {
+      try {
+        const agreementFormData = new FormData();
+        //@ts-ignore
+        agreementFormData.append("signature", formData.agreement.signature);
+
+        const result = await agreementVerify(agreementFormData).unwrap();
+
+        if (result?.success === true) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+          toast.error("Please provide Signature");
+        }
+      } catch (error: any) {
+        toast.error("Agreement failed:", error?.message);
+      }
+    }
   };
 
   const handleBack = () => {
@@ -203,9 +233,7 @@ const StepperForm = () => {
       console.error("Error during verification:", error.message);
     }
   };
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+
   const StepComponent = steps[activeStep].component;
 
   return (
@@ -234,7 +262,10 @@ const StepperForm = () => {
             onClick={handleNext}
             style={{ marginLeft: 10 }}
           >
-            {profileLoading || labelLoading || addressLoading
+            {profileLoading ||
+            labelLoading ||
+            addressLoading ||
+            agreementLoading
               ? "Saving.."
               : "Save & Go Next"}
           </Button>

@@ -9,6 +9,7 @@ import {
   YoutubeIcon,
   HelpCircleIcon,
   LayoutDashboard,
+  VideoIcon,
 } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -27,7 +28,7 @@ import { GrTransaction } from "react-icons/gr";
 const menuItems = [
   {
     path: "/",
-    title: "Dashboard",
+    title: "Overview",
     icon: <LayoutDashboard size={18} />,
   },
   {
@@ -36,20 +37,27 @@ const menuItems = [
     icon: <RiPlayListAddFill size={18} />,
   },
   {
-    path: "/artist-management",
-    title: "Artist & Label Manage",
-    icon: <Settings2Icon size={18} />,
-  },
-  {
-    path: "/youtube-request",
-    title: "Youtube Request",
-    icon: <YoutubeIcon size={18} />,
+    path: "/release-video",
+    title: "Release Video",
+    icon: <VideoIcon size={18} />,
   },
   {
     path: "/my-uploads",
     title: "My Uploads",
     icon: <Music4Icon size={18} />,
   },
+  {
+    path: "/artist-management",
+    title: "Artist & Label Manage",
+    icon: <Settings2Icon size={18} />,
+  },
+
+  // {
+  //   path: "/youtube-request",
+  //   title: "Youtube Request",
+  //   icon: <YoutubeIcon size={18} />,
+  // },
+
   {
     path: "/financial",
     title: "Financial",

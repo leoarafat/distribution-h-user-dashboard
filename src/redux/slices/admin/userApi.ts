@@ -42,6 +42,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    agreementVerify: build.mutation({
+      query: (data) => ({
+        url: `/user/signature-verify`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
     addressVerify: build.mutation({
       query: (data) => ({
         url: `/user/address-verify`,
@@ -79,4 +87,5 @@ export const {
   useAddressVerifyMutation,
   useVerifyUserMutation,
   useUserLoginMutation,
+  useAgreementVerifyMutation,
 } = userApi;

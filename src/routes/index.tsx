@@ -29,6 +29,7 @@ import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
 import DashboardHome from "@/components/DashboardHome/DashboardHome";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
+import UploadVideo from "@/components/Uplaods/UplaodVideo/UploadVideo";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <Uploads />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/release-video",
+        element: (
+          <IsVerifiedRoutes>
+            <UploadVideo />
           </IsVerifiedRoutes>
         ),
       },
@@ -83,14 +92,14 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      {
-        path: "/youtube-request",
-        element: (
-          <IsVerifiedRoutes>
-            <YoutubeManage />
-          </IsVerifiedRoutes>
-        ),
-      },
+      // {
+      //   path: "/youtube-request",
+      //   element: (
+      //     <IsVerifiedRoutes>
+      //       <YoutubeManage />
+      //     </IsVerifiedRoutes>
+      //   ),
+      // },
 
       {
         path: "/verify",
