@@ -55,6 +55,26 @@ const menuItems = [
   },
 
   {
+    path: "/analytics",
+    title: "Analytics",
+    icon: <SiSimpleanalytics size={18} />,
+  },
+  {
+    path: "/legal",
+    title: "Legal",
+    icon: <CiCircleInfo size={18} />,
+  },
+  {
+    path: "/help",
+    title: "Help",
+    icon: <HelpCircleIcon size={18} />,
+  },
+  // {
+  //   path: "/manage-account",
+  //   title: "Manage Account",
+  //   icon: <GrTransaction size={18} />,
+  // },
+  {
     path: "/financial",
     title: "Financial",
     icon: <MdAttachMoney size={18} color="#fff" />,
@@ -72,26 +92,22 @@ const menuItems = [
     ],
   },
   {
-    path: "/analytics",
-    title: "Analytics",
-    icon: <SiSimpleanalytics size={18} />,
-  },
-  {
-    path: "/legal",
-    title: "Legal",
-    icon: <CiCircleInfo size={18} />,
-  },
-  {
-    path: "/help",
-    title: "Help",
-    icon: <HelpCircleIcon size={18} />,
-  },
-  {
     path: "/manage-account",
     title: "Manage Account",
-    icon: <GrTransaction size={18} />,
+    icon: <GrTransaction size={18} color="#fff" />,
+    subMenu: [
+      {
+        path: "/add-account",
+        title: "Add Account",
+        icon: "",
+      },
+      {
+        path: "/my-account",
+        title: "My Account",
+        icon: "",
+      },
+    ],
   },
-
   {
     path: "/settings",
     title: "Settings",

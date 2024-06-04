@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
+import BankAccountCard from "../Bank/BankAccountCard";
+import MobileBankingCard from "../MobileBanking/MobileBankingCard";
+import PayoneerCard from "../PayoneerPage/PayoneerCard";
 
-import Bank from "./Bank/Bank";
-import MobileBanking from "./MobileBanking/MobileBanking";
-import PayoneerPage from "./PayoneerPage/PayoneerPage";
-
-const ManageAccount = () => {
+const AccountDetails = () => {
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = (event: any, newValue: any) => {
@@ -22,12 +21,12 @@ const ManageAccount = () => {
         </Tabs>
       </Box>
       <Box sx={{ p: 3 }}>
-        {tabValue === 0 && <Bank />}
-        {tabValue === 1 && <MobileBanking />}
-        {tabValue === 2 && <PayoneerPage />}
+        {tabValue === 0 && <BankAccountCard />}
+        {tabValue === 1 && <MobileBankingCard />}
+        {tabValue === 2 && <PayoneerCard />}
       </Box>
     </Box>
   );
 };
 
-export default ManageAccount;
+export default AccountDetails;

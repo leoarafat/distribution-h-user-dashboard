@@ -31,6 +31,7 @@ import UploadVideo from "@/components/Uplaods/UplaodVideo/UploadVideo";
 import AnalyticsPage from "@/components/Analytics/AnalyticsPage";
 import FinancialAnalytics from "@/components/Financial/FinancialAnalytics";
 import FinancialReports from "@/components/Financial/FinancialReports";
+import AccountDetails from "@/components/ManageAccount/AccountDetails/AccountDetails";
 
 const router = createBrowserRouter([
   {
@@ -136,10 +137,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/manage-account",
+        path: "/manage-account/add-account",
         element: (
           <IsVerifiedRoutes>
             <ManageAccount />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/manage-account/my-account",
+        element: (
+          <IsVerifiedRoutes>
+            <AccountDetails />
           </IsVerifiedRoutes>
         ),
       },
