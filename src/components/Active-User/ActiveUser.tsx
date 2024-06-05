@@ -13,6 +13,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useVerifyMutation } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/slices/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,6 +58,7 @@ const Verify = () => {
   const classes = useStyles();
   const [codes, setCodes] = useState(["", "", "", ""]);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const dispatch = useAppDispatch();
   const activation_token = localStorage.getItem("activationToken");
   const navigate = useNavigate();
   const [verify, { isLoading, data, isSuccess, error }] = useVerifyMutation();
@@ -64,6 +67,7 @@ const Verify = () => {
     if (isSuccess && data) {
       toast.success("Register Successful");
       localStorage.setItem("accessToken", data?.data?.accessToken);
+      dispatch(setUser({ accessToken: data?.data?.accessToken }));
       localStorage.removeItem("activationToken");
       navigate("/");
     }

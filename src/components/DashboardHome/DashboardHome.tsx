@@ -4,10 +4,17 @@ import FinancialCharts from "../Financial/FinancialCharts";
 import RevenueComponent from "../Financial/RevenueComponent";
 import LastSixApproved from "./LastSixApproved";
 import News from "./News";
-
 import CorrectionRequest from "./CorrectionRequest";
 
 const DashboardHome = () => {
+  // const token: any | null = useAppSelector(useCurrentAccessToken);
+  // const navigate = useNavigate();
+
+  // const isVerified = useAppSelector(useIsVerified);
+  // console.log(isVerified);
+  // if (!isVerified) {
+  //   navigate("/verify");
+  // }
   return (
     <Box sx={{ padding: 3 }}>
       <RevenueComponent />

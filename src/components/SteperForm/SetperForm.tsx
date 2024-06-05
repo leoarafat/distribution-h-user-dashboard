@@ -23,6 +23,8 @@ import {
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import AgreementPage from "../Verification/Agreement";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsVerified } from "@/redux/slices/auth/authSlice";
 
 const steps = [
   {
@@ -218,12 +220,14 @@ const StepperForm = () => {
     const updatedFormData = { ...formData, [step]: data };
     setFormData(updatedFormData);
   };
-
+  const dispatch = useAppDispatch();
   const handleSubmit = async () => {
     try {
       const result = await verifyUser({});
       if (result?.data?.success) {
         toast.success("Congratulations. Verify Successful");
+        console.log(result?.data);
+        dispatch(setIsVerified({ isVerified: result?.data?.data?.isVerified }));
         navigate("/");
       } else {
         toast.error("Verification failed. Please try again later.");

@@ -14,6 +14,8 @@ import { storeUserInfo } from "@/redux/services/auth.service";
 import toast from "react-hot-toast";
 import loginImage from "../../assets/login.jpg"; // Import your login image here
 import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser } from "@/redux/slices/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [userLogin, { isLoading, data, isSuccess, error }] =
     useUserLoginMutation();
 
@@ -54,7 +57,12 @@ const Login = () => {
     if (isSuccess && data) {
       toast.success("Login Successful");
       storeUserInfo({ accessToken: data?.data?.accessToken });
-      navigate("/");
+      dispatch(setUser({ accessToken: data?.data?.accessToken }));
+      if (data?.data?.isVerified === false) {
+        navigate("/verify");
+      } else {
+        navigate("/");
+      }
     }
     if (error) {
       if ("data" in error) {
@@ -64,7 +72,7 @@ const Login = () => {
         console.error("Login error:", error);
       }
     }
-  }, [isSuccess, data, error, navigate]);
+  }, [isSuccess, data, error, navigate, dispatch]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
