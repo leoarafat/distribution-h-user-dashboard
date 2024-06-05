@@ -4,7 +4,6 @@ import {
   Typography,
   Paper,
   Grid,
-  CircularProgress,
   IconButton,
   Table,
   TableBody,
@@ -14,7 +13,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Link } from "react-router-dom";
 
 const LatestVideo = () => {
@@ -28,7 +27,7 @@ const LatestVideo = () => {
         <Link to={"/release-video"}>
           {" "}
           <div className="flex justify-center items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
-            <LibraryAddIcon sx={{ fontSize: 60 }} />
+            <YouTubeIcon sx={{ fontSize: 60 }} />
           </div>
           <div className="hidden">
             <p

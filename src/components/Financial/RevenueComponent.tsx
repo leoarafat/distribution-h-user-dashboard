@@ -71,7 +71,7 @@ const RevenueComponent = () => {
         }}
       >
         <Typography variant="h6" gutterBottom>
-          Current Month Balance
+          Current Balance
         </Typography>
         {currentMonthBalance === null ? (
           <CircularProgress />
@@ -79,7 +79,7 @@ const RevenueComponent = () => {
           <>
             <Typography
               variant="h4"
-              color={currentMonthBalance >= 100 ? "success.main" : "error.main"}
+              color={currentMonthBalance >= 50 ? "success.main" : "error.main"}
               gutterBottom
             >
               {currentMonthBalance.toLocaleString("en-US", {
@@ -90,16 +90,16 @@ const RevenueComponent = () => {
             <Button
               variant="contained"
               color="primary"
-              disabled={currentMonthBalance < 100}
+              disabled={currentMonthBalance < 50}
               onClick={handleRequestPayment}
               sx={{ mt: 2, width: "60%" }}
             >
               Request Payment
             </Button>
-            {currentMonthBalance < 100 && (
+            {currentMonthBalance < 50 && (
               <Typography sx={{ mt: 2, width: "60%" }}>
-                <span className="font-bold">Payment not available:</span> your
-                balance must exceed the contractual threshold of 100.00 $.
+                <span className="font-bold">Payment not available:</span> Your
+                balance must exceed the contractual threshold of 50.00 $.
               </Typography>
             )}
           </>

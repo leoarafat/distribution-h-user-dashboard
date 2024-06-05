@@ -17,6 +17,8 @@ table {
 
 .ant-layout-sider-children .ant-menu-item-selected {
   font-weight: bold;
+  background: #7cc84e;
+  color: #000;
 }
 
 span.ant-menu-title-content {

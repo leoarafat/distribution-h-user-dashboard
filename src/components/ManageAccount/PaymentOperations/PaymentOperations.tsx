@@ -55,9 +55,9 @@ const PaymentOperations = () => {
           {currentMonthBalance !== null
             ? currentMonthBalance.toLocaleString("en-US", {
                 style: "currency",
-                currency: "EUR",
+                currency: "USD",
               })
-            : "€0.00"}
+            : "$0.00"}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           Available balance on {dayjs().format("DD MMMM YYYY")}
@@ -74,20 +74,20 @@ const PaymentOperations = () => {
             <Button
               variant="contained"
               color="primary"
-              disabled={currentMonthBalance < 100}
+              disabled={currentMonthBalance < 50}
               onClick={handleRequestPayment}
               sx={{ mt: 2, width: "50%" }}
             >
               Request Payment
             </Button>
-            {currentMonthBalance < 100 && (
+            {currentMonthBalance < 50 && (
               <Typography
                 variant="body2"
                 color="error"
                 sx={{ mt: 2, textAlign: "center" }}
               >
-                <span className="font-bold">Payment not available:</span> your
-                balance must exceed the contractual threshold of 100.00 €.
+                <span className="font-bold">Payment not available:</span>Your
+                balance must exceed the contractual threshold of 50.00 $.
               </Typography>
             )}
           </>

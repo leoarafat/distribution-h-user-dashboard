@@ -4,7 +4,7 @@ import FinancialCharts from "../Financial/FinancialCharts";
 import RevenueComponent from "../Financial/RevenueComponent";
 import LastSixApproved from "./LastSixApproved";
 import News from "./News";
-import Balance from "./Balance";
+
 import CorrectionRequest from "./CorrectionRequest";
 
 const DashboardHome = () => {
@@ -16,7 +16,6 @@ const DashboardHome = () => {
       <CorrectionRequest />
       <Grid container spacing={3} sx={{ marginTop: 3 }}>
         <News />
-        <Balance />
       </Grid>
     </Box>
   );

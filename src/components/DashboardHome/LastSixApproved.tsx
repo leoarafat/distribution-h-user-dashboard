@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { Link } from "react-router-dom";
 import LatestVideo from "./LatestVideo";
 const LastSixApproved = () => {
@@ -31,7 +31,7 @@ const LastSixApproved = () => {
           <Link to={"/upload"}>
             {" "}
             <div className="flex justify-center items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
-              <LibraryAddIcon sx={{ fontSize: 60 }} />
+              <AudiotrackIcon sx={{ fontSize: 60 }} />
             </div>
             <div className="hidden">
               <p
