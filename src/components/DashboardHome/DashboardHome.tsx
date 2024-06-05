@@ -10,7 +10,6 @@ import CorrectionRequest from "./CorrectionRequest";
 const DashboardHome = () => {
   return (
     <Box sx={{ padding: 3 }}>
-      {/* Analytics Visual */}
       <RevenueComponent />
       <FinancialCharts />
       <LastSixApproved />

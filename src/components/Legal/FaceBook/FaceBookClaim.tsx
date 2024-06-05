@@ -87,7 +87,7 @@ const FacebookClaim = () => {
               required
               fullWidth
               id="upc"
-              label="UPC ( From Your Backstage)"
+              label="UPC"
               variant="outlined"
             />
           </Grid>

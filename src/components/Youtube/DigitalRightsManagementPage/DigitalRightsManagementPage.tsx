@@ -11,6 +11,9 @@ import { useState } from "react";
 import TikTokClaim from "@/components/Legal/TikTok/TikTokClaim";
 import YoutubeClaim from "@/components/Legal/Youtube/YoutubeClaim";
 import FacebookClaim from "@/components/Legal/FaceBook/FaceBookClaim";
+import YoutubeTakeDown from "@/components/Legal/Youtube/YouTubeTakeDown";
+import YouTubeManualClaim from "@/components/Legal/Youtube/YouTubeManualClaim";
+import FacebookWhiteList from "@/components/Legal/FaceBook/FacebookWhiteList";
 
 const services = [
   {
@@ -43,6 +46,36 @@ const services = [
     title: "YouTube Claim Release",
     type: "youtube",
   },
+  {
+    icon: (
+      <img
+        className="ml-24 w-[90px] h-[60px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+      />
+    ),
+    title: "YouTube Video Takedowns Request",
+    type: "youtube-takedown",
+  },
+  {
+    icon: (
+      <img
+        className="ml-20 w-[90px] h-[60px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+      />
+    ),
+    title: "YouTube Manual UGC Claim",
+    type: "youtube-manual",
+  },
+  {
+    icon: (
+      <img
+        className="ml-20 w-[90px] h-[60px]"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
+      />
+    ),
+    title: "Facebook Page Whitelist",
+    type: "facebook-whitelist",
+  },
 ];
 
 const DigitalRightsManagementPage = () => {
@@ -70,7 +103,7 @@ const DigitalRightsManagementPage = () => {
             >
               <Card
                 sx={{
-                  height: "100%",
+                  height: "80%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -98,6 +131,9 @@ const DigitalRightsManagementPage = () => {
         {claimType === "tiktok" && <TikTokClaim />}
         {claimType === "facebook" && <FacebookClaim />}
         {claimType === "youtube" && <YoutubeClaim />}
+        {claimType === "youtube-takedown" && <YoutubeTakeDown />}
+        {claimType === "youtube-manual" && <YouTubeManualClaim />}
+        {claimType === "facebook-whitelist" && <FacebookWhiteList />}
       </Container>
     </Box>
   );

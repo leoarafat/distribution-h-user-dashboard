@@ -85,7 +85,7 @@ const TikTokClaim = () => {
               required
               fullWidth
               id="upc"
-              label="UPC ( From Your Backstage)"
+              label="UPC"
               variant="outlined"
             />
           </Grid>
@@ -94,7 +94,7 @@ const TikTokClaim = () => {
               required
               fullWidth
               id="isrc"
-              label="ISRC ( From Your Backstage)"
+              label="ISRC"
               variant="outlined"
             />
           </Grid>

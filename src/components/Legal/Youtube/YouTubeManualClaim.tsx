@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-const YoutubeClaim = () => {
+const YouTubeManualClaim = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
 
   if (isLoading) {
@@ -58,9 +58,7 @@ const YoutubeClaim = () => {
         </Typography>
         <Typography variant="subtitle1" gutterBottom style={{ color: "#000" }}>
           Enter the Information to make a{" "}
-          <span className="text-[#FF0000] font-bold">
-            YouTube claim request
-          </span>
+          <span className="text-[#FF0000] font-bold">Youtube Manual Claim</span>
         </Typography>
 
         <Grid container spacing={2}>
@@ -121,4 +119,4 @@ const YoutubeClaim = () => {
   );
 };
 
-export default YoutubeClaim;
+export default YouTubeManualClaim;

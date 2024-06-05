@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-const YoutubeClaim = () => {
+const FacebookWhiteList = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
 
   if (isLoading) {
@@ -58,8 +58,8 @@ const YoutubeClaim = () => {
         </Typography>
         <Typography variant="subtitle1" gutterBottom style={{ color: "#000" }}>
           Enter the Information to make a{" "}
-          <span className="text-[#FF0000] font-bold">
-            YouTube claim request
+          <span className="text-[#1877F2] font-bold">
+            Facebook Whitelist request
           </span>
         </Typography>
 
@@ -86,26 +86,18 @@ const YoutubeClaim = () => {
             <TextField
               required
               fullWidth
-              id="song"
-              label="Song Title"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
               id="upc"
               label="UPC"
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12}>
+
+          <Grid item xs={6}>
             <TextField
               required
               fullWidth
               id="url"
-              label="Youtube Video URL"
+              label="Facebook Page URL"
               variant="outlined"
             />
           </Grid>
@@ -121,4 +113,4 @@ const YoutubeClaim = () => {
   );
 };
 
-export default YoutubeClaim;
+export default FacebookWhiteList;
