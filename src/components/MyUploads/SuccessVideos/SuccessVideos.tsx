@@ -44,7 +44,7 @@ const AlbumCard = ({ album }: any) => {
         component="img"
         sx={{ width: 150 }}
         image={album.image}
-        alt="Album cover"
+        alt="Thumbnail"
       />
       <CardContent
         sx={{
@@ -78,37 +78,37 @@ const AlbumCard = ({ album }: any) => {
           </Box>
         </Box>
         <Grid container spacing={1} sx={{ marginTop: 1 }}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Typography variant="subtitle1" color="text.secondary">
               Created By:
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography variant="body2" color="text.secondary">
               {album.createdBy}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Typography variant="subtitle1" color="text.secondary">
               Label:
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography variant="body2" color="text.secondary">
               {album.label}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Typography variant="subtitle1" color="text.secondary">
               Cat#:
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Typography variant="body2" color="text.secondary">
               {album.catalogNumber}
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Typography variant="subtitle1" color="text.secondary">
               Stores:
             </Typography>
@@ -137,7 +137,7 @@ const AlbumList = ({ albums }: any) => {
   );
 };
 
-const SuccessRelease = () => {
+const SuccessVideos = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
   const [page, setPage] = useState(1);
@@ -146,7 +146,7 @@ const SuccessRelease = () => {
     {
       image:
         "https://img.freepik.com/premium-psd/jazz-concert-banner-template_23-2149016105.jpg?w=1380",
-      name: "Album Name",
+      name: "Video Name",
       createdBy: "jeancolc lasa",
       label: "Taranga Electro center Jun 24,2024",
       catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
@@ -155,7 +155,7 @@ const SuccessRelease = () => {
     {
       image:
         "https://img.freepik.com/free-psd/music-concert-facebook-template_23-2149959353.jpg?w=1380&t=st=1717396042~exp=1717396642~hmac=3ed5b19d91dde372cbc75905a981b538a87285dca11a523ffec316eb090d4050",
-      name: "Album Name",
+      name: "Video Name",
       createdBy: "jeancolc lasa",
       label: "Taranga Electro center Jun 24,2024",
       catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
@@ -164,7 +164,7 @@ const SuccessRelease = () => {
     {
       image:
         "https://img.freepik.com/premium-psd/feel-music-event-banner-template-design-psd_394216-16.jpg?w=1380",
-      name: "Album Name",
+      name: "Video Name",
       createdBy: "jeancolc lasa",
       label: "Taranga Electro center Jun 24,2024",
       catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
@@ -173,7 +173,7 @@ const SuccessRelease = () => {
     {
       image:
         "https://img.freepik.com/free-psd/music-festival-banner-template_23-2148911140.jpg?w=1380&t=st=1717396073~exp=1717396673~hmac=55f764269162dd468ebb21ef39305a74f8d061ae5eb180f9d22c0d061e28fcd4",
-      name: "Album Name",
+      name: "Video Name",
       createdBy: "jeancolc lasa",
       label: "Taranga Electro center Jun 24,2024",
       catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
@@ -215,7 +215,7 @@ const SuccessRelease = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Success Release
+        Success Release Videos
       </Typography>
       <Box
         sx={{
@@ -255,4 +255,4 @@ const SuccessRelease = () => {
   );
 };
 
-export default SuccessRelease;
+export default SuccessVideos;

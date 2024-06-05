@@ -5,6 +5,8 @@ import MyUploadsColorTabs from "../MyUploads/MyUploadsTabs";
 import SuccessRelease from "./SuccessRelease/SuccessRelease";
 import FinalizeMusic from "./FinalizeMusic/FinalizeMusic";
 import CorrectionMusic from "./CorrectionMusic/CorrectionMusic";
+import SuccessVideos from "./SuccessVideos/SuccessVideos";
+import PendingVideos from "./PendingVideos/PendingVideos";
 
 const YoutubeManage = () => {
   const [activeTab, setActiveTab] = useState("one");
@@ -20,6 +22,8 @@ const YoutubeManage = () => {
         {activeTab === "one" && <SuccessRelease />}
         {activeTab === "two" && <FinalizeMusic />}
         {activeTab === "three" && <CorrectionMusic />}
+        {activeTab === "four" && <SuccessVideos />}
+        {activeTab === "five" && <PendingVideos />}
       </Box>
     </div>
   );

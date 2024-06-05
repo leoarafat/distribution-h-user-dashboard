@@ -15,6 +15,8 @@ export default function MyUploadsColorTabs({ value, handleChange }: any) {
         <Tab value="one" label="Successful Release" />
         <Tab value="two" label="Release To Finalize" />
         <Tab value="three" label="Release Correction" />
+        <Tab value="four" label="Successful Release Videos" />
+        <Tab value="five" label="Pending Videos" />
       </Tabs>
     </Box>
   );

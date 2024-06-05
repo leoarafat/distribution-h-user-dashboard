@@ -18,7 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const AlbumCard = ({ album }) => {
+const AlbumCard = ({ album }: any) => {
   const handleEdit = () => {
     console.log("Edit", album.name);
   };
@@ -114,10 +114,13 @@ const AlbumCard = ({ album }) => {
               Stores:
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={8} sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body2" color="text.secondary">
               {album.stores}
             </Typography>
+            <IconButton onClick={handleView}>
+              <VisibilityIcon />
+            </IconButton>
           </Grid>
         </Grid>
       </CardContent>
@@ -125,10 +128,10 @@ const AlbumCard = ({ album }) => {
   );
 };
 
-const AlbumList = ({ albums }) => {
+const AlbumList = ({ albums }: any) => {
   return (
     <Grid container direction="column">
-      {albums.map((album) => (
+      {albums.map((album: any) => (
         <AlbumCard key={album.catalogNumber} album={album} />
       ))}
     </Grid>
@@ -179,15 +182,15 @@ const FinalizeMusic = () => {
     },
   ];
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSortChange = (event) => {
+  const handleSortChange = (event: any) => {
     setSortOption(event.target.value);
   };
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (event: any, value: any) => {
     setPage(value);
   };
 

@@ -12,13 +12,12 @@ import {
   Select,
   MenuItem,
   Pagination,
-  Button,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const AlbumCard = ({ album }) => {
+const AlbumCard = ({ album }: any) => {
   const handleEdit = () => {
     console.log("Edit", album.name);
   };
@@ -125,10 +124,10 @@ const AlbumCard = ({ album }) => {
   );
 };
 
-const AlbumList = ({ albums }) => {
+const AlbumList = ({ albums }: any) => {
   return (
     <Grid container direction="column">
-      {albums.map((album) => (
+      {albums.map((album: any) => (
         <AlbumCard key={album.catalogNumber} album={album} />
       ))}
     </Grid>
@@ -179,15 +178,15 @@ const CorrectionMusic = () => {
     },
   ];
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSortChange = (event) => {
+  const handleSortChange = (event: any) => {
     setSortOption(event.target.value);
   };
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (event: any, value: any) => {
     setPage(value);
   };
 
