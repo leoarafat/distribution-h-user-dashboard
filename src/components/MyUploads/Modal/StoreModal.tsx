@@ -54,7 +54,7 @@ const StoreModal: React.FC<StoreModalProps> = ({
       name: "TikTok",
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDnmLX4PrZhLb-xlyZ91i-mvwa9iLPp-BeyQ&s",
-      status: "Take-down",
+      status: "Takedown",
       link: "https://www.tiktok.com",
     },
     {
@@ -70,6 +70,13 @@ const StoreModal: React.FC<StoreModalProps> = ({
         "https://w7.pngwing.com/pngs/4/438/png-transparent-spotify-logo-spotify-mobile-app-computer-icons-app-store-music-free-icon-spotify-miscellaneous-logo-music-download-thumbnail.png",
       status: "Delivered",
       link: "https://www.spotify.com",
+    },
+    {
+      name: "Instagram",
+      image:
+        "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png",
+      status: "Pending",
+      link: "https://www.instagram.com",
     },
   ];
 
@@ -97,7 +104,7 @@ const StoreModal: React.FC<StoreModalProps> = ({
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
+                  <TableCell>Store Name</TableCell>
                   <TableCell>Image</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Link</TableCell>
@@ -120,7 +127,12 @@ const StoreModal: React.FC<StoreModalProps> = ({
                         variant="body1"
                         sx={{
                           fontWeight: "bold",
-                          color: store.status === "Delivered" ? "green" : "red",
+                          color:
+                            store.status === "Delivered"
+                              ? "green"
+                              : store.status === "Pending"
+                              ? "blue"
+                              : "red",
                         }}
                       >
                         {store.status}
