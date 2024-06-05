@@ -15,6 +15,8 @@ import { useVerifyMutation } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/auth/authSlice";
+import { decodedToken } from "@/utils/jwt";
+import { storeUserInfo } from "@/redux/services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -66,8 +68,9 @@ const Verify = () => {
   useEffect(() => {
     if (isSuccess && data) {
       toast.success("Register Successful");
-      localStorage.setItem("accessToken", data?.data?.accessToken);
-      dispatch(setUser({ accessToken: data?.data?.accessToken }));
+      const user = decodedToken(data?.data?.accessToken);
+      dispatch(setUser({ user: user, accessToken: data?.data?.accessToken }));
+      storeUserInfo({ accessToken: data?.data?.accessToken });
       localStorage.removeItem("activationToken");
       navigate("/");
     }

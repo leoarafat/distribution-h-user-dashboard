@@ -4,17 +4,21 @@ import FinancialCharts from "../Financial/FinancialCharts";
 import RevenueComponent from "../Financial/RevenueComponent";
 import LastSixApproved from "./LastSixApproved";
 import News from "./News";
+
 import CorrectionRequest from "./CorrectionRequest";
+import { useNavigate } from "react-router-dom";
+import useVerification from "@/utils/isVerified";
+import { useEffect } from "react";
 
 const DashboardHome = () => {
-  // const token: any | null = useAppSelector(useCurrentAccessToken);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { isVerified } = useVerification();
 
-  // const isVerified = useAppSelector(useIsVerified);
-  // console.log(isVerified);
-  // if (!isVerified) {
-  //   navigate("/verify");
-  // }
+  useEffect(() => {
+    if (!isVerified) {
+      navigate("/verify");
+    }
+  }, [isVerified, navigate]);
   return (
     <Box sx={{ padding: 3 }}>
       <RevenueComponent />

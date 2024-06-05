@@ -226,7 +226,7 @@ const StepperForm = () => {
       const result = await verifyUser({});
       if (result?.data?.success) {
         toast.success("Congratulations. Verify Successful");
-        console.log(result?.data);
+
         dispatch(setIsVerified({ isVerified: result?.data?.data?.isVerified }));
         navigate("/");
       } else {

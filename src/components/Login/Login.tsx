@@ -16,6 +16,7 @@ import loginImage from "../../assets/login.jpg"; // Import your login image here
 import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/auth/authSlice";
+import { decodedToken } from "@/utils/jwt";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,8 +57,9 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess && data) {
       toast.success("Login Successful");
+      const user = decodedToken(data?.data?.accessToken);
+      dispatch(setUser({ user: user, accessToken: data?.data?.accessToken }));
       storeUserInfo({ accessToken: data?.data?.accessToken });
-      dispatch(setUser({ accessToken: data?.data?.accessToken }));
       if (data?.data?.isVerified === false) {
         navigate("/verify");
       } else {

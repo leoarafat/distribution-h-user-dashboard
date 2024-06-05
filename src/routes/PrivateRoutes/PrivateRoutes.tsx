@@ -1,23 +1,24 @@
-import { useAppSelector } from "@/redux/hooks";
-import { useCurrentAccessToken } from "@/redux/slices/auth/authSlice";
-
-import { useEffect } from "react";
+import Loader from "@/utils/Loader";
+import useLoggedin from "@/utils/isLoggedin";
 import { useNavigate } from "react-router-dom";
 
 const PrivateRoutes = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
+  const { isLoggedIn, isLoading, isError } = useLoggedin();
 
-  const rawToken: string | null = useAppSelector(useCurrentAccessToken);
-  const token = rawToken ? rawToken.replace(/^"|"$/g, "") : null;
-  console.log(token);
+  if (!isLoading && !isLoggedIn) {
+    navigate("/verify");
+  }
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/auth/login");
-    }
-  }, [token, navigate]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  return token ? children : null;
+  if (isError) {
+    return <div>Error loading user data</div>;
+  }
+
+  return isLoggedIn ? children : null;
 };
 
 export default PrivateRoutes;
