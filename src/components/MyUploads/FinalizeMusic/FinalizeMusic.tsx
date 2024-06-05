@@ -114,13 +114,10 @@ const AlbumCard = ({ album }: any) => {
               Stores:
             </Typography>
           </Grid>
-          <Grid item xs={8} sx={{ display: "flex", alignItems: "center" }}>
+          <Grid item xs={8}>
             <Typography variant="body2" color="text.secondary">
               {album.stores}
             </Typography>
-            <IconButton onClick={handleView}>
-              <VisibilityIcon />
-            </IconButton>
           </Grid>
         </Grid>
       </CardContent>

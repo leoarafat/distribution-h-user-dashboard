@@ -16,8 +16,9 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import StoreModal from "../Modal/StoreModal";
 
-const AlbumCard = ({ album }: any) => {
+const AlbumCard = ({ album, handleStoreModal }: any) => {
   const handleEdit = () => {
     console.log("Edit", album.name);
   };
@@ -117,7 +118,7 @@ const AlbumCard = ({ album }: any) => {
             <Typography variant="body2" color="text.secondary">
               {album.stores}
             </Typography>
-            <IconButton onClick={handleView}>
+            <IconButton onClick={() => handleStoreModal(album)}>
               <VisibilityIcon />
             </IconButton>
           </Grid>
@@ -127,11 +128,15 @@ const AlbumCard = ({ album }: any) => {
   );
 };
 
-const AlbumList = ({ albums }: any) => {
+const AlbumList = ({ albums, handleStoreModal }: any) => {
   return (
     <Grid container direction="column">
       {albums.map((album: any) => (
-        <AlbumCard key={album.catalogNumber} album={album} />
+        <AlbumCard
+          key={album.catalogNumber}
+          album={album}
+          handleStoreModal={handleStoreModal}
+        />
       ))}
     </Grid>
   );
@@ -140,8 +145,9 @@ const AlbumList = ({ albums }: any) => {
 const SuccessRelease = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("name");
+  const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
-
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
   const albums = [
     {
       image:
@@ -180,7 +186,10 @@ const SuccessRelease = () => {
       stores: "220 terrs, 21 Stored",
     },
   ];
-
+  const handleStoreModal = async (payload: any) => {
+    setOpen(true);
+    setSelectedAlbum(payload);
+  };
   const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
@@ -242,7 +251,7 @@ const SuccessRelease = () => {
           <MenuItem value="createdBy">Sort by Created By</MenuItem>
         </Select>
       </Box>
-      <AlbumList albums={displayedAlbums} />
+      <AlbumList albums={displayedAlbums} handleStoreModal={handleStoreModal} />
       <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
         <Pagination
           count={Math.ceil(filteredAlbums.length / albumsPerPage)}
@@ -251,6 +260,7 @@ const SuccessRelease = () => {
           color="primary"
         />
       </Box>
+      <StoreModal open={open} setOpen={setOpen} selectedAlbum={selectedAlbum} />
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box } from "@mui/material";
 import ColorTabs from "@/utils/Tabs";
 import LabelManage from "./Label/LabelPage";
@@ -7,7 +7,7 @@ import ArtistManage from "./Artist/ArtistPage";
 const ArtistLabelManagement = () => {
   const [activeTab, setActiveTab] = useState("one");
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (event: any, newValue: any) => {
     setActiveTab(newValue);
   };
 

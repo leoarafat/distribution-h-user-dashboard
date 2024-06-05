@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -33,15 +34,15 @@ const LabelManage = () => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
 
-  const handlePageChange = (event, newPage) => {
+  const handlePageChange = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
-  const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event: any) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -71,6 +72,7 @@ const LabelManage = () => {
           value={searchQuery}
           onChange={handleSearchChange}
           InputProps={{
+            //@ts-ignore
             startAdornment: <SearchIcon position="start" />,
           }}
         />
