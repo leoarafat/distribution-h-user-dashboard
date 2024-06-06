@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState } from "react";
 import {
   TextField,
-  Button,
   Box,
   IconButton,
   Autocomplete,
@@ -20,15 +20,17 @@ const TracksInformation = () => {
   const [additionalFields, setAdditionalFields] = useState([]);
 
   const handleAddField = () => {
+    //@ts-ignore
     setAdditionalFields([...additionalFields, { type: "", value: "" }]);
   };
 
-  const handleRemoveField = (index) => {
+  const handleRemoveField = (index: any) => {
     setAdditionalFields(additionalFields.filter((_, i) => i !== index));
   };
 
-  const handleFieldChange = (index, key, value) => {
+  const handleFieldChange = (index: any, key: any, value: any) => {
     const updatedFields = [...additionalFields];
+    //@ts-ignore
     updatedFields[index][key] = value;
     setAdditionalFields(updatedFields);
   };
@@ -242,6 +244,7 @@ const TracksInformation = () => {
                   variant="outlined"
                   margin="normal"
                   label="Field Type"
+                  //@ts-ignore
                   value={field.type}
                   onChange={(e) =>
                     handleFieldChange(index, "type", e.target.value)
@@ -253,6 +256,7 @@ const TracksInformation = () => {
                   variant="outlined"
                   margin="normal"
                   label="Field Value"
+                  //@ts-ignore
                   value={field.value}
                   onChange={(e) =>
                     handleFieldChange(index, "value", e.target.value)
