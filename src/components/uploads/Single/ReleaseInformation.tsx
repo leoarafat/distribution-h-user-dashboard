@@ -87,7 +87,7 @@ const ReleaseInformation = () => {
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Music Release Form
+          Release Information
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -110,7 +110,7 @@ const ReleaseInformation = () => {
               alignItems="center"
               spacing={1}
             >
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <Autocomplete
                   options={artists}
                   value={artist}
@@ -127,7 +127,7 @@ const ReleaseInformation = () => {
                   freeSolo
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item className="flex justify-between">
                 <IconButton
                   onClick={() => removePrimaryArtist(index)}
                   disabled={primaryArtists.length === 1}
@@ -151,7 +151,7 @@ const ReleaseInformation = () => {
               alignItems="center"
               spacing={1}
             >
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <Autocomplete
                   options={artists}
                   value={artist}

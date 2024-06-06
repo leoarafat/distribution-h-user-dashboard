@@ -1,5 +1,6 @@
 // src/components/ProtectedRoute/ProtectedRoute.tsx
 
+import Loader from "@/utils/Loader";
 import useVerification from "@/utils/isVerified";
 
 import { useNavigate } from "react-router-dom";
@@ -13,7 +14,7 @@ const IsVerifiedRoutes = ({ children }: { children: JSX.Element }) => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (isError) {

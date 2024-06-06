@@ -23,15 +23,16 @@ import { setIsVerified } from "@/redux/slices/auth/authSlice";
 import AudioDetails from "../uploads/Single/AudioDetails";
 import UserDetails from "../uploads/Single/UserDetails";
 import TrackDetails from "../uploads/Single/TrackDetails";
-import AdditionalDetails from "../uploads/Single/AdditionalDetails";
+import AdditionalDetails from "../uploads/Single/TracksInformation";
 import ReleaseInformation from "../uploads/Single/ReleaseInformation";
+import TracksInformation from "../uploads/Single/TracksInformation";
 
 const steps = [
   { title: "Release Information", component: ReleaseInformation },
   { title: "Audio & Cover", component: AudioDetails },
-  { title: "User Details", component: UserDetails },
+  { title: "Tracks Details", component: TracksInformation },
   { title: "Track Details", component: TrackDetails },
-  { title: "Additional Details", component: AdditionalDetails },
+  // { title: "Additional Details", component: AdditionalDetails },
 ];
 
 const UploaderStepperForm = () => {
