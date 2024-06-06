@@ -13,8 +13,9 @@ export default function MyUploadsColorTabs({ value, handleChange }: any) {
         aria-label="secondary tabs example"
       >
         <Tab value="one" label="Successful Release" />
-        <Tab value="two" label="Release To Finalize" />
-        <Tab value="three" label="Release Correction" />
+        <Tab value="two" label="Pending Release" />
+        <Tab value="three" label="Drafts" />
+        {/* <Tab value="three" label="Release Correction" /> */}
         <Tab value="four" label="Successful Release Videos" />
         <Tab value="five" label="Pending Videos" />
       </Tabs>

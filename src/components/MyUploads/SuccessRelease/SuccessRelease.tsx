@@ -39,7 +39,7 @@ function SuccessRelease() {
       field: "cover",
       headerName: "",
       width: 80,
-      renderCell: (params) => (
+      renderCell: (params: any) => (
         <img
           src={params.value}
           alt="cover"
@@ -51,7 +51,7 @@ function SuccessRelease() {
       field: "title",
       headerName: "Title",
       width: 300,
-      renderCell: (params) => (
+      renderCell: (params: any) => (
         <div>
           <Typography style={{ fontWeight: "bold", color: "#007BFF" }}>
             {params.value}
