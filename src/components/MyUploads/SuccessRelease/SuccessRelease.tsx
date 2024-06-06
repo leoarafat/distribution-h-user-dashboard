@@ -1,268 +1,151 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Grid,
-  IconButton,
-  Container,
-  Box,
-  TextField,
-  Select,
-  MenuItem,
-  Pagination,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Box, Typography, TextField, IconButton } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import SearchIcon from "@mui/icons-material/Search";
+import PublicIcon from "@mui/icons-material/Public";
+import StoreIcon from "@mui/icons-material/Store"; // Added StoreIcon import
+import { rows } from "@/MockData/BankData";
 import StoreModal from "../Modal/StoreModal";
+import CountryModal from "../Modal/CountryModal";
 
-const AlbumCard = ({ album, handleStoreModal }: any) => {
-  const handleEdit = () => {
-    console.log("Edit", album.name);
-  };
-
-  const handleDelete = () => {
-    console.log("Delete", album.name);
-  };
-
-  const handleView = () => {
-    console.log("View", album.name);
-  };
-
-  return (
-    <Card
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        marginBottom: 2,
-        boxShadow: 3,
-        width: "100%",
-      }}
-    >
-      <CardMedia
-        component="img"
-        sx={{ width: 150 }}
-        image={album.image}
-        alt="Album cover"
-      />
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          flexGrow: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="div" variant="h5">
-            {album.name}
-          </Typography>
-          <Box>
-            <IconButton onClick={handleView}>
-              <VisibilityIcon />
-            </IconButton>
-            <IconButton onClick={handleEdit}>
-              <EditIcon />
-            </IconButton>
-            <IconButton onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Grid container spacing={1} sx={{ marginTop: 1 }}>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" color="text.secondary">
-              Created By:
-            </Typography>
-          </Grid>
-          <Grid item xs={8}>
-            <Typography variant="body2" color="text.secondary">
-              {album.createdBy}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" color="text.secondary">
-              Label:
-            </Typography>
-          </Grid>
-          <Grid item xs={8}>
-            <Typography variant="body2" color="text.secondary">
-              {album.label}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" color="text.secondary">
-              Cat#:
-            </Typography>
-          </Grid>
-          <Grid item xs={8}>
-            <Typography variant="body2" color="text.secondary">
-              {album.catalogNumber}
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="subtitle1" color="text.secondary">
-              Stores:
-            </Typography>
-          </Grid>
-          <Grid item xs={8} sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body2" color="text.secondary">
-              {album.stores}
-            </Typography>
-            <IconButton onClick={() => handleStoreModal(album)}>
-              <VisibilityIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  );
-};
-
-const AlbumList = ({ albums, handleStoreModal }: any) => {
-  return (
-    <Grid container direction="column">
-      {albums.map((album: any) => (
-        <AlbumCard
-          key={album.catalogNumber}
-          album={album}
-          handleStoreModal={handleStoreModal}
-        />
-      ))}
-    </Grid>
-  );
-};
-
-const SuccessRelease = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState("name");
-  const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1);
+function SuccessRelease() {
+  const [searchText, setSearchText] = useState("");
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
-  const albums = [
-    {
-      image:
-        "https://img.freepik.com/premium-psd/jazz-concert-banner-template_23-2149016105.jpg?w=1380",
-      name: "Album Name",
-      createdBy: "jeancolc lasa",
-      label: "Taranga Electro center Jun 24,2024",
-      catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
-      stores: "220 terrs, 21 Stored",
-    },
-    {
-      image:
-        "https://img.freepik.com/free-psd/music-concert-facebook-template_23-2149959353.jpg?w=1380&t=st=1717396042~exp=1717396642~hmac=3ed5b19d91dde372cbc75905a981b538a87285dca11a523ffec316eb090d4050",
-      name: "Album Name",
-      createdBy: "jeancolc lasa",
-      label: "Taranga Electro center Jun 24,2024",
-      catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
-      stores: "220 terrs, 21 Stored",
-    },
-    {
-      image:
-        "https://img.freepik.com/premium-psd/feel-music-event-banner-template-design-psd_394216-16.jpg?w=1380",
-      name: "Album Name",
-      createdBy: "jeancolc lasa",
-      label: "Taranga Electro center Jun 24,2024",
-      catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
-      stores: "220 terrs, 21 Stored",
-    },
-    {
-      image:
-        "https://img.freepik.com/free-psd/music-festival-banner-template_23-2148911140.jpg?w=1380&t=st=1717396073~exp=1717396673~hmac=55f764269162dd468ebb21ef39305a74f8d061ae5eb180f9d22c0d061e28fcd4",
-      name: "Album Name",
-      createdBy: "jeancolc lasa",
-      label: "Taranga Electro center Jun 24,2024",
-      catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
-      stores: "220 terrs, 21 Stored",
-    },
-  ];
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [countryOpen, setCountryOpen] = useState(false);
+
+  const handleSearch = () => {
+    const filteredData = rows.filter(
+      (row) =>
+        row.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.artist.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.label.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRows(filteredData);
+  };
   const handleStoreModal = async (payload: any) => {
     setOpen(true);
     setSelectedAlbum(payload);
   };
-  const handleSearchChange = (event: any) => {
-    setSearchQuery(event.target.value);
+  const handleCountryModal = async (payload: any) => {
+    setCountryOpen(true);
+    setSelectedCountry(payload);
   };
-
-  const handleSortChange = (event: any) => {
-    setSortOption(event.target.value);
-  };
-
-  const handlePageChange = (event: any, value: any) => {
-    setPage(value);
-  };
-
-  const filteredAlbums = albums
-    .filter((album) =>
-      album.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortOption === "name") {
-        return a.name.localeCompare(b.name);
-      } else if (sortOption === "createdBy") {
-        return a.createdBy.localeCompare(b.createdBy);
-      }
-      return 0;
-    });
-
-  const albumsPerPage = 2;
-  const displayedAlbums = filteredAlbums.slice(
-    (page - 1) * albumsPerPage,
-    page * albumsPerPage
-  );
-
-  return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Success Release
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 2,
-        }}
-      >
-        <TextField
-          label="Search"
-          variant="outlined"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          sx={{ width: "40%" }}
+  const columns = [
+    {
+      field: "cover",
+      headerName: "",
+      width: 80,
+      renderCell: (params) => (
+        <img
+          src={params.value}
+          alt="cover"
+          style={{ width: "50px", height: "50px", borderRadius: "4px" }}
         />
-        <Select
-          value={sortOption}
-          onChange={handleSortChange}
-          variant="outlined"
-          sx={{ width: "40%" }}
+      ),
+    },
+    {
+      field: "title",
+      headerName: "Title",
+      width: 300,
+      renderCell: (params) => (
+        <div>
+          <Typography style={{ fontWeight: "bold", color: "#007BFF" }}>
+            {params.value}
+          </Typography>
+          <Typography>{params.row.artist}</Typography>
+        </div>
+      ),
+    },
+    { field: "label", headerName: "Label", width: 150 },
+    { field: "releaseDate", headerName: "Release Date", width: 150 },
+    { field: "upc", headerName: "UPC", width: 200 },
+    { field: "catNo", headerName: "Cat#", width: 100 },
+    { field: "tracks", headerName: "Tracks", width: 100 },
+
+    {
+      field: "territories",
+      headerName: "Territories",
+      width: 230,
+      renderCell: (params: any) => (
+        <div
+          onClick={() => handleCountryModal(params.row)}
+          className="cursor-pointer"
         >
-          <MenuItem value="name">Sort by Name</MenuItem>
-          <MenuItem value="createdBy">Sort by Created By</MenuItem>
-        </Select>
+          <Box display="flex" alignItems="center">
+            <PublicIcon style={{ marginRight: 8 }} />
+            <Typography>{params.value}</Typography>
+          </Box>
+        </div>
+      ),
+    },
+    {
+      field: "stores",
+      headerName: "Stores",
+      width: 120,
+      renderCell: (params: any) => (
+        <div
+          onClick={() => handleStoreModal(params.row)}
+          className="cursor-pointer"
+        >
+          <Box display="flex" alignItems="center">
+            <StoreIcon style={{ marginRight: 8 }} />
+            <Typography>{params.value}</Typography>
+          </Box>
+        </div>
+      ),
+    },
+  ];
+  return (
+    <>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+        mt={3}
+      >
+        <Typography variant="h4" fontWeight="bold">
+          Success Release
+        </Typography>
+        <Box display="flex" alignItems="center">
+          <TextField
+            variant="outlined"
+            size="small"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{ marginRight: 10 }}
+          />
+          <IconButton onClick={handleSearch}>
+            <SearchIcon />
+          </IconButton>
+        </Box>
       </Box>
-      <AlbumList albums={displayedAlbums} handleStoreModal={handleStoreModal} />
-      <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
-        <Pagination
-          count={Math.ceil(filteredAlbums.length / albumsPerPage)}
-          page={page}
-          onChange={handlePageChange}
-          color="primary"
+      <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          //@ts-ignore
+          pageSize={10}
+          rowsPerPageOptions={[10, 20, 50]}
+          autoHeight
+          disableSelectionOnClick
+          checkboxSelection={false}
+          pagination
         />
-      </Box>
+      </div>
       <StoreModal open={open} setOpen={setOpen} selectedAlbum={selectedAlbum} />
-    </Container>
+      <CountryModal
+        open={countryOpen}
+        setOpen={setCountryOpen}
+        selectedCountry={selectedCountry}
+      />
+    </>
   );
-};
+}
 
 export default SuccessRelease;

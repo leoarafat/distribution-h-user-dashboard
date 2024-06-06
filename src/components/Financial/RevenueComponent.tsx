@@ -52,7 +52,7 @@ const RevenueComponent = () => {
         <Typography variant="h3" color="primary" gutterBottom>
           {allTimeRevenue.toLocaleString("en-US", {
             style: "currency",
-            currency: "EUR",
+            currency: "USD",
           })}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
