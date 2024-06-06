@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState, useEffect, useCallback } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
 
-const ProfileVerification = ({ data, onChange }) => {
+const ProfileVerification = ({ data, onChange }: any) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
@@ -33,26 +34,26 @@ const ProfileVerification = ({ data, onChange }) => {
   }, [profileData, initialSetupDone, onChange]);
 
   const handleChange = useCallback(
-    (e) => {
+    (e: any) => {
       const { name, value } = e.target;
       onChange("profile", { ...data.profile, [name]: value });
     },
     [onChange, data.profile]
   );
 
-  const handleProfileImageUpload = (event) => {
+  const handleProfileImageUpload = (event: any) => {
     const file = event.target.files[0];
     setSelectedProfileImage(file);
     onChange("profile", { ...data.profile, profileImage: file });
   };
 
-  const handleNidFront = (event) => {
+  const handleNidFront = (event: any) => {
     const file = event.target.files[0];
     setNidFront(file);
     onChange("profile", { ...data.profile, nidFront: file });
   };
 
-  const handleNidBack = (event) => {
+  const handleNidBack = (event: any) => {
     const file = event.target.files[0];
     setNidBack(file);
     onChange("profile", { ...data.profile, nidBack: file });
@@ -84,6 +85,7 @@ const ProfileVerification = ({ data, onChange }) => {
               <div className="relative w-3/4">
                 {typeof selectedProfileImage === "object" ? (
                   <img
+                    //@ts-ignore
                     src={
                       selectedProfileImage
                         ? URL.createObjectURL(selectedProfileImage)
@@ -133,6 +135,7 @@ const ProfileVerification = ({ data, onChange }) => {
               <div className="relative w-3/4">
                 {typeof nidFront === "object" ? (
                   <img
+                    //@ts-ignore
                     src={nidFront ? URL.createObjectURL(nidFront) : null}
                     alt="NID Front"
                     className="w-[300px] h-[200px]"
@@ -178,6 +181,7 @@ const ProfileVerification = ({ data, onChange }) => {
               <div className="relative w-3/4">
                 {typeof nidBack === "object" ? (
                   <img
+                    //@ts-ignore
                     src={nidBack ? URL.createObjectURL(nidBack) : null}
                     alt="NID Back"
                     className="w-[300px] h-[200px]"

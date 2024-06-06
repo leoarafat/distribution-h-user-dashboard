@@ -30,6 +30,7 @@ import FinancialReports from "@/components/Financial/FinancialReports";
 import AccountDetails from "@/components/ManageAccount/AccountDetails/AccountDetails";
 import PaymentOperations from "@/components/ManageAccount/PaymentOperations/PaymentOperations";
 import TransactionHistory from "@/components/ManageAccount/TransactionHistory/TransactionHistory";
+import UploaderStepperForm from "@/components/SteperForm/UploaderStepper";
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
         path: "/single",
         element: (
           <IsVerifiedRoutes>
-            <UploadSingle />
+            <UploaderStepperForm />
           </IsVerifiedRoutes>
         ),
       },
