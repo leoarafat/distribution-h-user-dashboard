@@ -4,9 +4,9 @@ import { Box } from "@mui/material";
 import MyUploadsColorTabs from "../MyUploads/MyUploadsTabs";
 import SuccessRelease from "./SuccessRelease/SuccessRelease";
 import FinalizeMusic from "./FinalizeMusic/FinalizeMusic";
-import CorrectionMusic from "./CorrectionMusic/CorrectionMusic";
-import SuccessVideos from "./SuccessVideos/SuccessVideos";
 import PendingVideos from "./PendingVideos/PendingVideos";
+import Drafts from "./Drafts/Drafts";
+import SuccessVideos from "./SuccessVideos/SuccessVideos";
 
 const YoutubeManage = () => {
   const [activeTab, setActiveTab] = useState("one");
@@ -21,7 +21,8 @@ const YoutubeManage = () => {
       <Box p={3}>
         {activeTab === "one" && <SuccessRelease />}
         {activeTab === "two" && <FinalizeMusic />}
-        {activeTab === "three" && <CorrectionMusic />}
+        {activeTab === "three" && <Drafts />}
+        {/* {activeTab === "three" && <CorrectionMusic />} */}
         {activeTab === "four" && <SuccessVideos />}
         {activeTab === "five" && <PendingVideos />}
       </Box>

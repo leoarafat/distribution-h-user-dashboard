@@ -8,6 +8,7 @@ import StoreIcon from "@mui/icons-material/Store"; // Added StoreIcon import
 import { rows } from "@/MockData/BankData";
 import StoreModal from "../Modal/StoreModal";
 import CountryModal from "../Modal/CountryModal";
+import BasicPagination from "../BasicPagination";
 
 function SuccessRelease() {
   const [searchText, setSearchText] = useState("");
@@ -16,7 +17,9 @@ function SuccessRelease() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [open, setOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 10;
+  const totalPages = Math.ceil(filteredRows.length / pageSize);
   const handleSearch = () => {
     const filteredData = rows.filter(
       (row) =>
@@ -24,6 +27,7 @@ function SuccessRelease() {
         row.artist.toLowerCase().includes(searchText.toLowerCase()) ||
         row.label.toLowerCase().includes(searchText.toLowerCase())
     );
+    setCurrentPage(0);
     setFilteredRows(filteredData);
   };
   const handleStoreModal = async (payload: any) => {
@@ -33,6 +37,9 @@ function SuccessRelease() {
   const handleCountryModal = async (payload: any) => {
     setCountryOpen(true);
     setSelectedCountry(payload);
+  };
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page - 1); // Page index starts from 1, so decrement by 1
   };
   const columns = [
     {
@@ -125,9 +132,12 @@ function SuccessRelease() {
           </IconButton>
         </Box>
       </Box>
-      <div style={{ height: 600, width: "100%" }}>
+      <div style={{ height: 600, width: "100%" }} className="mb-12">
         <DataGrid
-          rows={filteredRows}
+          rows={filteredRows.slice(
+            currentPage * pageSize,
+            (currentPage + 1) * pageSize
+          )}
           columns={columns}
           //@ts-ignore
           pageSize={10}
@@ -136,8 +146,16 @@ function SuccessRelease() {
           disableSelectionOnClick
           checkboxSelection={false}
           pagination
+          hideFooterPagination
         />
       </div>
+      {/* Pagination */}
+      <Box mt={3} display="flex" justifyContent="center">
+        <BasicPagination
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </Box>
       <StoreModal open={open} setOpen={setOpen} selectedAlbum={selectedAlbum} />
       <CountryModal
         open={countryOpen}

@@ -25,7 +25,7 @@ import { MdAttachMoney } from "react-icons/md";
 const { SubMenu } = Menu;
 import { CiCircleInfo } from "react-icons/ci";
 import { GrTransaction } from "react-icons/gr";
-import { Analytics } from "@mui/icons-material";
+
 import { SiSimpleanalytics } from "react-icons/si";
 const menuItems = [
   {
@@ -59,16 +59,7 @@ const menuItems = [
     title: "Analytics",
     icon: <SiSimpleanalytics size={18} />,
   },
-  {
-    path: "/legal",
-    title: "Legal",
-    icon: <CiCircleInfo size={18} />,
-  },
-  {
-    path: "/help",
-    title: "Help",
-    icon: <HelpCircleIcon size={18} />,
-  },
+
   // {
   //   path: "/manage-account",
   //   title: "Manage Account",
@@ -96,6 +87,12 @@ const menuItems = [
       },
     ],
   },
+  {
+    path: "/legal",
+    title: "Legal",
+    icon: <CiCircleInfo size={18} />,
+  },
+
   {
     path: "/manage-account",
     title: "Manage Account",
@@ -129,6 +126,11 @@ const menuItems = [
         icon: "",
       },
     ],
+  },
+  {
+    path: "/help",
+    title: "Help",
+    icon: <HelpCircleIcon size={18} />,
   },
 ];
 

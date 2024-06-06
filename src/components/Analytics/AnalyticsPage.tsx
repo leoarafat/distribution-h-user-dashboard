@@ -57,22 +57,22 @@ const data = {
 
 const viewsRevenueData = {
   weekly: [
-    { name: "Week 1", views: 400, revenue: 2400 },
-    { name: "Week 2", views: 300, revenue: 2210 },
-    { name: "Week 3", views: 200, revenue: 2290 },
-    { name: "Week 4", views: 278, revenue: 2000 },
+    { name: "Week 1", stream: 400, revenue: 2400 },
+    { name: "Week 2", stream: 300, revenue: 2210 },
+    { name: "Week 3", stream: 200, revenue: 2290 },
+    { name: "Week 4", stream: 278, revenue: 2000 },
   ],
   monthly: [
-    { name: "Month 1", views: 1200, revenue: 7000 },
-    { name: "Month 2", views: 1100, revenue: 6200 },
-    { name: "Month 3", views: 900, revenue: 5000 },
-    { name: "Month 4", views: 980, revenue: 4500 },
+    { name: "Month 1", stream: 1200, revenue: 7000 },
+    { name: "Month 2", stream: 1100, revenue: 6200 },
+    { name: "Month 3", stream: 900, revenue: 5000 },
+    { name: "Month 4", stream: 980, revenue: 4500 },
   ],
   yearly: [
-    { name: "Year 1", views: 5400, revenue: 34000 },
-    { name: "Year 2", views: 4800, revenue: 31000 },
-    { name: "Year 3", views: 4300, revenue: 28000 },
-    { name: "Year 4", views: 4000, revenue: 25000 },
+    { name: "Year 1", stream: 5400, revenue: 34000 },
+    { name: "Year 2", stream: 4800, revenue: 31000 },
+    { name: "Year 3", stream: 4300, revenue: 28000 },
+    { name: "Year 4", stream: 4000, revenue: 25000 },
   ],
 };
 
@@ -228,7 +228,7 @@ const AnalyticsPage = () => {
 
       {/* Total Views and Revenue */}
       <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Total Views and Revenue</Typography>
+        <Typography variant="h6">Total Stream and Revenue</Typography>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             //@ts-ignore
@@ -240,7 +240,7 @@ const AnalyticsPage = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="views" fill="#8884d8" />
+            <Bar dataKey="stream" fill="#8884d8" />
             <Bar dataKey="revenue" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>

@@ -364,3 +364,41 @@ export const rows = [
     stores: "21 stores",
   },
 ];
+export const videosData = [
+  {
+    image:
+      "https://img.freepik.com/premium-psd/jazz-concert-banner-template_23-2149016105.jpg?w=1380",
+    name: "Video Name",
+    createdBy: "jeancolc lasa",
+    label: "Taranga Electro center Jun 24,2024",
+    catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
+    stores: "220 terrs, 21 Stored",
+  },
+  {
+    image:
+      "https://img.freepik.com/free-psd/music-concert-facebook-template_23-2149959353.jpg?w=1380&t=st=1717396042~exp=1717396642~hmac=3ed5b19d91dde372cbc75905a981b538a87285dca11a523ffec316eb090d4050",
+    name: "Video Name",
+    createdBy: "jeancolc lasa",
+    label: "Taranga Electro center Jun 24,2024",
+    catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
+    stores: "220 terrs, 21 Stored",
+  },
+  {
+    image:
+      "https://img.freepik.com/premium-psd/feel-music-event-banner-template-design-psd_394216-16.jpg?w=1380",
+    name: "Video Name",
+    createdBy: "jeancolc lasa",
+    label: "Taranga Electro center Jun 24,2024",
+    catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
+    stores: "220 terrs, 21 Stored",
+  },
+  {
+    image:
+      "https://img.freepik.com/free-psd/music-festival-banner-template_23-2148911140.jpg?w=1380&t=st=1717396073~exp=1717396673~hmac=55f764269162dd468ebb21ef39305a74f8d061ae5eb180f9d22c0d061e28fcd4",
+    name: "Video Name",
+    createdBy: "jeancolc lasa",
+    label: "Taranga Electro center Jun 24,2024",
+    catalogNumber: "Cat#:TEC3001 744662925003 Release Id:416651",
+    stores: "220 terrs, 21 Stored",
+  },
+];

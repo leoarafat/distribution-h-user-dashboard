@@ -1,37 +1,43 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Typography, TextField, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import SearchIcon from "@mui/icons-material/Search";
-// Import the custom pagination component
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { rows } from "@/MockData/BankData";
 import BasicPagination from "../BasicPagination";
 
-function FinalizeMusic() {
+function Drafts() {
   const [searchText, setSearchText] = useState("");
+  const [filteredRows, setFilteredRows] = useState(rows);
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 10;
-
-  // Filtered rows based on search text
-  const filteredRows = rows.filter(
-    (row) =>
-      row.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      row.artist.toLowerCase().includes(searchText.toLowerCase()) ||
-      row.label.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  // Calculate total number of pages
   const totalPages = Math.ceil(filteredRows.length / pageSize);
 
-  // Handle search input change
-  const handleSearchChange = (e: any) => {
-    setCurrentPage(0); // Reset current page to 0 when search text changes
-    setSearchText(e.target.value);
+  const handleSearch = () => {
+    const filteredData = rows.filter(
+      (row) =>
+        row.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.artist.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.label.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setCurrentPage(0);
+    setFilteredRows(filteredData);
   };
 
-  // Handle pagination change
-  const handlePageChange = (page: any) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page - 1); // Page index starts from 1, so decrement by 1
+  };
+
+  const handleEdit = (id: number) => {
+    // Handle edit action
+    console.log(`Edit row with id: ${id}`);
+  };
+
+  const handleDelete = (id: number) => {
+    // Handle delete action
+    console.log(`Delete row with id: ${id}`);
   };
 
   const columns = [
@@ -65,11 +71,25 @@ function FinalizeMusic() {
     { field: "upc", headerName: "UPC", flex: 1 },
     { field: "catNo", headerName: "Cat#", flex: 1 },
     { field: "tracks", headerName: "Tracks", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
+      renderCell: (params: any) => (
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <IconButton onClick={() => handleEdit(params.id)}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={() => handleDelete(params.id)}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      ),
+    },
   ];
 
   return (
     <>
-      {/* Your search input */}
       <Box
         display="flex"
         justifyContent="space-between"
@@ -78,7 +98,7 @@ function FinalizeMusic() {
         mt={3}
       >
         <Typography variant="h4" fontWeight="bold">
-          Pending Release
+          Drafts
         </Typography>
         <Box display="flex" alignItems="center">
           <TextField
@@ -86,17 +106,15 @@ function FinalizeMusic() {
             size="small"
             placeholder="Search..."
             value={searchText}
-            onChange={handleSearchChange}
+            onChange={(e) => setSearchText(e.target.value)}
             style={{ marginRight: 10 }}
           />
-          <IconButton onClick={handleSearchChange}>
+          <IconButton onClick={handleSearch}>
             <SearchIcon />
           </IconButton>
         </Box>
       </Box>
-
-      {/* Your data grid */}
-      <div style={{ height: 600, width: "100%" }} className="mb-10">
+      <div style={{ height: 600, width: "100%" }} className="mb-12">
         <DataGrid
           rows={filteredRows.slice(
             currentPage * pageSize,
@@ -104,15 +122,15 @@ function FinalizeMusic() {
           )}
           columns={columns}
           //@ts-ignore
-          pageSize={pageSize}
+          pageSize={10}
+          rowsPerPageOptions={[10, 20, 50]}
           autoHeight
           disableSelectionOnClick
           checkboxSelection={false}
-          rowCount={filteredRows.length}
+          pagination
           hideFooterPagination
         />
       </div>
-
       {/* Pagination */}
       <Box mt={3} display="flex" justifyContent="center">
         <BasicPagination
@@ -124,4 +142,4 @@ function FinalizeMusic() {
   );
 }
 
-export default FinalizeMusic;
+export default Drafts;
