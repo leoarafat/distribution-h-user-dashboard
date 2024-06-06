@@ -25,6 +25,7 @@ import { MdAttachMoney } from "react-icons/md";
 const { SubMenu } = Menu;
 import { CiCircleInfo } from "react-icons/ci";
 import { GrTransaction } from "react-icons/gr";
+import { MdPayments } from "react-icons/md";
 
 import { SiSimpleanalytics } from "react-icons/si";
 const menuItems = [
@@ -40,7 +41,7 @@ const menuItems = [
   },
   {
     path: "/release-video",
-    title: "Release Video",
+    title: "Upload Video",
     icon: <VideoIcon size={18} />,
   },
   {
@@ -95,17 +96,17 @@ const menuItems = [
 
   {
     path: "/manage-account",
-    title: "Manage Account",
-    icon: <GrTransaction size={18} color="#fff" />,
+    title: "Payout Details",
+    icon: <MdPayments size={18} color="#fff" />,
     subMenu: [
       {
         path: "/add-account",
-        title: "Add Account",
+        title: "Add Bank Details",
         icon: "",
       },
       {
         path: "/my-account",
-        title: "My Account",
+        title: "Payout Info",
         icon: "",
       },
     ],
