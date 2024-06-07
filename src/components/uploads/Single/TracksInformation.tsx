@@ -37,9 +37,6 @@ const TracksInformation = () => {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom>
-        Assets Metadata
-      </Typography>
       <form>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>

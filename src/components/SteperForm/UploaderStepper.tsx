@@ -148,7 +148,7 @@ const UploaderStepperForm = () => {
             onClick={handleSubmit}
             style={{ marginLeft: 10 }}
           >
-            {verifyLoading ? "Verifying..." : "Let's Verify"}
+            {verifyLoading ? "Uploading..." : "Let's Upload"}
           </Button>
         )}
       </div>

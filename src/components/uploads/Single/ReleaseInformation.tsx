@@ -86,9 +86,6 @@ const ReleaseInformation = () => {
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Release Information
-        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField

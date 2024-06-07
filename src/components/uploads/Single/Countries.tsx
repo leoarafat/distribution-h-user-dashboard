@@ -111,9 +111,6 @@ const Countries = () => {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>
-        Let's Distribute Your Music With Musix
-      </Typography>
       {loading ? (
         <Loader />
       ) : (
