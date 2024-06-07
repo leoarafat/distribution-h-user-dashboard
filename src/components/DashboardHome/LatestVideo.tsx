@@ -26,8 +26,9 @@ const LatestVideo = () => {
       >
         <Link to={"/release-video"}>
           {" "}
-          <div className="flex justify-center items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
+          <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
             <YouTubeIcon sx={{ fontSize: 60 }} />
+            <p>Release Video</p>
           </div>
           <div className="hidden">
             <p
@@ -75,7 +76,7 @@ const LatestVideo = () => {
                 <TableCell>Video Name</TableCell>
                 <TableCell>Label Name</TableCell>
                 <TableCell>Store</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                {/* <TableCell align="right">Actions</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -95,11 +96,11 @@ const LatestVideo = () => {
                     <TableCell>Video Name</TableCell>
                     <TableCell>Label Name</TableCell>
                     <TableCell>Store</TableCell>
-                    <TableCell align="right">
+                    {/* <TableCell align="right">
                       <IconButton size="small">
                         <Edit fontSize="small" />
                       </IconButton>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
             </TableBody>

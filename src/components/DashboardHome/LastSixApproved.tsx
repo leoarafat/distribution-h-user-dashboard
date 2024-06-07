@@ -30,8 +30,9 @@ const LastSixApproved = () => {
         >
           <Link to={"/upload"}>
             {" "}
-            <div className="flex justify-center items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
+            <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
               <AudiotrackIcon sx={{ fontSize: 60 }} />
+              <p>Release Audio</p>
             </div>
             <div className="hidden">
               <p
@@ -87,7 +88,7 @@ const LastSixApproved = () => {
                   <TableCell>Album Name</TableCell>
                   <TableCell>Label Name</TableCell>
                   <TableCell>Store</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  {/* <TableCell align="right">Actions</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -108,11 +109,11 @@ const LastSixApproved = () => {
                       <TableCell>Album Name</TableCell>
                       <TableCell>Label Name</TableCell>
                       <TableCell>Store</TableCell>
-                      <TableCell align="right">
+                      {/* <TableCell align="right">
                         <IconButton size="small">
                           <Edit fontSize="small" />
                         </IconButton>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   ))}
               </TableBody>

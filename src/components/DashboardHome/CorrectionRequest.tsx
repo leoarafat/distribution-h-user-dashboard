@@ -37,7 +37,7 @@ const CorrectionRequest = () => {
                 <TableCell>Album Name</TableCell>
                 <TableCell>Label Name</TableCell>
                 <TableCell>Store</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                {/* <TableCell align="right">Actions</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -50,11 +50,11 @@ const CorrectionRequest = () => {
                     <TableCell>Album Name</TableCell>
                     <TableCell>Label Name</TableCell>
                     <TableCell>Store</TableCell>
-                    <TableCell align="right">
+                    {/* <TableCell align="right">
                       <IconButton size="small">
                         <Edit fontSize="small" />
                       </IconButton>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
             </TableBody>
