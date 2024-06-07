@@ -8,28 +8,6 @@ const AudioDetails = ({ data, onChange }: any) => {
   const [coverImage, setCoverImage] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
 
-  // const handleCoverImageUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   setCoverImage(file);
-  //   onChange("coverImage", file);
-  // };
-
-  // const handleAudioUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   setAudioFile(file);
-  //   onChange("audioFile", file);
-  // };
-
-  // const handleCoverImageRemoveImage = () => {
-  //   setCoverImage(null);
-  //   onChange("coverImage", null);
-  // };
-
-  // const handleAudioRemove = () => {
-  //   setAudioFile(null);
-  //   onChange("audioFile", null);
-  // };
-
   const handleCoverImageUpload = (event: any) => {
     const file = event.target.files[0];
 

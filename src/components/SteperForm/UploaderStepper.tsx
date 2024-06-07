@@ -24,13 +24,14 @@ import AudioDetails from "../uploads/Single/AudioDetails";
 import ReleaseInformation from "../uploads/Single/ReleaseInformation";
 import TracksInformation from "../uploads/Single/TracksInformation";
 import Countries from "../uploads/Single/Countries";
+import SingleReviewPage from "../uploads/Single/SingleReviewPage";
 
 const steps = [
   { title: "Release Information", component: ReleaseInformation },
   { title: "Audio & Cover", component: AudioDetails },
   { title: "Tracks Details", component: TracksInformation },
-  { title: "Countries", component: Countries },
-  // { title: "Additional Details", component: AdditionalDetails },
+  { title: "Territories", component: Countries },
+  { title: "Review Details", component: SingleReviewPage },
 ];
 
 const UploaderStepperForm = () => {
@@ -109,7 +110,7 @@ const UploaderStepperForm = () => {
   return (
     <Grid container direction="column">
       <Typography variant="h4" align="center" gutterBottom>
-        Verification Process
+        Let's Distribute Your Music With Musix
       </Typography>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step) => (
