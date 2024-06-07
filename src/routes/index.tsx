@@ -14,7 +14,6 @@ import Verify from "@/components/Active-User/ActiveUser";
 import { createBrowserRouter } from "react-router-dom";
 import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
 import Uploads from "@/components/Uplaods/Uploads";
-import UploadSingle from "@/components/Uplaods/UploadSingle/UploadSingle";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 import MyUploads from "@/components/MyUploads/MyUploads";
@@ -31,6 +30,11 @@ import AccountDetails from "@/components/ManageAccount/AccountDetails/AccountDet
 import PaymentOperations from "@/components/ManageAccount/PaymentOperations/PaymentOperations";
 import TransactionHistory from "@/components/ManageAccount/TransactionHistory/TransactionHistory";
 import UploaderStepperForm from "@/components/SteperForm/UploaderStepper";
+import SuccessRelease from "@/components/MyUploads/SuccessRelease/SuccessRelease";
+import FinalizeMusic from "@/components/MyUploads/FinalizeMusic/FinalizeMusic";
+import Drafts from "@/components/MyUploads/Drafts/Drafts";
+import PendingVideos from "@/components/MyUploads/PendingVideos/PendingVideos";
+import SuccessVideos from "@/components/MyUploads/SuccessVideos/SuccessVideos";
 
 const router = createBrowserRouter([
   {
@@ -85,11 +89,51 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
+      // {
+      //   path: "/my-uploads",
+      //   element: (
+      //     <IsVerifiedRoutes>
+      //       <MyUploads />
+      //     </IsVerifiedRoutes>
+      //   ),
+      // },
       {
-        path: "/my-uploads",
+        path: "/my-uploads/success-track",
         element: (
           <IsVerifiedRoutes>
-            <MyUploads />
+            <SuccessRelease />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/pending-track",
+        element: (
+          <IsVerifiedRoutes>
+            <FinalizeMusic />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/drafts",
+        element: (
+          <IsVerifiedRoutes>
+            <Drafts />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/pending-videos",
+        element: (
+          <IsVerifiedRoutes>
+            <PendingVideos />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/videos",
+        element: (
+          <IsVerifiedRoutes>
+            <SuccessVideos />
           </IsVerifiedRoutes>
         ),
       },

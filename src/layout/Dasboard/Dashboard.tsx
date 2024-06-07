@@ -44,10 +44,38 @@ const menuItems = [
     title: "Upload Video",
     icon: <VideoIcon size={18} />,
   },
+
   {
     path: "/my-uploads",
     title: "My Uploads",
-    icon: <Music4Icon size={18} />,
+    icon: <Music4Icon size={18} color="#fff" />,
+    subMenu: [
+      {
+        path: "/success-track",
+        title: "Success Tracks",
+        icon: "",
+      },
+      {
+        path: "/pending-track",
+        title: "Pending Tracks",
+        icon: "",
+      },
+      {
+        path: "/drafts",
+        title: "Drafts",
+        icon: "",
+      },
+      {
+        path: "/videos",
+        title: "Videos",
+        icon: "",
+      },
+      {
+        path: "/pending-videos",
+        title: "PendingVideos",
+        icon: "",
+      },
+    ],
   },
   {
     path: "/artist-management",
@@ -61,11 +89,6 @@ const menuItems = [
     icon: <SiSimpleanalytics size={18} />,
   },
 
-  // {
-  //   path: "/manage-account",
-  //   title: "Manage Account",
-  //   icon: <GrTransaction size={18} />,
-  // },
   {
     path: "/financial",
     title: "Financial",
