@@ -402,3 +402,93 @@ export const videosData = [
     stores: "220 terrs, 21 Stored",
   },
 ];
+export const services = [
+  {
+    icon: (
+      <img
+        className="w-[35px] h-[35px] ml-[75px]"
+        src="https://img.freepik.com/premium-vector/set-tiktok-app-icons-social-media-logo-vector-illustration_277909-592.jpg"
+        alt="TikTok"
+      />
+    ),
+    title: "TikTok Manual Claim",
+    type: "tiktok",
+  },
+  {
+    icon: (
+      <img
+        className="w-w-[35px] h-[35px] ml-[95px]"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
+        alt="Facebook"
+      />
+    ),
+    title: "Facebook Claim Release",
+    type: "facebook",
+  },
+  {
+    icon: (
+      <img
+        className="w-[60px] h-[40px] ml-[75px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+        alt="YouTube"
+      />
+    ),
+    title: "YouTube Claim Release",
+    type: "youtube",
+  },
+  {
+    icon: (
+      <img
+        className="w-[60px] h-[40px] ml-[85px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+        alt="YouTube Takedown"
+      />
+    ),
+    title: "YouTube Video Takedowns Request",
+    type: "youtube-takedown",
+  },
+  {
+    icon: (
+      <img
+        className="w-[60px] h-[40px] ml-[75px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+        alt="YouTube Manual Claim"
+      />
+    ),
+    title: "YouTube Manual UGC Claim",
+    type: "youtube-manual",
+  },
+  {
+    icon: (
+      <img
+        className="w-w-[35px] h-[35px] ml-[95px]"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
+        alt="Facebook Whitelist"
+      />
+    ),
+    title: "Facebook Page Whitelist",
+    type: "facebook-whitelist",
+  },
+  {
+    icon: (
+      <img
+        className="w-[60px] h-[40px] ml-[75px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+        alt="Artist Channel"
+      />
+    ),
+    title: "Artist Channel Request",
+    type: "artist-channel-request",
+  },
+  {
+    icon: (
+      <img
+        className="w-[60px] h-[40px] ml-[60px]"
+        src="https://e7.pngegg.com/pngimages/125/937/png-clipart-youtube-logo-youtube-angle-logo-thumbnail.png"
+        alt="Whitelist Request"
+      />
+    ),
+    title: "WhiteListRequest",
+    type: "white-list-request",
+  },
+];

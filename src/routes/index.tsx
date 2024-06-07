@@ -35,6 +35,7 @@ import FinalizeMusic from "@/components/MyUploads/FinalizeMusic/FinalizeMusic";
 import Drafts from "@/components/MyUploads/Drafts/Drafts";
 import PendingVideos from "@/components/MyUploads/PendingVideos/PendingVideos";
 import SuccessVideos from "@/components/MyUploads/SuccessVideos/SuccessVideos";
+import DigitalRightsManagementPage from "@/components/Youtube/DigitalRightsManagementPage/DigitalRightsManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -167,7 +168,7 @@ const router = createBrowserRouter([
         path: "/legal",
         element: (
           <IsVerifiedRoutes>
-            <Legal />
+            <DigitalRightsManagementPage />
           </IsVerifiedRoutes>
         ),
       },
