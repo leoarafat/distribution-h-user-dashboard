@@ -61,6 +61,11 @@ const menuItems = [
         icon: "",
       },
       {
+        path: "/correction-track",
+        title: "Correction Tracks",
+        icon: "",
+      },
+      {
         path: "/drafts",
         title: "Drafts",
         icon: "",

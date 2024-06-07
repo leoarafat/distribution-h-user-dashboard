@@ -16,8 +16,6 @@ import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
 import Uploads from "@/components/Uplaods/Uploads";
 import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
-import MyUploads from "@/components/MyUploads/MyUploads";
-import Legal from "@/components/Legal/Legal";
 import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
 import DashboardHome from "@/components/DashboardHome/DashboardHome";
@@ -36,6 +34,7 @@ import Drafts from "@/components/MyUploads/Drafts/Drafts";
 import PendingVideos from "@/components/MyUploads/PendingVideos/PendingVideos";
 import SuccessVideos from "@/components/MyUploads/SuccessVideos/SuccessVideos";
 import DigitalRightsManagementPage from "@/components/Youtube/DigitalRightsManagementPage/DigitalRightsManagementPage";
+import CorrectionMusic from "@/components/MyUploads/CorrectionMusic/CorrectionMusic";
 
 const router = createBrowserRouter([
   {
@@ -90,14 +89,7 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      // {
-      //   path: "/my-uploads",
-      //   element: (
-      //     <IsVerifiedRoutes>
-      //       <MyUploads />
-      //     </IsVerifiedRoutes>
-      //   ),
-      // },
+
       {
         path: "/my-uploads/success-track",
         element: (
@@ -127,6 +119,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <PendingVideos />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/correction-track",
+        element: (
+          <IsVerifiedRoutes>
+            <CorrectionMusic />
           </IsVerifiedRoutes>
         ),
       },

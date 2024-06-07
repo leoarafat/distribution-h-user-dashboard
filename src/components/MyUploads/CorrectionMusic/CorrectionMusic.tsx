@@ -100,7 +100,7 @@ const AlbumCard = ({ album }: any) => {
           </Grid>
           <Grid item xs={4}>
             <Typography variant="subtitle1" color="text.secondary">
-              Cat#:
+              ISRC:
             </Typography>
           </Grid>
           <Grid item xs={8}>

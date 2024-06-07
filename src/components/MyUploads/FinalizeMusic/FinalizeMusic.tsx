@@ -63,7 +63,7 @@ function FinalizeMusic() {
     { field: "label", headerName: "Label", flex: 1 },
     { field: "releaseDate", headerName: "Release Date", flex: 1 },
     { field: "upc", headerName: "UPC", flex: 1 },
-    { field: "catNo", headerName: "Cat#", flex: 1 },
+    { field: "isrc", headerName: "ISRC", flex: 1 },
     { field: "tracks", headerName: "Tracks", flex: 1 },
   ];
 
