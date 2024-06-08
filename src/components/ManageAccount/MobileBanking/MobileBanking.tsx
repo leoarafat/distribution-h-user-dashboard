@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { mobileBankingProviders } from "@/MockData/BankData";
+import { mobileBankingProviders } from "@/MockData/MockData";
 
 const MobileBanking = () => {
   const [mobileBankingData, setMobileBankingData] = useState({

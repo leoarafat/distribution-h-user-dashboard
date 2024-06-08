@@ -11,7 +11,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useState } from "react";
-import { bangladeshiBanks } from "@/MockData/BankData";
+import { bangladeshiBanks } from "@/MockData/MockData";
 
 const Bank = () => {
   const [accountData, setAccountData] = useState({

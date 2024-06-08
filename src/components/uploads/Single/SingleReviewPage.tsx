@@ -13,7 +13,7 @@ import {
   Avatar,
 } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { releaseInformationData } from "@/MockData/BankData";
+import { releaseInformationData } from "@/MockData/MockData";
 
 const SingleTrackReviewPage = () => {
   const { tracks, release, audio } = releaseInformationData;

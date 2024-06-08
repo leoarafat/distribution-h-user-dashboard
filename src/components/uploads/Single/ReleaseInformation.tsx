@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState } from "react";
 import {
   Container,
@@ -13,13 +14,14 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
+import { genres } from "@/MockData/MockData";
 
-const genres = [
-  "Rock",
-  "Pop",
-  "Jazz",
-  // Add more genres as needed
-];
+// const genres = [
+//   "Rock",
+//   "Pop",
+//   "Jazz",
+//   // Add more genres as needed
+// ];
 
 const subgenres = [
   "Classic Rock",
@@ -54,7 +56,21 @@ const years = Array.from(
 const ReleaseInformation = () => {
   const [primaryArtists, setPrimaryArtists] = useState([""]);
   const [featuringArtists, setFeaturingArtists] = useState([""]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedSubgenre, setSelectedSubgenre] = useState("");
+  const handleGenreChange = (event: any, value: any) => {
+    setSelectedGenre(value);
+    setSelectedSubgenre(""); // Reset subgenre when genre changes
+  };
 
+  const handleSubgenreChange = (event: any, value: any) => {
+    setSelectedSubgenre(value);
+  };
+
+  const getSubgenres = () => {
+    const genreObj = genres.find((genre) => genre.name === selectedGenre);
+    return genreObj ? genreObj.subgenres : [];
+  };
   const addPrimaryArtist = () => setPrimaryArtists([...primaryArtists, ""]);
   const addFeaturingArtist = () =>
     setFeaturingArtists([...featuringArtists, ""]);
@@ -188,7 +204,10 @@ const ReleaseInformation = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Autocomplete
-              options={genres}
+              // options={genres}
+              options={genres?.map((genre: any) => genre.name)}
+              value={selectedGenre}
+              onChange={handleGenreChange}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -202,7 +221,11 @@ const ReleaseInformation = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Autocomplete
-              options={subgenres}
+              // options={subgenres}
+              //@ts-ignore
+              options={getSubgenres()}
+              value={selectedSubgenre}
+              onChange={handleSubgenreChange}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -210,6 +233,7 @@ const ReleaseInformation = () => {
                   variant="outlined"
                   required
                   fullWidth
+                  disabled={!selectedGenre}
                 />
               )}
             />

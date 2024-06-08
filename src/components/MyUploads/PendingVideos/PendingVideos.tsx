@@ -5,7 +5,7 @@ import { Box, Typography, TextField, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import SearchIcon from "@mui/icons-material/Search";
 // Import the custom pagination component
-import { rows } from "@/MockData/BankData";
+import { rows } from "@/MockData/MockData";
 import BasicPagination from "../BasicPagination";
 
 function PendingVideos() {

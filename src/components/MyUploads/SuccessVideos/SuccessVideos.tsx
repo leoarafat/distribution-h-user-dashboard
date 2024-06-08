@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import SearchIcon from "@mui/icons-material/Search";
 import PublicIcon from "@mui/icons-material/Public";
 import StoreIcon from "@mui/icons-material/Store"; // Added StoreIcon import
-import { rows } from "@/MockData/BankData";
+import { rows } from "@/MockData/MockData";
 import StoreModal from "../Modal/StoreModal";
 import CountryModal from "../Modal/CountryModal";
 import BasicPagination from "../BasicPagination";

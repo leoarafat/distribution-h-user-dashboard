@@ -5,7 +5,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { rows } from "@/MockData/BankData";
+import { rows } from "@/MockData/MockData";
 import BasicPagination from "../BasicPagination";
 
 function Drafts() {

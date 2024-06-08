@@ -15,7 +15,7 @@ import YouTubeManualClaim from "@/components/Legal/Youtube/YouTubeManualClaim";
 import FacebookWhiteList from "@/components/Legal/FaceBook/FacebookWhiteList";
 import ArtistChannelRequest from "../ArtistChannelRequest/ArtistChannelRequest";
 import WhiteListRequest from "../WhiteListRequest/WhiteListRequest";
-import { services } from "@/MockData/BankData";
+import { services } from "@/MockData/MockData";
 
 const DigitalRightsManagementPage = () => {
   const [claimType, setClaimType] = useState("tiktok");

@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import dayjs from "dayjs";
-import { transactions } from "@/MockData/BankData";
+import { transactions } from "@/MockData/MockData";
 import PaymentMethodModal from "../PaymentMethodModal/PaymentMethodModal";
 
 const TransactionHistory = () => {
