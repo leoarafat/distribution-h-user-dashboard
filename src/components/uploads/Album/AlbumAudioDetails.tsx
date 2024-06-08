@@ -187,7 +187,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
         song.id === songId
           ? {
               ...song,
-              primaryArtists: song.primaryArtists.map((artist, i) =>
+              primaryArtists: song.primaryArtists.map((artist: any, i: any) =>
                 i === index ? value : artist
               ),
             }
@@ -206,8 +206,8 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
         song.id === songId
           ? {
               ...song,
-              featuringArtists: song.featuringArtists.map((artist, i) =>
-                i === index ? value : artist
+              featuringArtists: song.featuringArtists.map(
+                (artist: any, i: any) => (i === index ? value : artist)
               ),
             }
           : song
@@ -322,19 +322,24 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
           </Box>
         </Box>
 
-        {songs.map((song, index) => (
+        {songs?.map((song, index) => (
           <Box mt={4} key={song.id} border={1} borderRadius={5} padding={2}>
             <Box
               display="flex"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography variant="h6">Audio {index + 1}</Typography>
+              <Typography variant="h6">
+                {song?.file?.name} {index + 1}
+              </Typography>
               <IconButton onClick={() => handleAudioRemove(song.id)}>
                 <MdClose />
               </IconButton>
             </Box>
-            <audio controls style={{ width: "100%", marginTop: "10px" }}>
+            <audio
+              controls
+              style={{ width: "100%", marginTop: "10px", marginBottom: "15px" }}
+            >
               <source src={URL.createObjectURL(song.file)} type="audio/mpeg" />
               Your browser does not support the audio tag.
             </audio>
@@ -363,7 +368,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     }
                   />
                 </Grid>
-                {song.primaryArtists.map((artist, artistIndex) => (
+                {song.primaryArtists.map((artist: any, artistIndex: any) => (
                   <Grid
                     item
                     xs={12}
@@ -417,7 +422,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     </Grid>
                   </Grid>
                 ))}
-                {song.featuringArtists.map((artist, artistIndex) => (
+                {song.featuringArtists.map((artist: any, artistIndex: any) => (
                   <Grid
                     item
                     xs={12}
@@ -656,11 +661,11 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
             </Box>
           </Box>
         ))}
-        <Box mt={4}>
+        {/* <Box mt={4}>
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Submit
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </Container>
   );
