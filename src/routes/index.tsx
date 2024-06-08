@@ -35,6 +35,7 @@ import PendingVideos from "@/components/MyUploads/PendingVideos/PendingVideos";
 import SuccessVideos from "@/components/MyUploads/SuccessVideos/SuccessVideos";
 import DigitalRightsManagementPage from "@/components/Youtube/DigitalRightsManagementPage/DigitalRightsManagementPage";
 import CorrectionMusic from "@/components/MyUploads/CorrectionMusic/CorrectionMusic";
+import AlbumStepperForm from "@/components/SteperForm/AlbumStepper";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <UploaderStepperForm />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/album",
+        element: (
+          <IsVerifiedRoutes>
+            <AlbumStepperForm />
           </IsVerifiedRoutes>
         ),
       },

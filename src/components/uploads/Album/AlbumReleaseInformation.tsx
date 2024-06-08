@@ -51,7 +51,7 @@ const years = Array.from(
   (val, index) => new Date().getFullYear() - index
 ).map(String); // Convert years to strings for Autocomplete
 
-const ReleaseInformation = () => {
+const AlbumReleaseInformation = () => {
   const [primaryArtists, setPrimaryArtists] = useState([""]);
   const [featuringArtists, setFeaturingArtists] = useState([""]);
 
@@ -289,4 +289,4 @@ const ReleaseInformation = () => {
   );
 };
 
-export default ReleaseInformation;
+export default AlbumReleaseInformation;

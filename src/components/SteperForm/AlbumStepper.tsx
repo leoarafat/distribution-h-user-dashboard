@@ -20,24 +20,24 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/redux/hooks";
 import { setIsVerified } from "@/redux/slices/auth/authSlice";
-import AudioDetails from "../uploads/Single/AudioDetails";
 import ReleaseInformation from "../uploads/Single/ReleaseInformation";
 import TracksInformation from "../uploads/Single/TracksInformation";
 import Countries from "../uploads/Single/Countries";
 import SingleReviewPage from "../uploads/Single/SingleReviewPage";
+import AlbumAudioDetails from "../uploads/Album/AlbumAudioDetails";
 
 const steps = [
   { title: "Release Information", component: ReleaseInformation },
-  { title: "Audio & Cover", component: AudioDetails },
+  { title: "Audio & Cover", component: AlbumAudioDetails },
   { title: "Tracks Details", component: TracksInformation },
   { title: "Territories", component: Countries },
   { title: "Review Details", component: SingleReviewPage },
 ];
 
-const UploaderStepperForm = () => {
+const AlbumStepperForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    audio: {},
+    audio: [],
     trackDetails: {},
     additionalDetails: {},
     previewPage: {},
@@ -145,4 +145,4 @@ const UploaderStepperForm = () => {
   );
 };
 
-export default UploaderStepperForm;
+export default AlbumStepperForm;
