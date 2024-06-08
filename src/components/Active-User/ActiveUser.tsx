@@ -82,7 +82,7 @@ const Verify = () => {
         console.error("Login error:", error);
       }
     }
-  }, [isSuccess, data, error, navigate]);
+  }, [isSuccess, data, error, navigate, dispatch]);
   const handleChange = (index: any, value: any) => {
     if (value.length > 1) {
       value = value.slice(-1);

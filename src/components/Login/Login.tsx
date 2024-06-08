@@ -60,7 +60,6 @@ const Login = () => {
       const user = decodedToken(data?.data?.accessToken);
       dispatch(setUser({ user: user, accessToken: data?.data?.accessToken }));
       storeUserInfo({ accessToken: data?.data?.accessToken });
-
       navigate("/");
     }
     if (error) {
