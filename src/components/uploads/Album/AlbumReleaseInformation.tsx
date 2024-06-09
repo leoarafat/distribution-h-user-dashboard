@@ -1,63 +1,26 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Grid,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-} from "@mui/material";
+import { useState } from "react";
+import { Container, Grid, TextField, Box, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const genres = [
-  "Rock",
-  "Pop",
-  "Jazz",
-  // Add more genres as needed
-];
+const genres = ["Rock", "Pop", "Jazz"];
 
-const subgenres = [
-  "Classic Rock",
-  "Hard Rock",
-  // Add more subgenres as needed
-];
+const subgenre = ["Classic Rock", "Hard Rock"];
 
-const formats = [
-  "CD",
-  "Vinyl",
-  // Add more formats as needed
-];
+const labels = ["Label 1", "Label 2"];
 
-const labels = [
-  "Label 1",
-  "Label 2",
-  // Add more labels as needed
-];
-
-const artists = [
-  "Artist 1",
-  "Artist 2",
-  "Artist 3",
-  // Add more artists as needed
-];
+const artists = ["Artist 1", "Artist 2", "Artist 3"];
 
 const years = Array.from(
   new Array(50),
   (val, index) => new Date().getFullYear() - index
-).map(String); // Convert years to strings for Autocomplete
+).map(String);
 
 const AlbumReleaseInformation = () => {
   const [primaryArtists, setPrimaryArtists] = useState([""]);
-  const [featuringArtists, setFeaturingArtists] = useState([""]);
 
   const addPrimaryArtist = () => setPrimaryArtists([...primaryArtists, ""]);
-  const addFeaturingArtist = () =>
-    setFeaturingArtists([...featuringArtists, ""]);
 
   const removePrimaryArtist = (index: any) => {
     const newPrimaryArtists = [...primaryArtists];
@@ -65,22 +28,10 @@ const AlbumReleaseInformation = () => {
     setPrimaryArtists(newPrimaryArtists);
   };
 
-  const removeFeaturingArtist = (index: any) => {
-    const newFeaturingArtists = [...featuringArtists];
-    newFeaturingArtists.splice(index, 1);
-    setFeaturingArtists(newFeaturingArtists);
-  };
-
   const handlePrimaryArtistChange = (index: any, value: any) => {
     const newPrimaryArtists = [...primaryArtists];
     newPrimaryArtists[index] = value;
     setPrimaryArtists(newPrimaryArtists);
-  };
-
-  const handleFeaturingArtistChange = (index: any, value: any) => {
-    const newFeaturingArtists = [...featuringArtists];
-    newFeaturingArtists[index] = value;
-    setFeaturingArtists(newFeaturingArtists);
   };
 
   return (
@@ -156,7 +107,7 @@ const AlbumReleaseInformation = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Autocomplete
-              options={subgenres}
+              options={subgenre}
               renderInput={(params) => (
                 <TextField
                   {...params}

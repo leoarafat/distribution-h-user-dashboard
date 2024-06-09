@@ -3,7 +3,6 @@ import {
   Grid,
   TextField,
   Box,
-  Button,
   Container,
   Typography,
   IconButton,
@@ -14,8 +13,7 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import { Button } from "@mui/material";
 
 const genres = ["Rock", "Pop", "Jazz"];
 const subgenres = ["Classic Rock", "Hard Rock"];
@@ -50,17 +48,22 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                 version: "",
                 primaryArtists: [""],
                 featuringArtists: [""],
+                writers: [""],
+                composers: [""],
+                directors: [""],
+                producers: [""],
                 variousArtists: false,
                 genre: "",
                 subgenre: "",
                 label: "",
                 format: "",
                 releaseDate: "",
-                pline: "",
-                cline: "",
+                publisher: "",
+                language: "",
                 productionYear: "",
-                upc: "",
-                catalogNumber: "",
+                isrc: "",
+                youtube: "",
+                lyrics: "",
               };
         });
       });
@@ -101,17 +104,22 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
           version: "",
           primaryArtists: [""],
           featuringArtists: [""],
+          writers: [""],
+          composers: [""],
+          directors: [""],
+          producers: [""],
           variousArtists: false,
           genre: "",
           subgenre: "",
           label: "",
           format: "",
           releaseDate: "",
-          pline: "",
-          cline: "",
+          publisher: "",
+          language: "",
           productionYear: "",
-          upc: "",
-          catalogNumber: "",
+          isrc: "",
+          youtube: "",
+          lyrics: "",
         },
       ]);
     }
@@ -146,7 +154,100 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       )
     );
   };
+  const addWriter = (songId: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId ? { ...song, writers: [...song.writers, ""] } : song
+      )
+    );
+  };
 
+  const addComposer = (songId: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? { ...song, composers: [...song.composers, ""] }
+          : song
+      )
+    );
+  };
+  const addDirectors = (songId: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? { ...song, directors: [...song.directors, ""] }
+          : song
+      )
+    );
+  };
+
+  const addProducer = (songId: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? { ...song, producers: [...song.producers, ""] }
+          : song
+      )
+    );
+  };
+  const removeWriter = (songId: number, index: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              writers: song.writers.filter(
+                (_: string, i: number) => i !== index
+              ),
+            }
+          : song
+      )
+    );
+  };
+
+  const removeComposer = (songId: number, index: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              composers: song.composers.filter(
+                (_: string, i: number) => i !== index
+              ),
+            }
+          : song
+      )
+    );
+  };
+  const removeDirector = (songId: number, index: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              directors: song.directors.filter(
+                (_: string, i: number) => i !== index
+              ),
+            }
+          : song
+      )
+    );
+  };
+
+  const removeProducer = (songId: number, index: number) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              producers: song.producers.filter(
+                (_: string, i: number) => i !== index
+              ),
+            }
+          : song
+      )
+    );
+  };
   const removePrimaryArtist = (songId: number, index: number) => {
     setSongs((prevSongs) =>
       prevSongs.map((song) =>
@@ -214,6 +315,75 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       )
     );
   };
+  const handleProducersChange = (
+    songId: number,
+    index: number,
+    value: string
+  ) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              producers: song.producers.map((artist: any, i: any) =>
+                i === index ? value : artist
+              ),
+            }
+          : song
+      )
+    );
+  };
+  const handleDirectorsChange = (
+    songId: number,
+    index: number,
+    value: string
+  ) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              directors: song.directors.map((artist: any, i: any) =>
+                i === index ? value : artist
+              ),
+            }
+          : song
+      )
+    );
+  };
+  const handleWriterChange = (songId: number, index: number, value: string) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              writers: song.writers.map((writer: any, i: any) =>
+                i === index ? value : writer
+              ),
+            }
+          : song
+      )
+    );
+  };
+
+  const handleComposerChange = (
+    songId: number,
+    index: number,
+    value: string
+  ) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId
+          ? {
+              ...song,
+              composers: song.composers.map((composer: any, i: any) =>
+                i === index ? value : composer
+              ),
+            }
+          : song
+      )
+    );
+  };
 
   const handleSongChange = (songId: number, field: string, value: any) => {
     setSongs((prevSongs) =>
@@ -244,11 +414,11 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
           label: song.label,
           format: song.format,
           releaseDate: song.releaseDate,
-          pline: song.pline,
-          cline: song.cline,
+          publisher: song.publisher,
+          language: song.language,
           productionYear: song.productionYear,
-          upc: song.upc,
-          catalogNumber: song.catalogNumber,
+          isrc: song.isrc,
+          youtube: song.youtube,
         })
       );
     });
@@ -256,7 +426,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
     // Send formData to the API endpoint
     // Example: axios.post('/api/endpoint', formData);
   };
-  console.log(songs);
+  // console.log(songs);
   return (
     <Container>
       <Box mt={3}>
@@ -371,13 +541,13 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                 {song.primaryArtists.map((artist: any, artistIndex: any) => (
                   <Grid
                     item
-                    xs={12}
+                    xs={6}
                     key={artistIndex}
                     container
                     alignItems="center"
-                    spacing={1}
+                    // spacing={1}
                   >
-                    <Grid item xs={11}>
+                    <Grid item xs={12}>
                       <Autocomplete
                         isOptionEqualToValue={(option, value) =>
                           option.value === value.value
@@ -400,12 +570,6 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                         )}
                         freeSolo
                       />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={1}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
                       <IconButton
                         onClick={() =>
                           removePrimaryArtist(song.id, artistIndex)
@@ -422,44 +586,29 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     </Grid>
                   </Grid>
                 ))}
+                {/* featuringArtists */}
                 {song.featuringArtists.map((artist: any, artistIndex: any) => (
                   <Grid
                     item
-                    xs={12}
+                    xs={6}
                     key={artistIndex}
                     container
                     alignItems="center"
-                    spacing={1}
                   >
-                    <Grid item xs={11}>
-                      <Autocomplete
-                        isOptionEqualToValue={(option, value) =>
-                          option.value === value.value
-                        }
-                        options={artists}
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Featuring"
+                        variant="outlined"
                         value={artist}
-                        onChange={(event, newValue) =>
+                        onChange={(event) =>
                           handleFeaturingArtistChange(
                             song.id,
                             artistIndex,
-                            newValue
+                            event.target.value
                           )
                         }
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Featuring"
-                            variant="outlined"
-                          />
-                        )}
-                        freeSolo
+                        fullWidth
                       />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={1}
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
                       <IconButton
                         onClick={() =>
                           removeFeaturingArtist(song.id, artistIndex)
@@ -476,23 +625,149 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     </Grid>
                   </Grid>
                 ))}
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={song.variousArtists}
-                        onChange={(e) =>
-                          handleSongChange(
+                {/* featuringArtists */}
+                {/* Producers */}
+                {song.producers.map((producer: any, producerIndex: any) => (
+                  <Grid
+                    item
+                    xs={6}
+                    key={producerIndex}
+                    container
+                    alignItems="center"
+                  >
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Producers"
+                        variant="outlined"
+                        value={producer}
+                        onChange={(event) =>
+                          handleProducersChange(
                             song.id,
-                            "variousArtists",
-                            e.target.checked
+                            producerIndex,
+                            event.target.value
                           )
                         }
+                        fullWidth
                       />
-                    }
-                    label="Various Artists / Compilation"
-                  />
+                      <IconButton
+                        onClick={() => removeProducer(song.id, producerIndex)}
+                        disabled={song.producers.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                      {producerIndex === song.producers.length - 1 && (
+                        <IconButton onClick={() => addProducer(song.id)}>
+                          <AddCircleOutlineIcon />
+                        </IconButton>
+                      )}
+                    </Grid>
+                  </Grid>
+                ))}
+                {/* Producers */}
+                {/* Directors */}
+                {song.directors.map((director: any, directorIndex: any) => (
+                  <Grid
+                    item
+                    xs={6}
+                    key={directorIndex}
+                    container
+                    alignItems="center"
+                  >
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Directors"
+                        variant="outlined"
+                        value={director}
+                        onChange={(event) =>
+                          handleDirectorsChange(
+                            song.id,
+                            directorIndex,
+                            event.target.value
+                          )
+                        }
+                        fullWidth
+                      />
+                      <IconButton
+                        onClick={() => removeDirector(song.id, directorIndex)}
+                        disabled={song.directors.length === 1}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                      {directorIndex === song.directors.length - 1 && (
+                        <IconButton onClick={() => addDirectors(song.id)}>
+                          <AddCircleOutlineIcon />
+                        </IconButton>
+                      )}
+                    </Grid>
+                  </Grid>
+                ))}
+                {/* Directors */}
+
+                <Grid item xs={6}>
+                  {song.writers.map((writer: any, index: any) => (
+                    <Grid container spacing={1} alignItems="center" key={index}>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Writer"
+                          variant="outlined"
+                          value={writer}
+                          onChange={(event) =>
+                            handleWriterChange(
+                              song.id,
+                              index,
+                              event.target.value
+                            )
+                          }
+                          fullWidth
+                        />
+                        <IconButton
+                          onClick={() => removeWriter(song.id, index)}
+                          disabled={song?.writers?.length === 1}
+                        >
+                          <RemoveCircleOutlineIcon />
+                        </IconButton>
+                        {index === song?.writers?.length - 1 && (
+                          <IconButton onClick={() => addWriter(song.id)}>
+                            <AddCircleOutlineIcon />
+                          </IconButton>
+                        )}
+                      </Grid>
+                    </Grid>
+                  ))}
                 </Grid>
+                <Grid item xs={6}>
+                  {song.composers.map((composer: any, index: any) => (
+                    <Grid container spacing={1} alignItems="center" key={index}>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Composer"
+                          variant="outlined"
+                          value={composer}
+                          onChange={(event) =>
+                            handleComposerChange(
+                              song.id,
+                              index,
+                              event.target.value
+                            )
+                          }
+                          fullWidth
+                        />
+                        <IconButton
+                          onClick={() => removeComposer(song.id, index)}
+                          disabled={song?.composers?.length === 1}
+                        >
+                          <RemoveCircleOutlineIcon />
+                        </IconButton>
+                        {index === song?.composers?.length - 1 && (
+                          <IconButton onClick={() => addComposer(song.id)}>
+                            <AddCircleOutlineIcon />
+                          </IconButton>
+                        )}
+                      </Grid>
+                    </Grid>
+                  ))}
+                </Grid>
+
                 <Grid item xs={12} md={6}>
                   <Autocomplete
                     isOptionEqualToValue={(option, value) =>
@@ -595,23 +870,40 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                 <Grid item xs={12} md={4}>
                   <TextField
                     fullWidth
-                    label="Ⓟ Line"
+                    label="Publisher"
                     variant="outlined"
-                    value={song.pline}
+                    value={song.publisher}
                     onChange={(e) =>
-                      handleSongChange(song.id, "pline", e.target.value)
+                      handleSongChange(song.id, "publisher", e.target.value)
                     }
                   />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                {/* <Grid item xs={12} md={4}>
                   <TextField
                     fullWidth
-                    label="© Line"
+                    label="Language"
                     variant="outlined"
-                    value={song.cline}
+                    value={song.language}
                     onChange={(e) =>
-                      handleSongChange(song.id, "cline", e.target.value)
+                      handleSongChange(song.id, "language", e.target.value)
                     }
+                  />
+                </Grid> */}
+                <Grid item xs={12} md={4}>
+                  <Autocomplete
+                    fullWidth
+                    options={["English", "Spanish", "French", "German"]}
+                    renderInput={(params) => (
+                      <TextField
+                        value={song.language}
+                        {...params}
+                        label="Lyrics Language"
+                        variant="outlined"
+                        onChange={(e) =>
+                          handleSongChange(song.id, "language", e.target.value)
+                        }
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -638,23 +930,35 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="UPC/EAN"
+                    label="ISRC"
                     variant="outlined"
-                    value={song.upc}
+                    value={song.isrc}
                     onChange={(e) =>
-                      handleSongChange(song.id, "upc", e.target.value)
+                      handleSongChange(song.id, "isrc", e.target.value)
                     }
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Producer Catalogue Number"
+                    label="Youtube URL"
                     variant="outlined"
-                    value={song.catalogNumber}
+                    value={song.youtube}
                     onChange={(e) =>
-                      handleSongChange(song.id, "catalogNumber", e.target.value)
+                      handleSongChange(song.id, "youtube", e.target.value)
                     }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    label="Lyrics"
+                    multiline
+                    onChange={(e) =>
+                      handleSongChange(song.id, "lyrics", e.target.value)
+                    }
+                    rows={4}
                   />
                 </Grid>
               </Grid>
