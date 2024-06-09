@@ -31,7 +31,7 @@ const LastSixApproved = () => {
             {" "}
             <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
               <AudiotrackIcon sx={{ fontSize: 60, color: "#03008D" }} />
-              <p>Release Audio</p>
+              <p>Create Audio Release</p>
             </div>
             <div className="hidden">
               <p

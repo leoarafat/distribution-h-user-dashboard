@@ -168,7 +168,7 @@ const LabelVerification = ({ data, onChange }: any) => {
         <Grid item xs={6}>
           <TextField
             name="channelName"
-            label="Chanel NAme"
+            label="Channel Name"
             variant="outlined"
             fullWidth
             value={data?.label?.channelName || ""}

@@ -26,7 +26,7 @@ const LatestVideo = () => {
           {" "}
           <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
             <YouTubeIcon sx={{ fontSize: 60, color: "#FF0000" }} />
-            <p>Release Video</p>
+            <p>Create Video Release</p>
           </div>
           <div className="hidden">
             <p

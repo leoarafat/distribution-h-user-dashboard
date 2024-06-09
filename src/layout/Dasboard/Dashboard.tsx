@@ -53,17 +53,17 @@ const menuItems = [
     subMenu: [
       {
         path: "/success-track",
-        title: "Success Tracks",
+        title: "Music",
         icon: "",
       },
       {
         path: "/pending-track",
-        title: "Pending Tracks",
+        title: "Pending Release",
         icon: "",
       },
       {
         path: "/correction-track",
-        title: "Correction Tracks",
+        title: "Correction Request",
         icon: "",
       },
       {
@@ -78,7 +78,7 @@ const menuItems = [
       },
       {
         path: "/pending-videos",
-        title: "PendingVideos",
+        title: "Pending Videos",
         icon: "",
       },
     ],
