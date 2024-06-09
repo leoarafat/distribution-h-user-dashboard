@@ -16,19 +16,6 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
 import { genres } from "@/MockData/MockData";
 
-// const genres = [
-//   "Rock",
-//   "Pop",
-//   "Jazz",
-//   // Add more genres as needed
-// ];
-
-const subgenres = [
-  "Classic Rock",
-  "Hard Rock",
-  // Add more subgenres as needed
-];
-
 const formats = [
   "CD",
   "Vinyl",

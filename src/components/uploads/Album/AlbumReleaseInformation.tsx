@@ -4,10 +4,6 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const genres = ["Rock", "Pop", "Jazz"];
-
-const subgenre = ["Classic Rock", "Hard Rock"];
-
 const labels = ["Label 1", "Label 2"];
 
 const artists = ["Artist 1", "Artist 2", "Artist 3"];
@@ -91,34 +87,6 @@ const AlbumReleaseInformation = () => {
             </Grid>
           ))}
 
-          <Grid item xs={12} md={6}>
-            <Autocomplete
-              options={genres}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Genre"
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Autocomplete
-              options={subgenre}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Subgenre"
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
-            />
-          </Grid>
           <Grid item xs={12}>
             <Autocomplete
               options={labels}

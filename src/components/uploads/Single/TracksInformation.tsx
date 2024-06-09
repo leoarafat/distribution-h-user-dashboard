@@ -7,9 +7,8 @@ import {
   Autocomplete,
   Container,
   Grid,
-  Typography,
 } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const years = Array.from(new Array(125), (val, index) => 2024 - index).map(
@@ -18,11 +17,6 @@ const years = Array.from(new Array(125), (val, index) => 2024 - index).map(
 
 const TracksInformation = () => {
   const [additionalFields, setAdditionalFields] = useState([]);
-
-  const handleAddField = () => {
-    //@ts-ignore
-    setAdditionalFields([...additionalFields, { type: "", value: "" }]);
-  };
 
   const handleRemoveField = (index: any) => {
     setAdditionalFields(additionalFields.filter((_, i) => i !== index));

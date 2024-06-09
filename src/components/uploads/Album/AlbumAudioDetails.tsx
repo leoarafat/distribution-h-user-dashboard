@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useEffect } from "react";
 import {
   Grid,
@@ -13,10 +14,8 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
-import { Button } from "@mui/material";
+import { genres } from "@/MockData/MockData";
 
-const genres = ["Rock", "Pop", "Jazz"];
-const subgenres = ["Classic Rock", "Hard Rock"];
 const formats = ["CD", "Vinyl"];
 const labels = ["Label 1", "Label 2"];
 const artists = ["Artist 1", "Artist 2", "Artist 3"];
@@ -31,6 +30,8 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
   >([]);
   const [songs, setSongs] = useState<any[]>([]);
   const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedSubgenre, setSelectedSubgenre] = useState("");
 
   useEffect(() => {
     if (audioFiles.length > 0) {
@@ -69,7 +70,19 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       });
     }
   }, [audioFiles]);
+  const handleGenreChange = (event: any, value: any) => {
+    setSelectedGenre(value);
+    setSelectedSubgenre(""); // Reset subgenre when genre changes
+  };
 
+  const handleSubgenreChange = (event: any, value: any) => {
+    setSelectedSubgenre(value);
+  };
+
+  const getSubgenres = () => {
+    const genreObj = genres.find((genre) => genre.name === selectedGenre);
+    return genreObj ? genreObj.subgenres : [];
+  };
   const handleCoverImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -734,16 +747,13 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                   ))}
                 </Grid>
 
+                {/* Here genre  */}
                 <Grid item xs={12} md={6}>
                   <Autocomplete
-                    isOptionEqualToValue={(option, value) =>
-                      option.value === value.value
-                    }
-                    options={genres}
-                    value={song.genre}
-                    onChange={(event, newValue) =>
-                      handleSongChange(song.id, "genre", newValue)
-                    }
+                    // options={genres}
+                    options={genres?.map((genre: any) => genre.name)}
+                    value={selectedGenre}
+                    onChange={handleGenreChange}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -757,14 +767,11 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Autocomplete
-                    isOptionEqualToValue={(option, value) =>
-                      option.value === value.value
-                    }
-                    options={subgenres}
-                    value={song.subgenre}
-                    onChange={(event, newValue) =>
-                      handleSongChange(song.id, "subgenre", newValue)
-                    }
+                    // options={subgenres}
+                    //@ts-ignore
+                    options={getSubgenres()}
+                    value={selectedSubgenre}
+                    onChange={handleSubgenreChange}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -772,6 +779,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                         variant="outlined"
                         required
                         fullWidth
+                        disabled={!selectedGenre}
                       />
                     )}
                   />
