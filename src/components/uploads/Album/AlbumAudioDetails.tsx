@@ -393,40 +393,6 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
     );
   };
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    if (coverImage) {
-      formData.append("coverImage", coverImage);
-    }
-    songs.forEach((song) => {
-      formData.append("audioFiles", song.file);
-      formData.append(
-        "songDetails",
-        JSON.stringify({
-          id: song.id,
-          title: song.title,
-          version: song.version,
-          primaryArtists: song.primaryArtists,
-          featuringArtists: song.featuringArtists,
-          variousArtists: song.variousArtists,
-          genre: song.genre,
-          subgenre: song.subgenre,
-          label: song.label,
-          format: song.format,
-          releaseDate: song.releaseDate,
-          publisher: song.publisher,
-          language: song.language,
-          productionYear: song.productionYear,
-          isrc: song.isrc,
-          youtube: song.youtube,
-        })
-      );
-    });
-
-    // Send formData to the API endpoint
-    // Example: axios.post('/api/endpoint', formData);
-  };
-  // console.log(songs);
   return (
     <Container>
       <Box mt={3}>
@@ -878,17 +844,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     }
                   />
                 </Grid>
-                {/* <Grid item xs={12} md={4}>
-                  <TextField
-                    fullWidth
-                    label="Language"
-                    variant="outlined"
-                    value={song.language}
-                    onChange={(e) =>
-                      handleSongChange(song.id, "language", e.target.value)
-                    }
-                  />
-                </Grid> */}
+
                 <Grid item xs={12} md={4}>
                   <Autocomplete
                     fullWidth
@@ -965,11 +921,6 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
             </Box>
           </Box>
         ))}
-        {/* <Box mt={4}>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Box> */}
       </Box>
     </Container>
   );

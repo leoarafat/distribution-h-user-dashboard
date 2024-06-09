@@ -20,18 +20,17 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/redux/hooks";
 import { setIsVerified } from "@/redux/slices/auth/authSlice";
-import TracksInformation from "../uploads/Single/TracksInformation";
-import Countries from "../uploads/Single/Countries";
-import SingleReviewPage from "../uploads/Single/SingleReviewPage";
+
 import AlbumAudioDetails from "../uploads/Album/AlbumAudioDetails";
 import AlbumReleaseInformation from "../uploads/Album/AlbumReleaseInformation";
+import AlbumAudioReview from "../uploads/Album/AlbumAudioReview";
 
 const steps = [
   { title: "Release Information", component: AlbumReleaseInformation },
   { title: "Audio & Cover", component: AlbumAudioDetails },
-  { title: "Tracks Details", component: TracksInformation },
-  { title: "Territories", component: Countries },
-  { title: "Review Details", component: SingleReviewPage },
+  // { title: "Tracks Details", component: TracksInformation },
+  // { title: "Territories", component: Countries },
+  { title: "Review Details", component: AlbumAudioReview },
 ];
 
 const AlbumStepperForm = () => {
