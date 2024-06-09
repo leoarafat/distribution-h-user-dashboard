@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Checkbox,
   FormControlLabel,
   Grid,
+  IconButton,
+  InputAdornment,
   Paper,
   TextField,
   Typography,
@@ -12,11 +14,13 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { storeUserInfo } from "@/redux/services/auth.service";
 import toast from "react-hot-toast";
-import loginImage from "../../assets/login.jpg"; // Import your login image here
+import loginImage from "../../assets/login.jpg";
+import logo from "../../assets/1.png";
 import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUser } from "@/redux/slices/auth/authSlice";
 import { decodedToken } from "@/utils/jwt";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +28,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${loginImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    backgroundColor: "#f0f0f0",
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    "&:before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
   },
   paper: {
     padding: theme.spacing(4),
@@ -31,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     maxWidth: 400,
     margin: "auto",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundColor: "#ffffff",
+    zIndex: 2,
+    position: "relative",
   },
   form: {
     marginTop: theme.spacing(3),
@@ -40,10 +60,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     height: 50,
   },
-  image: {
-    maxWidth: "100%",
-    height: "auto",
-    borderRadius: theme.shape.borderRadius,
+  eyeIcon: {
+    cursor: "pointer",
+  },
+  logo: {
+    width: 30,
   },
 }));
 
@@ -53,6 +74,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const [userLogin, { isLoading, data, isSuccess, error }] =
     useUserLoginMutation();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -91,9 +114,17 @@ const Login = () => {
     >
       <Grid item xs={12} sm={6}>
         <Paper className={classes.paper}>
-          <Typography variant="h5" component="h2" gutterBottom>
-            Login
-          </Typography>
+          <div className="flex justify-center items-center">
+            <img src={logo} alt="Company Logo" className={classes.logo} />
+            <Typography
+              variant="h5"
+              component="h2"
+              gutterBottom
+              className="pt-3 font-semibold"
+            >
+              Login
+            </Typography>
+          </div>
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -110,11 +141,23 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
               id="password"
+              label="Password"
+              name="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      className={classes.eyeIcon}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
