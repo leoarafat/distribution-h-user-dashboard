@@ -90,18 +90,85 @@ const AnalyticsPage = () => {
     const currentChartData = data[filter];
 
     const pdf = new jsPDF();
-    let y = 10;
+    let y = 20;
 
-    pdf.setFontSize(12);
+    // Header
+    pdf.setFontSize(30);
     pdf.setFont("helvetica", "bold");
+    pdf.text("Be Musix.", 10, y);
+    y += 10;
 
+    pdf.setFontSize(14);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("Distribution services", 10, y);
+    y += 20;
+
+    // Date
+    pdf.setFontSize(12);
+    pdf.text("Wednesday 01 November 2023", 10, y);
+    y += 10;
+
+    // Partner greeting
+    pdf.text("Dear partner,", 10, y);
+    y += 10;
+
+    pdf.text(
+      "Here is the total amount of royalties credited on your account (BE Musix) regarding",
+      10,
+      y
+    );
+    y += 10;
+    pdf.text("the selected filters:", 10, y);
+    y += 20;
+
+    // Filter information
+    pdf.text("September 2023", 10, y);
+    y += 10;
+
+    pdf.text("Labels filtered single report:", 10, y);
+    y += 10;
+
+    // Table header
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Store", 10, y);
+    pdf.text("Total", 150, y);
+    y += 10;
+
+    pdf.setFont("helvetica", "normal");
+
+    // Data rows
     currentChartData.forEach((item: any) => {
-      pdf.text("Store:", 10, y);
-      pdf.text(item.name, 40, y);
-      pdf.text("Total:", 100, y);
-      pdf.text(String(item.value), 140, y);
-      y += 20;
+      pdf.text(item.name, 10, y);
+      pdf.text(String(item.value), 150, y);
+      y += 10;
     });
+
+    y += 10;
+
+    // Net revenue
+    pdf.text("NET REVENUE", 10, y);
+    pdf.text(
+      String(
+        currentChartData.reduce((acc: number, item: any) => acc + item.value, 0)
+      ),
+      150,
+      y
+    );
+    y += 20;
+
+    // Footer
+    pdf.text(
+      "For any requests, please contact your local support team.",
+      10,
+      y
+    );
+    y += 10;
+
+    pdf.text("Very best regards,", 10, y);
+    y += 10;
+    pdf.text("Royalty Accounting Team", 10, y);
+    y += 10;
+    pdf.text("Be Musix", 10, y);
 
     pdf.save("chart_data.pdf");
   };

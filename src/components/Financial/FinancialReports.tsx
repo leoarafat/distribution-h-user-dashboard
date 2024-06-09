@@ -23,6 +23,7 @@ import {
   ArrowUpward as ArrowUpwardIcon,
 } from "@mui/icons-material";
 import { CSVLink } from "react-csv";
+import jsPDF from "jspdf";
 
 const FinancialReports = () => {
   const [page, setPage] = useState(0);
@@ -90,6 +91,80 @@ const FinancialReports = () => {
     return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
   });
 
+  const handlePDFDownload = (row) => {
+    const pdf = new jsPDF();
+    let y = 20;
+
+    // Header
+    pdf.setFontSize(30);
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Be Musix.", 10, y);
+    y += 10;
+
+    pdf.setFontSize(14);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("Distribution services", 10, y);
+    y += 20;
+
+    // Date
+    pdf.setFontSize(12);
+    pdf.text(`Date: ${row.date}`, 10, y);
+    y += 10;
+
+    // Partner greeting
+    pdf.text("Dear partner,", 10, y);
+    y += 10;
+
+    pdf.text(
+      "Here is the total amount of royalties credited on your account (BE Musix) regarding",
+      10,
+      y
+    );
+    y += 10;
+    pdf.text("the selected filters:", 10, y);
+    y += 20;
+
+    // Filter information
+    pdf.text("Transaction Details", 10, y);
+    y += 10;
+
+    // Table header
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Store", 10, y);
+    pdf.text("Total", 150, y);
+    y += 10;
+
+    pdf.setFont("helvetica", "normal");
+
+    // Data row
+    pdf.text(row.description, 10, y);
+    pdf.text(String(row.amount), 150, y);
+    y += 10;
+
+    y += 10;
+
+    // Net revenue
+    pdf.text("NET REVENUE", 10, y);
+    pdf.text(String(row.amount), 150, y);
+    y += 20;
+
+    // Footer
+    pdf.text(
+      "For any requests, please contact your local support team.",
+      10,
+      y
+    );
+    y += 10;
+
+    pdf.text("Very best regards,", 10, y);
+    y += 10;
+    pdf.text("Royalty Accounting Team", 10, y);
+    y += 10;
+    pdf.text("Be Musix", 10, y);
+
+    pdf.save(`transaction_${row.id}.pdf`);
+  };
+
   return (
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
@@ -155,7 +230,7 @@ const FinancialReports = () => {
                           <DollarIcon /> {row.amount}
                         </TableCell>
                         <TableCell>
-                          <IconButton onClick={() => {}}>
+                          <IconButton onClick={() => handlePDFDownload(row)}>
                             <PdfIcon />
                           </IconButton>
                           <CSVLink
