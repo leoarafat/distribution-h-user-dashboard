@@ -244,7 +244,9 @@ const UploadVideo = () => {
                         onChange={handleThumbnailUpload}
                         required
                       />
-                      <PhotoCamera style={{ fontSize: 100, color: "red" }} />
+                      <PhotoCamera
+                        style={{ fontSize: 100, color: "#03008D" }}
+                      />
                     </label>
                   )}
                   {thumbnailError && (

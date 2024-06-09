@@ -73,7 +73,7 @@ const Uploads = () => {
                   },
                 }}
               >
-                <MusicNoteIcon sx={{ fontSize: 40 }} />
+                <MusicNoteIcon sx={{ fontSize: 40, color: "red" }} />
               </IconButton>
               <Typography variant="h6">Upload Single</Typography>
             </Paper>
@@ -105,7 +105,7 @@ const Uploads = () => {
                   },
                 }}
               >
-                <AlbumIcon sx={{ fontSize: 40 }} />
+                <AlbumIcon sx={{ fontSize: 40, color: "red" }} />
               </IconButton>
               <Typography variant="h6">Upload Album</Typography>
             </Paper>
