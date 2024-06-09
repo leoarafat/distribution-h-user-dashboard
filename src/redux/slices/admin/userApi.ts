@@ -26,6 +26,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    editProfilePicture: build.mutation({
+      query: (data) => ({
+        url: `/user/edit-profile-picture`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
     profileVerify: build.mutation({
       query: (data) => ({
         url: `/user/profile-verify`,
@@ -88,4 +96,5 @@ export const {
   useVerifyUserMutation,
   useUserLoginMutation,
   useAgreementVerifyMutation,
+  useEditProfilePictureMutation,
 } = userApi;

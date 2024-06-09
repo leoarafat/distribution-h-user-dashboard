@@ -13,7 +13,6 @@ import Register from "@/components/Register/Register";
 import Verify from "@/components/Active-User/ActiveUser";
 import { createBrowserRouter } from "react-router-dom";
 import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
-import Uploads from "@/components/Uplaods/Uploads";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
@@ -35,6 +34,7 @@ import SuccessVideos from "@/components/MyUploads/SuccessVideos/SuccessVideos";
 import DigitalRightsManagementPage from "@/components/Youtube/DigitalRightsManagementPage/DigitalRightsManagementPage";
 import CorrectionMusic from "@/components/MyUploads/CorrectionMusic/CorrectionMusic";
 import AlbumStepperForm from "@/components/SteperForm/AlbumStepper";
+import Uploads from "@/components/Uplaods/Uploads";
 
 const router = createBrowserRouter([
   {

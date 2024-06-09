@@ -14,25 +14,24 @@ import {
 } from "@mui/material";
 import { Edit, Upload } from "lucide-react";
 import toast from "react-hot-toast";
-import {
-  useMyProfileQuery,
-  useUpdateProfileMutation,
-} from "@/redux/slices/admin/settingApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
+import { useEditProfilePictureMutation } from "@/redux/slices/admin/userApi";
 
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
-  const { data: profileData, isLoading: profileLoading } = useMyProfileQuery(
-    {}
-  );
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    refetch,
+  } = useMyProfileQuery({});
   const initialFormValues = profileData?.data;
 
-  const [updateProfile, { isLoading, isSuccess, error }] =
-    useUpdateProfileMutation();
+  const [editProfilePicture, { isLoading, isSuccess, error }] =
+    useEditProfilePictureMutation();
 
   useEffect(() => {
     if (error) {
@@ -64,32 +63,24 @@ const Profile = () => {
     ? profileData?.data?.image
     : `${imageURL}/${profileData?.data?.image}`;
 
-  const onFinish = async (event: any) => {
-    event.preventDefault();
+  const handleImageChange = async (e: any) => {
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    setImagePreview(url as any);
+
     const formData = new FormData();
-    if (image) {
-      formData.append("profileImage", image);
-    }
+    formData.append("image", file);
 
     try {
-      const res = await updateProfile(formData);
+      const res = await editProfilePicture(formData);
 
       if (res?.data?.success === true) {
-        toast.success("Profile Update Successful");
-        setOpenEdit(false);
-        setImage(null);
-        setImagePreview(null);
+        refetch();
+        toast.success("Profile Image Updated Successfully");
       }
     } catch (error: any) {
       toast.error(error.message);
     }
-  };
-
-  const handleImageChange = (e: any) => {
-    const file = e.target.files[0];
-    setImage(file);
-    const url = URL.createObjectURL(file);
-    setImagePreview(url as any);
   };
 
   const handleTabChange = (event: any, newValue: any) => {
@@ -139,6 +130,7 @@ const Profile = () => {
                 }}
               >
                 <Avatar
+                  className="cursor-pointer"
                   src={imagePreview ? imagePreview : src}
                   sx={{ width: 112, height: 112 }}
                 />
@@ -151,6 +143,7 @@ const Profile = () => {
                     backgroundColor: "rgba(0, 0, 0, 0.5)",
                     borderRadius: "50%",
                     padding: 1,
+                    cursor: "pointer",
                   }}
                 >
                   <Upload color="#fff" />
