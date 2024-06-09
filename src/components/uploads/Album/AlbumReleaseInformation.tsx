@@ -139,53 +139,7 @@ const AlbumReleaseInformation = () => {
               </Grid>
             </Grid>
           ))}
-          {featuringArtists.map((artist, index) => (
-            <Grid
-              item
-              xs={12}
-              key={index}
-              container
-              alignItems="center"
-              spacing={1}
-            >
-              <Grid item xs={12}>
-                <Autocomplete
-                  options={artists}
-                  value={artist}
-                  onChange={(event, newValue) =>
-                    handleFeaturingArtistChange(index, newValue)
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Featuring"
-                      variant="outlined"
-                    />
-                  )}
-                  freeSolo
-                />
-              </Grid>
-              <Grid item xs={2}>
-                <IconButton
-                  onClick={() => removeFeaturingArtist(index)}
-                  disabled={featuringArtists.length === 1}
-                >
-                  <RemoveCircleOutlineIcon />
-                </IconButton>
-                {index === featuringArtists.length - 1 && (
-                  <IconButton onClick={addFeaturingArtist}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                )}
-              </Grid>
-            </Grid>
-          ))}
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox />}
-              label="Various Artists / Compilation"
-            />
-          </Grid>
+
           <Grid item xs={12} md={6}>
             <Autocomplete
               options={genres}
@@ -228,24 +182,22 @@ const AlbumReleaseInformation = () => {
               )}
             />
           </Grid>
+
           <Grid item xs={12} md={6}>
-            <Autocomplete
-              options={formats}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Format"
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
+            <TextField
+              fullWidth
+              label="Physical/Original Release Date"
+              variant="outlined"
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Physical/Original Release Date"
+              label="Store Release Date"
               variant="outlined"
               type="date"
               InputLabelProps={{
@@ -273,15 +225,9 @@ const AlbumReleaseInformation = () => {
               )}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField fullWidth label="UPC/EAN" variant="outlined" />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label="Producer Catalogue Number"
-              variant="outlined"
-            />
+
+          <Grid item xs={12} md={12}>
+            <TextField fullWidth label="Catalogue Number" variant="outlined" />
           </Grid>
         </Grid>
       </Box>
