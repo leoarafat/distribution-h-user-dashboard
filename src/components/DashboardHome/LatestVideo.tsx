@@ -4,7 +4,6 @@ import {
   Typography,
   Paper,
   Grid,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +11,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Link } from "react-router-dom";
 
@@ -27,7 +25,7 @@ const LatestVideo = () => {
         <Link to={"/release-video"}>
           {" "}
           <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
-            <YouTubeIcon sx={{ fontSize: 60 }} />
+            <YouTubeIcon sx={{ fontSize: 60, color: "#FF0000" }} />
             <p>Release Video</p>
           </div>
           <div className="hidden">
@@ -65,7 +63,7 @@ const LatestVideo = () => {
             position: "relative",
           }}
         >
-          <p className="mb-14"></p>
+          <p></p>
         </Box>
         <TableContainer component={Paper}>
           <Table>

@@ -14,7 +14,6 @@ import Verify from "@/components/Active-User/ActiveUser";
 import { createBrowserRouter } from "react-router-dom";
 import IsVerifiedRoutes from "./VerifiedRoutes/VerifyProtect";
 import Uploads from "@/components/Uplaods/Uploads";
-import UploadAlbum from "@/components/Uplaods/UploadAlbum/UploadAlbum";
 import ArtistLabelManagement from "@/components/ArtisLabelManagement/ArtisLabelManagement";
 import HelpPage from "@/components/Help/Help";
 import ManageAccount from "@/components/ManageAccount/ManageAccount";
@@ -82,14 +81,7 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
-      {
-        path: "/album",
-        element: (
-          <IsVerifiedRoutes>
-            <UploadAlbum />
-          </IsVerifiedRoutes>
-        ),
-      },
+
       {
         path: "/artist-management",
         element: (

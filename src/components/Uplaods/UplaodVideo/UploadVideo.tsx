@@ -206,12 +206,12 @@ const UploadVideo = () => {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
-              <div className="flex justify-around items-center w-full">
+              <div className="flex justify-around items-center w-full p-3">
                 <div className="image_upload flex items-center justify-center flex-col p-3">
                   <h4 className="mb-2 text-sm font-semibold">Upload Cover</h4>
                   <p className="mb-2 text-xs">
-                    Please ensure that your cover meets the following
-                    specifications: the image size should be 1920 by 1080
+                    Please ensure that your cover meets the following <br />
+                    specifications: the image size should be 1920 by 1080 <br />
                     pixels, and the format must be in JPG.
                   </p>
                   {thumbnail ? (
@@ -244,7 +244,7 @@ const UploadVideo = () => {
                         onChange={handleThumbnailUpload}
                         required
                       />
-                      <PhotoCamera style={{ fontSize: 100 }} />
+                      <PhotoCamera style={{ fontSize: 100, color: "red" }} />
                     </label>
                   )}
                   {thumbnailError && (
@@ -259,6 +259,8 @@ const UploadVideo = () => {
                   <p className="mb-2 text-xs">
                     Please note that only MP4 file is permitted for upload &
                     without any logo.
+                    <br />
+                    <br />
                   </p>
                   {videoFile ? (
                     <div className="relative w-3/4">
@@ -296,7 +298,7 @@ const UploadVideo = () => {
                         onChange={handleVideoUpload}
                         required
                       />
-                      <YouTube style={{ fontSize: 100 }} />
+                      <YouTube style={{ fontSize: 100, color: "#FF0000" }} />
                     </label>
                   )}
                 </div>

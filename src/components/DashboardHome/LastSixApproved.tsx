@@ -5,7 +5,6 @@ import {
   Paper,
   Grid,
   CircularProgress,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +12,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { Link } from "react-router-dom";
 import LatestVideo from "./LatestVideo";
@@ -31,7 +30,7 @@ const LastSixApproved = () => {
           <Link to={"/upload"}>
             {" "}
             <div className="flex justify-center flex-col items-center w-full h-full border-dashed border border-black py-10 cursor-pointer">
-              <AudiotrackIcon sx={{ fontSize: 60 }} />
+              <AudiotrackIcon sx={{ fontSize: 60, color: "#03008D" }} />
               <p>Release Audio</p>
             </div>
             <div className="hidden">
@@ -58,7 +57,7 @@ const LastSixApproved = () => {
               marginBottom: 2,
             }}
           >
-            <Typography variant="h6">Last 6 Approved Tracks</Typography>
+            <Typography variant="h6">Last Tracks</Typography>
           </Box>
           <Box
             sx={{
@@ -69,7 +68,7 @@ const LastSixApproved = () => {
               position: "relative",
             }}
           >
-            <CircularProgress
+            {/* <CircularProgress
               variant="determinate"
               value={100}
               size={60}
@@ -77,7 +76,7 @@ const LastSixApproved = () => {
             />
             <Typography variant="h4" sx={{ position: "absolute" }}>
               06
-            </Typography>
+            </Typography> */}
           </Box>
           <TableContainer component={Paper}>
             <Table>

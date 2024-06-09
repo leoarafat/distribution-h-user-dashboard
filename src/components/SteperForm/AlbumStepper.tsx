@@ -80,7 +80,7 @@ const AlbumStepperForm = () => {
     try {
       const result = await verifyUser({});
       if (result?.data?.success) {
-        toast.success("Congratulations. Verify Successful");
+        toast.success("Congratulations. Upload Successful");
 
         dispatch(setIsVerified({ isVerified: result?.data?.data?.isVerified }));
         navigate("/");
