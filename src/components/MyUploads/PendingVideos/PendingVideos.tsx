@@ -79,7 +79,7 @@ function PendingVideos() {
         mt={3}
       >
         <Typography variant="h4" fontWeight="bold">
-          Pending Release
+          Pending Videos
         </Typography>
         <Box display="flex" alignItems="center">
           <TextField
