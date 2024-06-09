@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { storeUserInfo } from "@/redux/services/auth.service";
 import toast from "react-hot-toast";
 import loginImage from "../../assets/login.jpg";
-import logo from "../../assets/1.png";
+import logo from "../../assets/1.jpg";
 import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 

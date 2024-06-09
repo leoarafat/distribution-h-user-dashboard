@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState } from "react";
 import {
   Container,
@@ -32,21 +33,21 @@ const FinancialReports = () => {
   const [sortedColumn, setSortedColumn] = useState("date");
   const [sortDirection, setSortDirection] = useState("asc");
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: any) => {
     setSearchQuery(event.target.value);
     setPage(0);
   };
 
-  const handleSort = (column) => {
+  const handleSort = (column: any) => {
     if (sortedColumn === column) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -79,7 +80,9 @@ const FinancialReports = () => {
   );
 
   const sortedHistory = filteredHistory.sort((a, b) => {
+    //@ts-ignore
     const aValue = a[sortedColumn];
+    //@ts-ignore
     const bValue = b[sortedColumn];
 
     if (typeof aValue === "string" && typeof bValue === "string") {
@@ -91,7 +94,7 @@ const FinancialReports = () => {
     return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
   });
 
-  const handlePDFDownload = (row) => {
+  const handlePDFDownload = (row: any) => {
     const pdf = new jsPDF();
     let y = 20;
 
