@@ -189,6 +189,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     removeUserInfo(authKey);
     navigate("/auth/login");
+    window.location.reload();
   };
 
   const filteredMenuItems = isVerifiedUser ? menuItems : [onboardingItem];

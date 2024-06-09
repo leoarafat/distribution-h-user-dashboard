@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const ReviewConfirm = () => {
   const classes = useStyles();
   const { data: profileData, isLoading } = useProfileQuery({});
-  console.log(profileData);
+
   if (isLoading) {
     return <Loader />;
   }

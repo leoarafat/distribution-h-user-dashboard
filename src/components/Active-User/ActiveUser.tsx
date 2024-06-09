@@ -14,8 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { useVerifyMutation } from "@/redux/slices/admin/userApi";
 import toast from "react-hot-toast";
 import { useAppDispatch } from "@/redux/hooks";
-import { setUser } from "@/redux/slices/auth/authSlice";
-import { decodedToken } from "@/utils/jwt";
 import { storeUserInfo } from "@/redux/services/auth.service";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +58,6 @@ const Verify = () => {
   const classes = useStyles();
   const [codes, setCodes] = useState(["", "", "", ""]);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
-  const dispatch = useAppDispatch();
   const activation_token = localStorage.getItem("activationToken");
   const navigate = useNavigate();
   const [verify, { isLoading, data, isSuccess, error }] = useVerifyMutation();
@@ -68,11 +65,10 @@ const Verify = () => {
   useEffect(() => {
     if (isSuccess && data) {
       toast.success("Register Successful");
-      const user = decodedToken(data?.data?.accessToken);
-      dispatch(setUser({ user: user, accessToken: data?.data?.accessToken }));
       storeUserInfo({ accessToken: data?.data?.accessToken });
       localStorage.removeItem("activationToken");
       navigate("/");
+      window.location.reload();
     }
     if (error) {
       if ("data" in error) {
@@ -82,7 +78,7 @@ const Verify = () => {
         console.error("Login error:", error);
       }
     }
-  }, [isSuccess, data, error, navigate, dispatch]);
+  }, [isSuccess, data, error, navigate]);
   const handleChange = (index: any, value: any) => {
     if (value.length > 1) {
       value = value.slice(-1);

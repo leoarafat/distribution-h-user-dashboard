@@ -17,9 +17,6 @@ import toast from "react-hot-toast";
 import loginImage from "../../assets/login.jpg";
 import logo from "../../assets/1.png";
 import { useUserLoginMutation } from "@/redux/slices/admin/userApi";
-import { useAppDispatch } from "@/redux/hooks";
-import { setUser } from "@/redux/slices/auth/authSlice";
-import { decodedToken } from "@/utils/jwt";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
@@ -71,19 +68,28 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+
   const [userLogin, { isLoading, data, isSuccess, error }] =
     useUserLoginMutation();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (isSuccess && data) {
       toast.success("Login Successful");
-      const user = decodedToken(data?.data?.accessToken);
-      dispatch(setUser({ user: user, accessToken: data?.data?.accessToken }));
       storeUserInfo({ accessToken: data?.data?.accessToken });
       navigate("/");
+      window.location.reload();
     }
     if (error) {
       if ("data" in error) {
@@ -93,7 +99,7 @@ const Login = () => {
         console.error("Login error:", error);
       }
     }
-  }, [isSuccess, data, error, navigate, dispatch]);
+  }, [isSuccess, data, error, navigate]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -102,6 +108,11 @@ const Login = () => {
       await userLogin({ email: email.value, password: password.value });
     } catch (err: any) {
       toast.error(err.message);
+    }
+    if (rememberMe) {
+      localStorage.setItem("rememberedEmail", email.value);
+    } else {
+      localStorage.removeItem("rememberedEmail");
     }
   };
 
@@ -135,6 +146,8 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -149,10 +162,7 @@ const Login = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton
-                      className={classes.eyeIcon}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
@@ -160,7 +170,13 @@ const Login = () => {
               }}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  color="primary"
+                />
+              }
               label="Remember me"
             />
             <Button
