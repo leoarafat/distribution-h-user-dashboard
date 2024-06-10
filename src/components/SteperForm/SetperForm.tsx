@@ -63,6 +63,7 @@ const StepperForm = () => {
   const [signature, setSignature] = useState(null);
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhone] = useState("");
+  const [nidNumber, setNidNumber] = useState("");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -77,6 +78,8 @@ const StepperForm = () => {
       setUserName(formData.profile.name);
       //@ts-ignore
       setPhone(formData.profile.phoneNumber);
+      //@ts-ignore
+      setNidNumber(formData?.profile?.nidNumber);
     }
 
     if (formData.label) {
@@ -107,7 +110,8 @@ const StepperForm = () => {
       nidFront &&
       nidBack &&
       userName &&
-      phoneNumber
+      phoneNumber &&
+      nidNumber
     ) {
       try {
         const profileFormData = new FormData();
@@ -116,6 +120,7 @@ const StepperForm = () => {
         profileFormData.append("nidBack", nidBack);
         profileFormData.append("name", userName);
         profileFormData.append("phoneNumber", phoneNumber);
+        profileFormData.append("nidNumber", nidNumber);
 
         const result = await verifyProfile(profileFormData).unwrap();
 
@@ -127,6 +132,16 @@ const StepperForm = () => {
       } catch (error: any) {
         toast.error("Profile verification failed:", error?.message);
       }
+    }
+    if (
+      (activeStep === 0 && !selectedProfileImage) ||
+      !nidFront ||
+      !nidBack ||
+      !userName ||
+      !phoneNumber ||
+      !nidNumber
+    ) {
+      toast.error("Data Is Missing");
     }
 
     if (
@@ -189,6 +204,18 @@ const StepperForm = () => {
       } catch (error: any) {
         toast.error("Label verification failed:", error?.message);
       }
+    }
+    if (
+      //@ts-ignore
+      (activeStep === 2 && !formData.label?.channelUrl) ||
+      //@ts-ignore
+      !formData.label?.channelName ||
+      //@ts-ignore
+      !formData.label?.subscribeCount ||
+      //@ts-ignore
+      !formData.label?.videosCount
+    ) {
+      toast.error("Data Is Missing");
     }
     //@ts-ignore
     if (activeStep === 3 && formData?.agreement) {

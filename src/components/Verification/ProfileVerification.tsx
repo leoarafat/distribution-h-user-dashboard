@@ -19,6 +19,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
       const initialProfileData = {
         name: profileData.data.name || "",
         phoneNumber: profileData.data.phoneNumber || "",
+        nidNumber: profileData.data.nidNumber || "",
         email: profileData.data.email || "",
         profileImage: profileData.data.image || null,
         nidFront: profileData.data.nidFront || null,
@@ -230,13 +231,23 @@ const ProfileVerification = ({ data, onChange }: any) => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             name="phoneNumber"
             label="Phone Number"
             variant="outlined"
             fullWidth
             value={data.profile.phoneNumber || ""}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            name="nidNumber"
+            label="Nid Number"
+            variant="outlined"
+            fullWidth
+            value={data.profile.nidNumber || ""}
             onChange={handleChange}
           />
         </Grid>
