@@ -177,7 +177,9 @@ const StepperForm = () => {
       //@ts-ignore
       formData.label?.subscribeCount &&
       //@ts-ignore
-      formData.label?.videosCount
+      formData.label?.videosCount &&
+      copyRightImage &&
+      dashboardImage
     ) {
       try {
         const labelFormData = new FormData();
@@ -213,7 +215,9 @@ const StepperForm = () => {
       //@ts-ignore
       !formData.label?.subscribeCount ||
       //@ts-ignore
-      !formData.label?.videosCount
+      !formData.label?.videosCount ||
+      !copyRightImage ||
+      !dashboardImage
     ) {
       toast.error("Data Is Missing");
     }
