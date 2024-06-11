@@ -123,26 +123,26 @@ const StepperForm = () => {
         profileFormData.append("nidNumber", nidNumber);
 
         const result = await verifyProfile(profileFormData).unwrap();
-
+        console.log(result, "Result");
         if (result?.success === true) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
-          toast.error("Please update required fields");
+          toast.error("Please update required fields", result?.message);
         }
       } catch (error: any) {
-        toast.error("Profile verification failed:", error?.message);
+        toast.error(error?.data?.message);
       }
     }
-    if (
-      (activeStep === 0 && !selectedProfileImage) ||
-      !nidFront ||
-      !nidBack ||
-      !userName ||
-      !phoneNumber ||
-      !nidNumber
-    ) {
-      toast.error("Data Is Missing");
-    }
+    // if (
+    //   (activeStep === 0 && !selectedProfileImage) ||
+    //   !nidFront ||
+    //   !nidBack ||
+    //   !userName ||
+    //   !phoneNumber ||
+    //   !nidNumber
+    // ) {
+    //   toast.error("Data Is Missing");
+    // }
 
     if (
       activeStep === 1 &&
@@ -204,23 +204,23 @@ const StepperForm = () => {
           toast.error("Please provide required fields");
         }
       } catch (error: any) {
-        toast.error("Label verification failed:", error?.message);
+        toast.error(error?.data?.message);
       }
     }
-    if (
-      //@ts-ignore
-      (activeStep === 2 && !formData.label?.channelUrl) ||
-      //@ts-ignore
-      !formData.label?.channelName ||
-      //@ts-ignore
-      !formData.label?.subscribeCount ||
-      //@ts-ignore
-      !formData.label?.videosCount ||
-      !copyRightImage ||
-      !dashboardImage
-    ) {
-      toast.error("Data Is Missing");
-    }
+    // if (
+    //   //@ts-ignore
+    //   (activeStep === 2 && !formData.label?.channelUrl) ||
+    //   //@ts-ignore
+    //   !formData.label?.channelName ||
+    //   //@ts-ignore
+    //   !formData.label?.subscribeCount ||
+    //   //@ts-ignore
+    //   !formData.label?.videosCount ||
+    //   !copyRightImage ||
+    //   !dashboardImage
+    // ) {
+    //   toast.error("Data Is Missing");
+    // }
     //@ts-ignore
     if (activeStep === 3 && formData?.agreement) {
       try {
@@ -236,7 +236,7 @@ const StepperForm = () => {
           toast.error("Please provide Signature");
         }
       } catch (error: any) {
-        toast.error("Agreement failed:", error?.message);
+        toast.error(error?.data?.message);
       }
     }
   };
