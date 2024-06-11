@@ -96,10 +96,16 @@ const ReleaseInformation = () => {
               fullWidth
               label="Release Title"
               variant="outlined"
+              placeholder="Please use version field to enter further info for the release"
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField fullWidth label="Version/Subtitle" variant="outlined" />
+            <TextField
+              fullWidth
+              label="Version/Subtitle"
+              variant="outlined"
+              placeholder="Use this field to add further details to your release title"
+            />
           </Grid>
           {primaryArtists.map((artist, index) => (
             <Grid
