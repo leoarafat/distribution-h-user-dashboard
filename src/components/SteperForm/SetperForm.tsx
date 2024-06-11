@@ -133,16 +133,6 @@ const StepperForm = () => {
         toast.error(error?.data?.message);
       }
     }
-    // if (
-    //   (activeStep === 0 && !selectedProfileImage) ||
-    //   !nidFront ||
-    //   !nidBack ||
-    //   !userName ||
-    //   !phoneNumber ||
-    //   !nidNumber
-    // ) {
-    //   toast.error("Data Is Missing");
-    // }
 
     if (
       activeStep === 1 &&
@@ -207,20 +197,7 @@ const StepperForm = () => {
         toast.error(error?.data?.message);
       }
     }
-    // if (
-    //   //@ts-ignore
-    //   (activeStep === 2 && !formData.label?.channelUrl) ||
-    //   //@ts-ignore
-    //   !formData.label?.channelName ||
-    //   //@ts-ignore
-    //   !formData.label?.subscribeCount ||
-    //   //@ts-ignore
-    //   !formData.label?.videosCount ||
-    //   !copyRightImage ||
-    //   !dashboardImage
-    // ) {
-    //   toast.error("Data Is Missing");
-    // }
+
     //@ts-ignore
     if (activeStep === 3 && formData?.agreement) {
       try {
