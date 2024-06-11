@@ -291,7 +291,7 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Paper, Grid, Button, Divider } from "@mui/material";
 import SignatureCanvas from "react-signature-canvas";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
-// import signatureImage from "../../assets/sign.jpg";
+
 import signatureImageHasan from "../../assets/sign.jpg";
 
 const AgreementPage = ({ data, onChange }: any) => {
@@ -348,6 +348,87 @@ const AgreementPage = ({ data, onChange }: any) => {
         <Typography variant="h4" gutterBottom>
           Music Distribution Agreement
         </Typography>
+        <Divider sx={{ marginY: 2 }} />
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Typography
+              style={{ textAlign: "center" }}
+              variant="h6"
+              gutterBottom
+            >
+              Artist Information
+            </Typography>
+            <Box
+              sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
+            >
+              <Typography variant="body1">
+                <strong>Name:</strong> {mockData.name}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Phone Number:</strong> {mockData.phoneNumber}
+              </Typography>
+              <Typography variant="body1">
+                <strong>NID Number:</strong> {mockData.nidNumber}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Channel Name:</strong> {mockData.channelName}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Channel URL:</strong>{" "}
+                <a
+                  href={mockData.channelUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {mockData.channelUrl}
+                </a>
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography
+              style={{ textAlign: "center" }}
+              variant="h6"
+              gutterBottom
+            >
+              Company Information
+            </Typography>
+            <Box
+              sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
+            >
+              <Typography variant="body2" align="center">
+                For and on behalf of {mockData.companyName}
+              </Typography>
+              <Divider />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginTop: 1,
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ fontFamily: "cursive", fontSize: 24 }}
+                >
+                  Hasan
+                </Typography>
+                <Divider sx={{ width: "100%", marginY: 1 }} />
+                <Typography variant="body1">
+                  <strong>Name:</strong> {mockData.companyOwnerName}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
+                  {mockData.companyName}
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Date:</strong> {mockData.createdDate}
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
         <Divider sx={{ marginY: 2 }} />
         <Typography variant="h6" gutterBottom>
           Agreement Date
@@ -438,125 +519,32 @@ const AgreementPage = ({ data, onChange }: any) => {
           verify the accuracy of financial statements once a year.
         </Typography>
         <Divider sx={{ marginY: 2 }} />
+
+        <Divider sx={{ marginY: 2 }} />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Typography
-              style={{ textAlign: "center" }}
-              variant="h6"
-              gutterBottom
-            >
-              Artist Information
-            </Typography>
-            <Box
-              sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
-            >
-              <Typography variant="body1">
-                <strong>Name:</strong> {mockData.name}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Phone Number:</strong> {mockData.phoneNumber}
-              </Typography>
-              <Typography variant="body1">
-                <strong>NID Number:</strong> {mockData.nidNumber}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Channel Name:</strong> {mockData.channelName}
-              </Typography>
-              <Typography variant="body1">
-                <strong>Channel URL:</strong>{" "}
-                <a
-                  href={mockData.channelUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {mockData.channelUrl}
-                </a>
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography
-              style={{ textAlign: "center" }}
-              variant="h6"
-              gutterBottom
-            >
-              Company Information
-            </Typography>
-            <Box
-              sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
-            >
-              <Typography variant="body2" align="center">
-                For and on behalf of {mockData.companyName}
-              </Typography>
-              <Divider />
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  marginTop: 1,
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{ fontFamily: "cursive", fontSize: 24 }}
-                >
-                  Hasan
-                </Typography>
-                <Divider sx={{ width: "100%", marginY: 1 }} />
-                <Typography variant="body1">
-                  <strong>Name:</strong> {mockData.companyOwnerName}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
-                  {mockData.companyName}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Date:</strong> {mockData.createdDate}
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Signature
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 2,
-            border: "1px solid black",
-            padding: 2,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "48%",
-            }}
-          >
-            <Typography variant="body2" align="center">
-              For and on behalf of Sk Sanu
-            </Typography>
-            <SignatureCanvas
-              ref={sigCanvas}
-              penColor="black"
-              canvasProps={{ width: 500, height: 200, className: "sigCanvas" }}
-              onEnd={handleSignatureChange}
-            />
+            {/* Artist Signature Box */}
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-                marginTop: 2,
+                border: "1px solid black",
+                padding: 2,
+                borderRadius: 1,
+                textAlign: "center",
               }}
             >
+              <Typography variant="body2" gutterBottom>
+                For and on behalf of {mockData.name}
+              </Typography>
+              <SignatureCanvas
+                ref={sigCanvas}
+                penColor="black"
+                canvasProps={{
+                  width: 500,
+                  height: 200,
+                  className: "sigCanvas",
+                }}
+                onEnd={handleSignatureChange}
+              />
               <Button
                 variant="outlined"
                 color="secondary"
@@ -564,50 +552,58 @@ const AgreementPage = ({ data, onChange }: any) => {
               >
                 Clear
               </Button>
+              <Typography variant="body1" gutterBottom>
+                <strong>Name:</strong> {mockData.name}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Designation:</strong> {mockData.artistDesignation}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Date:</strong> {mockData.createdDate}
+              </Typography>
             </Box>
-            <Typography variant="body1">
-              {mockData.artistDesignation}
-            </Typography>
-            <Typography variant="body1">Sk Sanu</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "48%",
-            }}
-          >
-            <Typography variant="body2" align="center">
-              For and on behalf of {mockData.companyName}
-            </Typography>
-            <Typography variant="body1">
-              <img
-                src={signatureImageHasan}
-                alt="Signature"
-                style={{ width: "160px" }}
-              />
-            </Typography>
-            <Typography variant="body1">
-              <strong>Name:</strong> {mockData.companyOwnerName}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
-              {mockData.companyName}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Date:</strong> {mockData.createdDate}
-            </Typography>
-          </Box>
-        </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Box
+              sx={{
+                border: "1px solid black",
+                padding: 2,
+                borderRadius: 1,
+                textAlign: "center",
+                height: "385px",
+              }}
+            >
+              <Typography variant="body2" gutterBottom>
+                For and on behalf of {mockData.companyName}
+              </Typography>
+              <div className="flex justify-center items-center flex-col w-full h-[550px]">
+                <img
+                  src={signatureImageHasan}
+                  alt="Signature"
+                  style={{ width: "160px" }}
+                />
+                <Typography variant="body1" gutterBottom>
+                  <strong>Name:</strong> {mockData.companyOwnerName}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
+                  {mockData.companyName}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  <strong>Date:</strong> {mockData.createdDate}
+                </Typography>
+              </div>
+            </Box>
+          </Grid>
+        </Grid>
         <Divider sx={{ marginY: 2 }} />
         <Typography variant="h6" gutterBottom>
           Note
         </Typography>
         <Typography variant="body1" paragraph>
           If a transfer or takedown of all songs is required before the contract
-          expires, a 300 euro charge applies. After paying 300 Euros you can
-          shift to another distribution.
+          expires, a $300 charge applies. After paying $300 you can shift to
+          another distribution.
         </Typography>
       </Paper>
     </Box>
