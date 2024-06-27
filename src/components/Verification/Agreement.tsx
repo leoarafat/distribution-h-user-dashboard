@@ -4,6 +4,7 @@ import SignatureCanvas from "react-signature-canvas";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
 
 import signatureImageHasan from "../../assets/sign.jpg";
+import AgreementCard from "../cards/AgreementCard";
 
 const AgreementPage = ({ data, onChange }: any) => {
   const [signature, setSignature] = useState(null);
@@ -134,103 +135,13 @@ const AgreementPage = ({ data, onChange }: any) => {
                   {mockData.companyName}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Date:</strong> {mockData.createdDate}
+                  <strong>Date:</strong> {currentDate.toLocaleDateString()}
                 </Typography>
               </Box>
             </Box>
           </Grid>
         </Grid>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Agreement Date
-        </Typography>
-        <Typography variant="body1" paragraph>
-          This Music Distribution Agreement ("Agreement") is entered into as of{" "}
-          {currentDate.toDateString()} between {mockData.companyName}, having
-          its principal place of business at {mockData.companyAddress}{" "}
-          ("Company") and {mockData.name}, having its principal place of
-          business at [Artist Address] ("Artist").
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Distribution Terms
-        </Typography>
-        <Typography variant="body1" paragraph>
-          The Company agrees to distribute the Artist's music under the terms
-          and conditions set forth in this Agreement. The content includes all
-          recordings, music videos, and ancillary material that the contractor
-          owns or controls during the exclusive distribution period.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Worldwide Rights
-        </Typography>
-        <Typography variant="body1" paragraph>
-          The agreement covers worldwide distribution rights. The initial period
-          is three years from the date the first recording is delivered. This
-          period can be automatically extended for successive one-year periods
-          unless either party sends a termination notice three months before the
-          start of an extended period. The contractor cannot terminate the
-          agreement if their balance account is negative, except after 10 years
-          from the initial period.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Financial Terms
-        </Typography>
-        <Typography variant="body1" paragraph>
-          70% of the net receipts will be paid to the contractor by Be Musix
-          Limited, after deductions for mechanical rights, duties, and taxes.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Exclusive Rights
-        </Typography>
-        <Typography variant="body1" paragraph>
-          Be Musix Limited is granted exclusive rights to distribute and market
-          the content, digitize, reproduce, and make the content available to
-          the public and third parties. They also have non-exclusive rights to
-          use the artist's name and likeness for promotion.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Agreement Modifications
-        </Typography>
-        <Typography variant="body1" paragraph>
-          The agreement can be modified to adapt to the evolving digital music
-          distribution market, with contractor approval via an opt-in process on
-          the dashboard.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Warranties
-        </Typography>
-        <Typography variant="body1" paragraph>
-          The contractor represents and warrants that they have the authority to
-          enter the agreement, have exclusive rights to the artist's
-          performances, and that the content does not infringe on third-party
-          rights or applicable laws.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Third-Party Claims
-        </Typography>
-        <Typography variant="body1" paragraph>
-          If a third party makes a claim against Be Musix Limited regarding the
-          content, the contractor must take necessary actions to settle the
-          claim. Be Musix Limited can also take measures to stop the claim,
-          including suspending or terminating the agreement.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          Audit Rights
-        </Typography>
-        <Typography variant="body1" paragraph>
-          The contractor has the right to audit Be Musix Limited's records to
-          verify the accuracy of financial statements once a year.
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-
+        <AgreementCard />
         <Divider sx={{ marginY: 2 }} />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -270,7 +181,7 @@ const AgreementPage = ({ data, onChange }: any) => {
                 <strong>Designation:</strong> {mockData.artistDesignation}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Date:</strong> {mockData.createdDate}
+                <strong>Date:</strong> {currentDate.toLocaleString()}
               </Typography>
             </Box>
           </Grid>
@@ -308,7 +219,11 @@ const AgreementPage = ({ data, onChange }: any) => {
           </Grid>
         </Grid>
         <Divider sx={{ marginY: 2 }} />
-        <Typography variant="h6" gutterBottom>
+        <Typography
+          style={{ color: "#3572EF", fontWeight: "bold" }}
+          variant="h6"
+          gutterBottom
+        >
           Note
         </Typography>
         <Typography variant="body1" paragraph>
