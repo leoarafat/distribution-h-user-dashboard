@@ -22,10 +22,30 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddLabelModal from "./AddLabelModa";
 
 const labelData = [
-  { id: 150999, name: "Label 1" },
-  { id: 150999, name: "Label 2" },
-  { id: 150999, name: "Label 3" },
-  { id: 150999, name: "Label 4" },
+  {
+    id: 150999,
+    labelName: "Label 1",
+    youtubeChannel: "Learn With Arafat",
+    youtubeUrl: "https://arafat.com",
+  },
+  {
+    id: 150999,
+    labelName: "Label 1",
+    youtubeChannel: "Learn With Arafat",
+    youtubeUrl: "https://arafat.com",
+  },
+  {
+    id: 150999,
+    labelName: "Label 1",
+    youtubeChannel: "Learn With Arafat",
+    youtubeUrl: "https://arafat.com",
+  },
+  {
+    id: 150999,
+    labelName: "Label 1",
+    youtubeChannel: "Learn With Arafat",
+    youtubeUrl: "https://arafat.com",
+  },
 ];
 
 const LabelManage = () => {
@@ -50,7 +70,7 @@ const LabelManage = () => {
     setOpen(true);
   };
   const filteredLabelData = labelData.filter((row) =>
-    row.name.toLowerCase().includes(searchQuery.toLowerCase())
+    row.labelName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -91,8 +111,10 @@ const LabelManage = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>
-                <TableSortLabel>Name</TableSortLabel>
+                <TableSortLabel>labelName</TableSortLabel>
               </TableCell>
+              <TableCell>Youtube Channel</TableCell>
+              <TableCell>Youtube URL</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -102,7 +124,9 @@ const LabelManage = () => {
               .map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{row.id}</TableCell>
-                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.labelName}</TableCell>
+                  <TableCell>{row.youtubeChannel}</TableCell>
+                  <TableCell>{row.youtubeUrl}</TableCell>
                   <TableCell>
                     <IconButton aria-label="edit">
                       <EditIcon />

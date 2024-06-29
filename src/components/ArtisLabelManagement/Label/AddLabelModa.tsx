@@ -15,13 +15,14 @@ interface AddLabelModalProps {
 
 const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
   const [labelName, setLabelName] = useState("");
+  const [youtubeChannel, setYoutubeChannel] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const handleCancel = () => {
     setOpen(false);
   };
 
   const handleSave = () => {
-    // Add your logic to handle saving label here
     setOpen(false);
   };
 
@@ -42,6 +43,26 @@ const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
             type="text"
             fullWidth
             value={labelName}
+            onChange={(e) => setLabelName(e.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="channel"
+            label="Youtube Channel"
+            type="text"
+            fullWidth
+            value={youtubeChannel}
+            onChange={(e) => setLabelName(e.target.value)}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="url"
+            label="Youtube URL"
+            type="text"
+            fullWidth
+            value={youtubeUrl}
             onChange={(e) => setLabelName(e.target.value)}
           />
         </DialogContent>

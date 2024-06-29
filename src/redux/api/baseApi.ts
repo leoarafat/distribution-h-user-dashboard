@@ -9,14 +9,14 @@ const authToken = getFromLocalStorage(authKey);
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:7000",
+    baseUrl: "http://localhost:7001",
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
   tagTypes: tagsList,
 });
-export const imageURL = "http://localhost:7000";
+export const imageURL = "http://localhost:7001";
 export const baseUrl = axios.create({
-  baseURL: "http://localhost:7000",
+  baseURL: "http://localhost:7001",
 });
-export const socketURL = "http://localhost:7000";
+export const socketURL = "http://localhost:7001";

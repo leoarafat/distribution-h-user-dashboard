@@ -39,7 +39,7 @@ function SuccessRelease() {
     setSelectedCountry(payload);
   };
   const handlePageChange = (page: any) => {
-    setCurrentPage(page - 1); // Page index starts from 1, so decrement by 1
+    setCurrentPage(page - 1);
   };
   const columns = [
     {

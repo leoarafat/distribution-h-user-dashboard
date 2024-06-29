@@ -87,7 +87,7 @@ const LatestVideo = () => {
                     <TableCell>
                       <img
                         className="w-[90px] h-[60px] rounded-md"
-                        src="https://cdnb.artstation.com/p/assets/images/images/020/421/613/large/raj-hossain-new-song-poster.jpg?1567700019"
+                        src="https://cdnb.artstation.com/p/assets/images/images/020/421/613/large/raj-hossain-new-song-poster.jpg?1567700119"
                         alt=""
                       />
                     </TableCell>

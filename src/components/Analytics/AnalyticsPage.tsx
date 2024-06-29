@@ -63,7 +63,7 @@ const viewsRevenueData = {
     { name: "Week 4", stream: 278, revenue: 2000 },
   ],
   monthly: [
-    { name: "Month 1", stream: 1200, revenue: 7000 },
+    { name: "Month 1", stream: 1200, revenue: 7001 },
     { name: "Month 2", stream: 1100, revenue: 6200 },
     { name: "Month 3", stream: 900, revenue: 5000 },
     { name: "Month 4", stream: 980, revenue: 4500 },
