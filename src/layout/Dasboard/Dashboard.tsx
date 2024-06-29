@@ -1,16 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Avatar, Badge, Layout, Menu } from "antd";
-import {
-  Bell,
-  LogOut,
-  Settings,
-  Music4Icon,
-  Settings2Icon,
-  YoutubeIcon,
-  HelpCircleIcon,
-  LayoutDashboard,
-  VideoIcon,
-} from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { isLoggedIn, removeUserInfo } from "@/redux/services/auth.service";
@@ -19,150 +9,10 @@ import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
-import { RiPlayListAddFill } from "react-icons/ri";
+import { menuItems } from "./menuItems";
 const { Header, Sider, Content } = Layout;
-import { MdAttachMoney } from "react-icons/md";
+
 const { SubMenu } = Menu;
-import { CiCircleInfo } from "react-icons/ci";
-import { GrTransaction } from "react-icons/gr";
-import { MdPayments } from "react-icons/md";
-
-import { SiSimpleanalytics } from "react-icons/si";
-import { useEffect } from "react";
-const menuItems = [
-  {
-    path: "/",
-    title: "Overview",
-    icon: <LayoutDashboard size={18} />,
-  },
-  {
-    path: "/upload",
-    title: "Upload Music",
-    icon: <RiPlayListAddFill size={18} />,
-  },
-  {
-    path: "/release-video",
-    title: "Upload Video",
-    icon: <VideoIcon size={18} />,
-  },
-
-  {
-    path: "/my-uploads",
-    title: "My Uploads",
-    icon: <Music4Icon size={18} color="#fff" />,
-    subMenu: [
-      {
-        path: "/success-track",
-        title: "Music",
-        icon: "",
-      },
-      {
-        path: "/pending-track",
-        title: "Pending Release",
-        icon: "",
-      },
-      {
-        path: "/correction-track",
-        title: "Correction Request",
-        icon: "",
-      },
-      {
-        path: "/drafts",
-        title: "Drafts",
-        icon: "",
-      },
-      {
-        path: "/videos",
-        title: "Videos",
-        icon: "",
-      },
-      {
-        path: "/pending-videos",
-        title: "Pending Videos",
-        icon: "",
-      },
-    ],
-  },
-  {
-    path: "/artist-management",
-    title: "Artist & Label Manage",
-    icon: <Settings2Icon size={18} />,
-  },
-
-  {
-    path: "/analytics",
-    title: "Analytics",
-    icon: <SiSimpleanalytics size={18} />,
-  },
-
-  {
-    path: "/financial",
-    title: "Financial",
-    icon: <MdAttachMoney size={18} color="#fff" />,
-    subMenu: [
-      {
-        path: "/financial-operations",
-        title: "Payment & operation",
-        icon: "",
-      },
-      {
-        path: "/financial-reports",
-        title: "Financial Reports",
-        icon: "",
-      },
-      {
-        path: "/financial-analytics",
-        title: "Financial Analytics",
-        icon: "",
-      },
-    ],
-  },
-  {
-    path: "/legal",
-    title: "Legal",
-    icon: <CiCircleInfo size={18} />,
-  },
-
-  {
-    path: "/manage-account",
-    title: "Payout Details",
-    icon: <MdPayments size={18} color="#fff" />,
-    subMenu: [
-      {
-        path: "/add-account",
-        title: "Add Bank Details",
-        icon: "",
-      },
-      {
-        path: "/my-account",
-        title: "Payout Info",
-        icon: "",
-      },
-    ],
-  },
-  {
-    path: "/settings",
-    title: "Settings",
-    icon: <Settings size={18} color="#fff" />,
-    subMenu: [
-      {
-        path: "/profile",
-        title: "Manage Profile",
-        icon: "",
-      },
-      {
-        path: "/change-password",
-        title: "Change password",
-        icon: "",
-      },
-    ],
-  },
-  {
-    path: "/help",
-    title: "Help",
-    icon: <HelpCircleIcon size={18} />,
-  },
-];
 
 const onboardingItem = {
   path: "/verify",
@@ -298,8 +148,14 @@ const Dashboard = () => {
                       src={`${imageURL}/${myProfile?.image}`}
                     />
                   </Link>
-                  <Link to={"/settings/profile"}>
+                  <Link
+                    className="flex justify-between items-center"
+                    to={"/settings/profile"}
+                  >
                     <h2 className="text-lg text-white">{myProfile?.name}</h2>
+                    <p className="text-small text-white">
+                      ({myProfile?.clientId})
+                    </p>
                   </Link>
                 </div>
               </>

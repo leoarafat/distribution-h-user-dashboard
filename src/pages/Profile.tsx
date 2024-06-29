@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Button,
   TextField,
   Grid,
   Container,
@@ -29,7 +28,7 @@ const Profile = () => {
     refetch,
   } = useMyProfileQuery({});
   const initialFormValues = profileData?.data;
-
+  console.log(initialFormValues);
   const [editProfilePicture, { isLoading, isSuccess, error }] =
     useEditProfilePictureMutation();
 
@@ -157,6 +156,8 @@ const Profile = () => {
         <Typography variant="h4" sx={{ marginTop: 2 }}>
           {initialFormValues?.name}
         </Typography>
+        <Typography>UserId: {initialFormValues?.clientId}</Typography>
+        <Typography>Revenue Share RAte: {70}%</Typography>
       </Box>
 
       <Box sx={{ width: "100%" }}>
