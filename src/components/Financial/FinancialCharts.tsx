@@ -31,7 +31,8 @@ const generateMonthlyData = (year) => {
   for (let i = 1; i <= 12; i++) {
     let month = i < 10 ? "0" + i : i.toString();
     let date = `${year}-${month}`;
-    let amount = Math.floor(Math.random() * 5000) + 1000; // Random amount between 1000 to 6000
+    let amount = Math.floor(Math.random() * 5000) + 1000;
+    6000;
     months.push({ date, amount });
   }
   return months;
@@ -43,25 +44,10 @@ const generateDailyData = (year, month) => {
   for (let i = 1; i <= daysInMonth; i++) {
     let day = i < 10 ? "0" + i : i.toString();
     let date = `${year}-${month}-${day}`;
-    let amount = Math.floor(Math.random() * 500) + 100; // Random amount between 100 to 600
+    let amount = Math.floor(Math.random() * 500) + 100;
     days.push({ date, amount });
   }
   return days;
-};
-
-const generateWeeklyData = (year, month) => {
-  const weeks = [];
-  let startOfMonth = dayjs(`${year}-${month}-01`);
-  let endOfMonth = dayjs(`${year}-${month}-01`).endOf("month");
-
-  while (startOfMonth.isBefore(endOfMonth)) {
-    let weekStart = startOfMonth.startOf("week").format("YYYY-MM-DD");
-    let weekEnd = startOfMonth.endOf("week").format("YYYY-MM-DD");
-    let amount = Math.floor(Math.random() * 1000) + 500; // Random amount between 500 to 1500
-    weeks.push({ week: `${weekStart} - ${weekEnd}`, amount });
-    startOfMonth = startOfMonth.add(1, "week");
-  }
-  return weeks;
 };
 
 const FinancialCharts = () => {
@@ -79,9 +65,6 @@ const FinancialCharts = () => {
     } else if (range === "month") {
       const month = date.month() + 1;
       data = generateDailyData(year, month < 10 ? `0${month}` : month);
-    } else if (range === "week") {
-      const month = date.month() + 1;
-      data = generateWeeklyData(year, month < 10 ? `0${month}` : month);
     }
     setFinancialData(data);
     setLoading(false);
@@ -126,7 +109,7 @@ const FinancialCharts = () => {
           </Typography>
           <Box display="flex" alignItems="center">
             <FormControl sx={{ mr: 2 }}>
-              <InputLabel>Time Range</InputLabel>
+              <InputLabel>Select Filter</InputLabel>
               <Select
                 value={timeRange}
                 onChange={handleTimeRangeChange}
@@ -134,7 +117,6 @@ const FinancialCharts = () => {
               >
                 <MenuItem value="year">Year</MenuItem>
                 <MenuItem value="month">Month</MenuItem>
-                <MenuItem value="week">Week</MenuItem>
               </Select>
             </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
