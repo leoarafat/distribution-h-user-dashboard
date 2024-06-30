@@ -22,7 +22,8 @@ const PrivateRoutes = ({ children }: { children: JSX.Element }) => {
   }
 
   if (isError) {
-    return <div>Error loading user data</div>;
+    localStorage.removeItem("accessToken");
+    window.location.reload();
   }
 
   return isLoggedIn ? children : null;

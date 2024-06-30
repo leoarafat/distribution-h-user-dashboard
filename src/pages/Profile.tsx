@@ -16,7 +16,9 @@ import toast from "react-hot-toast";
 import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 import { useEditProfilePictureMutation } from "@/redux/slices/admin/userApi";
-
+import PersonIcon from "@mui/icons-material/Person";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
@@ -153,11 +155,42 @@ const Profile = () => {
             <Avatar src={src} sx={{ width: 112, height: 112 }} />
           )}
         </Box>
-        <Typography variant="h4" sx={{ marginTop: 2 }}>
+
+        <Typography
+          variant="h4"
+          sx={{
+            marginTop: 2,
+            color: "#3f51b5",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           {initialFormValues?.name}
         </Typography>
-        <Typography>UserId: {initialFormValues?.clientId}</Typography>
-        <Typography>Revenue Share RAte: {70}%</Typography>
+        <Typography
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 1,
+          }}
+        >
+          <PersonIcon sx={{ marginRight: 1, color: "#3f51b5" }} />
+          UserId: {initialFormValues?.clientId}
+        </Typography>
+        <Typography
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 1,
+          }}
+        >
+          <MonetizationOnIcon sx={{ marginRight: 1, color: "#3f51b5" }} />
+          Revenue Share Rate:{" "}
+          <span style={{ color: "#4caf50", marginLeft: 4 }}>70%</span>
+        </Typography>
       </Box>
 
       <Box sx={{ width: "100%" }}>
