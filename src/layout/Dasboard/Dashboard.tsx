@@ -33,16 +33,22 @@ const Dashboard = () => {
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
 
-  if (!isUser) {
-    navigate("/auth/login");
-  }
-
   const handleLogout = () => {
     removeUserInfo(authKey);
     navigate("/auth/login");
   };
 
-  const filteredMenuItems = isVerifiedUser ? menuItems : [onboardingItem];
+  // Add the logout item
+  const logoutItem = {
+    key: "logout",
+    title: "Logout",
+    icon: <LogOut size={18} />,
+    onClick: handleLogout,
+  };
+
+  const filteredMenuItems = isVerifiedUser
+    ? [...menuItems, logoutItem]
+    : [onboardingItem, logoutItem];
 
   return (
     <Layout>
@@ -102,21 +108,11 @@ const Dashboard = () => {
                   fontSize: "16px",
                   marginBottom: "10px",
                 }}
+                onClick={item.onClick}
               >
                 <Link to={item.path}>{item.title}</Link>
               </Menu.Item>
             )
-          )}
-          {isVerifiedUser && (
-            <Menu.Item
-              key="500"
-              className=""
-              icon={<LogOut size={20} />}
-              style={{ color: "#fff", fontSize: "16px" }}
-              onClick={handleLogout}
-            >
-              Logout
-            </Menu.Item>
           )}
         </Menu>
       </Sider>

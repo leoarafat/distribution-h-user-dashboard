@@ -9,11 +9,12 @@ import {
   HelpCircleIcon,
   LayoutDashboard,
   VideoIcon,
+  SendHorizontal,
 } from "lucide-react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
 import PendingReleaseIcon from "@mui/icons-material/HourglassFull";
-import { SendHorizontal } from "lucide-react";
+
 export const menuItems = [
   {
     path: "/",
@@ -30,7 +31,6 @@ export const menuItems = [
     title: "Upload Video",
     icon: <VideoIcon size={18} />,
   },
-
   {
     path: "/my-uploads",
     title: "My Uploads",
@@ -39,32 +39,32 @@ export const menuItems = [
       {
         path: "/success-track",
         title: "Music",
-        icon: "",
+        icon: <Music4Icon size={18} color="#fff" />,
       },
       {
         path: "/pending-track",
         title: "Pending Release",
-        icon: "",
+        icon: <PendingReleaseIcon style={{ fontSize: 18, color: "white" }} />,
       },
       {
         path: "/correction-track",
         title: "Correction Request",
-        icon: "",
+        icon: <SendHorizontal style={{ fontSize: 18, color: "white" }} />,
       },
       {
         path: "/drafts",
         title: "Drafts",
-        icon: "",
+        icon: <CiCircleInfo size={18} color="white" />,
       },
       {
         path: "/videos",
         title: "Videos",
-        icon: "",
+        icon: <VideoIcon size={18} color="white" />,
       },
       {
         path: "/pending-videos",
         title: "Pending Videos",
-        icon: "",
+        icon: <PendingReleaseIcon style={{ fontSize: 18, color: "white" }} />,
       },
     ],
   },
@@ -73,13 +73,11 @@ export const menuItems = [
     title: "Artist & Label Manage",
     icon: <Settings2Icon size={18} />,
   },
-
   {
     path: "/analytics",
     title: "Analytics",
     icon: <SiSimpleanalytics size={18} />,
   },
-
   {
     path: "/financial",
     title: "Financial",
@@ -88,17 +86,17 @@ export const menuItems = [
       {
         path: "/financial-operations",
         title: "Payment & operation",
-        icon: "",
+        icon: <MdPayments size={18} />,
       },
       {
         path: "/financial-reports",
         title: "Financial Reports",
-        icon: "",
+        icon: <SiSimpleanalytics size={18} />,
       },
       {
         path: "/financial-analytics",
         title: "Financial Analytics",
-        icon: "",
+        icon: <SiSimpleanalytics size={18} />,
       },
     ],
   },
@@ -154,7 +152,6 @@ export const menuItems = [
       },
     ],
   },
-
   {
     path: "/manage-account",
     title: "Payout Details",
@@ -163,12 +160,12 @@ export const menuItems = [
       {
         path: "/add-account",
         title: "Add Bank Details",
-        icon: "",
+        icon: <MdPayments size={18} />,
       },
       {
         path: "/my-account",
         title: "Payout Info",
-        icon: "",
+        icon: <MdPayments size={18} />,
       },
     ],
   },
@@ -180,12 +177,12 @@ export const menuItems = [
       {
         path: "/profile",
         title: "Manage Profile",
-        icon: "",
+        icon: <Settings size={18} />,
       },
       {
         path: "/change-password",
         title: "Change password",
-        icon: "",
+        icon: <Settings size={18} />,
       },
     ],
   },
