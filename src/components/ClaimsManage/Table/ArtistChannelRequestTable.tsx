@@ -10,15 +10,11 @@ import {
   IconButton,
   TablePagination,
 } from "@mui/material";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Trash2 } from "lucide-react";
 
 const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedLabelId, setSelectedLabelId] = useState<number | null>(null);
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -67,24 +63,6 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
       (statusFilter === "" || row.status === statusFilter)
   );
 
-  const handleMenuClick = (
-    event: React.MouseEvent<HTMLElement>,
-    clientId: number
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedLabelId(clientId);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setSelectedLabelId(null);
-  };
-
-  const handleMenuItemClick = (id: number) => {
-    console.log(`id: ${id} on client ID: ${setSelectedLabelId}`);
-    handleMenuClose();
-  };
-
   return (
     <>
       <Paper sx={{ mt: 3 }}>
@@ -115,26 +93,9 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
                     <TableCell>{row.upc3}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell align="right">
-                      <IconButton
-                        onClick={(event) => handleMenuClick(event, row.id)}
-                      >
-                        <MoreVertIcon />
+                      <IconButton>
+                        <Trash2 />
                       </IconButton>
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl) && selectedLabelId === row.id}
-                        onClose={handleMenuClose}
-                      >
-                        <MenuItem onClick={() => handleMenuItemClick(row.id)}>
-                          Approve
-                        </MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick(row.id)}>
-                          Reject
-                        </MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick(row.id)}>
-                          Delete
-                        </MenuItem>
-                      </Menu>
                     </TableCell>
                   </TableRow>
                 ))}
