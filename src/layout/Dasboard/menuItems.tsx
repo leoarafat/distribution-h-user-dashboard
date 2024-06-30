@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
+import PendingReleaseIcon from "@mui/icons-material/HourglassFull";
+import { SendHorizontal } from "lucide-react";
 export const menuItems = [
   {
     path: "/",
@@ -101,9 +103,56 @@ export const menuItems = [
     ],
   },
   {
-    path: "/legal",
+    path: "/claims",
     title: "Legal",
-    icon: <CiCircleInfo size={18} />,
+    icon: <CiCircleInfo size={18} color="white" />,
+    subMenu: [
+      {
+        path: "/manage",
+        title: "Legals",
+        icon: <SendHorizontal style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/artist-channel-request",
+        title: "Artist Channels",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/tikTok-claim-request",
+        title: "TikTok Claims",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/facebook-whiteList-request",
+        title: "Facebook WhiteLists",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/facebook-claim-request",
+        title: "Facebook Claims",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/whiteList-request",
+        title: "WhiteLists",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/youtube-claim-request",
+        title: "Youtube Claims",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/youtube-manual-claim",
+        title: "Youtube Manual Claims",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+      {
+        path: "/youtube-take-down",
+        title: "Youtube Take Downs",
+        icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
+      },
+    ],
   },
 
   {

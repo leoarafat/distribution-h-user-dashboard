@@ -35,6 +35,14 @@ import DigitalRightsManagementPage from "@/components/Youtube/DigitalRightsManag
 import CorrectionMusic from "@/components/MyUploads/CorrectionMusic/CorrectionMusic";
 import AlbumStepperForm from "@/components/SteperForm/AlbumStepper";
 import Uploads from "@/components/Uplaods/Uploads";
+import ArtistChannelRequest from "@/components/ClaimsManage/ArtistChannelRequest";
+import TikTokClaimRequest from "@/components/ClaimsManage/TikTokClaimRequest";
+import FacebookWhiteListRequest from "@/components/ClaimsManage/FacebookWhiteListRequest";
+import FacebookClaimRequest from "@/components/ClaimsManage/FacebookClaimRequest";
+import WhiteListRequest from "@/components/ClaimsManage/WhiteListRequest";
+import YoutubeClaimRequest from "@/components/ClaimsManage/YoutubeClaimRequest";
+import YoutubeManualClaim from "@/components/ClaimsManage/YoutubeManualClaim";
+import YoutubeTakeDown from "@/components/ClaimsManage/YoutubeTakeDown";
 
 const router = createBrowserRouter([
   {
@@ -165,12 +173,78 @@ const router = createBrowserRouter([
           </IsVerifiedRoutes>
         ),
       },
+
+      //! Claims Start
       {
-        path: "/legal",
+        path: "/claims/manage",
         element: (
           <IsVerifiedRoutes>
             <DigitalRightsManagementPage />
           </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/claims/artist-channel-request",
+        element: (
+          <PrivateRoutes>
+            <ArtistChannelRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/tikTok-claim-request",
+        element: (
+          <PrivateRoutes>
+            <TikTokClaimRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/facebook-whiteList-request",
+        element: (
+          <PrivateRoutes>
+            <FacebookWhiteListRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/facebook-claim-request",
+        element: (
+          <PrivateRoutes>
+            <FacebookClaimRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/whiteList-request",
+        element: (
+          <PrivateRoutes>
+            <WhiteListRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/youtube-claim-request",
+        element: (
+          <PrivateRoutes>
+            <YoutubeClaimRequest />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/youtube-manual-claim",
+        element: (
+          <PrivateRoutes>
+            <YoutubeManualClaim />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/claims/youtube-take-down",
+        element: (
+          <PrivateRoutes>
+            <YoutubeTakeDown />
+          </PrivateRoutes>
         ),
       },
       {
