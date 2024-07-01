@@ -50,7 +50,6 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>Label Name</TableCell>
                 <TableCell>Facebook Page URL</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -58,16 +57,11 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row._id}</TableCell>
+                    <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
-                    <TableCell>{row.url}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Trash2 />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell>{row.url?.slice(0, 20)}</TableCell>
+                    <TableCell>{row.approvedStatus}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

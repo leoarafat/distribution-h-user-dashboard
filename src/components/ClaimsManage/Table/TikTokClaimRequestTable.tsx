@@ -54,7 +54,6 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>TikTok Video URL</TableCell>
                 <TableCell>Time (Part Of Song)</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,19 +61,14 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row._id}</TableCell>
+                    <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
                     <TableCell>{row.upc}</TableCell>
                     <TableCell>{row.isrc}</TableCell>
-                    <TableCell>{row.tiktokUrl}</TableCell>
+                    <TableCell>{row.url?.slice(0, 20)}</TableCell>
                     <TableCell>{row.time}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Trash2 />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell>{row.approvedStatus}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

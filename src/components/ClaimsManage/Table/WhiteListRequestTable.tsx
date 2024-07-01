@@ -31,7 +31,7 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const { data: queryData } = useGetWhitelistRequestQuery({});
   //@ts-ignore
   const rows = queryData?.data?.data;
-
+  console.log(rows);
   const filteredRows = rows?.filter(
     (row) =>
       (row.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -51,7 +51,6 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>White List URL</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell>Created At</TableCell>
-                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -59,15 +58,10 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row._id}</TableCell>
-                    <TableCell>{row.whiteListUrl}</TableCell>
-                    <TableCell>{row.status}</TableCell>
+                    <TableCell>{row._id?.slice(5, 9)}</TableCell>
+                    <TableCell>{row.url?.slice(0, 20)}</TableCell>
+                    <TableCell>{row.approvedStatus}</TableCell>
                     <TableCell>{row.createdAt}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Trash2 />
-                      </IconButton>
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

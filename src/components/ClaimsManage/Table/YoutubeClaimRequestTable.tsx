@@ -54,7 +54,6 @@ const YoutubeClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>UPC</TableCell>
                 <TableCell>YouTube Video URL</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,18 +61,13 @@ const YoutubeClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row._id}</TableCell>
+                    <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
                     <TableCell>{row.songTitle}</TableCell>
                     <TableCell>{row.upc}</TableCell>
-                    <TableCell>{row.youtubeUrl}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Trash2 />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell>{row.url?.slice(0, 20)}</TableCell>
+                    <TableCell>{row.approvedStatus}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

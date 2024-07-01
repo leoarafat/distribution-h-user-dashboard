@@ -54,7 +54,6 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>UPC2</TableCell>
                 <TableCell>UPC3</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,18 +61,13 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: any) => (
                   <TableRow key={index}>
-                    <TableCell>{row._id}</TableCell>
-                    <TableCell>{row.channel_link?.slice(0, 15)}</TableCell>
-                    <TableCell>{row.topic_link?.slice(0, 15)}</TableCell>
+                    <TableCell>{row._id?.slice(5, 9)}</TableCell>
+                    <TableCell>{row.channel_link?.slice(0, 20)}</TableCell>
+                    <TableCell>{row.topic_link?.slice(0, 20)}</TableCell>
                     <TableCell>{row.upc_1}</TableCell>
                     <TableCell>{row.upc_2}</TableCell>
                     <TableCell>{row.upc_3}</TableCell>
                     <TableCell>{row.approvedStatus}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Trash2 />
-                      </IconButton>
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
