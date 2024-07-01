@@ -1,15 +1,10 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import { PhoneAndroid, AccountCircle } from "@mui/icons-material";
+import { useGetMyAccountsQuery } from "@/redux/slices/bank/bankApi";
 
 const MobileBankingCard = () => {
-  // Static data
-  const mobileBankingData = {
-    name: "John Doe",
-    phoneNumber: "123-456-7890",
-    mobileBankingName: "bKash",
-  };
-
-  const { name, phoneNumber, mobileBankingName } = mobileBankingData;
+  const { data: accounts } = useGetMyAccountsQuery({});
+  const alreadyHaveAccount = accounts?.data?.data?.mobileBankAccountAccount;
 
   return (
     <Card elevation={3}>
@@ -22,7 +17,7 @@ const MobileBankingCard = () => {
             <Box display="flex" alignItems="center">
               <AccountCircle fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Name: {name}
+                Name: {alreadyHaveAccount?.accountName}
               </Typography>
             </Box>
           </Grid>
@@ -30,7 +25,7 @@ const MobileBankingCard = () => {
             <Box display="flex" alignItems="center">
               <PhoneAndroid fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Phone Number: {phoneNumber}
+                Phone Number: {alreadyHaveAccount?.accountNumber}
               </Typography>
             </Box>
           </Grid>
@@ -38,7 +33,7 @@ const MobileBankingCard = () => {
             <Box display="flex" alignItems="center">
               <AccountCircle fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Mobile Banking Provider Name: {mobileBankingName}
+                Mobile Banking Provider Name: {alreadyHaveAccount?.providerName}
               </Typography>
             </Box>
           </Grid>

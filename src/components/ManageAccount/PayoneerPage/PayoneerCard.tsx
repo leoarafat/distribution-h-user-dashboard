@@ -1,16 +1,10 @@
 import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import { Email, AccountCircle } from "@mui/icons-material";
+import { useGetMyAccountsQuery } from "@/redux/slices/bank/bankApi";
 
 const PayoneerCard = () => {
-  // Static data
-  const payoneerData = {
-    fullName: "John Doe",
-    email: "example@example.com",
-    accountNumber: "1234567890",
-    phoneNumber: "123-456-7890",
-  };
-
-  const { fullName, email } = payoneerData;
+  const { data: accounts } = useGetMyAccountsQuery({});
+  const alreadyHaveAccount = accounts?.data?.data?.pioneerAccount;
 
   return (
     <Card elevation={3}>
@@ -23,7 +17,7 @@ const PayoneerCard = () => {
             <Box display="flex" alignItems="center">
               <AccountCircle fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Full Name: {fullName}
+                AccountNumber: {alreadyHaveAccount?.accountNumber}
               </Typography>
             </Box>
           </Grid>
@@ -31,7 +25,7 @@ const PayoneerCard = () => {
             <Box display="flex" alignItems="center">
               <Email fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Email: {email}
+                Email: {alreadyHaveAccount?.email}
               </Typography>
             </Box>
           </Grid>

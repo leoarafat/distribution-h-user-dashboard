@@ -7,17 +7,12 @@ import {
   IconButton,
 } from "@mui/material";
 import { AccountBalance, Phone, AccountCircle } from "@mui/icons-material";
+import { useGetMyAccountsQuery } from "@/redux/slices/bank/bankApi";
 
 const BankAccountCard = () => {
-  // Static data
-  const accountData = {
-    bankName: "BRAC Bank",
-    accountName: "John Doe",
-    phoneNumber: "123-456-7890",
-    accountNumber: "1234567890",
-  };
-
-  const { bankName, accountName, phoneNumber, accountNumber } = accountData;
+  const { data: accounts } = useGetMyAccountsQuery({});
+  const alreadyHaveAccount = accounts?.data?.data?.bankAccount;
+  console.log(alreadyHaveAccount);
 
   return (
     <Card elevation={3}>
@@ -30,7 +25,15 @@ const BankAccountCard = () => {
             <Box display="flex" alignItems="center">
               <AccountBalance fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Bank: {bankName}
+                Bank: {alreadyHaveAccount?.bankName}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center">
+              <AccountBalance fontSize="large" />
+              <Typography variant="body1" sx={{ marginLeft: 1 }}>
+                Branch: {alreadyHaveAccount?.branchName}
               </Typography>
             </Box>
           </Grid>
@@ -38,7 +41,7 @@ const BankAccountCard = () => {
             <Box display="flex" alignItems="center">
               <AccountCircle fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Account Name: {accountName}
+                Account Name: {alreadyHaveAccount?.accountName}
               </Typography>
             </Box>
           </Grid>
@@ -46,14 +49,15 @@ const BankAccountCard = () => {
             <Box display="flex" alignItems="center">
               <Phone fontSize="large" />
               <Typography variant="body1" sx={{ marginLeft: 1 }}>
-                Phone Number: {phoneNumber}
+                Phone Number: {alreadyHaveAccount?.phoneNumber}
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={12}>
             <Box display="flex" alignItems="center">
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                Account Number: {accountNumber}
+              <Phone fontSize="large" />
+              <Typography variant="body1" sx={{ marginLeft: 1 }}>
+                Account Number: {alreadyHaveAccount?.accountNumber}
               </Typography>
             </Box>
           </Grid>
