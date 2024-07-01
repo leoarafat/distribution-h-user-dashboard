@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import {
   Box,
   Button,
@@ -12,24 +12,59 @@ import {
   Typography,
 } from "@mui/material";
 import { mobileBankingProviders } from "@/MockData/MockData";
+import {
+  useAddMobileBankAccountMutation,
+  useGetMyAccountsQuery,
+} from "@/redux/slices/bank/bankApi";
+import toast from "react-hot-toast";
+
+interface MobileBankingData {
+  accountName: string;
+  accountNumber: string;
+  providerName: string;
+}
 
 const MobileBanking = () => {
-  const [mobileBankingData, setMobileBankingData] = useState({
-    name: "John Doe",
-    phoneNumber: "123-456-7890",
-    mobileBankingName: "bKash",
-  });
+  const [mobileBankingData, setMobileBankingData] = useState<MobileBankingData>(
+    {
+      accountName: "",
+      accountNumber: "",
+      providerName: "",
+    }
+  );
 
-  const handleAddMobileBanking = (e: any) => {
+  const [addMobileBank] = useAddMobileBankAccountMutation();
+  const { data: accounts } = useGetMyAccountsQuery({});
+  const alreadyHaveAccount =
+    accounts?.data?.data?.mobileBankAccountAccount?._id;
+  const handleAddMobileBanking = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your logic here to handle form submission
+    try {
+      const res = await addMobileBank(mobileBankingData).unwrap();
+      if (res?.success) {
+        toast.success("Mobile banking account added successfully!");
+        setMobileBankingData({
+          accountName: "",
+          accountNumber: "",
+          providerName: "",
+        });
+      } else {
+        toast.error("Failed to add mobile banking account. Please try again.");
+      }
+    } catch (error: any) {
+      console.error("Failed to add mobile banking account:", error);
+      toast.error(error?.message || "An error occurred.");
+    }
   };
 
-  const handleChange = (e) => {
-    setMobileBankingData({
-      ...mobileBankingData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setMobileBankingData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -44,24 +79,24 @@ const MobileBanking = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  id="name"
-                  name="name"
+                  id="accountName"
+                  name="accountName"
                   label="Name"
                   variant="outlined"
                   margin="normal"
-                  value={mobileBankingData.name}
+                  value={mobileBankingData.accountName}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="accountNumber"
+                  name="accountNumber"
                   label="Phone Number"
                   variant="outlined"
                   margin="normal"
-                  value={mobileBankingData.phoneNumber}
+                  value={mobileBankingData.accountNumber}
                   onChange={handleChange}
                 />
               </Grid>
@@ -69,11 +104,11 @@ const MobileBanking = () => {
                 <InputLabel id="bankNameLabel">Method</InputLabel>
                 <Select
                   fullWidth
-                  id="mobileBankingName"
-                  name="mobileBankingName"
+                  id="providerName"
+                  name="providerName"
                   label="Mobile Banking Name"
                   variant="outlined"
-                  value={mobileBankingData.mobileBankingName}
+                  value={mobileBankingData.providerName}
                   onChange={handleChange}
                 >
                   {mobileBankingProviders?.map((provider, index) => (
@@ -83,9 +118,9 @@ const MobileBanking = () => {
                   ))}
                 </Select>
               </Grid>
-              {/* Add more fields here if needed */}
               <Grid item xs={12}>
                 <Button
+                  disabled={alreadyHaveAccount}
                   type="submit"
                   variant="contained"
                   color="primary"

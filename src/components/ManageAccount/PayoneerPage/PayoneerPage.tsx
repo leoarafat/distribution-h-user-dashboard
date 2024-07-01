@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Box,
   Button,
@@ -8,16 +8,38 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import {
+  useAddPioneerAccountMutation,
+  useGetMyAccountsQuery,
+} from "@/redux/slices/bank/bankApi";
+import toast from "react-hot-toast";
 
 const PayoneerPage = () => {
   const [payoneerData, setPayoneerData] = useState({
-    payoneerId: "",
-    payoneerEmail: "",
+    accountNumber: "",
+    email: "",
   });
+  const [addPioneerAccount] = useAddPioneerAccountMutation();
+  const { data: accounts } = useGetMyAccountsQuery({});
 
-  const handleAddPayoneerAccount = (e: any) => {
+  const alreadyHaveAccount = accounts?.data?.data?.pioneerAccount?._id;
+  const handleAddPayoneerAccount = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your logic here to handle form submission
+    try {
+      const res = await addPioneerAccount(payoneerData).unwrap();
+      if (res?.success) {
+        toast.success("Pioneer Account added successfully!");
+        setPayoneerData({
+          accountNumber: "",
+          email: "",
+        });
+      } else {
+        toast.error("Failed to add Pioneer Account. Please try again.");
+      }
+    } catch (error: any) {
+      console.error("Failed to add Pioneer Account:", error);
+      toast.error(error?.message || "An error occurred.");
+    }
   };
 
   const handleChange = (e: any) => {
@@ -39,29 +61,30 @@ const PayoneerPage = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  id="payoneerId"
-                  name="payoneerId"
+                  id="accountNumber"
+                  name="accountNumber"
                   label="Payoneer ID"
                   variant="outlined"
                   margin="normal"
-                  value={payoneerData.payoneerId}
+                  value={payoneerData.accountNumber}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  id="payoneerEmail"
-                  name="payoneerEmail"
+                  id="email"
+                  name="email"
                   label="Payoneer Email"
                   variant="outlined"
                   margin="normal"
-                  value={payoneerData.payoneerEmail}
+                  value={payoneerData.email}
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <Button
+                  disabled={alreadyHaveAccount}
                   type="submit"
                   variant="contained"
                   color="primary"

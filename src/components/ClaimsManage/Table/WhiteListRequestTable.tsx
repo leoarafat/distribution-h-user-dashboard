@@ -31,7 +31,7 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const { data: queryData } = useGetWhitelistRequestQuery({});
   //@ts-ignore
   const rows = queryData?.data?.data;
-  console.log(rows);
+
   const filteredRows = rows?.filter(
     (row) =>
       (row.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
