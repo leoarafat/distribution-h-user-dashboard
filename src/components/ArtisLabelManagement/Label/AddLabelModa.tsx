@@ -7,6 +7,8 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { useAddLabelMutation } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
+import toast from "react-hot-toast";
 
 interface AddLabelModalProps {
   open: boolean;
@@ -18,14 +20,28 @@ const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
   const [youtubeChannel, setYoutubeChannel] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
+  const [addLabel, { isLoading }] = useAddLabelMutation();
+
+  const handleSave = async () => {
+    try {
+      const payload = {
+        labelName,
+        youtubeChannel,
+        youtubeUrl,
+      };
+      const res = await addLabel(payload);
+
+      if (res?.data?.success === true) {
+        toast.success("Label Add Successful");
+        setOpen(false);
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
   const handleCancel = () => {
     setOpen(false);
   };
-
-  const handleSave = () => {
-    setOpen(false);
-  };
-
   return (
     <div>
       <Dialog
@@ -53,7 +69,7 @@ const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
             type="text"
             fullWidth
             value={youtubeChannel}
-            onChange={(e) => setLabelName(e.target.value)}
+            onChange={(e) => setYoutubeChannel(e.target.value)}
           />
           <TextField
             autoFocus
@@ -63,7 +79,7 @@ const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
             type="text"
             fullWidth
             value={youtubeUrl}
-            onChange={(e) => setLabelName(e.target.value)}
+            onChange={(e) => setYoutubeUrl(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
@@ -71,7 +87,7 @@ const AddLabelModal: React.FC<AddLabelModalProps> = ({ open, setOpen }) => {
             Cancel
           </Button>
           <Button onClick={handleSave} color="primary">
-            Save
+            {isLoading ? "Saving..." : "Save"}
           </Button>
         </DialogActions>
       </Dialog>

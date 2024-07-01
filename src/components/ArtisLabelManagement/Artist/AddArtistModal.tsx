@@ -7,6 +7,8 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
+import { useAddArtistMutation } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
+import toast from "react-hot-toast";
 
 interface AddArtistModalProps {
   open: boolean;
@@ -19,12 +21,29 @@ const AddArtistModal: React.FC<AddArtistModalProps> = ({ open, setOpen }) => {
   const [spotifyId, setSpotifyId] = useState("");
   const [appleId, setAppleId] = useState("");
   const [facebookUrl, setFacebookUrl] = useState("");
+  const [addArtist, { isLoading }] = useAddArtistMutation();
 
-  const handleCancel = () => {
-    setOpen(false);
+  const handleSave = async () => {
+    try {
+      const payload = {
+        primaryArtistName: artistName,
+        primaryArtistInstagramId: instagramId,
+        primaryArtistSpotifyId: spotifyId,
+        primaryArtistAppleId: appleId,
+        primaryArtistFacebookId: facebookUrl,
+      };
+      const res = await addArtist(payload);
+
+      if (res?.data?.success === true) {
+        toast.success("Label Add Successful");
+        setOpen(false);
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
   };
 
-  const handleSave = () => {
+  const handleCancel = () => {
     setOpen(false);
   };
 
@@ -89,7 +108,7 @@ const AddArtistModal: React.FC<AddArtistModalProps> = ({ open, setOpen }) => {
             Cancel
           </Button>
           <Button onClick={handleSave} color="primary">
-            Save
+            {isLoading ? "Saving.." : "Save"}
           </Button>
         </DialogActions>
       </Dialog>

@@ -22,4 +22,6 @@ export const tagsList = [
   "dashboard",
   "notification",
   "agreement",
+  "artist",
+  "label",
 ] as const;

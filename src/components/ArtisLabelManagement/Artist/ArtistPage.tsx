@@ -17,50 +17,28 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import AddArtistModal from "./AddArtistModal";
-
-const artistData = [
-  {
-    id: 150999,
-    name: "Emon Khan",
-    instagramId: "Pending",
-    spotifyId: "Pending",
-    appleId: "Pending",
-    facebookUrl: "Pending",
-  },
-  {
-    id: 150999,
-    name: "Emon Khan",
-    instagramId: "-",
-    spotifyId: "-",
-    appleId: "-",
-    facebookUrl: "-",
-  },
-  {
-    id: 150999,
-    name: "Emon Khan",
-    instagramId: "-",
-    spotifyId: "-",
-    appleId: "-",
-    facebookUrl: "-",
-  },
-  {
-    id: 150999,
-    name: "Emon Khan",
-    instagramId: "-",
-    spotifyId: "-",
-    appleId: "-",
-    facebookUrl: "-",
-  },
-];
+import {
+  useDeleteArtistMutation,
+  useGetArtistsQuery,
+  useEditArtistsMutation,
+} from "@/redux/slices/ArtistAndLabel/artistLabelApi";
+import Loader from "@/utils/Loader";
+import toast from "react-hot-toast";
 
 const ArtistManage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const [editMode, setEditMode] = useState<any>({});
+  const [editRowData, setEditRowData] = useState<any>({});
+  const { data: artistsData, isLoading } = useGetArtistsQuery({});
+  const [deleteArtist] = useDeleteArtistMutation();
+  const [updateArtist] = useEditArtistsMutation();
 
   const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
@@ -74,12 +52,63 @@ const ArtistManage = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const showModal = () => {
     setOpen(true);
   };
-  const filteredArtistData = artistData.filter((row) =>
-    row.name.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const handleEditClick = (id: string, rowData: any) => {
+    setEditMode({ ...editMode, [id]: true });
+    setEditRowData(rowData);
+  };
+
+  const handleSaveClick = async (id: string) => {
+    try {
+      const res = await updateArtist({ id, ...editRowData });
+
+      if (res?.data?.success === true) {
+        toast.success("Artist Updated");
+        setEditMode({ ...editMode, [id]: false });
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
+
+  const handleInputChange = (e: any, field: string) => {
+    setEditRowData({ ...editRowData, [field]: e.target.value });
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteArtist(id);
+
+      if (res?.data?.success === true) {
+        toast.success("Artist Deleted");
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
+
+  //@ts-ignore
+  const artistData = artistsData?.data?.data;
+
+  if (!artistData) {
+    return (
+      <div>
+        <p>Data Is Empty</p>
+      </div>
+    );
+  }
+
+  const filteredArtistData = artistData?.filter((row: any) =>
+    row.primaryArtistName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -131,20 +160,92 @@ const ArtistManage = () => {
           <TableBody>
             {filteredArtistData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
+              .map((row: any, index: any) => (
                 <TableRow key={index}>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell>{row.instagramId}</TableCell>
-                  <TableCell>{row.spotifyId}</TableCell>
-                  <TableCell>{row.appleId}</TableCell>
-                  <TableCell>{row.facebookUrl}</TableCell>
-                  <IconButton aria-label="edit">
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
+                  <TableCell>{row?.primaryArtistId}</TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <TextField
+                        value={editRowData.primaryArtistName}
+                        onChange={(e) =>
+                          handleInputChange(e, "primaryArtistName")
+                        }
+                      />
+                    ) : (
+                      row?.primaryArtistName
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <TextField
+                        value={editRowData.primaryArtistInstagramId}
+                        onChange={(e) =>
+                          handleInputChange(e, "primaryArtistInstagramId")
+                        }
+                      />
+                    ) : (
+                      row?.primaryArtistInstagramId?.slice(0, 15)
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <TextField
+                        value={editRowData.primaryArtistSpotifyId}
+                        onChange={(e) =>
+                          handleInputChange(e, "primaryArtistSpotifyId")
+                        }
+                      />
+                    ) : (
+                      row?.primaryArtistSpotifyId?.slice(0, 15)
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <TextField
+                        value={editRowData.primaryArtistAppleId}
+                        onChange={(e) =>
+                          handleInputChange(e, "primaryArtistAppleId")
+                        }
+                      />
+                    ) : (
+                      row?.primaryArtistAppleId?.slice(0, 15)
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <TextField
+                        value={editRowData.primaryArtistFacebookId}
+                        onChange={(e) =>
+                          handleInputChange(e, "primaryArtistFacebookId")
+                        }
+                      />
+                    ) : (
+                      row?.primaryArtistFacebookId?.slice(0, 15)
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editMode[row._id] ? (
+                      <IconButton
+                        aria-label="save"
+                        onClick={() => handleSaveClick(row._id)}
+                      >
+                        <SaveIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        aria-label="edit"
+                        onClick={() => handleEditClick(row._id, row)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    )}
+                    <IconButton
+                      onClick={() => handleDelete(row?._id)}
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

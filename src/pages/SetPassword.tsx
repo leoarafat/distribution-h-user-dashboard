@@ -26,11 +26,11 @@ const SetPassword = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
   };
 
-  const handleConfirmPasswordChange = (e) => {
+  const handleConfirmPasswordChange = (e: any) => {
     setConfirmPassword(e.target.value);
   };
 
@@ -42,7 +42,7 @@ const SetPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -68,7 +68,7 @@ const SetPassword = () => {
         setSuccess("Password set successfully");
         navigate("/auth/login");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response);
       setError("Failed to set password");
     }
