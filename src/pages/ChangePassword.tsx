@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   TextField,
@@ -6,13 +6,20 @@ import {
   Container,
   Box,
   CircularProgress,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useChangePasswordMutation } from "@/redux/slices/admin/settingApi";
 import toast from "react-hot-toast";
 
 const ChangePassword = () => {
   const [changePassword, { isLoading, data, isSuccess, error }] =
     useChangePasswordMutation();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -32,16 +39,23 @@ const ChangePassword = () => {
   const onFinish = async (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const currentPassword = formData.get("currentPassword");
+    const oldPassword = formData.get("oldPassword");
     const newPassword = formData.get("newPassword");
     const confirmPassword = formData.get("confirmPassword");
 
     try {
-      await changePassword({ currentPassword, newPassword, confirmPassword });
+      await changePassword({ oldPassword, newPassword, confirmPassword });
     } catch (err: any) {
       toast.error(err.message);
     }
   };
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleClickShowNewPassword = () => setShowNewPassword(!showNewPassword);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
+  const handleMouseDownPassword = (event: any) => event.preventDefault();
 
   return (
     <Container
@@ -60,7 +74,6 @@ const ChangePassword = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          // backgroundColor: "primary.main",
           p: 4,
           borderRadius: 2,
           boxShadow: 3,
@@ -72,30 +85,66 @@ const ChangePassword = () => {
         </Typography>
         <TextField
           label="Current Password"
-          name="currentPassword"
-          type="password"
+          name="oldPassword"
+          type={showPassword ? "text" : "password"}
           variant="outlined"
           margin="normal"
           fullWidth
           required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           label="New Password"
           name="newPassword"
-          type="password"
+          type={showNewPassword ? "text" : "password"}
           variant="outlined"
           margin="normal"
           fullWidth
           required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowNewPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           label="Confirm Password"
           name="confirmPassword"
-          type="password"
+          type={showConfirmPassword ? "text" : "password"}
           variant="outlined"
           margin="normal"
           fullWidth
           required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowConfirmPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <Box sx={{ mt: 2 }}>
           <Button

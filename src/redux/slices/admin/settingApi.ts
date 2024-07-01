@@ -143,8 +143,8 @@ export const settingApi = baseApi.injectEndpoints({
     }),
     changePassword: build.mutation({
       query: (userData) => ({
-        url: `auth/change-password`,
-        method: "POST",
+        url: `user/change-password`,
+        method: "PATCH",
         body: userData,
       }),
       invalidatesTags: ["forget"],
