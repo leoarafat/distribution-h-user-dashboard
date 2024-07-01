@@ -1,43 +1,73 @@
+import React, { useState } from "react";
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
+import toast from "react-hot-toast";
 import AuthWrapper from "@/components/share/AuthWrapper";
 import Title from "@/components/share/Title";
 import { useForgetPasswordMutation } from "@/redux/slices/admin/settingApi";
-import { Button, Form, Input } from "antd";
-import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
+  const [email, setEmail] = useState("");
   const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
 
-  const onFinish = async (values: any) => {
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     try {
-      localStorage.setItem("email", values?.email);
-      const res = await forgetPassword(values);
-      if (res?.data?.success == true) {
+      localStorage.setItem("email", email);
+      const res = await forgetPassword({ email });
+      if (res?.data?.success) {
         toast.success(res?.data?.message);
       }
     } catch (error: any) {
       console.log(error?.message);
     }
   };
+
   return (
     <AuthWrapper>
-      <div className="text-center mb-12">
-        <Title>Forget Password</Title>
-        <p>Please enter your email and click send</p>
-      </div>
-      <Form layout="vertical" onFinish={onFinish}>
-        <Form.Item label="Email" name="email">
-          <Input placeholder="Enter your email" style={{ height: "50px" }} />
-        </Form.Item>
-
-        <Form.Item>
+      <Container maxWidth="sm">
+        <Box sx={{ textAlign: "center", mb: 3 }}>
+          <Title>Forget Password</Title>
+          <Typography variant="body1" sx={{ mt: 1 }}>
+            Please enter your email and click send
+          </Typography>
+        </Box>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            fullWidth
+            required
+            value={email}
+            onChange={handleEmailChange}
+            sx={{ mb: 2 }}
+          />
           <Button
-            className="bg-secondary h-12 text-white text-lg w-full mt-6"
-            htmlType="submit"
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={isLoading}
+            sx={{ height: 50, fontSize: 16 }}
           >
-            {isLoading ? "Sending..." : "Send"}
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Send"
+            )}
           </Button>
-        </Form.Item>
-      </Form>
+        </Box>
+      </Container>
     </AuthWrapper>
   );
 };

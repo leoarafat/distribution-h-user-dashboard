@@ -1,7 +1,16 @@
 import { useState } from "react";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Box,
+  IconButton,
+  InputAdornment,
+  Paper,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
-
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -11,18 +20,29 @@ const SetPassword = () => {
   const email = searchParams.get("email");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
-  const handlePasswordChange = (e: any) => {
+
+  const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleConfirmPasswordChange = (e: any) => {
+  const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -48,7 +68,7 @@ const SetPassword = () => {
         setSuccess("Password set successfully");
         navigate("/auth/login");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error(error.response);
       setError("Failed to set password");
     }
@@ -56,44 +76,76 @@ const SetPassword = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ mt: 5 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+      <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
+        <Typography variant="h4" component="h1" gutterBottom align="center">
           Set Password
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
             label="New Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             fullWidth
             margin="normal"
             value={password}
             onChange={handlePasswordChange}
             required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
             label="Confirm Password"
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             fullWidth
             margin="normal"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
             required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowConfirmPassword}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           {error && (
-            <Typography color="error" variant="body2">
+            <Typography color="error" variant="body2" align="center">
               {error}
             </Typography>
           )}
           {success && (
-            <Typography color="primary" variant="body2">
+            <Typography color="primary" variant="body2" align="center">
               {success}
             </Typography>
           )}
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 3, height: 50 }}
+          >
             Set Password
           </Button>
         </form>
-      </Box>
+      </Paper>
     </Container>
   );
 };
