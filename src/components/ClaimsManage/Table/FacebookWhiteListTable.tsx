@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -11,6 +12,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
+import { useGetFacebookWhitelistRequestQuery } from "@/redux/slices/claims/claimsApi";
 
 const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
@@ -25,31 +27,11 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
     setPage(0);
   };
 
-  const rows = [
-    {
-      id: 1,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      facebookUrl: "http://www.arafat.com",
-      status: "pending",
-    },
-    {
-      id: 2,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      facebookUrl: "http://www.arafat.com",
-      status: "approved",
-    },
-    {
-      id: 3,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      facebookUrl: "http://www.arafat.com",
-      status: "rejected",
-    },
-  ];
+  const { data: queryData } = useGetFacebookWhitelistRequestQuery({});
+  //@ts-ignore
+  const rows = queryData?.data?.data;
 
-  const filteredRows = rows.filter(
+  const filteredRows = rows?.filter(
     (row) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.facebookUrl.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -73,13 +55,13 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row._id}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
-                    <TableCell>{row.facebookUrl}</TableCell>
+                    <TableCell>{row.url}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell align="right">
                       <IconButton>
@@ -94,7 +76,7 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows.length}
+          count={filteredRows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

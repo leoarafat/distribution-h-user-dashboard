@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -11,6 +12,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
+import { useGetTikTokClaimRequestQuery } from "@/redux/slices/claims/claimsApi";
 
 const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
@@ -25,40 +27,11 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
     setPage(0);
   };
 
-  const rows = [
-    {
-      id: 1,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      isrc: "AP10101",
-      tiktokUrl: "http://www.arafat.com",
-      time: "10-15",
-      status: "pending",
-    },
-    {
-      id: 2,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      isrc: "AP10101",
-      tiktokUrl: "http://www.arafat.com",
-      time: "10-15",
-      status: "approved",
-    },
-    {
-      id: 3,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      isrc: "AP10101",
-      tiktokUrl: "http://www.arafat.com",
-      time: "10-15",
-      status: "rejected",
-    },
-  ];
+  const { data: queryData } = useGetTikTokClaimRequestQuery({});
+  //@ts-ignore
+  const rows = queryData?.data?.data;
 
-  const filteredRows = rows.filter(
+  const filteredRows = rows?.filter(
     (row) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -86,10 +59,10 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row._id}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
                     <TableCell>{row.upc}</TableCell>
@@ -110,7 +83,7 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows.length}
+          count={filteredRows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

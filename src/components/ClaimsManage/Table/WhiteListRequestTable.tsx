@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Trash2 } from "lucide-react";
+import { useGetWhitelistRequestQuery } from "@/redux/slices/claims/claimsApi";
 
 const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
@@ -26,33 +28,16 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
     setPage(0);
   };
 
-  const rows = [
-    {
-      id: 1,
-      whiteListUrl: "http://www.arafat.com",
-      status: "pending",
-      createdAt: "10-06-2024",
-    },
-    {
-      id: 2,
-      whiteListUrl: "http://www.arafat.com",
-      status: "approved",
-      createdAt: "10-06-2024",
-    },
-    {
-      id: 3,
-      whiteListUrl: "http://www.arafat.com",
-      status: "rejected",
-      createdAt: "10-06-2024",
-    },
-  ];
+  const { data: queryData } = useGetWhitelistRequestQuery({});
+  //@ts-ignore
+  const rows = queryData?.data?.data;
 
-  const filteredRows = rows.filter(
+  const filteredRows = rows?.filter(
     (row) =>
-      (row.whiteListUrl.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        row.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (row.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        row.approvedStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.createdAt.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (statusFilter ? row.status === statusFilter : true)
+      (statusFilter ? row.approvedStatus === statusFilter : true)
   );
 
   return (
@@ -71,10 +56,10 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row._id}</TableCell>
                     <TableCell>{row.whiteListUrl}</TableCell>
                     <TableCell>{row.status}</TableCell>
                     <TableCell>{row.createdAt}</TableCell>
@@ -91,7 +76,7 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows.length}
+          count={filteredRows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

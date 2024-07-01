@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -11,6 +12,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
+import { useGetFacebookClaimRequestQuery } from "@/redux/slices/claims/claimsApi";
 
 const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
@@ -24,36 +26,12 @@ const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const { data: queryData } = useGetFacebookClaimRequestQuery({});
+  //@ts-ignore
+  const rows = queryData?.data?.data;
 
-  const rows = [
-    {
-      id: 1,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      status: "pending",
-      facebookVideoUrl: "http://www.arafat.com",
-    },
-    {
-      id: 2,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      status: "approved",
-      facebookVideoUrl: "http://www.arafat.com",
-    },
-    {
-      id: 3,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      upc: "AP101",
-      status: "rejected",
-      facebookVideoUrl: "http://www.arafat.com",
-    },
-  ];
-
-  const filteredRows = rows.filter(
-    (row) =>
+  const filteredRows = rows?.filter(
+    (row: any) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.email.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -78,10 +56,10 @@ const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row._id}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
                     <TableCell>{row.upc}</TableCell>
@@ -101,7 +79,7 @@ const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows.length}
+          count={filteredRows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

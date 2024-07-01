@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -13,6 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Trash2 } from "lucide-react";
+import { useGetYoutubeTakeDownQuery } from "@/redux/slices/claims/claimsApi";
 
 const YoutubeTakeDownRequestTable = ({ searchQuery, statusFilter }: any) => {
   const [page, setPage] = useState(0);
@@ -27,46 +29,11 @@ const YoutubeTakeDownRequestTable = ({ searchQuery, statusFilter }: any) => {
     setPage(0);
   };
 
-  const rows = [
-    {
-      id: 1,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      songTitle: "Jao Pakhi",
-      upc: "AP101",
-      youtubeUrl: "http://www.arafat.com",
-      status: "pending",
-    },
-    {
-      id: 2,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      songTitle: "Jao Pakhi",
-      upc: "AP101",
-      youtubeUrl: "http://www.arafat.com",
-      status: "pending",
-    },
-    {
-      id: 3,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      songTitle: "Jao Pakhi",
-      upc: "AP101",
-      youtubeUrl: "http://www.arafat.com",
-      status: "approved",
-    },
-    {
-      id: 4,
-      email: "arafat@gmail.com",
-      labelName: "Jao Pakhi",
-      songTitle: "Jao Pakhi",
-      upc: "AP101",
-      youtubeUrl: "http://www.arafat.com",
-      status: "rejected",
-    },
-  ];
+  const { data: queryData } = useGetYoutubeTakeDownQuery({});
+  //@ts-ignore
+  const rows = queryData?.data?.data;
 
-  const filteredRows = rows.filter(
+  const filteredRows = rows?.filter(
     (row) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -93,10 +60,10 @@ const YoutubeTakeDownRequestTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell>{row._id}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.labelName}</TableCell>
                     <TableCell>{row.songTitle}</TableCell>
@@ -116,7 +83,7 @@ const YoutubeTakeDownRequestTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows.length}
+          count={filteredRows?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
