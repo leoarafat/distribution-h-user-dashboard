@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const Auth = () => {
   return (
-    <div className="bg-primary h-screen flex items-center justify-center">
+    <div className=" h-screen flex items-center justify-center">
       <Outlet />
     </div>
   );

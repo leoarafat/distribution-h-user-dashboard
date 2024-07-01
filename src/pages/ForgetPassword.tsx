@@ -2,36 +2,18 @@ import AuthWrapper from "@/components/share/AuthWrapper";
 import Title from "@/components/share/Title";
 import { useForgetPasswordMutation } from "@/redux/slices/admin/settingApi";
 import { Button, Form, Input } from "antd";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ForgetPassword = () => {
-  const [forgetPassword, { error, isSuccess, data }] =
-    useForgetPasswordMutation();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (isSuccess) {
-      if (data) {
-        alert("Set New Password");
-        navigate("/auth/verify");
-      }
-    }
-
-    if (error) {
-      if ("data" in error) {
-        const errorData = error as any;
-
-        alert(errorData.data.message);
-      } else {
-        console.error("Login error:", error);
-      }
-    }
-  }, [data, error, isSuccess, navigate]);
+  const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
 
   const onFinish = async (values: any) => {
     try {
       localStorage.setItem("email", values?.email);
-      await forgetPassword(values);
+      const res = await forgetPassword(values);
+      if (res?.data?.success == true) {
+        toast.success(res?.data?.message);
+      }
     } catch (error: any) {
       console.log(error?.message);
     }
@@ -52,7 +34,7 @@ const ForgetPassword = () => {
             className="bg-secondary h-12 text-white text-lg w-full mt-6"
             htmlType="submit"
           >
-            Send
+            {isLoading ? "Sending..." : "Send"}
           </Button>
         </Form.Item>
       </Form>

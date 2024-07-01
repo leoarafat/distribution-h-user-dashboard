@@ -43,6 +43,7 @@ import WhiteListRequest from "@/components/ClaimsManage/WhiteListRequest";
 import YoutubeClaimRequest from "@/components/ClaimsManage/YoutubeClaimRequest";
 import YoutubeManualClaim from "@/components/ClaimsManage/YoutubeManualClaim";
 import YoutubeTakeDown from "@/components/ClaimsManage/YoutubeTakeDown";
+import SetPassword from "@/pages/SetPassword";
 
 const router = createBrowserRouter([
   {
@@ -362,6 +363,10 @@ const router = createBrowserRouter([
       {
         path: "/auth/set-new-password/:id",
         element: <SetNewPassword />,
+      },
+      {
+        path: "/auth/set-password",
+        element: <SetPassword />,
       },
     ],
   },
