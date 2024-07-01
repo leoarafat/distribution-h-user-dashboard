@@ -24,4 +24,5 @@ export const tagsList = [
   "agreement",
   "artist",
   "label",
+  "claims",
 ] as const;
