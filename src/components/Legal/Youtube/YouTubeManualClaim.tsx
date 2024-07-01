@@ -1,4 +1,5 @@
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useAddYoutubeManualClaimMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
   Grid,
@@ -8,9 +9,34 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import toast from "react-hot-toast";
 
 const YouTubeManualClaim = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const [addYoutubeManualClaim, { isLoading: isAddLoading }] =
+    useAddYoutubeManualClaimMutation();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      const res = await addYoutubeManualClaim({
+        user: profileData?.data?._id,
+        email: formData.get("email") as string,
+        labelName: formData.get("label") as string,
+        songTitle: formData.get("song") as string,
+        upc: formData.get("upc") as string,
+        url: formData.get("url") as string,
+      });
+      if (res?.data?.success === true) {
+        toast.success("Success");
+      }
+    } catch (error: any) {
+      console.error("Failed to submit YouTube manual claim:", error);
+      toast.error(error?.message);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -61,59 +87,76 @@ const YouTubeManualClaim = () => {
           <span className="text-[#FF0000] font-bold">Youtube Manual Claim</span>
         </Typography>
 
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              id="label"
-              label="Label Name"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              id="song"
-              label="Song Title"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required
-              fullWidth
-              id="upc"
-              label="UPC"
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="url"
-              label="Youtube Video URL"
-              variant="outlined"
-            />
-          </Grid>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                name="email"
+                label="Email"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="label"
+                name="label"
+                label="Label Name"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="song"
+                name="song"
+                label="Song Title"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                fullWidth
+                id="upc"
+                name="upc"
+                label="UPC"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="url"
+                name="url"
+                label="Youtube Video URL"
+                variant="outlined"
+              />
+            </Grid>
 
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" fullWidth>
-              Submit Request
-            </Button>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={isAddLoading}
+              >
+                {isAddLoading ? (
+                  <CircularProgress size={24} />
+                ) : (
+                  "Submit Request"
+                )}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </form>
       </Box>
     </Container>
   );
