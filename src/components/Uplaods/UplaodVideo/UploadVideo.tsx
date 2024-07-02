@@ -20,13 +20,11 @@ import {
 import { Add, Remove, PhotoCamera, YouTube } from "@mui/icons-material";
 import { MdClose } from "react-icons/md";
 import { genres } from "@/MockData/MockData";
-
-const primaryArtistOptions = [
-  { label: "Artist 1", id: 1 },
-  { label: "Artist 2", id: 2 },
-  { label: "Artist 3", id: 3 },
-  // Add more options as needed
-];
+import { UploadIcon } from "lucide-react";
+import {
+  useGetArtistsQuery,
+  useGetLabelsQuery,
+} from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const UploadVideo = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
@@ -35,7 +33,7 @@ const UploadVideo = () => {
       thumbnail: null,
       videoType: "",
       title: "",
-      primaryArtist: [{ primaryArtistName: null }],
+      primaryArtist: [{ primaryArtistName: "", primaryArtist: null }],
       writer: [{ writerName: "" }],
       composer: [{ composerName: "" }],
       musicDirector: [{ musicDirectorName: "" }],
@@ -55,9 +53,47 @@ const UploadVideo = () => {
   const [thumbnailError, setThumbnailError] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedSubgenre, setSelectedSubgenre] = useState("");
+  const { data: labelData } = useGetLabelsQuery({});
+  const { data: artistData } = useGetArtistsQuery({});
+
+  const artistOptions =
+    //@ts-ignore
+    artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
+    [];
+  const labelOptions =
+    //@ts-ignore
+    labelData?.data?.data?.map((label: any) => label.labelName) || [];
   const onSubmit = (data: any) => {
-    console.log(data);
+    const formData = new FormData();
+
+    // Append files
+    if (videoFile) {
+      formData.append("video", videoFile);
+    }
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    }
+
+    formData.append("videoType", data.videoType);
+    formData.append("title", data.title);
+    formData.append("label", data.label);
+    formData.append("genre", data.genre);
+    formData.append("subGenre", data.subGenre);
+    formData.append("language", data.language);
+    formData.append("isrc", data.isrc);
+    formData.append("upc", data.upc);
+    formData.append("description", data.description);
+    formData.append("storeReleaseDate", data.storeReleaseDate);
+
+    const formattedPrimaryArtists = data.primaryArtist.map((artist: any) => ({
+      primaryArtist: artist.primaryArtist?._id,
+      primaryArtistName: artist.primaryArtist?.primaryArtistName,
+    }));
+    formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
+
+    //  /send formData
   };
+
   const handleGenreChange = (event: any, value: any) => {
     setSelectedGenre(value);
     setSelectedSubgenre("");
@@ -137,18 +173,32 @@ const UploadVideo = () => {
           <Grid key={field.id} container spacing={2} alignItems="center">
             <Grid item xs={12}>
               <Controller
-                //@ts-ignore
-                name={`${fieldArrayName}[${index}].${name}`}
+                name={`${fieldArrayName}[${index}].primaryArtist._id`}
+                control={control}
+                render={({ field }) => (
+                  <input type="hidden" {...field} value={field.value || ""} />
+                )}
+              />
+              <Controller
+                name={`${fieldArrayName}[${index}].primaryArtist.primaryArtistName`}
                 control={control}
                 render={({ field }) =>
                   isAutocomplete ? (
-                    //@ts-ignore
                     <Autocomplete
                       {...field}
-                      options={primaryArtistOptions}
-                      //@ts-ignore
-                      getOptionLabel={(option) => option.label}
-                      onChange={(event, value) => field.onChange(value)}
+                      options={artistOptions}
+                      getOptionLabel={(option) => option || ""}
+                      isOptionEqualToValue={(option, value) => option === value}
+                      onChange={(event, value) => {
+                        field.onChange(value);
+                        const selectedArtist = artistData?.data?.data.find(
+                          (artist: any) => artist.primaryArtistName === value
+                        );
+                        setValue(
+                          `${fieldArrayName}[${index}].primaryArtist._id`,
+                          selectedArtist?._id || null
+                        );
+                      }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -187,7 +237,11 @@ const UploadVideo = () => {
                 </IconButton>
                 <IconButton
                   color="primary"
-                  onClick={() => append({ [name]: isAutocomplete ? null : "" })}
+                  onClick={() =>
+                    append({
+                      primaryArtist: { _id: null, primaryArtistName: "" },
+                    })
+                  }
                   size="large"
                 >
                   <Add />
@@ -343,6 +397,7 @@ const UploadVideo = () => {
                   "primaryArtist",
                   "Primary Artist",
                   "primaryArtistName",
+
                   true
                 )}
               </Grid>
@@ -374,7 +429,7 @@ const UploadVideo = () => {
                         option.value === value.value
                       }
                       {...field}
-                      options={["Label1", "Label2", "Label3"]}
+                      options={labelOptions}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -544,7 +599,8 @@ const UploadVideo = () => {
                   color="primary"
                   fullWidth
                 >
-                  Submit
+                  <UploadIcon className="pr-2" size={40} />
+                  Upload Video
                 </Button>
               </Grid>
             </Grid>

@@ -15,9 +15,11 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { albumReleaseInformationData } from "@/MockData/MockData";
 
 const AlbumAudioReview = ({ data, onChange }: any) => {
-  console.log(data, "Review Data");
   const { tracks, release, audio } = albumReleaseInformationData;
-
+  const releaseInformation = data && data?.releaseInformation;
+  const audios = data && data?.audios;
+  console.log(releaseInformation, "releaseInformation");
+  console.log(audios, "Audios");
   return (
     <Container maxWidth="md" style={{ padding: "20px" }}>
       <Card style={{ marginBottom: "20px" }}>
