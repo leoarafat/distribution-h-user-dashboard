@@ -8,10 +8,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
   TablePagination,
 } from "@mui/material";
-import { Trash2 } from "lucide-react";
 
 import { useGetArtistChannelRequestQuery } from "@/redux/slices/claims/claimsApi";
 

@@ -32,7 +32,7 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const rows = queryData?.data?.data;
 
   const filteredRows = rows?.filter(
-    (row) =>
+    (row: any) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.facebookUrl.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (statusFilter ? row.status === statusFilter : true)
@@ -55,7 +55,7 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
+                .map((row: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>

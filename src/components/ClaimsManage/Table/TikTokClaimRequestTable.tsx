@@ -32,7 +32,7 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
   const rows = queryData?.data?.data;
 
   const filteredRows = rows?.filter(
-    (row) =>
+    (row: any) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.isrc.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -59,7 +59,7 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
+                .map((row: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>

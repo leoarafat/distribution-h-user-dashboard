@@ -56,7 +56,7 @@ const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
+                .map((row: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.email}</TableCell>

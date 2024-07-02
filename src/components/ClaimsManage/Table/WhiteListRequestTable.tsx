@@ -8,11 +8,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton,
   TablePagination,
 } from "@mui/material";
 
-import { Trash2 } from "lucide-react";
 import { useGetWhitelistRequestQuery } from "@/redux/slices/claims/claimsApi";
 
 const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
@@ -33,7 +31,7 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
   const rows = queryData?.data?.data;
 
   const filteredRows = rows?.filter(
-    (row) =>
+    (row: { url: string; approvedStatus: string; createdAt: string }) =>
       (row.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.approvedStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.createdAt.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -56,7 +54,7 @@ const WhiteListTable = ({ searchQuery, statusFilter }: any) => {
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
+                .map((row: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{row._id?.slice(5, 9)}</TableCell>
                     <TableCell>{row.url?.slice(0, 20)}</TableCell>

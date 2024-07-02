@@ -568,7 +568,7 @@ export const genres = [
   },
   {
     name: "Indian",
-    Subgenres: [
+    subgenres: [
       "Indian",
       "Indian - Assamese",
       "Indian - Assamese Soundtrack",

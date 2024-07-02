@@ -38,8 +38,9 @@ const UploaderStepperForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     audio: {},
+    releaseInformation: {},
     trackDetails: {},
-    additionalDetails: {},
+    countries: {},
     previewPage: {},
   });
   const [selectCoverImage, setCoverImage] = useState(null);
@@ -54,7 +55,7 @@ const UploaderStepperForm = () => {
       setAudio(formData.audio.audio);
     }
   }, [formData]);
-
+  console.log(formData, "formData");
   const [verifyProfile, { isLoading: profileLoading }] =
     useProfileVerifyMutation();
   const [labelVerify, { isLoading: labelLoading }] = useLabelVerifyMutation();
@@ -99,7 +100,7 @@ const UploaderStepperForm = () => {
   return (
     <Grid container direction="column">
       <Typography variant="h4" align="center" gutterBottom>
-        Let's Distribute Your Music With Musix
+        Let's Distribute Your Music With Be Musix
       </Typography>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step) => (
