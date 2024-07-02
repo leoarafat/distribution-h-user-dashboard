@@ -89,7 +89,7 @@ const UploadVideo = () => {
       (artist: any) => artist._id
     );
     formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
-
+    console.log(formData);
     //  /send formData
   };
 

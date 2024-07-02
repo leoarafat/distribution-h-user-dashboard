@@ -74,9 +74,14 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       value: artist._id,
     })) || [];
 
+  // const labelOptions =
+  //   labelData?.data?.data?.map((label: any) => label.labelName) || [];
   const labelOptions =
-    labelData?.data?.data?.map((label: any) => label.labelName) || [];
-
+    //@ts-ignore
+    labelData?.data?.data?.map((label: any) => ({
+      label: label.labelName,
+      value: label._id,
+    })) || [];
   useEffect(() => {
     onChange("releaseInformation", formData);
   }, [formData]);
@@ -162,7 +167,14 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       featuringArtists: newFeaturingArtists,
     }));
   };
-
+  const handleLabelChange = (
+    newValue: { label: string; value: string } | null
+  ) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      label: newValue ? newValue.value : "",
+    }));
+  };
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
@@ -335,17 +347,20 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           <Grid item xs={12} md={6}>
             <Autocomplete
               options={labelOptions}
-              value={formData.label}
-              onChange={(event, newValue) =>
-                setFormData((prevData) => ({
-                  ...prevData,
-                  label: newValue || "",
-                }))
+              getOptionLabel={(option) => option.label}
+              value={
+                labelOptions.find((opt) => opt.value === formData.label) || null
               }
+              onChange={(event, newValue) => handleLabelChange(newValue)}
               renderInput={(params) => (
-                <TextField {...params} label="Label" variant="outlined" />
+                <TextField
+                  {...params}
+                  label="Label"
+                  variant="outlined"
+                  required
+                  fullWidth
+                />
               )}
-              freeSolo
             />
           </Grid>
           <Grid item xs={12} md={6}>
