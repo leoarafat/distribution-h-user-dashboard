@@ -9,17 +9,7 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import {
-  useAddressVerifyMutation,
-  useAgreementVerifyMutation,
-  useLabelVerifyMutation,
-  useProfileVerifyMutation,
-  useVerifyUserMutation,
-} from "@/redux/slices/admin/userApi";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/redux/hooks";
-import { setIsVerified } from "@/redux/slices/auth/authSlice";
 import AudioDetails from "../uploads/Single/AudioDetails";
 import ReleaseInformation from "../uploads/Single/ReleaseInformation";
 import TracksInformation from "../uploads/Single/TracksInformation";
@@ -40,7 +30,7 @@ const UploaderStepperForm = () => {
     audio: {},
     releaseInformation: {},
     trackDetails: {},
-    countries: {},
+    countries: [],
     previewPage: {},
   });
   const [selectCoverImage, setCoverImage] = useState(null);
@@ -55,15 +45,17 @@ const UploaderStepperForm = () => {
       setAudio(formData.audio.audio);
     }
   }, [formData]);
-  console.log(formData, "formData");
-  const [verifyProfile, { isLoading: profileLoading }] =
-    useProfileVerifyMutation();
-  const [labelVerify, { isLoading: labelLoading }] = useLabelVerifyMutation();
-  const [addressVerify, { isLoading: addressLoading }] =
-    useAddressVerifyMutation();
-  const [verifyUser, { isLoading: verifyLoading }] = useVerifyUserMutation();
-  const [agreementVerify, { isLoading: agreementLoading }] =
-    useAgreementVerifyMutation();
+  useEffect(() => {
+    const storedFormData = localStorage.getItem("uploaderFormData");
+    if (storedFormData) {
+      setFormData(JSON.parse(storedFormData));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("uploaderFormData", JSON.stringify(formData));
+  }, [formData]);
+  // console.log(formData, "formData");
 
   const handleNext = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -77,22 +69,21 @@ const UploaderStepperForm = () => {
     const updatedFormData = { ...formData, [step]: data };
     setFormData(updatedFormData);
   };
-  const dispatch = useAppDispatch();
-  const handleSubmit = async () => {
-    try {
-      const result = await verifyUser({});
-      if (result?.data?.success) {
-        toast.success("Congratulations. Upload Successful");
 
-        dispatch(setIsVerified({ isVerified: result?.data?.data?.isVerified }));
-        navigate("/");
-      } else {
-        toast.error("Verification failed. Please try again later.");
-      }
-    } catch (error: any) {
-      toast.error("An error occurred while verifying. Please try again later.");
-      console.error("Error during verification:", error.message);
-    }
+  const handleSubmit = async () => {
+    localStorage.removeItem("uploaderFormData");
+    // try {
+    //   const result = await verifyUser({});
+    //   if (result?.data?.success) {
+    //     toast.success("Congratulations. Upload Successful");
+    //     navigate("/");
+    //   } else {
+    //     toast.error("Verification failed. Please try again later.");
+    //   }
+    // } catch (error: any) {
+    //   toast.error("An error occurred while verifying. Please try again later.");
+    //   console.error("Error during verification:", error.message);
+    // }
   };
 
   const StepComponent = steps[activeStep].component;
@@ -123,12 +114,7 @@ const UploaderStepperForm = () => {
             onClick={handleNext}
             style={{ marginLeft: 10 }}
           >
-            {profileLoading ||
-            labelLoading ||
-            addressLoading ||
-            agreementLoading
-              ? "Saving.."
-              : "Save & Go Next"}
+            Save & Go Next
           </Button>
         )}
         {activeStep === steps.length - 1 && (
@@ -138,7 +124,7 @@ const UploaderStepperForm = () => {
             onClick={handleSubmit}
             style={{ marginLeft: 10 }}
           >
-            {verifyLoading ? "Uploading..." : "Let's Upload"}
+            Let's Upload
           </Button>
         )}
       </div>

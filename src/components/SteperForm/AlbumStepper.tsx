@@ -28,25 +28,22 @@ import AlbumAudioReview from "../uploads/Album/AlbumAudioReview";
 const steps = [
   { title: "Release Information", component: AlbumReleaseInformation },
   { title: "Audio & Cover", component: AlbumAudioDetails },
-  // { title: "Tracks Details", component: TracksInformation },
-  // { title: "Territories", component: Countries },
   { title: "Review Details", component: AlbumAudioReview },
 ];
 
 const AlbumStepperForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    audio: [],
-    trackDetails: {},
-    additionalDetails: {},
+    releaseInformation: {},
+    audios: [],
     previewPage: {},
   });
   const [selectCoverImage, setCoverImage] = useState(null);
   const [audio, setAudio] = useState(null);
-
+  console.log(formData);
   const navigate = useNavigate();
   useEffect(() => {
-    if (formData.audio) {
+    if (formData.audios) {
       //@ts-ignore
       setCoverImage(formData.audio.coverImage);
       //@ts-ignore

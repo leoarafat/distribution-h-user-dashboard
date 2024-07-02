@@ -7,13 +7,25 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  CircularProgress,
 } from "@mui/material";
 import Loader from "@/utils/Loader";
 
-const Countries = () => {
-  const [countries, setCountries] = useState([]);
-  const [selectedCountries, setSelectedCountries] = useState([]);
+interface Country {
+  cca3: string;
+  region: string;
+  name: {
+    common: string;
+  };
+  flags: string[];
+}
+
+interface Props {
+  onChange: (key: string, value: any) => void;
+}
+
+const Countries: React.FC<Props> = ({ onChange }) => {
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,28 +36,31 @@ const Countries = () => {
     try {
       const response = await fetch("https://restcountries.com/v3/all");
       const data = await response.json();
-      setCountries(data);
-      const allCountryCodes = data.map((country) => country.cca3);
+      const countriesData: Country[] = data;
+      setCountries(countriesData);
+      const allCountryCodes = countriesData.map((country) => country.cca3);
       setSelectedCountries(allCountryCodes);
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching countries: ", error);
-      setLoading(false); // Set loading to false even if there's an error
+      setLoading(false);
     }
   };
 
-  const handleCountrySelect = (countryCode) => {
-    const countryIndex = selectedCountries.indexOf(countryCode);
-    if (countryIndex === -1) {
-      setSelectedCountries([...selectedCountries, countryCode]);
-    } else {
-      const updatedCountries = [...selectedCountries];
-      updatedCountries.splice(countryIndex, 1);
-      setSelectedCountries(updatedCountries);
-    }
+  const handleCountrySelect = (countryCode: string) => {
+    setSelectedCountries((prevSelected) => {
+      const countryIndex = prevSelected.indexOf(countryCode);
+      if (countryIndex === -1) {
+        return [...prevSelected, countryCode];
+      } else {
+        const updatedCountries = [...prevSelected];
+        updatedCountries.splice(countryIndex, 1);
+        return updatedCountries;
+      }
+    });
   };
 
-  const handleAllContinentSelect = (continent) => {
+  const handleAllContinentSelect = (continent: string) => {
     const continentCountries = countries.filter(
       (country) => country.region === continent
     );
@@ -63,7 +78,11 @@ const Countries = () => {
     });
   };
 
-  const renderContinent = (continentName) => (
+  useEffect(() => {
+    onChange("countries", selectedCountries);
+  }, [selectedCountries]);
+
+  const renderContinent = (continentName: string) => (
     <Grid item xs={12} sm={4} key={continentName}>
       <Typography variant="h5" gutterBottom>
         {continentName}

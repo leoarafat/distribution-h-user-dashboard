@@ -1,325 +1,5 @@
-// /* eslint-disable @typescript-eslint/ban-ts-comment */
-// import { useCallback, useState } from "react";
-// import {
-//   Container,
-//   Grid,
-//   TextField,
-//   Box,
-//   Checkbox,
-//   FormControlLabel,
-//   IconButton,
-// } from "@mui/material";
-// import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-// import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-// import Autocomplete from "@mui/material/Autocomplete";
-// import { genres } from "@/MockData/MockData";
-// import {
-//   useGetArtistsQuery,
-//   useGetLabelsQuery,
-// } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
-
-// const formats = ["CD", "Vinyl"];
-
-// const artists = ["Artist 1", "Artist 2", "Artist 3"];
-
-// const years = Array.from(
-//   new Array(50),
-//   (val, index) => new Date().getFullYear() - index
-// ).map(String);
-
-// const ReleaseInformation = ({ data, onChange }) => {
-//   const [primaryArtists, setPrimaryArtists] = useState([""]);
-//   const [featuringArtists, setFeaturingArtists] = useState([""]);
-//   const [selectedGenre, setSelectedGenre] = useState("");
-//   const [selectedSubgenre, setSelectedSubgenre] = useState("");
-//   const { data: labelData } = useGetLabelsQuery({});
-//   const { data: artistData } = useGetArtistsQuery({});
-
-//   const handleGenreChange = (event: any, value: any) => {
-//     setSelectedGenre(value);
-//     setSelectedSubgenre(""); // Reset subgenre when genre changes
-//   };
-
-//   const handleSubgenreChange = (event: any, value: any) => {
-//     setSelectedSubgenre(value);
-//   };
-
-//   const getSubgenres = () => {
-//     const genreObj = genres.find((genre) => genre.name === selectedGenre);
-//     return genreObj ? genreObj.subgenres : [];
-//   };
-//   const addPrimaryArtist = () => setPrimaryArtists([...primaryArtists, ""]);
-//   const addFeaturingArtist = () =>
-//     setFeaturingArtists([...featuringArtists, ""]);
-
-//   const removePrimaryArtist = (index: any) => {
-//     const newPrimaryArtists = [...primaryArtists];
-//     newPrimaryArtists.splice(index, 1);
-//     setPrimaryArtists(newPrimaryArtists);
-//   };
-
-//   const removeFeaturingArtist = (index: any) => {
-//     const newFeaturingArtists = [...featuringArtists];
-//     newFeaturingArtists.splice(index, 1);
-//     setFeaturingArtists(newFeaturingArtists);
-//   };
-
-//   const handlePrimaryArtistChange = (index: any, value: any) => {
-//     const newPrimaryArtists = [...primaryArtists];
-//     newPrimaryArtists[index] = value;
-//     setPrimaryArtists(newPrimaryArtists);
-//   };
-
-//   const handleFeaturingArtistChange = (index: any, value: any) => {
-//     const newFeaturingArtists = [...featuringArtists];
-//     newFeaturingArtists[index] = value;
-//     setFeaturingArtists(newFeaturingArtists);
-//   };
-//   const artistOptions =
-//     artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
-//     [];
-//   const labelOptions =
-//     labelData?.data?.data?.map((label: any) => label.labelName) || [];
-
-//   const handleChange = useCallback(
-//     (e: any) => {
-//       const { name, value } = e.target;
-//       onChange("releaseInformation", {
-//         ...data.releaseInformation,
-//         [name]: value,
-//       });
-//     },
-//     [onChange, data.releaseInformation]
-//   );
-//   return (
-//     <Container maxWidth="md">
-//       <Box sx={{ my: 4 }}>
-//         <Grid container spacing={3}>
-//           <Grid item xs={12}>
-//             <TextField
-//               required
-//               fullWidth
-//               label="Release Title"
-//               variant="outlined"
-//               placeholder="Please use version field to enter further info for the release"
-//             />
-//           </Grid>
-//           <Grid item xs={12}>
-//             <TextField
-//               fullWidth
-//               label="Version/Subtitle"
-//               variant="outlined"
-//               placeholder="Use this field to add further details to your release title"
-//             />
-//           </Grid>
-//           {primaryArtists.map((artist, index) => (
-//             <Grid
-//               item
-//               xs={12}
-//               key={index}
-//               container
-//               alignItems="center"
-//               spacing={1}
-//             >
-//               <Grid item xs={12}>
-//                 <Autocomplete
-//                   options={artistOptions}
-//                   getOptionLabel={(option) => option.name}
-//                   value={artist}
-//                   onChange={(event, newValue) =>
-//                     handlePrimaryArtistChange(index, newValue)
-//                   }
-//                   renderInput={(params) => (
-//                     <TextField
-//                       {...params}
-//                       label="Primary Artist"
-//                       variant="outlined"
-//                     />
-//                   )}
-//                   freeSolo
-//                 />
-//               </Grid>
-//               <Grid item className="flex justify-between">
-//                 <IconButton
-//                   onClick={() => removePrimaryArtist(index)}
-//                   disabled={primaryArtists.length === 1}
-//                 >
-//                   <RemoveCircleOutlineIcon />
-//                 </IconButton>
-//                 {index === primaryArtists.length - 1 && (
-//                   <IconButton onClick={addPrimaryArtist}>
-//                     <AddCircleOutlineIcon />
-//                   </IconButton>
-//                 )}
-//               </Grid>
-//             </Grid>
-//           ))}
-//           {featuringArtists.map((artist, index) => (
-//             <Grid
-//               item
-//               xs={12}
-//               key={index}
-//               container
-//               alignItems="center"
-//               spacing={1}
-//             >
-//               <Grid item xs={12}>
-//                 <Autocomplete
-//                   options={artists}
-//                   getOptionLabel={(option) => option.name}
-//                   value={artist}
-//                   onChange={(event, newValue) =>
-//                     handleFeaturingArtistChange(index, newValue)
-//                   }
-//                   renderInput={(params) => (
-//                     <TextField
-//                       {...params}
-//                       label="Featuring"
-//                       variant="outlined"
-//                     />
-//                   )}
-//                   freeSolo
-//                 />
-//               </Grid>
-//               <Grid item xs={2}>
-//                 <IconButton
-//                   onClick={() => removeFeaturingArtist(index)}
-//                   disabled={featuringArtists.length === 1}
-//                 >
-//                   <RemoveCircleOutlineIcon />
-//                 </IconButton>
-//                 {index === featuringArtists.length - 1 && (
-//                   <IconButton onClick={addFeaturingArtist}>
-//                     <AddCircleOutlineIcon />
-//                   </IconButton>
-//                 )}
-//               </Grid>
-//             </Grid>
-//           ))}
-//           <Grid item xs={12}>
-//             <FormControlLabel
-//               control={<Checkbox />}
-//               label="Various Artists / Compilation"
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <Autocomplete
-//               // options={genres}
-//               options={genres?.map((genre: any) => genre.name)}
-//               getOptionLabel={(option) => option.name}
-//               value={selectedGenre}
-//               onChange={handleGenreChange}
-//               renderInput={(params) => (
-//                 <TextField
-//                   {...params}
-//                   label="Genre"
-//                   variant="outlined"
-//                   required
-//                   fullWidth
-//                 />
-//               )}
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <Autocomplete
-//               // options={subgenres}
-//               //@ts-ignore
-//               options={getSubgenres()}
-//               getOptionLabel={(option) => option.name}
-//               value={selectedSubgenre}
-//               onChange={handleSubgenreChange}
-//               renderInput={(params) => (
-//                 <TextField
-//                   {...params}
-//                   label="Subgenre"
-//                   variant="outlined"
-//                   required
-//                   fullWidth
-//                   disabled={!selectedGenre}
-//                 />
-//               )}
-//             />
-//           </Grid>
-//           <Grid item xs={12}>
-//             <Autocomplete
-//               options={labelOptions}
-//               getOptionLabel={(option) => option.name}
-//               renderInput={(params) => (
-//                 <TextField
-//                   {...params}
-//                   label="Label Name"
-//                   variant="outlined"
-//                   required
-//                   fullWidth
-//                 />
-//               )}
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <Autocomplete
-//               options={formats}
-//               getOptionLabel={(option) => option.name}
-//               renderInput={(params) => (
-//                 <TextField
-//                   {...params}
-//                   label="Format"
-//                   variant="outlined"
-//                   required
-//                   fullWidth
-//                 />
-//               )}
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <TextField
-//               fullWidth
-//               label="Physical/Original Release Date"
-//               variant="outlined"
-//               type="date"
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={4}>
-//             <TextField fullWidth label="Ⓟ Line" variant="outlined" />
-//           </Grid>
-//           <Grid item xs={12} md={4}>
-//             <TextField fullWidth label="© Line" variant="outlined" />
-//           </Grid>
-//           <Grid item xs={12} md={4}>
-//             <Autocomplete
-//               options={years}
-//               getOptionLabel={(option) => option.name}
-//               renderInput={(params) => (
-//                 <TextField
-//                   {...params}
-//                   label="Production Year"
-//                   variant="outlined"
-//                   required
-//                   fullWidth
-//                 />
-//               )}
-//             />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <TextField fullWidth label="UPC/EAN" variant="outlined" />
-//           </Grid>
-//           <Grid item xs={12} md={6}>
-//             <TextField
-//               fullWidth
-//               label="Producer Catalogue Number"
-//               variant="outlined"
-//             />
-//           </Grid>
-//         </Grid>
-//       </Box>
-//     </Container>
-//   );
-// };
-
-// export default ReleaseInformation;
-import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -338,45 +18,69 @@ import {
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
-const formats = ["CD", "Vinyl"];
-const years = Array.from(
-  new Array(50),
-  (val, index) => new Date().getFullYear() - index
-).map(String);
+const formats: string[] = ["CD", "Vinyl"];
+const years: string[] = Array.from(new Array(50), (val, index) =>
+  String(new Date().getFullYear() - index)
+);
 
-const ReleaseInformation = ({ data, onChange }) => {
-  const [formData, setFormData] = useState({
-    releaseTitle: "",
-    version: "",
-    primaryArtists: [""],
-    featuringArtists: [""],
-    variousArtists: false,
-    genre: "",
-    subgenre: "",
-    label: "",
-    format: "",
-    releaseDate: "",
-    pLine: "",
-    cLine: "",
-    productionYear: "",
-    upc: "",
-    catalogNumber: "",
+interface ReleaseFormData {
+  releaseTitle: string;
+  version: string;
+  primaryArtists: string[];
+  featuringArtists: string[];
+  variousArtists: boolean;
+  genre: string;
+  subgenre: string;
+  label: string;
+  format: string;
+  releaseDate: string;
+  pLine: string;
+  cLine: string;
+  productionYear: string;
+  upc: string;
+  catalogNumber: string;
+}
+
+interface Props {
+  data: ReleaseFormData;
+  onChange: (key: string, value: any) => void;
+}
+
+const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
+  const [formData, setFormData] = useState<ReleaseFormData>({
+    releaseTitle: data.releaseTitle || "",
+    version: data.version || "",
+    primaryArtists: data.primaryArtists || [""],
+    featuringArtists: data.featuringArtists || [""],
+    variousArtists: data.variousArtists || false,
+    genre: data.genre || "",
+    subgenre: data.subgenre || "",
+    label: data.label || "",
+    format: data.format || "",
+    releaseDate: data.releaseDate || "",
+    pLine: data.pLine || "",
+    cLine: data.cLine || "",
+    productionYear: data.productionYear || "",
+    upc: data.upc || "",
+    catalogNumber: data.catalogNumber || "",
   });
 
   const { data: labelData } = useGetLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =
+    //@ts-ignore
     artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
     [];
   const labelOptions =
+    //@ts-ignore
     labelData?.data?.data?.map((label: any) => label.labelName) || [];
 
   useEffect(() => {
     onChange("releaseInformation", formData);
   }, [formData]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -384,18 +88,24 @@ const ReleaseInformation = ({ data, onChange }) => {
     }));
   };
 
-  const handleGenreChange = (event: any, value: any) => {
+  const handleGenreChange = (
+    event: React.ChangeEvent<object>,
+    value: string | null
+  ) => {
     setFormData((prevData) => ({
       ...prevData,
-      genre: value,
+      genre: value || "",
       subgenre: "",
     }));
   };
 
-  const handleSubgenreChange = (event: any, value: any) => {
+  const handleSubgenreChange = (
+    event: React.ChangeEvent<object>,
+    value: string | null
+  ) => {
     setFormData((prevData) => ({
       ...prevData,
-      subgenre: value,
+      subgenre: value || "",
     }));
   };
 
@@ -416,7 +126,7 @@ const ReleaseInformation = ({ data, onChange }) => {
       featuringArtists: [...prevData.featuringArtists, ""],
     }));
 
-  const removePrimaryArtist = (index: any) => {
+  const removePrimaryArtist = (index: number) => {
     const newPrimaryArtists = [...formData.primaryArtists];
     newPrimaryArtists.splice(index, 1);
     setFormData((prevData) => ({
@@ -425,7 +135,7 @@ const ReleaseInformation = ({ data, onChange }) => {
     }));
   };
 
-  const removeFeaturingArtist = (index: any) => {
+  const removeFeaturingArtist = (index: number) => {
     const newFeaturingArtists = [...formData.featuringArtists];
     newFeaturingArtists.splice(index, 1);
     setFormData((prevData) => ({
@@ -434,7 +144,7 @@ const ReleaseInformation = ({ data, onChange }) => {
     }));
   };
 
-  const handlePrimaryArtistChange = (index: any, value: any) => {
+  const handlePrimaryArtistChange = (index: number, value: string) => {
     const newPrimaryArtists = [...formData.primaryArtists];
     newPrimaryArtists[index] = value;
     setFormData((prevData) => ({
@@ -443,7 +153,7 @@ const ReleaseInformation = ({ data, onChange }) => {
     }));
   };
 
-  const handleFeaturingArtistChange = (index: any, value: any) => {
+  const handleFeaturingArtistChange = (index: number, value: string) => {
     const newFeaturingArtists = [...formData.featuringArtists];
     newFeaturingArtists[index] = value;
     setFormData((prevData) => ({
@@ -494,7 +204,7 @@ const ReleaseInformation = ({ data, onChange }) => {
                   options={artistOptions}
                   value={artist}
                   onChange={(event, newValue) =>
-                    handlePrimaryArtistChange(index, newValue)
+                    handlePrimaryArtistChange(index, newValue || "")
                   }
                   renderInput={(params) => (
                     <TextField
@@ -536,7 +246,7 @@ const ReleaseInformation = ({ data, onChange }) => {
                   options={artistOptions}
                   value={artist}
                   onChange={(event, newValue) =>
-                    handleFeaturingArtistChange(index, newValue)
+                    handleFeaturingArtistChange(index, newValue || "")
                   }
                   renderInput={(params) => (
                     <TextField
@@ -577,7 +287,7 @@ const ReleaseInformation = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Autocomplete
-              options={genres?.map((genre: any) => genre.name)}
+              options={genres?.map((genre: any) => genre.name) || []}
               value={formData.genre}
               onChange={handleGenreChange}
               renderInput={(params) => (
@@ -615,7 +325,7 @@ const ReleaseInformation = ({ data, onChange }) => {
               onChange={(event, newValue) =>
                 setFormData((prevData) => ({
                   ...prevData,
-                  label: newValue,
+                  label: newValue || "",
                 }))
               }
               renderInput={(params) => (
@@ -636,7 +346,7 @@ const ReleaseInformation = ({ data, onChange }) => {
               onChange={(event, newValue) =>
                 setFormData((prevData) => ({
                   ...prevData,
-                  format: newValue,
+                  format: newValue || "",
                 }))
               }
               renderInput={(params) => (
@@ -671,7 +381,7 @@ const ReleaseInformation = ({ data, onChange }) => {
               onChange={(event, newValue) =>
                 setFormData((prevData) => ({
                   ...prevData,
-                  productionYear: newValue,
+                  productionYear: newValue || "",
                 }))
               }
               renderInput={(params) => (

@@ -1,8 +1,13 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useEffect, useState } from "react";
 import { Container, Grid, TextField, Box, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
+import {
+  useGetArtistsQuery,
+  useGetLabelsQuery,
+} from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const labels = ["Label 1", "Label 2"];
 
@@ -13,21 +18,62 @@ const years = Array.from(
   (val, index) => new Date().getFullYear() - index
 ).map(String);
 
-const AlbumReleaseInformation = () => {
-  const [primaryArtists, setPrimaryArtists] = useState([""]);
+const AlbumReleaseInformation = ({ data, onChange }: any) => {
+  const [formData, setFormData] = useState<any>({
+    releaseTitle: data.releaseTitle || "",
+    version: data.version || "",
+    primaryArtists: data.primaryArtists || [""],
+    label: data.label || "",
+    physicalReleaseDate: data.physicalReleaseDate || "",
+    storeReleaseDate: data.storeReleaseDate || "",
+    pLine: data.pLine || "",
+    cLine: data.cLine || "",
+    productionYear: data.productionYear || "",
+    catalogNumber: data.catalogNumber || "",
+  });
 
-  const addPrimaryArtist = () => setPrimaryArtists([...primaryArtists, ""]);
+  const { data: labelData } = useGetLabelsQuery({});
+  const { data: artistData } = useGetArtistsQuery({});
 
-  const removePrimaryArtist = (index: any) => {
-    const newPrimaryArtists = [...primaryArtists];
+  const artistOptions =
+    //@ts-ignore
+    artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
+    [];
+  const labelOptions =
+    //@ts-ignore
+    labelData?.data?.data?.map((label: any) => label.labelName) || [];
+  useEffect(() => {
+    onChange("releaseInformation", formData);
+  }, [formData]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+  const addPrimaryArtist = () =>
+    setFormData((prevData) => ({
+      ...prevData,
+      primaryArtists: [...prevData.primaryArtists, ""],
+    }));
+  const removePrimaryArtist = (index: number) => {
+    const newPrimaryArtists = [...formData.primaryArtists];
     newPrimaryArtists.splice(index, 1);
-    setPrimaryArtists(newPrimaryArtists);
+    setFormData((prevData) => ({
+      ...prevData,
+      primaryArtists: newPrimaryArtists,
+    }));
   };
 
-  const handlePrimaryArtistChange = (index: any, value: any) => {
-    const newPrimaryArtists = [...primaryArtists];
+  const handlePrimaryArtistChange = (index: number, value: string) => {
+    const newPrimaryArtists = [...formData.primaryArtists];
     newPrimaryArtists[index] = value;
-    setPrimaryArtists(newPrimaryArtists);
+    setFormData((prevData) => ({
+      ...prevData,
+      primaryArtists: newPrimaryArtists,
+    }));
   };
 
   return (
@@ -40,15 +86,27 @@ const AlbumReleaseInformation = () => {
               fullWidth
               label="Release Title"
               variant="outlined"
+              name="releaseTitle"
+              value={formData.releaseTitle}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField fullWidth label="Version/Subtitle" variant="outlined" />
+            <TextField
+              fullWidth
+              label="Version/Subtitle"
+              variant="outlined"
+              placeholder="Use this field to add further details to your release title"
+              name="version"
+              value={formData.version}
+              onChange={handleChange}
+            />
           </Grid>
-          {primaryArtists.map((artist, index) => (
+          {formData.primaryArtists.map((artist, index) => (
             <Grid
               item
               xs={12}
+              md={6}
               key={index}
               container
               alignItems="center"
@@ -56,10 +114,10 @@ const AlbumReleaseInformation = () => {
             >
               <Grid item xs={12}>
                 <Autocomplete
-                  options={artists}
+                  options={artistOptions}
                   value={artist}
                   onChange={(event, newValue) =>
-                    handlePrimaryArtistChange(index, newValue)
+                    handlePrimaryArtistChange(index, newValue || "")
                   }
                   renderInput={(params) => (
                     <TextField
@@ -74,11 +132,11 @@ const AlbumReleaseInformation = () => {
               <Grid item className="flex justify-between">
                 <IconButton
                   onClick={() => removePrimaryArtist(index)}
-                  disabled={primaryArtists.length === 1}
+                  disabled={formData.primaryArtists.length === 1}
                 >
                   <RemoveCircleOutlineIcon />
                 </IconButton>
-                {index === primaryArtists.length - 1 && (
+                {index === formData.primaryArtists.length - 1 && (
                   <IconButton onClick={addPrimaryArtist}>
                     <AddCircleOutlineIcon />
                   </IconButton>
@@ -87,13 +145,20 @@ const AlbumReleaseInformation = () => {
             </Grid>
           ))}
 
-          <Grid item xs={12}>
+          <Grid item xs={12} md={6}>
             <Autocomplete
-              options={labels}
+              options={labelOptions}
+              value={formData.label}
+              onChange={(event, newValue) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  label: newValue || "",
+                }))
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Label Name"
+                  label="Label"
                   variant="outlined"
                   required
                   fullWidth
@@ -111,6 +176,9 @@ const AlbumReleaseInformation = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              name="physicalReleaseDate"
+              value={formData.physicalReleaseDate}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -122,17 +190,41 @@ const AlbumReleaseInformation = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              name="storeReleaseDate"
+              value={formData.storeReleaseDate}
+              onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField fullWidth label="Ⓟ Line" variant="outlined" />
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="pLine"
+              value={formData.pLine}
+              onChange={handleChange}
+              fullWidth
+              label="Ⓟ Line"
+              variant="outlined"
+            />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField fullWidth label="© Line" variant="outlined" />
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="cLine"
+              value={formData.cLine}
+              onChange={handleChange}
+              fullWidth
+              label="© Line"
+              variant="outlined"
+            />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Autocomplete
               options={years}
+              value={formData.productionYear}
+              onChange={(event, newValue) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  productionYear: newValue || "",
+                }))
+              }
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -145,8 +237,15 @@ const AlbumReleaseInformation = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={12}>
-            <TextField fullWidth label="Catalogue Number" variant="outlined" />
+          <Grid item xs={12} md={6}>
+            <TextField
+              name="catalogNumber"
+              value={formData.catalogNumber}
+              onChange={handleChange}
+              fullWidth
+              label="Catalogue Number"
+              variant="outlined"
+            />
           </Grid>
         </Grid>
       </Box>
