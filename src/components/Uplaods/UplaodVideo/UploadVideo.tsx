@@ -33,7 +33,7 @@ const UploadVideo = () => {
       thumbnail: null,
       videoType: "",
       title: "",
-      primaryArtist: [{ primaryArtistName: "", primaryArtist: null }],
+      primaryArtist: [""],
       writer: [{ writerName: "" }],
       composer: [{ composerName: "" }],
       musicDirector: [{ musicDirectorName: "" }],
@@ -85,10 +85,9 @@ const UploadVideo = () => {
     formData.append("description", data.description);
     formData.append("storeReleaseDate", data.storeReleaseDate);
 
-    const formattedPrimaryArtists = data.primaryArtist.map((artist: any) => ({
-      primaryArtist: artist.primaryArtist?._id,
-      primaryArtistName: artist.primaryArtist?.primaryArtistName,
-    }));
+    const formattedPrimaryArtists = data.primaryArtist.map(
+      (artist: any) => artist._id
+    );
     formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
 
     //  /send formData
