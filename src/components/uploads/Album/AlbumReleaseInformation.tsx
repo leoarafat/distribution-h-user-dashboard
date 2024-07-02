@@ -9,10 +9,6 @@ import {
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
-const labels = ["Label 1", "Label 2"];
-
-const artists = ["Artist 1", "Artist 2", "Artist 3"];
-
 const years = Array.from(
   new Array(50),
   (val, index) => new Date().getFullYear() - index
@@ -37,11 +33,18 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
 
   const artistOptions =
     //@ts-ignore
-    artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
-    [];
+    artistData?.data?.data?.map((artist: any) => ({
+      label: artist.primaryArtistName,
+      value: artist._id,
+    })) || [];
+
   const labelOptions =
     //@ts-ignore
-    labelData?.data?.data?.map((label: any) => label.labelName) || [];
+    labelData?.data?.data?.map((label: any) => ({
+      label: label.labelName,
+      value: label._id,
+    })) || [];
+
   useEffect(() => {
     onChange("releaseInformation", formData);
   }, [formData]);
@@ -53,11 +56,13 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
   const addPrimaryArtist = () =>
     setFormData((prevData) => ({
       ...prevData,
       primaryArtists: [...prevData.primaryArtists, ""],
     }));
+
   const removePrimaryArtist = (index: number) => {
     const newPrimaryArtists = [...formData.primaryArtists];
     newPrimaryArtists.splice(index, 1);
@@ -67,12 +72,24 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
     }));
   };
 
-  const handlePrimaryArtistChange = (index: number, value: string) => {
+  const handlePrimaryArtistChange = (
+    index: number,
+    newValue: { label: string; value: string } | null
+  ) => {
     const newPrimaryArtists = [...formData.primaryArtists];
-    newPrimaryArtists[index] = value;
+    newPrimaryArtists[index] = newValue ? newValue.value : "";
     setFormData((prevData) => ({
       ...prevData,
       primaryArtists: newPrimaryArtists,
+    }));
+  };
+
+  const handleLabelChange = (
+    newValue: { label: string; value: string } | null
+  ) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      label: newValue ? newValue.value : "",
     }));
   };
 
@@ -115,9 +132,12 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
               <Grid item xs={12}>
                 <Autocomplete
                   options={artistOptions}
-                  value={artist}
+                  getOptionLabel={(option) => option.label}
+                  value={
+                    artistOptions.find((opt) => opt.value === artist) || null
+                  }
                   onChange={(event, newValue) =>
-                    handlePrimaryArtistChange(index, newValue || "")
+                    handlePrimaryArtistChange(index, newValue)
                   }
                   renderInput={(params) => (
                     <TextField
@@ -126,7 +146,6 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
                       variant="outlined"
                     />
                   )}
-                  freeSolo
                 />
               </Grid>
               <Grid item className="flex justify-between">
@@ -148,13 +167,11 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
           <Grid item xs={12} md={6}>
             <Autocomplete
               options={labelOptions}
-              value={formData.label}
-              onChange={(event, newValue) =>
-                setFormData((prevData) => ({
-                  ...prevData,
-                  label: newValue || "",
-                }))
+              getOptionLabel={(option) => option.label}
+              value={
+                labelOptions.find((opt) => opt.value === formData.label) || null
               }
+              onChange={(event, newValue) => handleLabelChange(newValue)}
               renderInput={(params) => (
                 <TextField
                   {...params}

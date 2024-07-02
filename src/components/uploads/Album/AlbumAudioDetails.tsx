@@ -81,6 +81,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
     //@ts-ignore
     artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
     [];
+  console.log(artistOptions);
   const labelOptions =
     //@ts-ignore
     labelData?.data?.data?.map((label: any) => label.labelName) || [];
