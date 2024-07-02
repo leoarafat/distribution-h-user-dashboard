@@ -26,7 +26,7 @@ const years: string[] = Array.from(new Array(50), (val, index) =>
 interface ReleaseFormData {
   releaseTitle: string;
   version: string;
-  primaryArtists: string[];
+  primaryArtists: { primaryArtistName: string; primaryArtist: string }[];
   featuringArtists: string[];
   variousArtists: boolean;
   genre: string;
@@ -50,7 +50,9 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   const [formData, setFormData] = useState<ReleaseFormData>({
     releaseTitle: data.releaseTitle || "",
     version: data.version || "",
-    primaryArtists: data.primaryArtists || [""],
+    primaryArtists: data.primaryArtists || [
+      { primaryArtistName: "", primaryArtist: "" },
+    ],
     featuringArtists: data.featuringArtists || [""],
     variousArtists: data.variousArtists || false,
     genre: data.genre || "",

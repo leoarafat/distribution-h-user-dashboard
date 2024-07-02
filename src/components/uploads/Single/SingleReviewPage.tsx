@@ -14,7 +14,8 @@ import {
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { releaseInformationData } from "@/MockData/MockData";
 
-const SingleTrackReviewPage = () => {
+const SingleTrackReviewPage = ({ data, onChange }) => {
+  console.log(data, "SingleReview");
   const { tracks, release, audio } = releaseInformationData;
 
   return (
