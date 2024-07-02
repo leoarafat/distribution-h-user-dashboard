@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Container,
   Card,
@@ -15,7 +14,8 @@ import {
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { albumReleaseInformationData } from "@/MockData/MockData";
 
-const AlbumAudioReview = () => {
+const AlbumAudioReview = ({ data, onChange }: any) => {
+  console.log(data, "Review Data");
   const { tracks, release, audio } = albumReleaseInformationData;
 
   return (

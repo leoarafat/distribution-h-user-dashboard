@@ -15,10 +15,13 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
 import { genres } from "@/MockData/MockData";
+import {
+  useGetArtistsQuery,
+  useGetLabelsQuery,
+} from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const formats = ["CD", "Vinyl"];
-const labels = ["Label 1", "Label 2"];
-const artists = ["Artist 1", "Artist 2", "Artist 3"];
+
 const years = Array.from(
   new Array(50),
   (val, index) => new Date().getFullYear() - index
@@ -30,8 +33,6 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
   >([]);
   const [songs, setSongs] = useState<any[]>([]);
   const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedSubgenre, setSelectedSubgenre] = useState("");
 
   useEffect(() => {
     if (audioFiles.length > 0) {
@@ -70,19 +71,47 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       });
     }
   }, [audioFiles]);
-  const handleGenreChange = (event: any, value: any) => {
-    setSelectedGenre(value);
-    setSelectedSubgenre(""); // Reset subgenre when genre changes
+  useEffect(() => {
+    onChange("audios", songs);
+  }, [songs]);
+  const { data: labelData } = useGetLabelsQuery({});
+  const { data: artistData } = useGetArtistsQuery({});
+
+  const artistOptions =
+    //@ts-ignore
+    artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
+    [];
+  const labelOptions =
+    //@ts-ignore
+    labelData?.data?.data?.map((label: any) => label.labelName) || [];
+
+  const handleGenreChange = (songId: number, newValue: any) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId ? { ...song, genre: newValue } : song
+      )
+    );
   };
 
-  const handleSubgenreChange = (event: any, value: any) => {
-    setSelectedSubgenre(value);
+  const handleSubgenreChange = (
+    songId: number,
+
+    newValue: string | null
+  ) => {
+    setSongs((prevSongs) =>
+      prevSongs.map((song) =>
+        song.id === songId ? { ...song, subgenre: newValue } : song
+      )
+    );
   };
 
-  const getSubgenres = () => {
+  const getSubgenres = (songId: number) => {
+    const selectedSong = songs.find((song) => song.id === songId);
+    const selectedGenre = selectedSong ? selectedSong.genre : null;
     const genreObj = genres.find((genre) => genre.name === selectedGenre);
     return genreObj ? genreObj.subgenres : [];
   };
+
   const handleCoverImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -93,7 +122,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       img.onload = () => {
         if (img.width === 1500 && img.height === 1500) {
           setCoverImage(file);
-          onChange("audio", { ...data?.audio, coverImage: file });
+          onChange("audios", { ...data?.audios, coverImage: file });
         } else {
           alert("Image must be 1500x1500 pixels.");
         }
@@ -140,7 +169,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
 
   const handleCoverImageRemove = () => {
     setCoverImage(null);
-    onChange("audio", { ...data?.audio, coverImage: null });
+    onChange("audios", { ...data?.audios, coverImage: null });
   };
 
   const handleAudioRemove = (id: number) => {
@@ -531,7 +560,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                         isOptionEqualToValue={(option, value) =>
                           option.value === value.value
                         }
-                        options={artists}
+                        options={artistOptions}
                         value={artist}
                         onChange={(event, newValue) =>
                           handlePrimaryArtistChange(
@@ -747,13 +776,13 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                   ))}
                 </Grid>
 
-                {/* Here genre  */}
                 <Grid item xs={12} md={6}>
                   <Autocomplete
-                    // options={genres}
-                    options={genres?.map((genre: any) => genre.name)}
-                    value={selectedGenre}
-                    onChange={handleGenreChange}
+                    options={genres?.map((genre: any) => genre.name) || []}
+                    value={song.genre}
+                    onChange={(event, newValue) =>
+                      handleGenreChange(song.id, newValue)
+                    }
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -765,13 +794,14 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     )}
                   />
                 </Grid>
+
                 <Grid item xs={12} md={6}>
                   <Autocomplete
-                    // options={subgenres}
-                    //@ts-ignore
-                    options={getSubgenres()}
-                    value={selectedSubgenre}
-                    onChange={handleSubgenreChange}
+                    options={getSubgenres(song.id)}
+                    value={song.subgenre || ""}
+                    onChange={(event, newValue) =>
+                      handleSubgenreChange(song.id, newValue)
+                    }
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -779,7 +809,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                         variant="outlined"
                         required
                         fullWidth
-                        disabled={!selectedGenre}
+                        disabled={!song.subgenre}
                       />
                     )}
                   />
@@ -789,7 +819,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     isOptionEqualToValue={(option, value) =>
                       option.value === value.value
                     }
-                    options={labels}
+                    options={labelOptions}
                     value={song.label}
                     onChange={(event, newValue) =>
                       handleSongChange(song.id, "label", newValue)
