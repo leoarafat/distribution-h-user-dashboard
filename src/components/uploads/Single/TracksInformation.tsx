@@ -21,6 +21,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               fullWidth
               options={["Audio", "Video"]}
               value={data.trackDetails.contentType}
+              defaultValue={"Audio"}
               onChange={(e, value) =>
                 onChange("trackDetails", {
                   ...data.trackDetails,
@@ -29,6 +30,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
                   label="Content Type"
@@ -42,8 +44,9 @@ const TracksInformation = ({ data, onChange }: any) => {
           <Grid item xs={12} sm={6}>
             <Autocomplete
               fullWidth
-              options={["Music"]}
+              options={["Music", "Classic Music", "Jazz Music"]}
               value={data.trackDetails.primaryTrackType}
+              defaultValue={"Music"}
               onChange={(e, value) =>
                 onChange("trackDetails", {
                   ...data.trackDetails,
@@ -52,6 +55,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
                   label="Primary Track Type"
@@ -81,6 +85,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
                   label="Secondary Track Type"
@@ -104,6 +109,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
                   label="Instrumental"
@@ -128,6 +134,7 @@ const TracksInformation = ({ data, onChange }: any) => {
 
           <Grid item xs={12}>
             <TextField
+              required
               fullWidth
               value={data.trackDetails.remixer}
               onChange={handleChange}
@@ -169,6 +176,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Arranger"
               name="arranger"
+              required
             />
           </Grid>
 
@@ -180,6 +188,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Producer"
               name="producer"
+              required
             />
           </Grid>
 
@@ -191,6 +200,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Publisher"
               name="publisher"
+              required
             />
           </Grid>
 
@@ -202,6 +212,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="ISRC"
               name="isrc"
+              required
             />
           </Grid>
 
@@ -223,6 +234,7 @@ const TracksInformation = ({ data, onChange }: any) => {
                   label="Ask to generate an ISRC"
                   variant="outlined"
                   name="askToGenerateISRC"
+                  required
                 />
               )}
             />
@@ -258,6 +270,7 @@ const TracksInformation = ({ data, onChange }: any) => {
                   label="Parental Advisory"
                   variant="outlined"
                   name="parentalAdvisory"
+                  required
                 />
               )}
             />
@@ -271,6 +284,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Preview Start"
               name="previewStart"
+              required
             />
           </Grid>
 
@@ -292,6 +306,7 @@ const TracksInformation = ({ data, onChange }: any) => {
                   label="Track Title Language"
                   variant="outlined"
                   name="trackTitleLanguage"
+                  required
                 />
               )}
             />
@@ -314,6 +329,7 @@ const TracksInformation = ({ data, onChange }: any) => {
                   fullWidth
                   label="Lyrics Language"
                   variant="outlined"
+                  required
                   name="lyricsLanguage"
                 />
               )}
@@ -329,6 +345,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               label="Lyrics"
               multiline
               rows={4}
+              required
               name="lyrics"
             />
           </Grid>

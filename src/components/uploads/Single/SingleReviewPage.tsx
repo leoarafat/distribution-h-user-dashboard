@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Container,
   Card,
@@ -12,12 +13,32 @@ import {
   Avatar,
 } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { releaseInformationData } from "@/MockData/MockData";
+import { useEffect, useState } from "react";
 
-const SingleTrackReviewPage = ({ data, onChange }) => {
+const SingleTrackReviewPage = ({ data, onChange }: any) => {
+  const [audioUrl, setAudioUrl] = useState(null);
   console.log(data, "SingleReview");
-  const { tracks, release, audio } = releaseInformationData;
+  // console.log(data?.audio.audioFile);
+  const trackDetails = data?.trackDetails;
+  const releaseInformation = data?.releaseInformation;
+  const audio = data?.audio;
 
+  useEffect(() => {
+    if (audio && audio.audioFile) {
+      //@ts-ignore
+      setAudioUrl(URL.createObjectURL(audio.audioFile));
+    }
+
+    return () => {
+      if (audioUrl) {
+        URL.revokeObjectURL(audioUrl);
+      }
+    };
+  }, [audio]);
+
+  if (!audio || !audio.audioFile) {
+    return <div>No audio file selected.</div>;
+  }
   return (
     <Container maxWidth="md" style={{ padding: "20px" }}>
       <Card style={{ marginBottom: "20px" }}>
@@ -27,8 +48,8 @@ const SingleTrackReviewPage = ({ data, onChange }) => {
               <PlayCircleOutlineIcon />
             </Avatar>
           }
-          title={tracks.title}
-          subheader={`${release.releaseTitle} - ${release.versionSubtitle}`}
+          title={trackDetails?.title}
+          subheader={`${releaseInformation?.releaseTitle} - ${releaseInformation?.version}`}
           style={{ backgroundColor: "#f5f5f5" }}
         />
         <CardContent>
@@ -36,8 +57,12 @@ const SingleTrackReviewPage = ({ data, onChange }) => {
             <Grid item xs={12} sm={4} style={{ padding: "10px" }}>
               <CardMedia
                 component="img"
-                image={audio.coverImage}
-                alt={tracks.title}
+                image={
+                  audio &&
+                  audio?.coverImage &&
+                  URL.createObjectURL(audio?.coverImage)
+                }
+                alt={trackDetails?.title}
                 style={{ width: "100%", height: "auto", borderRadius: "8px" }}
               />
             </Grid>
@@ -46,104 +71,119 @@ const SingleTrackReviewPage = ({ data, onChange }) => {
                 <ListItem>
                   <ListItemText
                     primary="Artists"
-                    secondary={release.primaryArtists.join(", ")}
+                    secondary={releaseInformation?.primaryArtists?.join(", ")}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Featuring Artists"
-                    secondary={release.featuringArtists.join(", ")}
+                    secondary={releaseInformation?.featuringArtists?.join(", ")}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Genre"
-                    secondary={`${release.genre} / ${release.subgenre}`}
+                    secondary={`${releaseInformation?.genre} / ${releaseInformation?.subgenre}`}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Label" secondary={release.labelName} />
+                  <ListItemText
+                    primary="Label"
+                    secondary={releaseInformation?.label}
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Release Date"
-                    secondary={release.physicalReleaseDate}
+                    secondary={releaseInformation?.releaseDate}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Price"
-                    secondary={`$${tracks.price}`}
+                    secondary={`$${trackDetails?.price}`}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Producer"
-                    secondary={tracks.producer}
+                    secondary={trackDetails?.producer}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Lyrics" secondary={tracks.lyrics} />
+                  <ListItemText
+                    primary="Lyrics"
+                    secondary={trackDetails?.lyrics}
+                  />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Remixer" secondary={tracks.remixer} />
+                  <ListItemText
+                    primary="Remixer"
+                    secondary={trackDetails?.remixer}
+                  />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="Author" secondary={tracks.author} />
+                  <ListItemText
+                    primary="Author"
+                    secondary={trackDetails?.author}
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Composer"
-                    secondary={tracks.composer}
+                    secondary={trackDetails?.composer}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Arranger"
-                    secondary={tracks.arranger}
+                    secondary={trackDetails?.arranger}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="P Line" secondary={tracks.pLine} />
+                  <ListItemText
+                    primary="P Line"
+                    secondary={releaseInformation?.pLine}
+                  />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Production Year"
-                    secondary={tracks.productionYear}
+                    secondary={releaseInformation?.productionYear}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Publisher"
-                    secondary={tracks.publisher}
+                    secondary={trackDetails?.publisher}
                   />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary="ISRC" secondary={tracks.isrc} />
+                  <ListItemText primary="ISRC" secondary={trackDetails?.isrc} />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Preview Start"
-                    secondary={tracks.previewStart}
+                    secondary={trackDetails?.previewStart}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Track Title Language"
-                    secondary={tracks.trackTitleLanguage}
+                    secondary={trackDetails?.trackTitleLanguage}
                   />
                 </ListItem>
                 <ListItem>
                   <ListItemText
                     primary="Lyrics Language"
-                    secondary={tracks.lyricsLanguage}
+                    secondary={trackDetails?.lyricsLanguage}
                   />
                 </ListItem>
               </List>
             </Grid>
           </Grid>
           <audio controls style={{ width: "100%", marginTop: "20px" }}>
-            <source src={audio.audioFile} type="audio/mpeg" />
+            <source src={audioUrl} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
         </CardContent>
@@ -153,25 +193,26 @@ const SingleTrackReviewPage = ({ data, onChange }) => {
           <Grid container spacing={2}>
             <Grid item xs={6} style={{ padding: "10px" }}>
               <Typography variant="body1">
-                <strong>Content Type:</strong> {tracks.contentType}
+                <strong>Content Type:</strong> {trackDetails?.contentType}
               </Typography>
               <Typography variant="body1">
-                <strong>Track Type:</strong> {tracks.primaryTrackType}
+                <strong>Track Type:</strong> {trackDetails?.primaryTrackType}
               </Typography>
               <Typography variant="body1">
-                <strong>Instrumental:</strong> {tracks.instrumental}
+                <strong>Instrumental:</strong> {trackDetails?.instrumental}
               </Typography>
             </Grid>
             <Grid item xs={6} style={{ padding: "10px" }}>
               <Typography variant="body1">
-                <strong>ISRC:</strong> {tracks.isrc}
+                <strong>ISRC:</strong> {trackDetails?.isrc}
               </Typography>
               <Typography variant="body1">
                 <strong>Catalogue Number:</strong>{" "}
-                {tracks.producerCatalogueNumber}
+                {releaseInformation?.catalogNumber}
               </Typography>
               <Typography variant="body1">
-                <strong>Parental Advisory:</strong> {tracks.parentalAdvisory}
+                <strong>Parental Advisory:</strong>{" "}
+                {trackDetails?.parentalAdvisory}
               </Typography>
             </Grid>
           </Grid>
@@ -187,70 +228,87 @@ const SingleTrackReviewPage = ({ data, onChange }) => {
             <ListItem>
               <ListItemText
                 primary="Release Title"
-                secondary={release.releaseTitle}
+                secondary={releaseInformation?.releaseTitle}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Version Subtitle"
-                secondary={release.versionSubtitle}
+                secondary={releaseInformation?.version}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Primary Artists"
-                secondary={release.primaryArtists.join(", ")}
+                secondary={releaseInformation?.primaryArtists.join(", ")}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Featuring Artists"
-                secondary={release.featuringArtists.join(", ")}
+                secondary={releaseInformation?.featuringArtists.join(", ")}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Various Artists Compilation"
-                secondary={release.variousArtistsCompilation ? "Yes" : "No"}
+                secondary={
+                  releaseInformation?.variousArtistsCompilation ? "Yes" : "No"
+                }
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Genre"
-                secondary={`${release.genre} / ${release.subgenre}`}
+                secondary={`${releaseInformation?.genre} / ${releaseInformation?.subgenre}`}
               />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Label" secondary={release.labelName} />
+              <ListItemText
+                primary="Label"
+                secondary={releaseInformation?.label}
+              />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Format" secondary={release.format} />
+              <ListItemText
+                primary="Format"
+                secondary={releaseInformation?.format}
+              />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Physical Release Date"
-                secondary={release.physicalReleaseDate}
+                secondary={releaseInformation?.releaseDate}
               />
             </ListItem>
             <ListItem>
-              <ListItemText primary="P Line" secondary={release.pLine} />
+              <ListItemText
+                primary="P Line"
+                secondary={releaseInformation?.pLine}
+              />
             </ListItem>
             <ListItem>
-              <ListItemText primary="C Line" secondary={release.cLine} />
+              <ListItemText
+                primary="C Line"
+                secondary={releaseInformation?.cLine}
+              />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Production Year"
-                secondary={release.productionYear}
+                secondary={releaseInformation?.productionYear}
               />
             </ListItem>
             <ListItem>
-              <ListItemText primary="UPC/EAN" secondary={release.upcEan} />
+              <ListItemText
+                primary="UPC/EAN"
+                secondary={releaseInformation?.upc}
+              />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="Producer Catalogue Number"
-                secondary={release.producerCatalogueNumber}
+                secondary={releaseInformation?.catalogNumber}
               />
             </ListItem>
           </List>

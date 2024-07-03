@@ -47,24 +47,47 @@ interface Props {
 }
 
 const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
-  const [formData, setFormData] = useState<ReleaseFormData>({
-    releaseTitle: data.releaseTitle || "",
-    version: data.version || "",
-    primaryArtists: data.primaryArtists || [""],
-    featuringArtists: data.featuringArtists || [""],
-    variousArtists: data.variousArtists || false,
-    genre: data.genre || "",
-    subgenre: data.subgenre || "",
-    label: data.label || "",
-    format: data.format || "",
-    releaseDate: data.releaseDate || "",
-    pLine: data.pLine || "",
-    cLine: data.cLine || "",
-    productionYear: data.productionYear || "",
-    upc: data.upc || "",
-    catalogNumber: data.catalogNumber || "",
+  // const [formData, setFormData] = useState<ReleaseFormData>({
+  //   releaseTitle: data.releaseTitle || "",
+  //   version: data.version || "",
+  //   primaryArtists: data.primaryArtists || [""],
+  //   featuringArtists: data.featuringArtists || [""],
+  //   variousArtists: data.variousArtists || false,
+  //   genre: data.genre || "",
+  //   subgenre: data.subgenre || "",
+  //   label: data.label || "",
+  //   format: data.format || "",
+  //   releaseDate: data.releaseDate || "",
+  //   pLine: data.pLine || "",
+  //   cLine: data.cLine || "",
+  //   productionYear: data.productionYear || "",
+  //   upc: data.upc || "",
+  //   catalogNumber: data.catalogNumber || "",
+  // });
+  const [formData, setFormData] = useState<ReleaseFormData>(() => {
+    const storedData = localStorage.getItem("releaseFormData");
+    if (storedData) {
+      return JSON.parse(storedData);
+    } else {
+      return {
+        releaseTitle: data.releaseTitle || "",
+        version: data.version || "",
+        primaryArtists: data.primaryArtists || [""],
+        featuringArtists: data.featuringArtists || [""],
+        variousArtists: data.variousArtists || false,
+        genre: data.genre || "",
+        subgenre: data.subgenre || "",
+        label: data.label || "",
+        format: data.format || "",
+        releaseDate: data.releaseDate || "",
+        pLine: data.pLine || "",
+        cLine: data.cLine || "",
+        productionYear: data.productionYear || "",
+        upc: data.upc || "",
+        catalogNumber: data.catalogNumber || "",
+      };
+    }
   });
-
   const { data: labelData } = useGetLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
@@ -82,10 +105,20 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       label: label.labelName,
       value: label._id,
     })) || [];
+  // useEffect(() => {
+  //   onChange("releaseInformation", formData);
+  // }, [formData]);
   useEffect(() => {
+    localStorage.setItem("releaseFormData", JSON.stringify(formData));
     onChange("releaseInformation", formData);
   }, [formData]);
-
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value, type, checked } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   }));
+  // };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -193,6 +226,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               label="Version/Subtitle"
               variant="outlined"
@@ -226,6 +260,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      required
                       label="Primary Artist"
                       variant="outlined"
                     />
@@ -266,14 +301,16 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
                   options={artistOptions}
                   getOptionLabel={(option) => option.label}
                   value={
-                    artistOptions.find((option) => option.value === artist) ||
-                    null
+                    artistOptions.find(
+                      (option: any) => option.value === artist
+                    ) || null
                   }
                   onChange={(event, newValue) =>
                     handleFeaturingArtistChange(index, newValue)
                   }
                   renderInput={(params) => (
                     <TextField
+                      required
                       {...params}
                       label="Featuring"
                       variant="outlined"
@@ -319,6 +356,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               onChange={handleGenreChange}
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   label="Genre"
                   variant="outlined"
@@ -335,6 +373,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               onChange={handleSubgenreChange}
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   label="Subgenre"
                   variant="outlined"
@@ -354,6 +393,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               onChange={(event, newValue) => handleLabelChange(newValue)}
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   label="Label"
                   variant="outlined"
@@ -374,13 +414,19 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
                 }))
               }
               renderInput={(params) => (
-                <TextField {...params} label="Format" variant="outlined" />
+                <TextField
+                  required
+                  {...params}
+                  label="Format"
+                  variant="outlined"
+                />
               )}
               freeSolo
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               type="date"
               label="Release Date"
@@ -393,6 +439,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               label="P Line"
               variant="outlined"
@@ -403,6 +450,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               label="C Line"
               variant="outlined"
@@ -414,6 +462,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           <Grid item xs={12} md={6}>
             <Autocomplete
               options={years}
+              required
               value={formData.productionYear}
               onChange={(event, newValue) =>
                 setFormData((prevData) => ({
@@ -433,6 +482,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               label="UPC"
               variant="outlined"
@@ -443,6 +493,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required
               fullWidth
               label="Catalog Number"
               variant="outlined"

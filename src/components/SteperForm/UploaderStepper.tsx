@@ -37,6 +37,7 @@ const UploaderStepperForm = () => {
   const [audio, setAudio] = useState(null);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     if (formData.audio) {
       //@ts-ignore
@@ -45,17 +46,6 @@ const UploaderStepperForm = () => {
       setAudio(formData.audio.audio);
     }
   }, [formData]);
-  useEffect(() => {
-    const storedFormData = localStorage.getItem("uploaderFormData");
-    if (storedFormData) {
-      setFormData(JSON.parse(storedFormData));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("uploaderFormData", JSON.stringify(formData));
-  }, [formData]);
-  // console.log(formData, "formData");
 
   const handleNext = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -70,21 +60,7 @@ const UploaderStepperForm = () => {
     setFormData(updatedFormData);
   };
 
-  const handleSubmit = async () => {
-    localStorage.removeItem("uploaderFormData");
-    // try {
-    //   const result = await verifyUser({});
-    //   if (result?.data?.success) {
-    //     toast.success("Congratulations. Upload Successful");
-    //     navigate("/");
-    //   } else {
-    //     toast.error("Verification failed. Please try again later.");
-    //   }
-    // } catch (error: any) {
-    //   toast.error("An error occurred while verifying. Please try again later.");
-    //   console.error("Error during verification:", error.message);
-    // }
-  };
+  const handleSubmit = async () => {};
 
   const StepComponent = steps[activeStep].component;
 

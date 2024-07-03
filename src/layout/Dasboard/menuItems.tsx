@@ -14,7 +14,7 @@ import {
 import { RiPlayListAddFill } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
 import PendingReleaseIcon from "@mui/icons-material/HourglassFull";
-
+import { ShieldAlert } from "lucide-react";
 export const menuItems = [
   {
     path: "/",
@@ -49,7 +49,7 @@ export const menuItems = [
       {
         path: "/correction-track",
         title: "Correction Request",
-        icon: <SendHorizontal style={{ fontSize: 18, color: "white" }} />,
+        icon: <ShieldAlert size={18} style={{ color: "white" }} />,
       },
       // {
       //   path: "/drafts",
@@ -66,6 +66,11 @@ export const menuItems = [
         title: "Pending Videos",
         icon: <PendingReleaseIcon style={{ fontSize: 18, color: "white" }} />,
       },
+      // {
+      //   path: "/correction-videos",
+      //   title: "Correction Videos",
+      //   icon: <ShieldAlert size={18} style={{ color: "white" }} />,
+      // },
     ],
   },
   {
