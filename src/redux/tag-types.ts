@@ -28,4 +28,7 @@ export const tagsList = [
   "bank",
   "pioneer",
   "mobile-bank",
+  "single-audio",
+  "video",
+  "album",
 ] as const;

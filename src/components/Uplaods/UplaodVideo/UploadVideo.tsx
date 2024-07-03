@@ -1,619 +1,5 @@
-// /* eslint-disable @typescript-eslint/ban-ts-comment */
-// /* eslint-disable react-hooks/rules-of-hooks */
-// import { useState } from "react";
-// import { useForm, useFieldArray, Controller } from "react-hook-form";
-// import {
-//   Button,
-//   TextField,
-//   Select,
-//   MenuItem,
-//   FormControl,
-//   InputLabel,
-//   Grid,
-//   Card,
-//   CardContent,
-//   IconButton,
-//   Box,
-//   Container,
-//   Autocomplete,
-// } from "@mui/material";
-// import { Add, Remove, PhotoCamera, YouTube } from "@mui/icons-material";
-// import { MdClose } from "react-icons/md";
-// import { genres } from "@/MockData/MockData";
-// import { UploadIcon } from "lucide-react";
-// import {
-//   useGetArtistsQuery,
-//   useGetLabelsQuery,
-// } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
-
-// const UploadVideo = () => {
-//   const { control, handleSubmit, watch, setValue } = useForm({
-//     defaultValues: {
-//       video: null,
-//       thumbnail: null,
-//       videoType: "",
-//       title: "",
-//       primaryArtist: [{ primaryArtistName: "", primaryArtist: null }],
-//       writer: [{ writerName: "" }],
-//       composer: [{ composerName: "" }],
-//       musicDirector: [{ musicDirectorName: "" }],
-//       label: "",
-//       genre: "",
-//       subGenre: "",
-//       language: "",
-//       isrc: "",
-//       upc: "",
-//       description: "",
-//       storeReleaseDate: "",
-//     },
-//   });
-
-//   const [thumbnail, setThumbnail] = useState(null);
-//   const [videoFile, setVideoFile] = useState(null);
-//   const [thumbnailError, setThumbnailError] = useState("");
-//   const [selectedGenre, setSelectedGenre] = useState("");
-//   const [selectedSubgenre, setSelectedSubgenre] = useState("");
-//   const { data: labelData } = useGetLabelsQuery({});
-//   const { data: artistData } = useGetArtistsQuery({});
-
-//   const artistOptions =
-//     //@ts-ignore
-//     artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
-//     [];
-//   const labelOptions =
-//     //@ts-ignore
-//     labelData?.data?.data?.map((label: any) => label.labelName) || [];
-//   const onSubmit = (data: any) => {
-//     const formData = new FormData();
-
-//     // Append files
-//     if (videoFile) {
-//       formData.append("video", videoFile);
-//     }
-//     if (thumbnail) {
-//       formData.append("thumbnail", thumbnail);
-//     }
-
-//     formData.append("videoType", data.videoType);
-//     formData.append("title", data.title);
-//     formData.append("label", data.label);
-//     formData.append("genre", data.genre);
-//     formData.append("subGenre", data.subGenre);
-//     formData.append("language", data.language);
-//     formData.append("isrc", data.isrc);
-//     formData.append("upc", data.upc);
-//     formData.append("description", data.description);
-//     formData.append("storeReleaseDate", data.storeReleaseDate);
-
-//     const formattedPrimaryArtists = data.primaryArtist.map((artist: any) => ({
-//       primaryArtist: artist.primaryArtist?._id,
-//       primaryArtistName: artist.primaryArtist?.primaryArtistName,
-//     }));
-//     formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
-
-//     //  /send formData
-//   };
-
-//   const handleGenreChange = (event: any, value: any) => {
-//     setSelectedGenre(value);
-//     setSelectedSubgenre("");
-//   };
-
-//   const handleSubgenreChange = (event: any, value: any) => {
-//     setSelectedSubgenre(value);
-//   };
-
-//   const getSubgenres = () => {
-//     const genreObj = genres?.find((genre) => genre.name === selectedGenre);
-//     return genreObj ? genreObj.subgenres : [];
-//   };
-//   const handleThumbnailUpload = (event: any) => {
-//     const file = event.target.files[0];
-
-//     if (file) {
-//       // Check if file is a JPG
-//       if (file.type !== "image/jpeg") {
-//         setThumbnailError("Please upload a JPG image.");
-//         return;
-//       }
-
-//       const img = new Image();
-//       const objectUrl = URL.createObjectURL(file);
-
-//       img.onload = () => {
-//         // Check image dimensions
-//         if (img.width === 1920 && img.height === 1080) {
-//           setValue("thumbnail", file);
-//           setThumbnail(file);
-//           setThumbnailError("");
-//         } else {
-//           setThumbnailError("Image must be 1920x1080 pixels.");
-//         }
-
-//         URL.revokeObjectURL(objectUrl);
-//       };
-
-//       img.onerror = () => {
-//         setThumbnailError("Invalid image file.");
-//       };
-
-//       img.src = objectUrl;
-//     }
-//   };
-
-//   const handleVideoUpload = (event: any) => {
-//     const file = event.target.files[0];
-//     setValue("video", file);
-//     setVideoFile(file);
-//   };
-
-//   const handleThumbnailRemoveImage = () => {
-//     setThumbnail(null);
-//     setThumbnailError("");
-//   };
-
-//   const handleVideoRemove = () => {
-//     setVideoFile(null);
-//   };
-
-//   const renderArrayFields = (
-//     fieldArrayName: any,
-//     label: any,
-//     name: any,
-//     isAutocomplete: boolean = false
-//   ) => {
-//     const { fields, append, remove } = useFieldArray({
-//       control,
-//       name: fieldArrayName,
-//     });
-
-//     return (
-//       <>
-//         {fields.map((field, index) => (
-//           <Grid key={field.id} container spacing={2} alignItems="center">
-//             <Grid item xs={12}>
-//               <Controller
-//                 name={`${fieldArrayName}[${index}].primaryArtist._id`}
-//                 control={control}
-//                 render={({ field }) => (
-//                   <input type="hidden" {...field} value={field.value || ""} />
-//                 )}
-//               />
-//               <Controller
-//                 name={`${fieldArrayName}[${index}].primaryArtist.primaryArtistName`}
-//                 control={control}
-//                 render={({ field }) =>
-//                   isAutocomplete ? (
-//                     <Autocomplete
-//                       {...field}
-//                       options={artistOptions}
-//                       getOptionLabel={(option) => option || ""}
-//                       isOptionEqualToValue={(option, value) => option === value}
-//                       onChange={(event, value) => {
-//                         field.onChange(value);
-//                         const selectedArtist = artistData?.data?.data.find(
-//                           (artist: any) => artist.primaryArtistName === value
-//                         );
-//                         setValue(
-//                           `${fieldArrayName}[${index}].primaryArtist._id`,
-//                           selectedArtist?._id || null
-//                         );
-//                       }}
-//                       renderInput={(params) => (
-//                         <TextField
-//                           {...params}
-//                           fullWidth
-//                           label={label}
-//                           variant="outlined"
-//                           margin="normal"
-//                         />
-//                       )}
-//                       freeSolo
-//                     />
-//                   ) : (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label={label}
-//                       variant="outlined"
-//                       margin="normal"
-//                     />
-//                   )
-//                 }
-//               />
-//               <div
-//                 style={{
-//                   display: "flex",
-//                   justifyContent: "center",
-//                   marginTop: "8px",
-//                 }}
-//               >
-//                 <IconButton
-//                   color="secondary"
-//                   onClick={() => remove(index)}
-//                   size="large"
-//                 >
-//                   <Remove />
-//                 </IconButton>
-//                 <IconButton
-//                   color="primary"
-//                   onClick={() =>
-//                     append({
-//                       primaryArtist: { _id: null, primaryArtistName: "" },
-//                     })
-//                   }
-//                   size="large"
-//                 >
-//                   <Add />
-//                 </IconButton>
-//               </div>
-//             </Grid>
-//           </Grid>
-//         ))}
-//       </>
-//     );
-//   };
-
-//   return (
-//     <Container>
-//       <Card>
-//         <CardContent>
-//           <form onSubmit={handleSubmit(onSubmit)}>
-//             <Grid container spacing={3}>
-//               <div className="flex justify-around items-center w-full p-3">
-//                 <div className="image_upload flex items-center justify-center flex-col p-3">
-//                   <h4 className="mb-2 text-sm font-semibold">Upload Cover</h4>
-//                   <p className="mb-2 text-xs">
-//                     Please ensure that your cover meets the following <br />
-//                     specifications: the image size should be 1920 by 1080 <br />
-//                     pixels, and the format must be in JPG.
-//                   </p>
-//                   {thumbnail ? (
-//                     <div className="relative w-3/4">
-//                       <img
-//                         //@ts-ignore
-//                         src={thumbnail ? URL.createObjectURL(thumbnail) : null}
-//                         alt="PROFILE IMAGE"
-//                         className="w-[350px] h-[200px]"
-//                       />
-//                       <button
-//                         type="button"
-//                         className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-//                         onClick={handleThumbnailRemoveImage}
-//                       >
-//                         <MdClose />
-//                       </button>
-//                     </div>
-//                   ) : (
-//                     <label
-//                       htmlFor="thumbnail"
-//                       className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
-//                     >
-//                       <input
-//                         id="thumbnail"
-//                         type="file"
-//                         accept="image/*"
-//                         name="thumbnail"
-//                         style={{ display: "none" }}
-//                         onChange={handleThumbnailUpload}
-//                         required
-//                       />
-//                       <PhotoCamera
-//                         style={{ fontSize: 100, color: "#03008D" }}
-//                       />
-//                     </label>
-//                   )}
-//                   {thumbnailError && (
-//                     <p style={{ color: "red", marginTop: "10px" }}>
-//                       {thumbnailError}
-//                     </p>
-//                   )}
-//                 </div>
-
-//                 <div className="image_upload flex items-center justify-center flex-col p-3">
-//                   <h4 className="mb-2 text-sm font-semibold">Upload Video</h4>
-//                   <p className="mb-2 text-xs">
-//                     Please note that only MP4 file is permitted for upload &
-//                     without any logo.
-//                     <br />
-//                     <br />
-//                   </p>
-//                   {videoFile ? (
-//                     <div className="relative w-3/4">
-//                       <video
-//                         controls
-//                         style={{ display: "block", marginTop: "10px" }}
-//                       >
-//                         <source
-//                           src={URL.createObjectURL(videoFile)}
-//                           type="video/mp4"
-//                         />
-//                         Your browser does not support the video tag.
-//                       </video>
-
-//                       <button
-//                         type="button"
-//                         className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full p-1"
-//                         onClick={handleVideoRemove}
-//                         style={{ transform: "translate(50%, -50%)" }}
-//                       >
-//                         <MdClose />
-//                       </button>
-//                     </div>
-//                   ) : (
-//                     <label
-//                       htmlFor="video"
-//                       className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
-//                     >
-//                       <input
-//                         id="video"
-//                         type="file"
-//                         accept="video/*"
-//                         name="video"
-//                         style={{ display: "none" }}
-//                         onChange={handleVideoUpload}
-//                         required
-//                       />
-//                       <YouTube style={{ fontSize: 100, color: "#FF0000" }} />
-//                     </label>
-//                   )}
-//                 </div>
-//               </div>
-
-//               <Grid item xs={6}>
-//                 <FormControl fullWidth variant="outlined">
-//                   <InputLabel>Video Type</InputLabel>
-//                   <Controller
-//                     name="videoType"
-//                     control={control}
-//                     render={({ field }) => (
-//                       <Select {...field} label="Video Type">
-//                         <MenuItem value="Music Video">Music Video</MenuItem>
-//                         <MenuItem value="Entertainment">Entertainment</MenuItem>
-//                         <MenuItem value="Lyrical Video">Lyrical Video</MenuItem>
-//                       </Select>
-//                     )}
-//                   />
-//                 </FormControl>
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <Controller
-//                   name="title"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label="Title"
-//                       variant="outlined"
-//                       placeholder="Enter Title"
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-
-//               <Grid item xs={6}>
-//                 {renderArrayFields(
-//                   "primaryArtist",
-//                   "Primary Artist",
-//                   "primaryArtistName",
-
-//                   true
-//                 )}
-//               </Grid>
-
-//               <Grid item xs={6}>
-//                 {renderArrayFields("writer", "Writer", "writerName")}
-//               </Grid>
-
-//               <Grid item xs={6}>
-//                 {renderArrayFields("composer", "Composer", "composerName")}
-//               </Grid>
-
-//               <Grid item xs={6}>
-//                 {renderArrayFields(
-//                   "musicDirector",
-//                   "Music Director",
-//                   "musicDirectorName"
-//                 )}
-//               </Grid>
-
-//               <Grid item xs={6}>
-//                 <Controller
-//                   name="label"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <Autocomplete
-//                       isOptionEqualToValue={(option, value) =>
-//                         //@ts-ignore
-//                         option.value === value.value
-//                       }
-//                       {...field}
-//                       options={labelOptions}
-//                       renderInput={(params) => (
-//                         <TextField
-//                           {...params}
-//                           fullWidth
-//                           label="Label"
-//                           variant="outlined"
-//                         />
-//                       )}
-//                       onChange={(_, value) => field.onChange(value)}
-//                       freeSolo
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-
-//               <Grid item xs={12} md={6}>
-//                 <Controller
-//                   name="genre"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <Autocomplete
-//                       isOptionEqualToValue={(option, value) =>
-//                         option.value === value.value
-//                       }
-//                       {...field}
-//                       options={genres?.map((genre: any) => genre.name)}
-//                       value={selectedGenre}
-//                       onChange={handleGenreChange}
-//                       renderInput={(params) => (
-//                         <TextField
-//                           {...params}
-//                           label="Genre"
-//                           variant="outlined"
-//                           required
-//                           fullWidth
-//                         />
-//                       )}
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-
-//               <Grid item xs={12} md={6}>
-//                 <Controller
-//                   name="subGenre"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <Autocomplete
-//                       isOptionEqualToValue={(option, value) =>
-//                         //@ts-ignore
-//                         option.value === value.value
-//                       }
-//                       {...field}
-//                       //@ts-ignore
-//                       options={getSubgenres()}
-//                       value={selectedSubgenre}
-//                       onChange={handleSubgenreChange}
-//                       renderInput={(params) => (
-//                         <TextField
-//                           {...params}
-//                           label="Subgenre"
-//                           variant="outlined"
-//                           required
-//                           fullWidth
-//                         />
-//                       )}
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <Controller
-//                   name="language"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <Autocomplete
-//                       isOptionEqualToValue={(option, value) =>
-//                         //@ts-ignore
-//                         option.value === value.value
-//                       }
-//                       {...field}
-//                       options={["English", "Spanish", "French"]}
-//                       renderInput={(params) => (
-//                         <TextField
-//                           {...params}
-//                           fullWidth
-//                           label="Language"
-//                           variant="outlined"
-//                         />
-//                       )}
-//                       onChange={(_, value) => field.onChange(value)}
-//                       freeSolo
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <Controller
-//                   name="isrc"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label="ISRC"
-//                       variant="outlined"
-//                       placeholder="Enter ISRC"
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-//               <Grid item xs={6}>
-//                 <Controller
-//                   name="upc"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label="UPC"
-//                       variant="outlined"
-//                       placeholder="Enter UPC"
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-//               <Grid item xs={12}>
-//                 <Controller
-//                   name="storeReleaseDate"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label="Store Release Date"
-//                       variant="outlined"
-//                       type="date"
-//                       InputLabelProps={{
-//                         shrink: true,
-//                       }}
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-//               <Grid item xs={12}>
-//                 <Controller
-//                   name="description"
-//                   control={control}
-//                   render={({ field }) => (
-//                     <TextField
-//                       {...field}
-//                       fullWidth
-//                       label="Description"
-//                       variant="outlined"
-//                       placeholder="Enter Description"
-//                       multiline
-//                       rows={4}
-//                     />
-//                   )}
-//                 />
-//               </Grid>
-
-//               <Grid item xs={12}>
-//                 <Button
-//                   type="submit"
-//                   variant="contained"
-//                   color="primary"
-//                   fullWidth
-//                 >
-//                   <UploadIcon className="pr-2" size={40} />
-//                   Upload Video
-//                 </Button>
-//               </Grid>
-//             </Grid>
-//           </form>
-//         </CardContent>
-//       </Card>
-//     </Container>
-//   );
-// };
-
-// export default UploadVideo;
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react-hooks/rules-of-hooks */
+
 import { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import {
@@ -639,6 +25,9 @@ import {
   useGetArtistsQuery,
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
+import { useUploadVideoMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const UploadVideo = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
@@ -647,7 +36,7 @@ const UploadVideo = () => {
       thumbnail: null,
       videoType: "",
       title: "",
-      primaryArtist: [""],
+      primaryArtist: [{ primaryArtistName: "", _id: "" }],
       writer: [{ writerName: "" }],
       composer: [{ composerName: "" }],
       musicDirector: [{ musicDirectorName: "" }],
@@ -667,50 +56,61 @@ const UploadVideo = () => {
   const [thumbnailError, setThumbnailError] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedSubgenre, setSelectedSubgenre] = useState("");
+  const navigate = useNavigate();
+  const [uploadVideo, { isLoading }] = useUploadVideoMutation();
+
   const { data: labelData } = useGetLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =
     //@ts-ignore
-    artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
-    [];
-  // const labelOptions =
-  //   //@ts-ignore
-  //   labelData?.data?.data?.map((label: any) => label.labelName) || [];
+    artistData?.data?.data?.map((artist: any) => ({
+      label: artist.primaryArtistName,
+      value: artist._id,
+    })) || [];
+
   const labelOptions =
+    //@ts-ignore
     labelData?.data?.data?.map((label: any) => ({
       label: label.labelName,
       value: label._id,
     })) || [];
 
-  const onSubmit = (data: any) => {
-    const formData = new FormData();
+  const onSubmit = async (data: any) => {
+    try {
+      const formData = new FormData();
+      if (videoFile) {
+        formData.append("video", videoFile);
+      }
+      if (thumbnail) {
+        formData.append("image", thumbnail);
+      }
 
-    // Append files
-    if (videoFile) {
-      formData.append("video", videoFile);
+      formData.append("videoType", data.videoType);
+      formData.append("title", data.title);
+      formData.append("label", data.label);
+      formData.append("genre", selectedGenre);
+      formData.append("subGenre", selectedSubgenre);
+      formData.append("language", data.language);
+      formData.append("isrc", data.isrc);
+      formData.append("upc", data.upc);
+      formData.append("description", data.description);
+      formData.append("storeReleaseDate", data.storeReleaseDate);
+
+      const formattedPrimaryArtists = data.primaryArtist.map(
+        (artist: any) => artist._id
+      );
+
+      formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
+      const res = await uploadVideo(formData);
+
+      if (res?.data?.success === true) {
+        toast.success("Video Upload Successful");
+        navigate("/my-uploads/pending-videos");
+      }
+    } catch (error: any) {
+      console.log(error?.message);
     }
-    if (thumbnail) {
-      formData.append("thumbnail", thumbnail);
-    }
-
-    formData.append("videoType", data.videoType);
-    formData.append("title", data.title);
-    formData.append("label", data.label);
-    formData.append("genre", data.genre);
-    formData.append("subGenre", data.subGenre);
-    formData.append("language", data.language);
-    formData.append("isrc", data.isrc);
-    formData.append("upc", data.upc);
-    formData.append("description", data.description);
-    formData.append("storeReleaseDate", data.storeReleaseDate);
-
-    const formattedPrimaryArtists = data.primaryArtist.map(
-      (artist: any) => artist._id
-    );
-    formData.append("primaryArtist", JSON.stringify(formattedPrimaryArtists));
-    console.log(data);
-    //  /send formData
   };
 
   const handleGenreChange = (event: any, value: any) => {
@@ -726,11 +126,11 @@ const UploadVideo = () => {
     const genreObj = genres?.find((genre) => genre.name === selectedGenre);
     return genreObj ? genreObj.subgenres : [];
   };
+
   const handleThumbnailUpload = (event: any) => {
     const file = event.target.files[0];
 
     if (file) {
-      // Check if file is a JPG
       if (file.type !== "image/jpeg") {
         setThumbnailError("Please upload a JPG image.");
         return;
@@ -740,7 +140,6 @@ const UploadVideo = () => {
       const objectUrl = URL.createObjectURL(file);
 
       img.onload = () => {
-        // Check image dimensions
         if (img.width === 1920 && img.height === 1080) {
           setValue("thumbnail", file);
           setThumbnail(file);
@@ -792,30 +191,26 @@ const UploadVideo = () => {
           <Grid key={field.id} container spacing={2} alignItems="center">
             <Grid item xs={12}>
               <Controller
-                name={`${fieldArrayName}[${index}].primaryArtist._id`}
-                control={control}
-                render={({ field }) => (
-                  <input type="hidden" {...field} value={field.value || ""} />
-                )}
-              />
-              <Controller
-                name={`${fieldArrayName}[${index}].primaryArtist.primaryArtistName`}
+                //@ts-ignore
+                name={`${fieldArrayName}[${index}].primaryArtistName`}
                 control={control}
                 render={({ field }) =>
                   isAutocomplete ? (
+                    //@ts-ignore
                     <Autocomplete
                       {...field}
-                      options={artistOptions}
+                      options={artistOptions.map((option: any) => option.label)}
                       getOptionLabel={(option) => option || ""}
                       isOptionEqualToValue={(option, value) => option === value}
                       onChange={(event, value) => {
                         field.onChange(value);
-                        const selectedArtist = artistData?.data?.data.find(
-                          (artist: any) => artist.primaryArtistName === value
+                        const selectedArtist = artistOptions.find(
+                          (artist: any) => artist.label === value
                         );
                         setValue(
-                          `${fieldArrayName}[${index}].primaryArtist._id`,
-                          selectedArtist?._id || null
+                          //@ts-ignore
+                          `${fieldArrayName}[${index}]._id`,
+                          selectedArtist?.value || null
                         );
                       }}
                       renderInput={(params) => (
@@ -856,11 +251,7 @@ const UploadVideo = () => {
                 </IconButton>
                 <IconButton
                   color="primary"
-                  onClick={() =>
-                    append({
-                      primaryArtist: { _id: null, primaryArtistName: "" },
-                    })
-                  }
+                  onClick={() => append({ primaryArtistName: "", _id: "" })}
                   size="large"
                 >
                   <Add />
@@ -928,74 +319,64 @@ const UploadVideo = () => {
                     </p>
                   )}
                 </div>
-
-                <div className="image_upload flex items-center justify-center flex-col p-3">
-                  <h4 className="mb-2 text-sm font-semibold">Upload Video</h4>
-                  <p className="mb-2 text-xs">
-                    Please note that only MP4 file is permitted for upload &
-                    without any logo.
-                    <br />
-                    <br />
-                  </p>
-                  {videoFile ? (
-                    <div className="relative w-3/4">
-                      <video
-                        controls
-                        style={{ display: "block", marginTop: "10px" }}
-                      >
-                        <source
-                          src={URL.createObjectURL(videoFile)}
-                          type="video/mp4"
+                <div className="flex flex-col items-center justify-center">
+                  <div className="image_upload flex items-center justify-center flex-col p-3">
+                    <h4 className="mb-2 text-sm font-semibold">
+                      Upload Your Video
+                    </h4>
+                    {videoFile ? (
+                      <div className="relative">
+                        <video
+                          //@ts-ignore
+                          src={videoFile ? URL.createObjectURL(videoFile) : ""}
+                          className="w-[350px] h-[200px]"
+                          controls
                         />
-                        Your browser does not support the video tag.
-                      </video>
-
-                      <button
-                        type="button"
-                        className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full p-1"
-                        onClick={handleVideoRemove}
-                        style={{ transform: "translate(50%, -50%)" }}
+                        <button
+                          type="button"
+                          className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                          onClick={handleVideoRemove}
+                        >
+                          <MdClose />
+                        </button>
+                      </div>
+                    ) : (
+                      <label
+                        htmlFor="video"
+                        className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
                       >
-                        <MdClose />
-                      </button>
-                    </div>
-                  ) : (
-                    <label
-                      htmlFor="video"
-                      className="upload w-[350px] hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
-                    >
-                      <input
-                        id="video"
-                        type="file"
-                        accept="video/*"
-                        name="video"
-                        style={{ display: "none" }}
-                        onChange={handleVideoUpload}
-                        required
-                      />
-                      <YouTube style={{ fontSize: 100, color: "#FF0000" }} />
-                    </label>
-                  )}
+                        <input
+                          id="video"
+                          type="file"
+                          accept="video/*"
+                          name="video"
+                          style={{ display: "none" }}
+                          onChange={handleVideoUpload}
+                          required
+                        />
+                        <YouTube style={{ fontSize: 100, color: "#03008D" }} />
+                      </label>
+                    )}
+                  </div>
                 </div>
               </div>
-
-              <Grid item xs={6}>
-                <FormControl fullWidth variant="outlined">
-                  <InputLabel>Video Type</InputLabel>
-                  <Controller
-                    name="videoType"
-                    control={control}
-                    render={({ field }) => (
-                      <Select {...field} label="Video Type">
-                        <MenuItem value="Music Video">Music Video</MenuItem>
-                        <MenuItem value="Entertainment">Entertainment</MenuItem>
-                        <MenuItem value="Lyrical Video">Lyrical Video</MenuItem>
+              <Grid item xs={12} md={6}>
+                <Controller
+                  name="videoType"
+                  control={control}
+                  render={({ field }) => (
+                    <FormControl fullWidth variant="outlined" margin="normal">
+                      <InputLabel>Video Type</InputLabel>
+                      <Select {...field} label="Video Type" required>
+                        <MenuItem value="music-video">Music Video</MenuItem>
+                        <MenuItem value="entertainment">Entertainment</MenuItem>
+                        <MenuItem value="lyrical-video">Lyrical Video</MenuItem>
                       </Select>
-                    )}
-                  />
-                </FormControl>
+                    </FormControl>
+                  )}
+                />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Controller
                   name="title"
                   control={control}
@@ -1005,35 +386,19 @@ const UploadVideo = () => {
                       fullWidth
                       label="Title"
                       variant="outlined"
-                      placeholder="Enter Title"
+                      margin="normal"
+                      required
                     />
                   )}
                 />
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 {renderArrayFields(
                   "primaryArtist",
                   "Primary Artist",
-                  "primaryArtistName",
-
+                  "name",
                   true
-                )}
-              </Grid>
-
-              <Grid item xs={6}>
-                {renderArrayFields("writer", "Writer", "writerName")}
-              </Grid>
-
-              <Grid item xs={6}>
-                {renderArrayFields("composer", "Composer", "composerName")}
-              </Grid>
-
-              <Grid item xs={6}>
-                {renderArrayFields(
-                  "musicDirector",
-                  "Music Director",
-                  "musicDirectorName"
                 )}
               </Grid>
 
@@ -1044,14 +409,16 @@ const UploadVideo = () => {
                   render={({ field }) => (
                     <Autocomplete
                       {...field}
-                      options={labelOptions.map((label) => label.label)}
-                      getOptionLabel={(option) => option || ""}
-                      isOptionEqualToValue={(option, value) => option === value}
+                      options={labelOptions}
+                      getOptionLabel={(option) => option.label || ""}
+                      value={
+                        labelOptions.find(
+                          (option, value) => option.value === value.label
+                        ) || null
+                      }
                       onChange={(event, value) => {
-                        const selectedLabel = labelOptions.find(
-                          (label) => label.label === value
-                        );
-                        field.onChange(selectedLabel?.value || "");
+                        field.onChange(value?.label || "");
+                        setValue("label", value?.value || null);
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -1060,6 +427,7 @@ const UploadVideo = () => {
                           label="Label"
                           variant="outlined"
                           margin="normal"
+                          required
                         />
                       )}
                       freeSolo
@@ -1069,87 +437,58 @@ const UploadVideo = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <Controller
-                  name="genre"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      isOptionEqualToValue={(option, value) =>
-                        option.value === value.value
-                      }
-                      {...field}
-                      options={genres?.map((genre: any) => genre.name)}
-                      value={selectedGenre}
-                      onChange={handleGenreChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Genre"
-                          variant="outlined"
-                          required
-                          fullWidth
-                        />
-                      )}
+                <Autocomplete
+                  options={genres.map((genre) => genre.name)}
+                  getOptionLabel={(option) => option}
+                  value={selectedGenre}
+                  onChange={handleGenreChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      label="Genre"
+                      variant="outlined"
+                      margin="normal"
+                      required
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Autocomplete
+                  options={getSubgenres()}
+                  getOptionLabel={(option) => option}
+                  value={selectedSubgenre}
+                  onChange={handleSubgenreChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      label="Subgenre"
+                      variant="outlined"
+                      margin="normal"
                     />
                   )}
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name="subGenre"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      isOptionEqualToValue={(option, value) =>
-                        //@ts-ignore
-                        option.value === value.value
-                      }
-                      {...field}
-                      //@ts-ignore
-                      options={getSubgenres()}
-                      value={selectedSubgenre}
-                      onChange={handleSubgenreChange}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Subgenre"
-                          variant="outlined"
-                          required
-                          fullWidth
-                        />
-                      )}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Controller
                   name="language"
                   control={control}
                   render={({ field }) => (
-                    <Autocomplete
-                      isOptionEqualToValue={(option, value) =>
-                        //@ts-ignore
-                        option.value === value.value
-                      }
+                    <TextField
                       {...field}
-                      options={["English", "Spanish", "French"]}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          fullWidth
-                          label="Language"
-                          variant="outlined"
-                        />
-                      )}
-                      onChange={(_, value) => field.onChange(value)}
-                      freeSolo
+                      fullWidth
+                      label="Language"
+                      variant="outlined"
+                      margin="normal"
+                      required
                     />
                   )}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Controller
                   name="isrc"
                   control={control}
@@ -1159,12 +498,13 @@ const UploadVideo = () => {
                       fullWidth
                       label="ISRC"
                       variant="outlined"
-                      placeholder="Enter ISRC"
+                      margin="normal"
+                      required
                     />
                   )}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Controller
                   name="upc"
                   control={control}
@@ -1174,25 +514,8 @@ const UploadVideo = () => {
                       fullWidth
                       label="UPC"
                       variant="outlined"
-                      placeholder="Enter UPC"
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="storeReleaseDate"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      fullWidth
-                      label="Store Release Date"
-                      variant="outlined"
-                      type="date"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
+                      margin="normal"
+                      required
                     />
                   )}
                 />
@@ -1207,14 +530,32 @@ const UploadVideo = () => {
                       fullWidth
                       label="Description"
                       variant="outlined"
-                      placeholder="Enter Description"
+                      margin="normal"
                       multiline
                       rows={4}
+                      required
                     />
                   )}
                 />
               </Grid>
-
+              <Grid item xs={12}>
+                <Controller
+                  name="storeReleaseDate"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Store Release Date"
+                      variant="outlined"
+                      margin="normal"
+                      type="date"
+                      InputLabelProps={{ shrink: true }}
+                      required
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <Button
                   type="submit"
@@ -1223,7 +564,7 @@ const UploadVideo = () => {
                   fullWidth
                 >
                   <UploadIcon className="pr-2" size={40} />
-                  Upload Video
+                  {isLoading ? "Uploading..." : "Upload Video"}
                 </Button>
               </Grid>
             </Grid>
