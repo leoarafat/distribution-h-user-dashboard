@@ -1,24 +1,60 @@
 import { baseApi } from "@/redux/api/baseApi";
 
-export const uploadVideoAudioApi = baseApi.injectEndpoints({
+export const myUploadsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    // getVideo: build.query({
-    //   query: (arg: Record<string, any>) => {
-    //     return {
-    //       url: `account/my-account`,
-    //       method: "GET",
-    //       params: arg,
-    //     };
-    //   },
-    //   transformResponse: (response: any[], meta: any) => {
-    //     return {
-    //       data: response,
-    //       meta,
-    //     };
-    //   },
-    //   providesTags: ["bank", "mobile-bank", "pioneer"],
-    // }),
+    getPendingVideo: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `my-uploads/pending-videos`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["video"],
+    }),
+    getSuccessVideo: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `my-uploads/success-videos`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["video"],
+    }),
+    getCorrectionVideo: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `my-uploads/correction-videos`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["video"],
+    }),
   }),
 });
 
-export const {} = uploadVideoAudioApi;
+export const {
+  useGetSuccessVideoQuery,
+  useGetPendingVideoQuery,
+  useGetCorrectionVideoQuery,
+} = myUploadsApi;
