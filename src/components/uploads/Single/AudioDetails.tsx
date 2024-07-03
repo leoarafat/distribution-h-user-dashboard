@@ -307,7 +307,9 @@ const AudioDetails = ({ data, onChange }: any) => {
                     height="200"
                     image={URL.createObjectURL(coverImage)}
                     alt="Cover"
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: "cover",
+                    }}
                   />
                   <IconButton
                     onClick={handleCoverImageRemoveImage}

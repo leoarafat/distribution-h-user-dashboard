@@ -26,7 +26,7 @@ const ParentComponent = () => {
         data={releaseData}
         onChange={handleReleaseInfoChange}
       />
-      {/* <TracksInformation data={tracksData} onChange={handleTrackChange} /> */}
+      <TracksInformation data={tracksData} onChange={handleTrackChange} />
     </>
   );
 };

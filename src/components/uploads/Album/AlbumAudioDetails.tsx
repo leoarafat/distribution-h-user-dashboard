@@ -502,12 +502,12 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
         </Box> */}
         <Box mt={3} className="flex justify-center items-center w-full">
           {/* Cover Image Uploader */}
-          <Box className="image_upload flex items-center justify-center flex-col p-3">
+          <Box className=" flex items-center justify-center flex-col p-3">
             <Typography variant="h6" gutterBottom>
               Upload Cover Image
             </Typography>
             {coverImage ? (
-              <Box position="relative" display="inline-block">
+              <Box>
                 <img
                   src={URL.createObjectURL(coverImage)}
                   alt="COVER IMAGE"
@@ -517,19 +517,20 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
                     objectFit: "cover",
                     borderRadius: "8px",
                     boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    position: "relative",
                   }}
                 />
                 <IconButton
                   style={{
-                    // position: "absolute",
-                    top: 0,
-                    // right: 0,
+                    position: "absolute",
+                    // top: -0,
+                    // left: 0,
+                    // right: 8,
                     backgroundColor: "rgba(255, 0, 0, 0.7)",
                     color: "white",
                   }}
                   onClick={handleCoverImageRemove}
                 >
-                  {" "}
                   <MdClose />
                 </IconButton>
               </Box>

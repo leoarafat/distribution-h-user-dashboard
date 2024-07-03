@@ -15,6 +15,8 @@ import ReleaseInformation from "../uploads/Single/ReleaseInformation";
 import TracksInformation from "../uploads/Single/TracksInformation";
 import Countries from "../uploads/Single/Countries";
 import SingleReviewPage from "../uploads/Single/SingleReviewPage";
+import { useUploadSingleAudioMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
+import toast from "react-hot-toast";
 
 const steps = [
   { title: "Release Information", component: ReleaseInformation },
@@ -33,20 +35,11 @@ const UploaderStepperForm = () => {
     countries: [],
     previewPage: {},
   });
-  const [selectCoverImage, setCoverImage] = useState(null);
-  const [audio, setAudio] = useState(null);
 
+  const [uploadAudio, { isLoading }] = useUploadSingleAudioMutation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (formData.audio) {
-      //@ts-ignore
-      setCoverImage(formData.audio.coverImage);
-      //@ts-ignore
-      setAudio(formData.audio.audio);
-    }
-  }, [formData]);
-
+  console.log(formData);
   const handleNext = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -60,7 +53,124 @@ const UploaderStepperForm = () => {
     setFormData(updatedFormData);
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    try {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("cLine", formData.releaseInformation?.cLine || "");
+      formDataToSend.append(
+        "subtitle",
+        formData.releaseInformation?.version || ""
+      );
+      formDataToSend.append(
+        "catalogNumber",
+        formData.releaseInformation?.catalogNumber || ""
+      );
+      formDataToSend.append(
+        "featuringArtists",
+        formData.releaseInformation?.featuringArtists?.join(",") || ""
+      );
+      formDataToSend.append(
+        "format",
+        formData.releaseInformation?.format || ""
+      );
+      formDataToSend.append("genre", formData.releaseInformation?.genre || "");
+      formDataToSend.append("label", formData.releaseInformation?.label || "");
+      formDataToSend.append("pLine", formData.releaseInformation?.pLine || "");
+      formDataToSend.append(
+        "primaryArtist",
+        formData.releaseInformation?.primaryArtists
+      );
+      formDataToSend.append(
+        "productionYear",
+        formData.releaseInformation?.productionYear || ""
+      );
+      formDataToSend.append(
+        "releaseDate",
+        formData.releaseInformation?.releaseDate || ""
+      );
+      formDataToSend.append(
+        "releaseTitle",
+        formData.releaseInformation?.releaseTitle || ""
+      );
+      formDataToSend.append(
+        "subGenre",
+        formData.releaseInformation?.subgenre || ""
+      );
+      formDataToSend.append("upc", formData.releaseInformation?.upc || "");
+      formDataToSend.append(
+        "variousArtists",
+        formData.releaseInformation?.variousArtists || ""
+      );
+
+      // Append trackDetails fields
+      formDataToSend.append("arranger", formData.trackDetails?.arranger || "");
+      formDataToSend.append(
+        "askToGenerateISRC",
+        formData.trackDetails?.askToGenerateISRC || ""
+      );
+      formDataToSend.append("author", formData.trackDetails?.author || "");
+      formDataToSend.append("composer", formData.trackDetails?.composer || "");
+      formDataToSend.append(
+        "contentType",
+        formData.trackDetails?.contentType || ""
+      );
+      formDataToSend.append(
+        "instrumental",
+        formData.trackDetails?.instrumental || ""
+      );
+      formDataToSend.append("isrc", formData.trackDetails?.isrc || "");
+      formDataToSend.append("lyrics", formData.trackDetails?.lyrics || "");
+      formDataToSend.append(
+        "lyricsLanguage",
+        formData.trackDetails?.lyricsLanguage || ""
+      );
+      formDataToSend.append(
+        "parentalAdvisory",
+        formData.trackDetails?.parentalAdvisory || ""
+      );
+      formDataToSend.append(
+        "previewStart",
+        formData.trackDetails?.previewStart || ""
+      );
+      formDataToSend.append("price", formData.trackDetails?.price || "");
+      formDataToSend.append(
+        "primaryTrackType",
+        formData.trackDetails?.primaryTrackType || ""
+      );
+      formDataToSend.append("producer", formData.trackDetails?.producer || "");
+      formDataToSend.append(
+        "publisher",
+        formData.trackDetails?.publisher || ""
+      );
+      formDataToSend.append("remixer", formData.trackDetails?.remixer || "");
+      formDataToSend.append(
+        "secondaryTrackType",
+        formData.trackDetails?.secondaryTrackType || ""
+      );
+      formDataToSend.append("title", formData.trackDetails?.title || "");
+      formDataToSend.append(
+        "trackTitleLanguage",
+        formData.trackDetails?.trackTitleLanguage || ""
+      );
+
+      formDataToSend.append("audio", formData.audio?.audioFile || "");
+      formDataToSend.append("image", formData.audio?.coverImage || "");
+
+      formDataToSend.append("countries", formData.countries?.join(",") || "");
+
+      const res = await uploadAudio(formDataToSend);
+      console.log(res);
+      if (res?.data?.success === true) {
+        localStorage.removeItem("releaseFormData");
+        localStorage.removeItem("tracksInformation");
+        toast.success("Song Upload Successful");
+        navigate("/my-uploads/pending-track");
+      }
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+    }
+  };
 
   const StepComponent = steps[activeStep].component;
 
@@ -100,7 +210,7 @@ const UploaderStepperForm = () => {
             onClick={handleSubmit}
             style={{ marginLeft: 10 }}
           >
-            Let's Upload
+            {isLoading ? "Uploading..." : "Let's Upload"}
           </Button>
         )}
       </div>

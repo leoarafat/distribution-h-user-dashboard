@@ -2,13 +2,22 @@ import React, { useEffect } from "react";
 import { TextField, Autocomplete, Container, Grid } from "@mui/material";
 
 const TracksInformation = ({ data, onChange }: any) => {
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   onChange("trackDetails", { ...data.trackDetails, [name]: value });
+  // };
+
+  // useEffect(() => {
+  //   onChange("trackDetails", data.trackDetails);
+  //   localStorage.setItem("tracksInformation", JSON.stringify(data));
+  // }, [data]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onChange("trackDetails", { ...data.trackDetails, [name]: value });
   };
 
   useEffect(() => {
-    onChange("trackDetails", data.trackDetails);
+    // Update localStorage only when necessary
     localStorage.setItem("tracksInformation", JSON.stringify(data));
   }, [data]);
   return (
@@ -20,7 +29,6 @@ const TracksInformation = ({ data, onChange }: any) => {
               fullWidth
               options={["Audio", "Video"]}
               value={data.trackDetails.contentType}
-              defaultValue={"Audio"}
               onChange={(e, value) =>
                 onChange("trackDetails", {
                   ...data.trackDetails,
@@ -45,7 +53,6 @@ const TracksInformation = ({ data, onChange }: any) => {
               fullWidth
               options={["Music", "Classic Music", "Jazz Music"]}
               value={data.trackDetails.primaryTrackType}
-              defaultValue={"Music"}
               onChange={(e, value) =>
                 onChange("trackDetails", {
                   ...data.trackDetails,
