@@ -439,8 +439,8 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
   return (
     <Container>
       <Box mt={3}>
-        <Box mt={3} className="flex justify-center items-center w-full">
-          {/* Cover Image Uploader */}
+        {/* <Box mt={3} className="flex justify-center items-center w-full">
+          
           <Box className="image_upload flex items-center justify-center flex-col p-3">
             <Typography variant="h6" gutterBottom>
               Upload Cover Image
@@ -480,7 +480,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
             )}
           </Box>
 
-          {/* Audio File Uploader */}
+          
           <Box className="image_upload flex items-center justify-center flex-col p-3">
             <Typography variant="h6" gutterBottom>
               Upload Audio Files
@@ -490,6 +490,96 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
               className="upload hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
             >
               <AudiotrackIcon style={{ fontSize: 100 }} />
+              <input
+                id="audio-upload"
+                type="file"
+                accept="audio/*"
+                style={{ display: "none" }}
+                onChange={handleAudioUpload}
+              />
+            </label>
+          </Box>
+        </Box> */}
+        <Box mt={3} className="flex justify-center items-center w-full">
+          {/* Cover Image Uploader */}
+          <Box className="image_upload flex items-center justify-center flex-col p-3">
+            <Typography variant="h6" gutterBottom>
+              Upload Cover Image
+            </Typography>
+            {coverImage ? (
+              <Box position="relative" display="inline-block">
+                <img
+                  src={URL.createObjectURL(coverImage)}
+                  alt="COVER IMAGE"
+                  style={{
+                    width: "300px",
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                  }}
+                />
+                <IconButton
+                  style={{
+                    // position: "absolute",
+                    top: 0,
+                    // right: 0,
+                    backgroundColor: "rgba(255, 0, 0, 0.7)",
+                    color: "white",
+                  }}
+                  onClick={handleCoverImageRemove}
+                >
+                  {" "}
+                  <MdClose />
+                </IconButton>
+              </Box>
+            ) : (
+              <label
+                htmlFor="cover-image-upload"
+                className="upload hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "300px",
+                  height: "300px",
+                  border: "2px dashed #ccc",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <BsCloudUpload style={{ fontSize: 60 }} />
+                <input
+                  id="cover-image-upload"
+                  type="file"
+                  accept="image/jpeg"
+                  style={{ display: "none" }}
+                  onChange={handleCoverImageUpload}
+                />
+              </label>
+            )}
+          </Box>
+
+          {/* Audio File Uploader */}
+          <Box className="image_upload flex items-center justify-center flex-col p-3">
+            <Typography variant="h6" gutterBottom>
+              Upload Audio Files
+            </Typography>
+            <label
+              htmlFor="audio-upload"
+              className="upload hover:bg-green-100 transition flex justify-center shadow-md rounded-md p-12 text-5xl cursor-pointer"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "300px",
+                height: "300px",
+                border: "2px dashed #ccc",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+            >
+              <AudiotrackIcon style={{ fontSize: 60 }} />
               <input
                 id="audio-upload"
                 type="file"

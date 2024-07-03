@@ -17,8 +17,7 @@ import { useEffect, useState } from "react";
 
 const SingleTrackReviewPage = ({ data, onChange }: any) => {
   const [audioUrl, setAudioUrl] = useState(null);
-  console.log(data, "SingleReview");
-  // console.log(data?.audio.audioFile);
+
   const trackDetails = data?.trackDetails;
   const releaseInformation = data?.releaseInformation;
   const audio = data?.audio;
@@ -35,7 +34,14 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
       }
     };
   }, [audio]);
-
+  useEffect(() => {
+    const storedData = localStorage.getItem("tracksInformation");
+    if (storedData) {
+      onChange("trackDetails", JSON.parse(storedData).trackDetails);
+      onChange("releaseInformation", JSON.parse(storedData).releaseInformation);
+      // onChange("audio", JSON.parse(storedData).audio);
+    }
+  }, []);
   if (!audio || !audio.audioFile) {
     return <div>No audio file selected.</div>;
   }
