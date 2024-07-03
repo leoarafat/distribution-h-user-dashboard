@@ -7,11 +7,14 @@ const TracksInformation = ({ data, onChange }: any) => {
     onChange("trackDetails", { ...data.trackDetails, [name]: value });
   };
 
+  // useEffect(() => {
+  //   // Ensure any local state changes are reflected in the parent component
+  //   onChange("trackDetails", data.trackDetails);
+  // }, [data.trackDetails]);
   useEffect(() => {
-    // Ensure any local state changes are reflected in the parent component
     onChange("trackDetails", data.trackDetails);
-  }, [data.trackDetails]);
-
+    localStorage.setItem("tracksInformation", JSON.stringify(data));
+  }, [data]);
   return (
     <Container maxWidth="md">
       <form>
