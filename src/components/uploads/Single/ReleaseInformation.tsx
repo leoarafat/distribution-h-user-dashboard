@@ -47,23 +47,6 @@ interface Props {
 }
 
 const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
-  // const [formData, setFormData] = useState<ReleaseFormData>({
-  //   releaseTitle: data.releaseTitle || "",
-  //   version: data.version || "",
-  //   primaryArtists: data.primaryArtists || [""],
-  //   featuringArtists: data.featuringArtists || [""],
-  //   variousArtists: data.variousArtists || false,
-  //   genre: data.genre || "",
-  //   subgenre: data.subgenre || "",
-  //   label: data.label || "",
-  //   format: data.format || "",
-  //   releaseDate: data.releaseDate || "",
-  //   pLine: data.pLine || "",
-  //   cLine: data.cLine || "",
-  //   productionYear: data.productionYear || "",
-  //   upc: data.upc || "",
-  //   catalogNumber: data.catalogNumber || "",
-  // });
   const [formData, setFormData] = useState<ReleaseFormData>(() => {
     const storedData = localStorage.getItem("releaseFormData");
     if (storedData) {
@@ -97,34 +80,25 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       value: artist._id,
     })) || [];
 
-  // const labelOptions =
-  //   labelData?.data?.data?.map((label: any) => label.labelName) || [];
   const labelOptions =
     //@ts-ignore
     labelData?.data?.data?.map((label: any) => ({
       label: label.labelName,
       value: label._id,
     })) || [];
-  // useEffect(() => {
-  //   onChange("releaseInformation", formData);
-  // }, [formData]);
+
   useEffect(() => {
     localStorage.setItem("releaseFormData", JSON.stringify(formData));
     onChange("releaseInformation", formData);
   }, [formData]);
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value, type, checked } = e.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   }));
-  // };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
+    // onChange("releaseInformation", { ...data.releaseInformation, [name]: value });
   };
 
   const handleGenreChange = (

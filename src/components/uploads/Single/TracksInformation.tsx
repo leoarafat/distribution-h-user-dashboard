@@ -2,22 +2,12 @@ import React, { useEffect } from "react";
 import { TextField, Autocomplete, Container, Grid } from "@mui/material";
 
 const TracksInformation = ({ data, onChange }: any) => {
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   onChange("trackDetails", { ...data.trackDetails, [name]: value });
-  // };
-
-  // useEffect(() => {
-  //   onChange("trackDetails", data.trackDetails);
-  //   localStorage.setItem("tracksInformation", JSON.stringify(data));
-  // }, [data]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onChange("trackDetails", { ...data.trackDetails, [name]: value });
   };
 
   useEffect(() => {
-    // Update localStorage only when necessary
     localStorage.setItem("tracksInformation", JSON.stringify(data));
   }, [data]);
   return (

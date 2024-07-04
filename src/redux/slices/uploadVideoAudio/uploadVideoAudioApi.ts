@@ -43,22 +43,6 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
       },
       providesTags: ["bank", "mobile-bank", "pioneer"],
     }),
-    // getVideo: build.query({
-    //   query: (arg: Record<string, any>) => {
-    //     return {
-    //       url: `account/my-account`,
-    //       method: "GET",
-    //       params: arg,
-    //     };
-    //   },
-    //   transformResponse: (response: any[], meta: any) => {
-    //     return {
-    //       data: response,
-    //       meta,
-    //     };
-    //   },
-    //   providesTags: ["bank", "mobile-bank", "pioneer"],
-    // }),
   }),
 });
 

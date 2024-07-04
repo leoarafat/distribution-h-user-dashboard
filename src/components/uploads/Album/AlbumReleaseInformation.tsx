@@ -15,18 +15,37 @@ const years = Array.from(
 ).map(String);
 
 const AlbumReleaseInformation = ({ data, onChange }: any) => {
-  const [formData, setFormData] = useState<any>({
-    releaseTitle: data.releaseTitle || "",
-    version: data.version || "",
-    primaryArtists: data.primaryArtists || [""],
-    label: data.label || "",
-    physicalReleaseDate: data.physicalReleaseDate || "",
-    storeReleaseDate: data.storeReleaseDate || "",
-    pLine: data.pLine || "",
-    cLine: data.cLine || "",
-    productionYear: data.productionYear || "",
-    catalogNumber: data.catalogNumber || "",
+  const [formData, setFormData] = useState<any>(() => {
+    const storedData = localStorage.getItem("releaseInformationData");
+    if (storedData) {
+      return JSON.parse(storedData);
+    } else {
+      return {
+        releaseTitle: data.releaseTitle || "",
+        version: data.version || "",
+        primaryArtists: data.primaryArtists || [""],
+        label: data.label || "",
+        physicalReleaseDate: data.physicalReleaseDate || "",
+        storeReleaseDate: data.storeReleaseDate || "",
+        pLine: data.pLine || "",
+        cLine: data.cLine || "",
+        productionYear: data.productionYear || "",
+        catalogNumber: data.catalogNumber || "",
+      };
+    }
   });
+  // const [formData, setFormData] = useState<any>({
+  //   releaseTitle: data.releaseTitle || "",
+  //   version: data.version || "",
+  //   primaryArtists: data.primaryArtists || [""],
+  //   label: data.label || "",
+  //   physicalReleaseDate: data.physicalReleaseDate || "",
+  //   storeReleaseDate: data.storeReleaseDate || "",
+  //   pLine: data.pLine || "",
+  //   cLine: data.cLine || "",
+  //   productionYear: data.productionYear || "",
+  //   catalogNumber: data.catalogNumber || "",
+  // });
 
   const { data: labelData } = useGetLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
@@ -45,13 +64,17 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
       value: label._id,
     })) || [];
 
+  // useEffect(() => {
+  //   onChange("releaseInformation", formData);
+  // }, [formData]);
   useEffect(() => {
+    localStorage.setItem("releaseInformationData", JSON.stringify(formData));
     onChange("releaseInformation", formData);
   }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
+    setFormData((prevData: any) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
@@ -87,7 +110,7 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
   const handleLabelChange = (
     newValue: { label: string; value: string } | null
   ) => {
-    setFormData((prevData) => ({
+    setFormData((prevData: any) => ({
       ...prevData,
       label: newValue ? newValue.value : "",
     }));

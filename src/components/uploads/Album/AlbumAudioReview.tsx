@@ -18,8 +18,8 @@ const AlbumAudioReview = ({ data, onChange }: any) => {
   const { tracks, release, audio } = albumReleaseInformationData;
   const releaseInformation = data && data?.releaseInformation;
   const audios = data && data?.audios;
-  console.log(releaseInformation, "releaseInformation");
-  console.log(audios, "Audios");
+  // console.log(releaseInformation, "releaseInformation");
+  // console.log(audios, "Audios");
   return (
     <Container maxWidth="md" style={{ padding: "20px" }}>
       <Card style={{ marginBottom: "20px" }}>

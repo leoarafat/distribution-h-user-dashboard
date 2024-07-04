@@ -81,7 +81,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
     //@ts-ignore
     artistData?.data?.data?.map((artist: any) => artist.primaryArtistName) ||
     [];
-  console.log(artistOptions);
+
   const labelOptions =
     //@ts-ignore
     labelData?.data?.data?.map((label: any) => label.labelName) || [];
@@ -123,7 +123,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       img.onload = () => {
         if (img.width === 1500 && img.height === 1500) {
           setCoverImage(file);
-          onChange("audios", { ...data?.audios, coverImage: file });
+          onChange("coverImage", { coverImage: file });
         } else {
           alert("Image must be 1500x1500 pixels.");
         }
@@ -170,7 +170,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
 
   const handleCoverImageRemove = () => {
     setCoverImage(null);
-    onChange("audios", { ...data?.audios, coverImage: null });
+    onChange("coverImage", { coverImage: null });
   };
 
   const handleAudioRemove = (id: number) => {

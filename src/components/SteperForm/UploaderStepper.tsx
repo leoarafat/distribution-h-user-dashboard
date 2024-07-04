@@ -252,7 +252,7 @@ const UploaderStepperForm = () => {
       formDataToSend.append("countries", formData.countries?.join(",") || "");
 
       const res = await uploadAudio(formDataToSend);
-      console.log(res);
+
       if (res?.data?.success === true) {
         localStorage.removeItem("releaseFormData");
         localStorage.removeItem("tracksInformation");
