@@ -71,6 +71,18 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
       });
     }
   }, [audioFiles]);
+
+  // useEffect(() => {
+  //   const storedSongs = localStorage.getItem("albumSongs");
+  //   if (storedSongs) {
+  //     setSongs(JSON.parse(storedSongs));
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("albumSongs", JSON.stringify(songs));
+  //   onChange("audios", songs);
+  // }, [songs]);
   useEffect(() => {
     onChange("audios", songs);
   }, [songs]);

@@ -34,18 +34,6 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
       };
     }
   });
-  // const [formData, setFormData] = useState<any>({
-  //   releaseTitle: data.releaseTitle || "",
-  //   version: data.version || "",
-  //   primaryArtists: data.primaryArtists || [""],
-  //   label: data.label || "",
-  //   physicalReleaseDate: data.physicalReleaseDate || "",
-  //   storeReleaseDate: data.storeReleaseDate || "",
-  //   pLine: data.pLine || "",
-  //   cLine: data.cLine || "",
-  //   productionYear: data.productionYear || "",
-  //   catalogNumber: data.catalogNumber || "",
-  // });
 
   const { data: labelData } = useGetLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
@@ -64,9 +52,6 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
       value: label._id,
     })) || [];
 
-  // useEffect(() => {
-  //   onChange("releaseInformation", formData);
-  // }, [formData]);
   useEffect(() => {
     localStorage.setItem("releaseInformationData", JSON.stringify(formData));
     onChange("releaseInformation", formData);
