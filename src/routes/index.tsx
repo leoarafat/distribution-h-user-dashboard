@@ -44,6 +44,7 @@ import YoutubeClaimRequest from "@/components/ClaimsManage/YoutubeClaimRequest";
 import YoutubeManualClaim from "@/components/ClaimsManage/YoutubeManualClaim";
 import YoutubeTakeDown from "@/components/ClaimsManage/YoutubeTakeDown";
 import SetPassword from "@/pages/SetPassword";
+import ReleasedSongs from "@/components/MyUploads/SuccessRelease/SuccessRelease";
 
 const router = createBrowserRouter([
   {
@@ -104,7 +105,7 @@ const router = createBrowserRouter([
         path: "/my-uploads/success-track",
         element: (
           <IsVerifiedRoutes>
-            <SuccessRelease />
+            <ReleasedSongs />
           </IsVerifiedRoutes>
         ),
       },

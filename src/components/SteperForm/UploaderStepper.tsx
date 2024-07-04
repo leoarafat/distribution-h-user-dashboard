@@ -17,7 +17,58 @@ import Countries from "../uploads/Single/Countries";
 import SingleReviewPage from "../uploads/Single/SingleReviewPage";
 import { useUploadSingleAudioMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
 import toast from "react-hot-toast";
+interface ReleaseInformation {
+  cLine: string;
+  version: string;
+  catalogNumber: string;
+  featuringArtists: string[];
+  format: string;
+  genre: string;
+  label: string;
+  pLine: string;
+  primaryArtists: string[];
+  productionYear: string;
+  releaseDate: string;
+  releaseTitle: string;
+  subgenre: string;
+  upc: string;
+  variousArtists: string;
+}
 
+interface TrackDetails {
+  arranger: string;
+  askToGenerateISRC: string;
+  author: string;
+  composer: string;
+  contentType: string;
+  instrumental: string;
+  isrc: string;
+  lyrics: string;
+  lyricsLanguage: string;
+  parentalAdvisory: string;
+  previewStart: string;
+  price: string;
+  primaryTrackType: string;
+  producer: string;
+  publisher: string;
+  remixer: string;
+  secondaryTrackType: string;
+  title: string;
+  trackTitleLanguage: string;
+}
+
+interface AudioDetails {
+  audioFile: File;
+  coverImage: File;
+}
+
+interface FormData {
+  audio: AudioDetails;
+  releaseInformation: ReleaseInformation;
+  trackDetails: TrackDetails;
+  countries: string[];
+  previewPage: Record<string, unknown>;
+}
 const steps = [
   { title: "Release Information", component: ReleaseInformation },
   { title: "Audio & Cover", component: AudioDetails },
@@ -28,18 +79,59 @@ const steps = [
 
 const UploaderStepperForm = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState({
-    audio: {},
-    releaseInformation: {},
-    trackDetails: {},
+  // const [formData, setFormData] = useState<FormData>({
+  //   audio: {},
+  //   releaseInformation: {},
+  //   trackDetails: {},
+  //   countries: [],
+  //   previewPage: {},
+  // });
+  const [formData, setFormData] = useState<FormData>({
+    audio: { audioFile: new File([], ""), coverImage: new File([], "") },
+    releaseInformation: {
+      cLine: "",
+      version: "",
+      catalogNumber: "",
+      featuringArtists: [],
+      format: "",
+      genre: "",
+      label: "",
+      pLine: "",
+      primaryArtists: [],
+      productionYear: "",
+      releaseDate: "",
+      releaseTitle: "",
+      subgenre: "",
+      upc: "",
+      variousArtists: "",
+    },
+    trackDetails: {
+      arranger: "",
+      askToGenerateISRC: "",
+      author: "",
+      composer: "",
+      contentType: "",
+      instrumental: "",
+      isrc: "",
+      lyrics: "",
+      lyricsLanguage: "",
+      parentalAdvisory: "",
+      previewStart: "",
+      price: "",
+      primaryTrackType: "",
+      producer: "",
+      publisher: "",
+      remixer: "",
+      secondaryTrackType: "",
+      title: "",
+      trackTitleLanguage: "",
+    },
     countries: [],
     previewPage: {},
   });
-
   const [uploadAudio, { isLoading }] = useUploadSingleAudioMutation();
   const navigate = useNavigate();
 
-  console.log(formData);
   const handleNext = async () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -79,7 +171,7 @@ const UploaderStepperForm = () => {
       formDataToSend.append("pLine", formData.releaseInformation?.pLine || "");
       formDataToSend.append(
         "primaryArtist",
-        formData.releaseInformation?.primaryArtists
+        formData.releaseInformation?.primaryArtists?.join(",") || ""
       );
       formDataToSend.append(
         "productionYear",
@@ -167,8 +259,9 @@ const UploaderStepperForm = () => {
         toast.success("Song Upload Successful");
         navigate("/my-uploads/pending-track");
       }
-    } catch (error) {
-      console.error("Error in handleSubmit:", error);
+    } catch (error: any) {
+      console.error("Error in handleSubmit:", error?.message);
+      toast.error(error?.message);
     }
   };
 
@@ -187,7 +280,10 @@ const UploaderStepperForm = () => {
         ))}
       </Stepper>
       <div style={{ flexGrow: 1, marginBottom: 20 }}>
-        <StepComponent data={formData} onChange={handleDataChange} />
+        {
+          //@ts-ignore
+          <StepComponent data={formData} onChange={handleDataChange} />
+        }
       </div>
       <div style={{ textAlign: "right" }}>
         <Button disabled={activeStep === 0} onClick={handleBack}>

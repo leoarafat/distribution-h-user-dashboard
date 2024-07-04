@@ -413,7 +413,8 @@ const UploadVideo = () => {
                       getOptionLabel={(option) => option.label || ""}
                       value={
                         labelOptions.find(
-                          (option, value) => option.value === value.label
+                          (option: any, value: any) =>
+                            option.value === value.label
                         ) || null
                       }
                       onChange={(event, value) => {
