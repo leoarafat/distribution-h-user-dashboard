@@ -44,6 +44,7 @@ interface FormData {
     upc: string;
     format: string;
     originalReleaseDate: string;
+    releaseDate: string;
     productionYear: string;
     youtubeUrl: string;
     lyrics: string;
@@ -172,13 +173,13 @@ const AlbumStepperForm = () => {
         formDataToSend.append(`audio[${index}][format]`, audio.format);
         formDataToSend.append(
           `audio[${index}][originalReleaseDate]`,
-          audio.originalReleaseDate
+          audio.releaseDate
         );
         formDataToSend.append(
           `audio[${index}][productionYear]`,
           audio.productionYear
         );
-        formDataToSend.append(`audio[${index}][youtubeUrl]`, audio.youtubeUrl);
+        formDataToSend.append(`audio[${index}][youtube]`, audio.youtubeUrl);
         formDataToSend.append(`audio[${index}][lyrics]`, audio.lyrics);
         formDataToSend.append(`audio[${index}][isrc]`, audio.isrc);
         formDataToSend.append(`audio[${index}][language]`, audio.language);
