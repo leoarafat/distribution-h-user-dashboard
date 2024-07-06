@@ -11,23 +11,24 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
       invalidatesTags: ["financial"],
     }),
 
-    // getVideo: build.query({
-    //   query: (arg: Record<string, any>) => {
-    //     return {
-    //       url: `account/my-account`,
-    //       method: "GET",
-    //       params: arg,
-    //     };
-    //   },
-    //   transformResponse: (response: any[], meta: any) => {
-    //     return {
-    //       data: response,
-    //       meta,
-    //     };
-    //   },
-    //   providesTags: ["bank", "mobile-bank", "pioneer"],
-    // }),
+    getMyFiles: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `statics/my-files`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response?.data,
+          meta,
+        };
+      },
+      providesTags: ["financial"],
+    }),
   }),
 });
 
-export const { useRequestPaymentMutation } = uploadVideoAudioApi;
+export const { useRequestPaymentMutation, useGetMyFilesQuery } =
+  uploadVideoAudioApi;

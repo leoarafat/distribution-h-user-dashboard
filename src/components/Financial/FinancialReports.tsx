@@ -25,6 +25,8 @@ import {
 } from "@mui/icons-material";
 import { CSVLink } from "react-csv";
 import jsPDF from "jspdf";
+import { useGetMyFilesQuery } from "@/redux/slices/financial/financialApi";
+import Loader from "@/utils/Loader";
 
 const FinancialReports = () => {
   const [page, setPage] = useState(0);
@@ -32,15 +34,13 @@ const FinancialReports = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortedColumn, setSortedColumn] = useState("date");
   const [sortDirection, setSortDirection] = useState("asc");
-
+  const { data: filesData } = useGetMyFilesQuery({});
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
-
-  const handleChangeRowsPerPage = (event: any) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  if (!filesData?.data) {
+    return <Loader />;
+  }
 
   const handleSearch = (event: any) => {
     setSearchQuery(event.target.value);
@@ -56,22 +56,7 @@ const FinancialReports = () => {
     }
   };
 
-  const financialHistory = [
-    { id: 1, date: "2023-01-01", description: "Transaction 1", amount: 100 },
-    { id: 2, date: "2023-01-02", description: "Transaction 2", amount: 200 },
-    { id: 3, date: "2023-01-03", description: "Transaction 3", amount: 300 },
-    { id: 4, date: "2023-01-04", description: "Transaction 4", amount: 400 },
-    { id: 5, date: "2023-01-05", description: "Transaction 5", amount: 500 },
-    { id: 6, date: "2023-01-06", description: "Transaction 6", amount: 600 },
-    { id: 7, date: "2023-01-07", description: "Transaction 7", amount: 700 },
-    { id: 8, date: "2023-01-08", description: "Transaction 8", amount: 800 },
-    { id: 9, date: "2023-01-09", description: "Transaction 9", amount: 900 },
-    { id: 11, date: "2023-01-10", description: "Transaction 10", amount: 1000 },
-    { id: 12, date: "2023-01-10", description: "Transaction 10", amount: 1000 },
-    { id: 13, date: "2023-01-10", description: "Transaction 10", amount: 1000 },
-  ];
-
-  const filteredHistory = financialHistory.filter((row) =>
+  const filteredHistory = filesData?.data?.filter((row: any) =>
     Object.values(row).some(
       (value) =>
         typeof value === "string" &&
@@ -79,7 +64,7 @@ const FinancialReports = () => {
     )
   );
 
-  const sortedHistory = filteredHistory.sort((a, b) => {
+  const sortedHistory = filteredHistory?.sort((a: any, b: any) => {
     //@ts-ignore
     const aValue = a[sortedColumn];
     //@ts-ignore
@@ -111,7 +96,8 @@ const FinancialReports = () => {
 
     // Date
     pdf.setFontSize(12);
-    pdf.text(`Date: ${row.date}`, 10, y);
+    const createdAt = new Date(row.createdAt).toLocaleString();
+    pdf.text(`Date: ${createdAt}`, 10, y);
     y += 10;
 
     // Partner greeting
@@ -140,15 +126,15 @@ const FinancialReports = () => {
     pdf.setFont("helvetica", "normal");
 
     // Data row
-    pdf.text(row.description, 10, y);
-    pdf.text(String(row.amount), 150, y);
+    pdf.text(row.filename, 10, y);
+    pdf.text(String(row.totalAmount), 150, y);
     y += 10;
 
     y += 10;
 
     // Net revenue
     pdf.text("NET REVENUE", 10, y);
-    pdf.text(String(row.amount), 150, y);
+    pdf.text(String(row.totalAmount), 150, y);
     y += 20;
 
     // Footer
@@ -165,7 +151,7 @@ const FinancialReports = () => {
     y += 10;
     pdf.text("Be Musix", 10, y);
 
-    pdf.save(`transaction_${row.id}.pdf`);
+    pdf.save(`transaction_${row._id?.slice(0, 6)}.pdf`);
   };
 
   return (
@@ -189,18 +175,18 @@ const FinancialReports = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell onClick={() => handleSort("date")}>
+                    <TableCell onClick={() => handleSort("createdAt")}>
                       Date{" "}
-                      {sortedColumn === "date" &&
+                      {sortedColumn === "createdAt" &&
                         (sortDirection === "asc" ? (
                           <ArrowDownwardIcon />
                         ) : (
                           <ArrowUpwardIcon />
                         ))}
                     </TableCell>
-                    <TableCell onClick={() => handleSort("description")}>
-                      Description{" "}
-                      {sortedColumn === "description" &&
+                    <TableCell onClick={() => handleSort("filename")}>
+                      File Name{" "}
+                      {sortedColumn === "filename" &&
                         (sortDirection === "asc" ? (
                           <ArrowDownwardIcon />
                         ) : (
@@ -209,10 +195,10 @@ const FinancialReports = () => {
                     </TableCell>
                     <TableCell
                       align="right"
-                      onClick={() => handleSort("amount")}
+                      onClick={() => handleSort("totalAmount")}
                     >
                       Amount ($){" "}
-                      {sortedColumn === "amount" &&
+                      {sortedColumn === "totalAmount" &&
                         (sortDirection === "asc" ? (
                           <ArrowDownwardIcon />
                         ) : (
@@ -224,13 +210,25 @@ const FinancialReports = () => {
                 </TableHead>
                 <TableBody>
                   {sortedHistory
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>{row.date}</TableCell>
-                        <TableCell>{row.description}</TableCell>
+                    ?.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                    ?.map((row: any) => (
+                      <TableRow key={row._id}>
+                        <TableCell>
+                          {new Date(row.createdAt).toLocaleString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </TableCell>
+
+                        <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
-                          <DollarIcon /> {row.amount}
+                          <DollarIcon /> {row.totalAmount}
                         </TableCell>
                         <TableCell>
                           <IconButton onClick={() => handlePDFDownload(row)}>
@@ -239,9 +237,9 @@ const FinancialReports = () => {
                           <CSVLink
                             data={[row]}
                             headers={[
-                              { label: "Date", key: "date" },
-                              { label: "Description", key: "description" },
-                              { label: "Amount ($)", key: "amount" },
+                              { label: "Date", key: "createdAt" },
+                              { label: "File Name", key: "filename" },
+                              { label: "Amount ($)", key: "totalAmount" },
                             ]}
                             filename={`transaction_${row.id}.csv`}
                           >
