@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useGetMyAccountsQuery } from "@/redux/slices/bank/bankApi";
+import { useRequestPaymentMutation } from "@/redux/slices/financial/financialApi";
 import {
   Box,
   Button,
@@ -9,14 +12,40 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const PaymentMethodModal = ({ open, onClose }: any) => {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const { data: accountData } = useGetMyAccountsQuery({});
+
+  //@ts-ignore
+  const accounts = accountData?.data?.data;
+  const [requestPayment, { isLoading }] = useRequestPaymentMutation();
   const onPaymentMethodChange = (e: any) => {
     e.preventDefault();
     setPaymentMethod(e.target.value);
   };
+  const handlePayment = async () => {
+    try {
+      const payload = {
+        bankId: paymentMethod,
+      };
+      const res = await requestPayment(payload);
 
+      if (res?.data?.success === true) {
+        toast.success("Request Sent Successful");
+        onClose();
+      }
+      if (res?.error) {
+        //@ts-ignore
+        toast.error(res?.error?.data?.message);
+        onClose();
+      }
+    } catch (error: any) {
+      console.log(error, "Error");
+      toast.error(error?.message);
+    }
+  };
   return (
     <Modal
       open={open}
@@ -51,17 +80,21 @@ const PaymentMethodModal = ({ open, onClose }: any) => {
             label="Payment Method"
             onChange={onPaymentMethodChange}
           >
-            <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-            <MenuItem value="Mobile Banking">Mobile Banking</MenuItem>
-            <MenuItem value="Payoneer">Payoneer</MenuItem>
+            <MenuItem value={accounts?.bankAccount?._id}>
+              Bank Transfer
+            </MenuItem>
+            <MenuItem value={accounts?.mobileBankAccountAccount?._id}>
+              Mobile Banking
+            </MenuItem>
+            <MenuItem value={accounts?.pioneerAccount?._id}>Payoneer</MenuItem>
           </Select>
         </FormControl>
         <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
           <Button onClick={onClose} sx={{ mr: 1 }}>
             Cancel
           </Button>
-          <Button variant="contained" color="primary" onClick={onClose}>
-            Confirm
+          <Button variant="contained" color="primary" onClick={handlePayment}>
+            {isLoading ? "Sending..." : "Confirm"}
           </Button>
         </Box>
       </Box>

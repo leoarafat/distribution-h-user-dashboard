@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  Typography,
 } from "@mui/material";
 import { useGetPendingSingleSongQuery } from "@/redux/slices/myUploads/myUploadsApi";
 import { imageURL } from "@/redux/api/baseApi";
@@ -31,7 +32,7 @@ const PendingSongsTable = ({ searchQuery, statusFilter }: any) => {
   };
   //@ts-ignore
   const rows = songsData?.data?.data;
-
+  console.log(rows);
   const filteredRows = rows?.filter(
     (row: any) =>
       (row.releaseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -50,6 +51,7 @@ const PendingSongsTable = ({ searchQuery, statusFilter }: any) => {
               <TableRow>
                 <TableCell>Cover</TableCell>
                 <TableCell>ReleaseID</TableCell>
+                <TableCell>Type</TableCell>
                 <TableCell>Release Title</TableCell>
                 <TableCell>Label</TableCell>
                 <TableCell>Release Date</TableCell>
@@ -59,40 +61,83 @@ const PendingSongsTable = ({ searchQuery, statusFilter }: any) => {
                 <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: any) => (
-                  <TableRow key={index}>
-                    <TableCell>
-                      <img
-                        className="w-[70px] h-[40px] rounded-md "
-                        src={`${imageURL}/${row?.image}`}
-                        alt=""
-                      />
-                    </TableCell>
-                    <TableCell>{row.releaseId}</TableCell>
-                    <TableCell>{row.releaseTitle}</TableCell>
-                    <TableCell>{row.label?.labelName}</TableCell>
-                    <TableCell>{row.releaseDate}</TableCell>
-                    <TableCell>{row.upc ? row.upc : "-"}</TableCell>
-                    <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
-                    <TableCell>
-                      {row.catalogNumber ? row.catalogNumber : "-"}
-                    </TableCell>
-                    <TableCell>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {row.isApproved}
-                        {row.isApproved === "pending" && <LoaderIcon />}
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                  <React.Fragment key={index}>
+                    {row.songType === "album" ? (
+                      <>
+                        {/* {console.log(row)} */}
+                        <TableRow>
+                          <TableCell>
+                            <img
+                              className="w-[70px] h-[40px] rounded-md "
+                              src={`${imageURL}/${row?.image}`}
+                              alt=""
+                            />
+                          </TableCell>
+                          <TableCell>{row.releaseId}</TableCell>
+                          <TableCell>{row?.songType?.toUpperCase()}</TableCell>
+                          <TableCell>{row.releaseTitle}</TableCell>
+                          <TableCell>{row.audio[0]?.label}</TableCell>
+                          <TableCell>{row.physicalReleaseDate}</TableCell>
+                          <TableCell>{row.upc ? row.upc : "-"}</TableCell>
+                          <TableCell>
+                            {row?.audio ? row?.audio[0]?.isrc : "-"}
+                          </TableCell>
+                          <TableCell>
+                            {row.catalogNumber ? row.catalogNumber : "-"}
+                          </TableCell>
+                          <TableCell>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              {row.isApproved}
+                              {row.isApproved === "pending" && <LoaderIcon />}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      </>
+                    ) : (
+                      <TableRow>
+                        <TableCell>
+                          <img
+                            className="w-[70px] h-[40px] rounded-md "
+                            src={`${imageURL}/${row?.image}`}
+                            alt=""
+                          />
+                        </TableCell>
+                        <TableCell>{row.releaseId}</TableCell>
+                        <TableCell>{row.songType?.toUpperCase()}</TableCell>
+                        <TableCell>{row.releaseTitle}</TableCell>
+                        <TableCell>{row.label?.labelName}</TableCell>
+                        <TableCell>{row.releaseDate}</TableCell>
+                        <TableCell>{row.upc ? row.upc : "-"}</TableCell>
+                        <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
+                        <TableCell>
+                          {row.catalogNumber ? row.catalogNumber : "-"}
+                        </TableCell>
+                        <TableCell>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            {row.isApproved}
+                            {row.isApproved === "pending" && <LoaderIcon />}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
                 ))}
             </TableBody>
           </Table>

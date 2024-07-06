@@ -4,16 +4,15 @@ import {
   Box,
   Typography,
   Paper,
-  Container,
   Toolbar,
   TextField,
   InputAdornment,
   Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import DraftsSongsTable from "./DraftsTable";
+import PendingAlbumTable from "./PendingAlbumTable";
 
-const Drafts = () => {
+const PendingAlbum = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchChange = (event: any) => {
@@ -39,7 +38,7 @@ const Drafts = () => {
                 component="div"
                 sx={{ flexGrow: 1, fontWeight: "bold" }}
               >
-                Pending Songs
+                Pending Albums
               </Typography>
               <TextField
                 variant="outlined"
@@ -66,11 +65,11 @@ const Drafts = () => {
       </Box>
       <Box sx={{ flexGrow: 1, mt: 2 }}>
         <Paper elevation={3} sx={{ borderRadius: 2, p: 2 }}>
-          <DraftsSongsTable searchQuery={searchQuery} />
+          <PendingAlbumTable searchQuery={searchQuery} />
         </Paper>
       </Box>
     </>
   );
 };
 
-export default Drafts;
+export default PendingAlbum;

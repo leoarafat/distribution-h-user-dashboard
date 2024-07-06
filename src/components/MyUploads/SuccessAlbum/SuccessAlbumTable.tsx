@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -19,7 +19,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import StoreIcon from "@mui/icons-material/Store"; //
 import Loader from "@/utils/Loader";
 import { countCountryOccurrences } from "@/utils/countCountryOccurrences";
-const SuccessSongsTable = ({ searchQuery }: any) => {
+const SuccessAlbumTable = ({ searchQuery }: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -47,20 +47,10 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
   };
   //@ts-ignore
   const rows = songsData?.data?.data;
-
-  // const processedSongs = rows?.map((song) => ({
-  //   ...song,
-  //   countryCounts: countCountryOccurrences(song?.countries[0]),
-  // }));
-  const processedSongs = rows?.map(
-    (song: { songType: string; countries: string[] }) => ({
-      ...song,
-      countryCounts:
-        song?.songType === "single" && song?.countries?.[0]
-          ? countCountryOccurrences(song.countries[0])
-          : null,
-    })
-  );
+  const processedSongs = rows?.map((song: { countries: string[] }) => ({
+    ...song,
+    countryCounts: countCountryOccurrences(song.countries[0]),
+  }));
   const filteredRows = processedSongs?.filter(
     (row: any) =>
       (row.releaseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -79,7 +69,6 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
               <TableRow>
                 <TableCell>Cover</TableCell>
                 <TableCell>ReleaseID</TableCell>
-                <TableCell>Type</TableCell>
                 <TableCell>Release Title</TableCell>
                 <TableCell>Label</TableCell>
                 <TableCell>Release Date</TableCell>
@@ -89,8 +78,7 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                 <TableCell>Store</TableCell>
               </TableRow>
             </TableHead>
-
-            {/* <TableBody>
+            <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: any) => (
@@ -113,7 +101,7 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                       onClick={handleCountryModal}
                     >
                       <PublicIcon style={{ marginRight: 8 }} />
-                      
+                      {/* {row?.countries ? row?.countries?.length : "Empty"} */}
                       {row?.countryCounts ? row?.countryCounts.length : "Empty"}
                     </TableCell>
                     <TableCell
@@ -125,90 +113,6 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                       {row?.store ? row?.store : "Empty"}
                     </TableCell>
                   </TableRow>
-                ))}
-            </TableBody> */}
-            <TableBody>
-              {filteredRows
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index: any) => (
-                  <React.Fragment key={index}>
-                    {row.songType === "album" ? (
-                      <>
-                        {/* {console.log(row)} */}
-                        <TableRow>
-                          <TableCell>
-                            <img
-                              className="w-[70px] h-[40px] rounded-md "
-                              src={`${imageURL}/${row?.image}`}
-                              alt=""
-                            />
-                          </TableCell>
-                          <TableCell>{row.releaseId}</TableCell>
-                          <TableCell>{row?.songType?.toUpperCase()}</TableCell>
-                          <TableCell>{row.releaseTitle}</TableCell>
-                          <TableCell>{row.audio[0]?.label}</TableCell>
-                          <TableCell>{row.physicalReleaseDate}</TableCell>
-                          <TableCell>{row.upc ? row.upc : "-"}</TableCell>
-                          <TableCell>
-                            {row?.audio ? row?.audio[0]?.isrc : "-"}
-                          </TableCell>
-                          <TableCell
-                            className="cursor-pointer"
-                            onClick={handleCountryModal}
-                          >
-                            <PublicIcon style={{ marginRight: 8 }} />
-
-                            {row?.countryCounts
-                              ? row?.countryCounts.length
-                              : "Empty"}
-                          </TableCell>
-                          <TableCell
-                            className="cursor-pointer"
-                            onClick={handleStoreModal}
-                          >
-                            {" "}
-                            <StoreIcon style={{ marginRight: 8 }} />{" "}
-                            {row?.store ? row?.store : "Empty"}
-                          </TableCell>
-                        </TableRow>
-                      </>
-                    ) : (
-                      <TableRow>
-                        <TableCell>
-                          <img
-                            className="w-[70px] h-[40px] rounded-md "
-                            src={`${imageURL}/${row?.image}`}
-                            alt=""
-                          />
-                        </TableCell>
-                        <TableCell>{row.releaseId}</TableCell>
-                        <TableCell>{row.songType?.toUpperCase()}</TableCell>
-                        <TableCell>{row.releaseTitle}</TableCell>
-                        <TableCell>{row.label?.labelName}</TableCell>
-                        <TableCell>{row.releaseDate}</TableCell>
-                        <TableCell>{row.upc ? row.upc : "-"}</TableCell>
-                        <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
-                        <TableCell
-                          className="cursor-pointer"
-                          onClick={handleCountryModal}
-                        >
-                          <PublicIcon style={{ marginRight: 8 }} />
-
-                          {row?.countryCounts
-                            ? row?.countryCounts.length
-                            : "Empty"}
-                        </TableCell>
-                        <TableCell
-                          className="cursor-pointer"
-                          onClick={handleStoreModal}
-                        >
-                          {" "}
-                          <StoreIcon style={{ marginRight: 8 }} />{" "}
-                          {row?.store ? row?.store : "Empty"}
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </React.Fragment>
                 ))}
             </TableBody>
           </Table>
@@ -233,4 +137,4 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
   );
 };
 
-export default SuccessSongsTable;
+export default SuccessAlbumTable;

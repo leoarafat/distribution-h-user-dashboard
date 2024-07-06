@@ -1,7 +1,7 @@
 export const countCountryOccurrences = (countryList: string) => {
   const countryCounts = countryList
-    .split(",")
-    .reduce((acc: { [key: string]: number }, countryCode: string) => {
+    ?.split(",")
+    ?.reduce((acc: { [key: string]: number }, countryCode: string) => {
       if (acc[countryCode]) {
         acc[countryCode]++;
       } else {

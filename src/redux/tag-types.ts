@@ -31,4 +31,5 @@ export const tagsList = [
   "single-audio",
   "video",
   "album",
+  "financial",
 ] as const;
