@@ -34,6 +34,13 @@ export const artistLabelApi = baseApi.injectEndpoints({
       },
       providesTags: ["label"],
     }),
+    getSingleLabel: build.query({
+      query: (id) => ({
+        url: `label/single/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["admin"],
+    }),
     getArtists: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -93,4 +100,5 @@ export const {
   useDeleteLabelMutation,
   useGetArtistsQuery,
   useGetLabelsQuery,
+  useGetSingleLabelQuery,
 } = artistLabelApi;
