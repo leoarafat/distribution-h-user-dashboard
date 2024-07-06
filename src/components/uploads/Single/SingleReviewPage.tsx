@@ -14,12 +14,18 @@ import {
 } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { useEffect, useState } from "react";
+import { getArtistsByIds } from "../Album/fetchArtist";
+import { useGetSingleLabelQuery } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const SingleTrackReviewPage = ({ data, onChange }: any) => {
   const [audioUrl, setAudioUrl] = useState(null);
+  const [artists, setArtists] = useState<any[]>([]);
 
   const trackDetails = data?.trackDetails;
   const releaseInformation = data?.releaseInformation;
+  const { data: labelData, isLoading } = useGetSingleLabelQuery(
+    releaseInformation?.label
+  );
   const audio = data?.audio;
 
   useEffect(() => {
@@ -42,6 +48,20 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
       // onChange("audio", JSON.parse(storedData).audio);
     }
   }, []);
+  useEffect(() => {
+    const fetchArtists = async () => {
+      try {
+        const artistIds = releaseInformation?.primaryArtists;
+        const fetchedArtists = await getArtistsByIds(artistIds);
+        setArtists(fetchedArtists);
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+      }
+    };
+
+    fetchArtists();
+  }, [releaseInformation?.primaryArtists]);
+
   if (!audio || !audio.audioFile) {
     return <div>No audio file selected.</div>;
   }
@@ -77,7 +97,16 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
                 <ListItem>
                   <ListItemText
                     primary="Artists"
-                    secondary={releaseInformation?.primaryArtists?.join(", ")}
+                    secondary={
+                      artists?.data
+                        ? artists.data
+                            .map(
+                              (artist: { primaryArtistName: any }) =>
+                                artist.primaryArtistName
+                            )
+                            .join(", ")
+                        : ""
+                    }
                   />
                 </ListItem>
                 <ListItem>
@@ -95,7 +124,9 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
                 <ListItem>
                   <ListItemText
                     primary="Label"
-                    secondary={releaseInformation?.label}
+                    secondary={
+                      isLoading ? "Loading.." : labelData?.data?.labelName
+                    }
                   />
                 </ListItem>
                 <ListItem>
@@ -246,7 +277,16 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
             <ListItem>
               <ListItemText
                 primary="Primary Artists"
-                secondary={releaseInformation?.primaryArtists.join(", ")}
+                secondary={
+                  artists?.data
+                    ? artists.data
+                        .map(
+                          (artist: { primaryArtistName: any }) =>
+                            artist.primaryArtistName
+                        )
+                        .join(", ")
+                    : ""
+                }
               />
             </ListItem>
             <ListItem>
@@ -272,7 +312,7 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
             <ListItem>
               <ListItemText
                 primary="Label"
-                secondary={releaseInformation?.label}
+                secondary={isLoading ? "Loading.." : labelData?.data?.labelName}
               />
             </ListItem>
             <ListItem>
