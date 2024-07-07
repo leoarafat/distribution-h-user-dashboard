@@ -15,7 +15,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const PaymentMethodModal = ({ open, onClose }: any) => {
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState();
   const { data: accountData } = useGetMyAccountsQuery({});
 
   //@ts-ignore
@@ -23,12 +23,14 @@ const PaymentMethodModal = ({ open, onClose }: any) => {
   const [requestPayment, { isLoading }] = useRequestPaymentMutation();
   const onPaymentMethodChange = (e: any) => {
     e.preventDefault();
+
     setPaymentMethod(e.target.value);
   };
   const handlePayment = async () => {
     try {
       const payload = {
-        bankId: paymentMethod,
+        bankId: paymentMethod?._id,
+        accountNumber: paymentMethod?.accountNumber,
       };
       const res = await requestPayment(payload);
 
@@ -80,13 +82,11 @@ const PaymentMethodModal = ({ open, onClose }: any) => {
             label="Payment Method"
             onChange={onPaymentMethodChange}
           >
-            <MenuItem value={accounts?.bankAccount?._id}>
-              Bank Transfer
-            </MenuItem>
-            <MenuItem value={accounts?.mobileBankAccountAccount?._id}>
+            <MenuItem value={accounts?.bankAccount}>Bank Transfer</MenuItem>
+            <MenuItem value={accounts?.mobileBankAccountAccount}>
               Mobile Banking
             </MenuItem>
-            <MenuItem value={accounts?.pioneerAccount?._id}>Payoneer</MenuItem>
+            <MenuItem value={accounts?.pioneerAccount}>Payoneer</MenuItem>
           </Select>
         </FormControl>
         <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
