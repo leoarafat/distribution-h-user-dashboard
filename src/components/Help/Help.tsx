@@ -12,8 +12,18 @@ import {
   Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useGetFaqQuery } from "@/redux/slices/newsAndFaq/newsAndFaqApi";
+import Loader from "@/utils/Loader";
 
 const HelpPage = () => {
+  const { data: faqData, isLoading } = useGetFaqQuery({});
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const faqs = faqData ?? [];
+
   return (
     <div>
       <Paper elevation={3} sx={{ p: 4, mt: 8, borderRadius: 4 }}>
@@ -65,86 +75,22 @@ const HelpPage = () => {
           <Typography variant="h5" gutterBottom>
             FAQs
           </Typography>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="faq-content"
-              id="faq-header"
-            >
-              <Typography variant="subtitle1" fontWeight="bold">
-                Q: How do I add songs to my playlist?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body1">
-                To add songs to your playlist, simply...
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="faq-content"
-              id="faq-header"
-            >
-              <Typography variant="subtitle1" fontWeight="bold">
-                Q: Can I create multiple playlists?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body1">
-                Yes, you can create multiple playlists by...
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="faq-content"
-              id="faq-header"
-            >
-              <Typography variant="subtitle1" fontWeight="bold">
-                Q: How do I delete a playlist?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body1">
-                To delete a playlist, navigate to...
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="faq-content"
-              id="faq-header"
-            >
-              <Typography variant="subtitle1" fontWeight="bold">
-                Q: Is there a limit to the number of songs in a playlist?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body1">
-                No, there is no limit to the number of songs...
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="faq-content"
-              id="faq-header"
-            >
-              <Typography variant="subtitle1" fontWeight="bold">
-                Q: How do I change my account settings?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography variant="body1">
-                To change your account settings, go to...
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+          {faqs.map((faq: any, index: number) => (
+            <Accordion key={index}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={`faq-content-${index}`}
+                id={`faq-header-${index}`}
+              >
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Q: {faq.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="body1">{faq.answer}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </div>
       </Paper>
     </div>
