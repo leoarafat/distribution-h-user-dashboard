@@ -98,6 +98,16 @@ export const myUploadsApi = baseApi.injectEndpoints({
       },
       providesTags: ["single-audio"],
     }),
+    getLatestSongs: build.query({
+      query: () => {
+        return {
+          url: `latest/latest-songs`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["single-audio"],
+    }),
   }),
 });
 
@@ -108,4 +118,5 @@ export const {
   useGetCorrectionSingleSongQuery,
   useGetPendingSingleSongQuery,
   useGetSuccessSingleSongQuery,
+  useGetLatestSongsQuery,
 } = myUploadsApi;

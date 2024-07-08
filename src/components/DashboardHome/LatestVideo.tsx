@@ -13,8 +13,17 @@ import {
 } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Link } from "react-router-dom";
+import { useGetLatestSongsQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import Loader from "@/utils/Loader";
+import { imageURL } from "@/redux/api/baseApi";
 
 const LatestVideo = () => {
+  const { data: songsData, isLoading } = useGetLatestSongsQuery({});
+  if (isLoading) {
+    return <Loader />;
+  }
+  const videoData = songsData?.data?.latestVideo || [];
+  console.log(videoData);
   return (
     <Grid item xs={12} md={6}>
       <label
@@ -69,7 +78,7 @@ const LatestVideo = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
+                <TableCell>Store Release Date</TableCell>
                 <TableCell>Thumbnail</TableCell>
                 <TableCell>Video Name</TableCell>
                 <TableCell>Label Name</TableCell>
@@ -78,29 +87,26 @@ const LatestVideo = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array(6)
-                //@ts-ignore
-                .fill()
-                .map((_, index) => (
-                  <TableRow key={index}>
-                    <TableCell>Jan 15, 2024</TableCell>
-                    <TableCell>
-                      <img
-                        className="w-[90px] h-[60px] rounded-md"
-                        src="https://cdnb.artstation.com/p/assets/images/images/020/421/613/large/raj-hossain-new-song-poster.jpg?1567700119"
-                        alt=""
-                      />
-                    </TableCell>
-                    <TableCell>Video Name</TableCell>
-                    <TableCell>Label Name</TableCell>
-                    <TableCell>Store</TableCell>
-                    {/* <TableCell align="right">
-                      <IconButton size="small">
-                        <Edit fontSize="small" />
-                      </IconButton>
-                    </TableCell> */}
-                  </TableRow>
-                ))}
+              {videoData?.map((track: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {new Date(track.storeReleaseDate).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    <img
+                      className="w-[90px] h-[60px] rounded-md"
+                      src={
+                        `${imageURL}/${track?.image}` ||
+                        "https://via.placeholder.com/90x60"
+                      }
+                      alt="Album"
+                    />
+                  </TableCell>
+                  <TableCell>{track.title}</TableCell>
+                  <TableCell>{track.label.labelName}</TableCell>
+                  <TableCell>{track.upc}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

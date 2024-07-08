@@ -4,7 +4,6 @@ import {
   Typography,
   Paper,
   Grid,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -16,7 +15,16 @@ import {
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { Link } from "react-router-dom";
 import LatestVideo from "./LatestVideo";
+import { useGetLatestSongsQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import Loader from "@/utils/Loader";
+import { imageURL } from "@/redux/api/baseApi";
 const LastSixApproved = () => {
+  const { data: songsData, isLoading } = useGetLatestSongsQuery({});
+  if (isLoading) {
+    return <Loader />;
+  }
+  const audioData = songsData?.data?.latestSingleTrack || [];
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
@@ -67,54 +75,39 @@ const LastSixApproved = () => {
               marginBottom: 2,
               position: "relative",
             }}
-          >
-            {/* <CircularProgress
-              variant="determinate"
-              value={100}
-              size={60}
-              sx={{ color: "green" }}
-            />
-            <Typography variant="h4" sx={{ position: "absolute" }}>
-              06
-            </Typography> */}
-          </Box>
+          ></Box>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Album Image</TableCell>
-                  <TableCell>Album Name</TableCell>
+                  <TableCell>Release Date</TableCell>
+                  <TableCell>Cover Image</TableCell>
+                  <TableCell>Song Title</TableCell>
                   <TableCell>Label Name</TableCell>
-                  <TableCell>Store</TableCell>
-                  {/* <TableCell align="right">Actions</TableCell> */}
+                  <TableCell>UPC</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Array(6)
-                  //@ts-ignore
-                  .fill()
-                  .map((_, index) => (
-                    <TableRow key={index}>
-                      <TableCell>Jan 15, 2024</TableCell>
-                      <TableCell>
-                        {" "}
-                        <img
-                          className="w-[90px] h-[60px] rounded-md"
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf8_RCV3yxcNBl4G7Xq0e1xCa73PhR-kYNPg&s"
-                          alt=""
-                        />
-                      </TableCell>
-                      <TableCell>Album Name</TableCell>
-                      <TableCell>Label Name</TableCell>
-                      <TableCell>Store</TableCell>
-                      {/* <TableCell align="right">
-                        <IconButton size="small">
-                          <Edit fontSize="small" />
-                        </IconButton>
-                      </TableCell> */}
-                    </TableRow>
-                  ))}
+                {audioData?.map((track: any, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      {new Date(track.releaseDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      <img
+                        className="w-[90px] h-[60px] rounded-md"
+                        src={
+                          `${imageURL}/${track?.image}` ||
+                          "https://via.placeholder.com/90x60"
+                        }
+                        alt="Album"
+                      />
+                    </TableCell>
+                    <TableCell>{track.title}</TableCell>
+                    <TableCell>{track.label.labelName}</TableCell>
+                    <TableCell>{track.upc}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
