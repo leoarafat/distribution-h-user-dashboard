@@ -14,12 +14,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import DraftsSongsTable from "./DraftsTable";
 
 const Drafts = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearchChange = (event: any) => {
-    setSearchQuery(event.target.value);
-  };
-
   return (
     <>
       <Box sx={{ flexGrow: 1, mt: 4 }}>
@@ -44,8 +38,6 @@ const Drafts = () => {
               <TextField
                 variant="outlined"
                 placeholder="Search…"
-                value={searchQuery}
-                onChange={handleSearchChange}
                 sx={{
                   marginLeft: 2,
                   borderRadius: 1,
@@ -66,7 +58,7 @@ const Drafts = () => {
       </Box>
       <Box sx={{ flexGrow: 1, mt: 2 }}>
         <Paper elevation={3} sx={{ borderRadius: 2, p: 2 }}>
-          <DraftsSongsTable searchQuery={searchQuery} />
+          <DraftsSongsTable />
         </Paper>
       </Box>
     </>
