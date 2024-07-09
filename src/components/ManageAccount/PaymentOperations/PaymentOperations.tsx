@@ -10,17 +10,17 @@ import {
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import PaymentMethodModal from "../PaymentMethodModal/PaymentMethodModal";
+import { useGetMyBalanceQuery } from "@/redux/slices/financial/financialApi";
 
 const PaymentOperations = () => {
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
   useEffect(() => {
-    setTimeout(() => {
-      const mockBalance = Math.floor(Math.random() * 200);
-      setCurrentMonthBalance(mockBalance);
-    }, 2000);
-  }, []);
+    if (myBalance) {
+      setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
+    }
+  }, [myBalance]);
   const handleRequestPayment = () => {
     setModalOpen(true);
   };

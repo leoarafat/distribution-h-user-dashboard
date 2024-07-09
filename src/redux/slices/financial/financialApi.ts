@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { baseApi } from "@/redux/api/baseApi";
 
 export const uploadVideoAudioApi = baseApi.injectEndpoints({
@@ -21,14 +22,39 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any[], meta: any) => {
         return {
+          //@ts-ignore
           data: response?.data,
           meta,
         };
       },
       providesTags: ["financial"],
     }),
+    getMyBalance: build.query({
+      query: () => {
+        return {
+          url: `statics/my-balance`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["financial"],
+    }),
+    getMyAllTimeBalance: build.query({
+      query: () => {
+        return {
+          url: `statics/my-allTime-balance`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["financial"],
+    }),
   }),
 });
 
-export const { useRequestPaymentMutation, useGetMyFilesQuery } =
-  uploadVideoAudioApi;
+export const {
+  useRequestPaymentMutation,
+  useGetMyFilesQuery,
+  useGetMyBalanceQuery,
+  useGetMyAllTimeBalanceQuery,
+} = uploadVideoAudioApi;

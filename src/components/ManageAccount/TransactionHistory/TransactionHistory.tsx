@@ -20,6 +20,7 @@ import { Search } from "@mui/icons-material";
 import dayjs from "dayjs";
 import { transactions } from "@/MockData/MockData";
 import PaymentMethodModal from "../PaymentMethodModal/PaymentMethodModal";
+import { useGetMyBalanceQuery } from "@/redux/slices/financial/financialApi";
 
 const TransactionHistory = () => {
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
@@ -27,12 +28,13 @@ const TransactionHistory = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
+
   useEffect(() => {
-    setTimeout(() => {
-      const mockBalance = Math.floor(Math.random() * 200);
-      setCurrentMonthBalance(mockBalance);
-    }, 2000);
-  }, []);
+    if (myBalance) {
+      setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
+    }
+  }, [myBalance]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
