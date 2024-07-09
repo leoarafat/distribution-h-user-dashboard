@@ -36,7 +36,6 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-
       providesTags: ["financial"],
     }),
     getMyAllTimeBalance: build.query({
@@ -46,7 +45,22 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-
+      providesTags: ["financial"],
+    }),
+    getMyTransaction: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `payment/my-transaction`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          //@ts-ignore
+          data: response?.data,
+          meta,
+        };
+      },
       providesTags: ["financial"],
     }),
   }),
@@ -57,4 +71,5 @@ export const {
   useGetMyFilesQuery,
   useGetMyBalanceQuery,
   useGetMyAllTimeBalanceQuery,
+  useGetMyTransactionQuery,
 } = uploadVideoAudioApi;

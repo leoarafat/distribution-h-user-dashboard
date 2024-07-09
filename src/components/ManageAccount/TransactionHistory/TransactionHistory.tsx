@@ -20,7 +20,11 @@ import { Search } from "@mui/icons-material";
 import dayjs from "dayjs";
 import { transactions } from "@/MockData/MockData";
 import PaymentMethodModal from "../PaymentMethodModal/PaymentMethodModal";
-import { useGetMyBalanceQuery } from "@/redux/slices/financial/financialApi";
+import {
+  useGetMyBalanceQuery,
+  useGetMyTransactionQuery,
+} from "@/redux/slices/financial/financialApi";
+import { formatDate } from "@/utils/formatedDate";
 
 const TransactionHistory = () => {
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
@@ -28,14 +32,15 @@ const TransactionHistory = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
+  const { data: myBalance } = useGetMyBalanceQuery({});
+  const { data: transactionData, isLoading } = useGetMyTransactionQuery({});
 
   useEffect(() => {
     if (myBalance) {
       setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
     }
   }, [myBalance]);
-
+  console.log(transactionData);
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -49,8 +54,11 @@ const TransactionHistory = () => {
     setPage(0);
   };
 
-  const filteredTransactions = transactions.filter((transaction) =>
-    transaction.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTransactions = transactionData?.data?.data?.filter(
+    (transaction) =>
+      transaction.transactionId
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
   const handleRequestPayment = () => {
     setModalOpen(true);
@@ -147,22 +155,22 @@ const TransactionHistory = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Operations</TableCell>
+                <TableCell>Method</TableCell>
+                <TableCell>Memo</TableCell>
+                <TableCell>transaction ID</TableCell>
                 <TableCell>Balance</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredTransactions
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((transaction, index) => (
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((transaction, index) => (
                   <TableRow key={index}>
-                    <TableCell>{transaction.date}</TableCell>
-                    <TableCell>{transaction.type}</TableCell>
-                    <TableCell>{transaction.description}</TableCell>
-                    <TableCell>{transaction.operations}</TableCell>
-                    <TableCell>{transaction.balance}</TableCell>
+                    <TableCell>{formatDate(transaction.createdAt)}</TableCell>
+                    <TableCell>{transaction.method}</TableCell>
+                    <TableCell>{transaction.memo}</TableCell>
+                    <TableCell>{transaction.transactionId}</TableCell>
+                    <TableCell>{transaction.amount}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -171,7 +179,7 @@ const TransactionHistory = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredTransactions.length}
+          count={filteredTransactions?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
