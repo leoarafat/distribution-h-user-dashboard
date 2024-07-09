@@ -15,6 +15,8 @@ import {
   TableRow,
   Box,
 } from "@mui/material";
+import { useGetCountrySongQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import Loader from "@/utils/Loader";
 
 interface CountryModalProps {
   open: boolean;
@@ -28,6 +30,11 @@ const CountryModal: React.FC<CountryModalProps> = ({
   selectedCountry,
 }) => {
   const [countries, setCountries] = useState([]);
+  const { data: countryData, isLoading } =
+    useGetCountrySongQuery(selectedCountry);
+
+  // State to hold the flag data from restcountries API
+  const [flagData, setFlagData] = useState([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -35,6 +42,14 @@ const CountryModal: React.FC<CountryModalProps> = ({
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         setCountries(data);
+        // Extract country names and flag URLs
+        const flags = data.map(
+          (country: { name: { common: any }; flags: { svg: any } }) => ({
+            countryName: country.name.common,
+            flag: country.flags?.svg,
+          })
+        );
+        setFlagData(flags);
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
@@ -46,6 +61,10 @@ const CountryModal: React.FC<CountryModalProps> = ({
   const handleCancel = () => {
     setOpen(false);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Dialog
@@ -61,6 +80,7 @@ const CountryModal: React.FC<CountryModalProps> = ({
             sx={{
               display: "flex",
               justifyContent: "center",
+              width: "400px",
               alignItems: "center",
               marginBottom: 2,
             }}
@@ -76,15 +96,24 @@ const CountryModal: React.FC<CountryModalProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {countries.map((country, index) => (
+                {countryData?.data?.map((country: any, index: number) => (
                   <TableRow key={index}>
-                    <TableCell>{country?.name.common}</TableCell>
+                    <TableCell>{country?.countryName}</TableCell>
                     <TableCell>
-                      <img
-                        src={country?.flags.svg}
-                        alt={country?.name.common}
-                        style={{ width: 60, height: 40 }}
-                      />
+                      {/* Find and display flag URL */}
+                      {flagData?.map((flag: any) => {
+                        if (flag.countryName === country?.countryName) {
+                          return (
+                            <img
+                              key={flag.countryName}
+                              src={flag.flag}
+                              alt={country?.countryName}
+                              style={{ width: 60, height: 40 }}
+                            />
+                          );
+                        }
+                        return null;
+                      })}
                     </TableCell>
                   </TableRow>
                 ))}

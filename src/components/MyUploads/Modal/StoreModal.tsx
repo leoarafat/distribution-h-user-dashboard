@@ -15,6 +15,9 @@ import {
   TableRow,
   Box,
 } from "@mui/material";
+import { useGetStoredSongQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import Loader from "@/utils/Loader";
+import { imageURL } from "@/redux/api/baseApi";
 
 interface StoreModalProps {
   open: boolean;
@@ -27,6 +30,9 @@ const StoreModal: React.FC<StoreModalProps> = ({
   setOpen,
   selectedAlbum,
 }) => {
+  const { data: storeData, isLoading } = useGetStoredSongQuery(
+    selectedAlbum?._id
+  );
   const handleCancel = () => {
     setOpen(false);
   };
@@ -34,51 +40,10 @@ const StoreModal: React.FC<StoreModalProps> = ({
   const handleSave = () => {
     setOpen(false);
   };
-
-  const staticStores = [
-    {
-      name: "Facebook",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREhIStQW6CVwkxfySAEk7m-ixijfzEEnZs-w&s",
-      status: "Delivered",
-      link: "https://www.facebook.com",
-    },
-    {
-      name: "YouTube",
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
-      status: "Delivered",
-      link: "https://www.youtube.com",
-    },
-    {
-      name: "TikTok",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDnmLX4PrZhLb-xlyZ91i-mvwa9iLPp-BeyQ&s",
-      status: "Takedown",
-      link: "https://www.tiktok.com",
-    },
-    {
-      name: "YouTube Music",
-      image:
-        "https://seeklogo.com/images/Y/youtube-music-logo-50422973B2-seeklogo.com.png",
-      status: "Delivered",
-      link: "https://music.youtube.com",
-    },
-    {
-      name: "Spotify",
-      image:
-        "https://w7.pngwing.com/pngs/4/438/png-transparent-spotify-logo-spotify-mobile-app-computer-icons-app-store-music-free-icon-spotify-miscellaneous-logo-music-download-thumbnail.png",
-      status: "Delivered",
-      link: "https://www.spotify.com",
-    },
-    {
-      name: "Instagram",
-      image:
-        "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png",
-      status: "Pending",
-      link: "https://www.instagram.com",
-    },
-  ];
+  if (isLoading) {
+    return <Loader />;
+  }
+  const staticStores = storeData?.data;
 
   return (
     <Dialog
@@ -111,40 +76,43 @@ const StoreModal: React.FC<StoreModalProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {staticStores.map((store, index) => (
+                {staticStores?.map((store: any, index: number) => (
                   <TableRow key={index}>
-                    <TableCell>{store.name}</TableCell>
+                    <TableCell>{store?.storeId?.title}</TableCell>
                     <TableCell>
                       <img
-                        src={store.image}
-                        alt={store.name}
+                        src={`${imageURL}/${store?.storeId?.image}`}
+                        alt={store?.storeId?.title}
                         style={{ width: 60, height: 60, borderRadius: "50%" }}
                       />
                     </TableCell>
-                    <TableCell style={{ whiteSpace: "nowrap" }}>
+                    <TableCell
+                      style={{ whiteSpace: "nowrap", cursor: "pointer" }}
+                    >
                       {" "}
                       <Typography
                         variant="body1"
                         sx={{
                           fontWeight: "bold",
+
                           color:
-                            store.status === "Delivered"
+                            store?.storeStatus === "Delivered"
                               ? "green"
-                              : store.status === "Pending"
+                              : store?.storeStatus === "Pending"
                               ? "blue"
                               : "red",
                         }}
                       >
-                        {store.status}
+                        {store?.storeStatus}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <a
-                        href={store.link}
+                        href={store?.storeId?.link}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {store.link}
+                        {store?.storeId?.link}
                       </a>
                     </TableCell>
                   </TableRow>

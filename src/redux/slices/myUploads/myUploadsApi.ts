@@ -108,6 +108,26 @@ export const myUploadsApi = baseApi.injectEndpoints({
 
       providesTags: ["single-audio"],
     }),
+    getStoredSong: build.query({
+      query: (id) => {
+        return {
+          url: `stored-content/single/${id}`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["store"],
+    }),
+    getCountrySong: build.query({
+      query: (id) => {
+        return {
+          url: `stored-country/single/${id}`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["store"],
+    }),
   }),
 });
 
@@ -119,4 +139,6 @@ export const {
   useGetPendingSingleSongQuery,
   useGetSuccessSingleSongQuery,
   useGetLatestSongsQuery,
+  useGetStoredSongQuery,
+  useGetCountrySongQuery,
 } = myUploadsApi;
