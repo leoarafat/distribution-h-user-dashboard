@@ -34,4 +34,5 @@ export const tagsList = [
   "financial",
   "news",
   "store",
+  "note",
 ] as const;

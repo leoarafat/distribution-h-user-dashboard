@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Container,
   Typography,
   Paper,
   Accordion,
@@ -10,13 +9,55 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Container,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useGetFaqQuery } from "@/redux/slices/newsAndFaq/newsAndFaqApi";
 import Loader from "@/utils/Loader";
+import { useSendFeedbackMutation } from "@/redux/slices/admin/adminManageApi";
+import toast from "react-hot-toast";
 
 const HelpPage = () => {
   const { data: faqData, isLoading } = useGetFaqQuery({});
+  const [feedbackFormOpen, setFeedbackFormOpen] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [sendFeedback, { isLoading: feedBackLoading }] =
+    useSendFeedbackMutation();
+
+  const handleOpenFeedbackForm = () => {
+    setFeedbackFormOpen(true);
+  };
+
+  const handleCloseFeedbackForm = () => {
+    setFeedbackFormOpen(false);
+  };
+
+  const handleFeedbackChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFeedbackMessage(event.target.value);
+  };
+
+  const handleSendFeedback = async () => {
+    try {
+      const data = {
+        description: feedbackMessage,
+      };
+      const res = await sendFeedback(data);
+      if (res?.data?.success === true) {
+        toast.success("Message Sent Successfully");
+        handleCloseFeedbackForm();
+      } else {
+        handleCloseFeedbackForm();
+      }
+    } catch (error: any) {
+      console.log(error?.message);
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -25,7 +66,7 @@ const HelpPage = () => {
   const faqs = faqData ?? [];
 
   return (
-    <div>
+    <>
       <Paper elevation={3} sx={{ p: 4, mt: 8, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>
           Music Dashboard Help
@@ -92,8 +133,52 @@ const HelpPage = () => {
             </Accordion>
           ))}
         </div>
+
+        <Divider sx={{ my: 4 }} />
+
+        <Button variant="contained" onClick={handleOpenFeedbackForm}>
+          Send Message
+        </Button>
+
+        <Dialog
+          open={feedbackFormOpen}
+          onClose={handleCloseFeedbackForm}
+          // maxWidth="md"
+          // fullWidth
+        >
+          <DialogTitle>Send Message to Admin</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1" gutterBottom>
+              Please enter your message below:
+            </Typography>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="feedback-message"
+              label="Your Message"
+              type="text"
+              fullWidth
+              multiline
+              rows={6}
+              value={feedbackMessage}
+              onChange={handleFeedbackChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseFeedbackForm} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSendFeedback}
+              color="primary"
+              disabled={feedBackLoading}
+            >
+              {feedBackLoading ? "Sending..." : "Send"}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
-    </div>
+    </>
   );
 };
 
