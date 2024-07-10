@@ -10,6 +10,8 @@ import { imageURL } from "@/redux/api/baseApi";
 import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
 import { menuItems } from "./menuItems";
+import useApproved from "@/utils/isApproved";
+import { useEffect } from "react";
 const { Header, Sider, Content } = Layout;
 
 const { SubMenu } = Menu;
@@ -24,12 +26,19 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const isUser = isLoggedIn();
   const userInfo = useVerification();
+  const userVerifiedInfo = useApproved();
   const isVerifiedUser = userInfo?.isVerified;
-
-  if (!isUser) {
-    navigate("/auth/login");
-  }
-
+  const isApproved = userVerifiedInfo?.isApproved;
+  useEffect(() => {
+    // Redirect to login if user is not authenticated
+    if (!isUser) {
+      navigate("/auth/login");
+    }
+    // Redirect to pending page if user is not approved
+    if (!isApproved) {
+      navigate("/pending");
+    }
+  }, [isUser, isApproved, navigate]);
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
 
@@ -46,9 +55,10 @@ const Dashboard = () => {
     onClick: handleLogout,
   };
 
-  const filteredMenuItems = isVerifiedUser
-    ? [...menuItems, logoutItem]
-    : [onboardingItem, logoutItem];
+  const filteredMenuItems =
+    isVerifiedUser && isApproved
+      ? [...menuItems, logoutItem]
+      : [onboardingItem, logoutItem];
 
   return (
     <Layout>

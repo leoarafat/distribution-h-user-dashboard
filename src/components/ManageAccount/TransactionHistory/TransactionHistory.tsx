@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -41,21 +42,21 @@ const TransactionHistory = () => {
     }
   }, [myBalance]);
   console.log(transactionData);
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   const filteredTransactions = transactionData?.data?.data?.filter(
-    (transaction) =>
+    (transaction: any) =>
       transaction.transactionId
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
@@ -87,7 +88,8 @@ const TransactionHistory = () => {
         </Typography>
         <Typography variant="h4" color="primary" gutterBottom>
           {currentMonthBalance !== null
-            ? currentMonthBalance.toLocaleString("en-US", {
+            ? //@ts-ignore
+              currentMonthBalance.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
               })
@@ -164,7 +166,7 @@ const TransactionHistory = () => {
             <TableBody>
               {filteredTransactions
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                ?.map((transaction, index) => (
+                ?.map((transaction: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{formatDate(transaction.createdAt)}</TableCell>
                     <TableCell>{transaction.method}</TableCell>
