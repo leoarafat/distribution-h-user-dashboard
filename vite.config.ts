@@ -10,6 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // base: "https://bemusix.com",
   // server: {
   //   host: "192.168.10.102",
   //   port: 3000,
