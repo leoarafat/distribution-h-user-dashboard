@@ -8,6 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+import { useGetCorrectionMessageQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import Loader from "@/utils/Loader";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -19,10 +21,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function CorrectionMessageModal({ open, setOpen, data }: any) {
-  //   console.log(data);
+  const { data: songs, isLoading } = useGetCorrectionMessageQuery(data);
   const handleClose = () => {
     setOpen(false);
   };
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <React.Fragment>
       <BootstrapDialog
@@ -31,7 +37,7 @@ export default function CorrectionMessageModal({ open, setOpen, data }: any) {
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+          {songs?.data?.title}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -46,21 +52,7 @@ export default function CorrectionMessageModal({ open, setOpen, data }: any) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          <Typography gutterBottom>{songs?.data?.message}</Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

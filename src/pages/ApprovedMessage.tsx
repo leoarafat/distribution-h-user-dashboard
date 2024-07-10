@@ -1,3 +1,4 @@
+import useApproved from "@/utils/isApproved";
 import {
   Container,
   Box,
@@ -5,6 +6,8 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const containerStyle = {
   display: "flex",
@@ -48,6 +51,15 @@ const footerStyle = {
 };
 
 const PendingApprovalMessage = () => {
+  const navigate = useNavigate();
+
+  const userVerifiedInfo = useApproved();
+  const isApproved = userVerifiedInfo?.isApproved;
+  useEffect(() => {
+    if (isApproved) {
+      navigate("/");
+    }
+  }, [isApproved, navigate]);
   return (
     <Container sx={containerStyle}>
       <Paper sx={paperStyle} elevation={3}>

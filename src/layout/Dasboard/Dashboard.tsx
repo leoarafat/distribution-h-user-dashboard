@@ -30,11 +30,10 @@ const Dashboard = () => {
   const isVerifiedUser = userInfo?.isVerified;
   const isApproved = userVerifiedInfo?.isApproved;
   useEffect(() => {
-    // Redirect to login if user is not authenticated
     if (!isUser) {
       navigate("/auth/login");
     }
-    // Redirect to pending page if user is not approved
+
     if (!isApproved) {
       navigate("/pending");
     }

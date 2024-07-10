@@ -53,11 +53,12 @@ const CorrectionRequest = () => {
               <TableRow>
                 <TableCell>Cover</TableCell>
                 <TableCell>ReleaseID</TableCell>
+                <TableCell>Type</TableCell>
                 <TableCell>Release Title</TableCell>
                 <TableCell>Label</TableCell>
                 <TableCell>Release Date</TableCell>
                 <TableCell>UPC</TableCell>
-                <TableCell>ISRC</TableCell>
+
                 <TableCell>Catalog Number</TableCell>
                 <TableCell>Correction Message</TableCell>
               </TableRow>
@@ -73,11 +74,12 @@ const CorrectionRequest = () => {
                     />
                   </TableCell>
                   <TableCell>{row.releaseId}</TableCell>
+                  <TableCell>{row.songType}</TableCell>
                   <TableCell>{row.releaseTitle}</TableCell>
                   <TableCell>{row.label?.labelName}</TableCell>
                   <TableCell>{row.releaseDate}</TableCell>
                   <TableCell>{row.upc ? row.upc : "-"}</TableCell>
-                  <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
+
                   <TableCell>
                     {row.catalogNumber ? row.catalogNumber : "-"}
                   </TableCell>
@@ -85,7 +87,7 @@ const CorrectionRequest = () => {
                     <ShieldAlert
                       size={30}
                       className="text-center cursor-pointer w-full"
-                      onClick={() => handleClickOpen(row.corrections)}
+                      onClick={() => handleClickOpen(row._id)}
                     />
                   </TableCell>
                 </TableRow>
