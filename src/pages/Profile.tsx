@@ -17,7 +17,7 @@ import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 import { useEditProfilePictureMutation } from "@/redux/slices/admin/userApi";
 import PersonIcon from "@mui/icons-material/Person";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -30,7 +30,7 @@ const Profile = () => {
     refetch,
   } = useMyProfileQuery({});
   const initialFormValues = profileData?.data;
-  console.log(initialFormValues);
+
   const [editProfilePicture, { isLoading, isSuccess, error }] =
     useEditProfilePictureMutation();
 
@@ -189,7 +189,9 @@ const Profile = () => {
         >
           <MonetizationOnIcon sx={{ marginRight: 1, color: "#3f51b5" }} />
           Revenue Share Rate:{" "}
-          <span style={{ color: "#4caf50", marginLeft: 4 }}>70%</span>
+          <span style={{ color: "#4caf50", marginLeft: 4 }}>
+            {initialFormValues?.revenueRate}%
+          </span>
         </Typography>
       </Box>
 
