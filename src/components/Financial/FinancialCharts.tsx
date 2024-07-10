@@ -3,12 +3,10 @@
 //   Paper,
 //   Typography,
 //   Box,
-//   TextField,
 //   CircularProgress,
 //   MenuItem,
 //   FormControl,
 //   Select,
-//   InputLabel,
 // } from "@mui/material";
 // import {
 //   ComposedChart,
@@ -21,66 +19,39 @@
 //   Legend,
 //   ResponsiveContainer,
 // } from "recharts";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-// import dayjs from "dayjs";
-
-// const generateMonthlyData = (year) => {
-//   const months = [];
-//   for (let i = 1; i <= 12; i++) {
-//     let month = i < 10 ? "0" + i : i.toString();
-//     let date = `${year}-${month}`;
-//     let amount = Math.floor(Math.random() * 5000) + 1000;
-//     6000;
-//     months.push({ date, amount });
-//   }
-//   return months;
-// };
-
-// const generateDailyData = (year, month) => {
-//   const daysInMonth = dayjs(`${year}-${month}`).daysInMonth();
-//   const days = [];
-//   for (let i = 1; i <= daysInMonth; i++) {
-//     let day = i < 10 ? "0" + i : i.toString();
-//     let date = `${year}-${month}-${day}`;
-//     let amount = Math.floor(Math.random() * 500) + 100;
-//     days.push({ date, amount });
-//   }
-//   return days;
-// };
+// import axios from "axios";
 
 // const FinancialCharts = () => {
-//   const [selectedDate, setSelectedDate] = useState(dayjs());
-//   const [timeRange, setTimeRange] = useState("year");
+//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 //   const [financialData, setFinancialData] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
-//   const updateData = (date, range) => {
+//   const fetchFinancialData = async (year) => {
 //     setLoading(true);
-//     const year = date.year();
-//     let data = [];
-//     if (range === "year") {
-//       data = generateMonthlyData(year);
-//     } else if (range === "month") {
-//       const month = date.month() + 1;
-//       data = generateDailyData(year, month < 10 ? `0${month}` : month);
+//     try {
+//       let url = `http://localhost:7001/statics/financial-analytics`;
+//       const response = await axios.get(url, {
+//         params: {
+//           year,
+//         },
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+//         },
+//       });
+
+//       if (response && response.data && response.data.data) {
+//         setFinancialData(response.data.data);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching financial data:", error);
+//     } finally {
+//       setLoading(false);
 //     }
-//     setFinancialData(data);
-//     setLoading(false);
 //   };
 
 //   useEffect(() => {
-//     updateData(selectedDate, timeRange);
-//   }, [selectedDate, timeRange]);
-
-//   const handleDateChange = (newValue) => {
-//     setSelectedDate(newValue);
-//   };
-
-//   const handleTimeRangeChange = (event) => {
-//     setTimeRange(event.target.value);
-//   };
+//     fetchFinancialData(selectedYear);
+//   }, [selectedYear]);
 
 //   if (loading) {
 //     return (
@@ -105,30 +76,18 @@
 //           mb={2}
 //         >
 //           <Typography variant="h5" gutterBottom>
-//             Financial Analytics
+//             Financial Analytics for {selectedYear}
 //           </Typography>
-//           <Box display="flex" alignItems="center">
-//             <FormControl sx={{ mr: 2 }}>
-//               <InputLabel>Select Filter</InputLabel>
-//               <Select
-//                 value={timeRange}
-//                 onChange={handleTimeRangeChange}
-//                 label="Time Range"
-//               >
-//                 <MenuItem value="year">Year</MenuItem>
-//                 <MenuItem value="month">Month</MenuItem>
-//               </Select>
-//             </FormControl>
-//             <LocalizationProvider dateAdapter={AdapterDayjs}>
-//               <DatePicker
-//                 views={timeRange === "year" ? ["year"] : ["year", "month"]}
-//                 label={timeRange === "year" ? "Select Year" : "Select Month"}
-//                 value={selectedDate}
-//                 onChange={handleDateChange}
-//                 renderInput={(params) => <TextField {...params} />}
-//               />
-//             </LocalizationProvider>
-//           </Box>
+//           <FormControl>
+//             <Select
+//               value={selectedYear}
+//               onChange={(e) => setSelectedYear(e.target.value)}
+//             >
+//               <MenuItem value={2023}>2023</MenuItem>
+//               <MenuItem value={2024}>2024</MenuItem>
+//               {/* Add more years as needed */}
+//             </Select>
+//           </FormControl>
 //         </Box>
 //         <ResponsiveContainer width="100%" height={400}>
 //           <ComposedChart
@@ -141,7 +100,7 @@
 //             }}
 //           >
 //             <CartesianGrid stroke="#f5f5f5" />
-//             <XAxis dataKey={timeRange === "week" ? "week" : "date"} />
+//             <XAxis dataKey="date" />
 //             <YAxis />
 //             <Tooltip />
 //             <Legend />
@@ -181,65 +140,53 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import axios from "axios";
 import dayjs from "dayjs";
 
-const generateMonthlyData = (year) => {
-  const months = [];
-  for (let i = 1; i <= 12; i++) {
-    let month = i < 10 ? "0" + i : i.toString();
-    let date = `${year}-${month}`;
-    let amount = Math.floor(Math.random() * 5000) + 1000;
-    6000;
-    months.push({ date, amount });
-  }
-  return months;
-};
-
-const generateDailyData = (year, month) => {
-  const daysInMonth = dayjs(`${year}-${month}`).daysInMonth();
-  const days = [];
-  for (let i = 1; i <= daysInMonth; i++) {
-    let day = i < 10 ? "0" + i : i.toString();
-    let date = `${year}-${month}-${day}`;
-    let amount = Math.floor(Math.random() * 500) + 100;
-    days.push({ date, amount });
-  }
-  return days;
-};
-
 const FinancialCharts = () => {
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [timeRange, setTimeRange] = useState("year");
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [financialData, setFinancialData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const updateData = (month, year, range) => {
+  const fetchFinancialData = async (year) => {
     setLoading(true);
-    let data = [];
-    if (range === "year") {
-      data = generateMonthlyData(year);
-    } else if (range === "month") {
-      const monthStr = month < 10 ? `0${month}` : month.toString();
-      data = generateDailyData(year, monthStr);
+    try {
+      let url = `http://localhost:7001/statics/financial-analytics`;
+      const response = await axios.get(url, {
+        params: {
+          year,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+
+      if (response && response.data && response.data.data) {
+        // Transform the response data to ensure all months of the year are included
+        const fetchedData = response.data.data;
+        const dataMap = new Map(
+          fetchedData.map((item) => [item.month, item.amount])
+        );
+        const months = Array.from({ length: 12 }, (_, index) => {
+          const monthName = dayjs().month(index).format("MMMM");
+          return {
+            date: `${year}-${index + 1 < 10 ? "0" + (index + 1) : index + 1}`,
+            amount: dataMap.get(monthName) || 0,
+          };
+        });
+        setFinancialData(months);
+      }
+    } catch (error) {
+      console.error("Error fetching financial data:", error);
+    } finally {
+      setLoading(false);
     }
-    setFinancialData(data);
-    setLoading(false);
   };
 
   useEffect(() => {
-    updateData(selectedMonth, selectedYear, timeRange);
-  }, [selectedMonth, selectedYear, timeRange]);
-
-  const handleMonthChange = (event) => {
-    setSelectedMonth(event.target.value);
-    setTimeRange("month");
-  };
-
-  const handleYearChange = (event) => {
-    setSelectedYear(event.target.value);
-    setTimeRange("year");
-  };
+    fetchFinancialData(selectedYear);
+  }, [selectedYear]);
 
   if (loading) {
     return (
@@ -264,33 +211,20 @@ const FinancialCharts = () => {
           mb={2}
         >
           <Typography variant="h5" gutterBottom>
-            Financial Analytics
+            Financial Analytics for {selectedYear}
           </Typography>
-          <Box display="flex" alignItems="center">
-            <FormControl sx={{ mr: 2 }}>
-              <Select value={selectedMonth} onChange={handleMonthChange}>
-                <MenuItem value={1}>January</MenuItem>
-                <MenuItem value={2}>February</MenuItem>
-                <MenuItem value={3}>March</MenuItem>
-                <MenuItem value={4}>April</MenuItem>
-                <MenuItem value={5}>May</MenuItem>
-                <MenuItem value={6}>June</MenuItem>
-                <MenuItem value={7}>July</MenuItem>
-                <MenuItem value={8}>August</MenuItem>
-                <MenuItem value={9}>September</MenuItem>
-                <MenuItem value={10}>October</MenuItem>
-                <MenuItem value={11}>November</MenuItem>
-                <MenuItem value={12}>December</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <Select value={selectedYear} onChange={handleYearChange}>
-                <MenuItem value={2023}>2023</MenuItem>
-                <MenuItem value={2024}>2024</MenuItem>
-                {/* Add more years as needed */}
-              </Select>
-            </FormControl>
-          </Box>
+          <FormControl>
+            <Select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              {Array.from({ length: 10 }, (_, index) => (
+                <MenuItem key={currentYear - index} value={currentYear - index}>
+                  {currentYear - index}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
         <ResponsiveContainer width="100%" height={400}>
           <ComposedChart
