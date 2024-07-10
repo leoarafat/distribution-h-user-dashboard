@@ -137,11 +137,11 @@ const Dashboard = () => {
           <div className="flex items-center gap-5">
             {isVerifiedUser && (
               <>
-                <Badge count={11}>
+                {/* <Badge count={11}>
                   <Link to={"/notifications"}>
                     <Bell size={30} color="#fff" />
                   </Link>
-                </Badge>
+                </Badge> */}
                 <div className="flex items-center gap-2">
                   <Link to={"/settings/profile"}>
                     <Avatar
