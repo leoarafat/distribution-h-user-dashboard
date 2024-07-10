@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Grid,
@@ -12,7 +12,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
   TextField,
 } from "@mui/material";
 import { Pagination } from "@mui/material";
@@ -24,8 +23,11 @@ import {
   ArrowUpward as ArrowUpwardIcon,
 } from "@mui/icons-material";
 import { CSVLink } from "react-csv";
-import jsPDF from "jspdf";
-import { useGetMyFilesQuery } from "@/redux/slices/financial/financialApi";
+
+import {
+  useGetMyBalanceQuery,
+  useGetMyFilesQuery,
+} from "@/redux/slices/financial/financialApi";
 import Loader from "@/utils/Loader";
 
 const FinancialReports = () => {
@@ -38,6 +40,16 @@ const FinancialReports = () => {
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
+
+  const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
+
+  useEffect(() => {
+    if (myBalance) {
+      setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
+    }
+  }, [myBalance]);
+  const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
+
   if (!filesData?.data) {
     return <Loader />;
   }
@@ -79,79 +91,52 @@ const FinancialReports = () => {
     return sortDirection === "asc" ? aValue - bValue : bValue - aValue;
   });
 
-  const handlePDFDownload = (row: any) => {
-    const pdf = new jsPDF();
-    let y = 20;
+  const handleCSVDownload = (row: any) => {
+    const csvData = row?.data?.map((entry: any) => ({
+      upc: entry.upc,
+      isrc: entry.isrc,
+      labelName: entry.labelName,
+      artistName: entry.artistName,
+      album: entry.album,
+      trackTitle: entry.trackTitle,
+      stream_quantity: entry.stream_quantity,
+      revenue: entry.revenue,
+      country: entry.country,
+      releaseTitle: entry.releaseTitle,
+      reportingMonth: entry.reportingMonth,
+      salesMonth: entry.salesMonth,
+      platForm: entry.platForm,
+      clientShareRate: entry.clientShareRate,
+    }));
 
-    // Header
-    pdf.setFontSize(30);
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Be Musix.", 10, y);
-    y += 10;
+    const headers = [
+      { label: "UPC", key: "upc" },
+      { label: "ISRC", key: "isrc" },
+      { label: "Label Name", key: "labelName" },
+      { label: "Artist Name", key: "artistName" },
+      { label: "Album", key: "album" },
+      { label: "Track Title", key: "trackTitle" },
+      { label: "Stream Quantity", key: "stream_quantity" },
+      { label: "Revenue", key: "revenue" },
+      { label: "Country", key: "country" },
+      { label: "Release Title", key: "releaseTitle" },
+      { label: "Reporting Month", key: "reportingMonth" },
+      { label: "Sales Month", key: "salesMonth" },
+      { label: "Platform", key: "platForm" },
+      { label: "Client Share Rate", key: "clientShareRate" },
+    ];
 
-    pdf.setFontSize(14);
-    pdf.setFont("helvetica", "normal");
-    pdf.text("Distribution services", 10, y);
-    y += 20;
-
-    // Date
-    pdf.setFontSize(12);
-    const createdAt = new Date(row.createdAt).toLocaleString();
-    pdf.text(`Date: ${createdAt}`, 10, y);
-    y += 10;
-
-    // Partner greeting
-    pdf.text("Dear partner,", 10, y);
-    y += 10;
-
-    pdf.text(
-      "Here is the total amount of royalties credited on your account (BE Musix) regarding",
-      10,
-      y
+    return (
+      <CSVLink
+        data={csvData}
+        headers={headers}
+        filename={"financial_data.csv"}
+        className="btn btn-primary"
+        target="_blank"
+      >
+        <CsvIcon /> Download CSV
+      </CSVLink>
     );
-    y += 10;
-    pdf.text("the selected filters:", 10, y);
-    y += 20;
-
-    // Filter information
-    pdf.text("Transaction Details", 10, y);
-    y += 10;
-
-    // Table header
-    pdf.setFont("helvetica", "bold");
-    pdf.text("Store", 10, y);
-    pdf.text("Total", 150, y);
-    y += 10;
-
-    pdf.setFont("helvetica", "normal");
-
-    // Data row
-    pdf.text(row.filename, 10, y);
-    pdf.text(String(row.totalAmount), 150, y);
-    y += 10;
-
-    y += 10;
-
-    // Net revenue
-    pdf.text("NET REVENUE", 10, y);
-    pdf.text(String(row.totalAmount), 150, y);
-    y += 20;
-
-    // Footer
-    pdf.text(
-      "For any requests, please contact your local support team.",
-      10,
-      y
-    );
-    y += 10;
-
-    pdf.text("Very best regards,", 10, y);
-    y += 10;
-    pdf.text("Royalty Accounting Team", 10, y);
-    y += 10;
-    pdf.text("Be Musix", 10, y);
-
-    pdf.save(`transaction_${row._id?.slice(0, 6)}.pdf`);
   };
 
   return (
@@ -228,26 +213,16 @@ const FinancialReports = () => {
 
                         <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
-                          <DollarIcon /> {row.totalAmount}
+                          <DollarIcon />{" "}
+                          {currentMonthBalance === null
+                            ? "0.00"
+                            : //@ts-ignore
+                              currentMonthBalance.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              })}
                         </TableCell>
-                        <TableCell>
-                          <IconButton onClick={() => handlePDFDownload(row)}>
-                            <PdfIcon />
-                          </IconButton>
-                          <CSVLink
-                            data={[row]}
-                            headers={[
-                              { label: "Date", key: "createdAt" },
-                              { label: "File Name", key: "filename" },
-                              { label: "Amount ($)", key: "totalAmount" },
-                            ]}
-                            filename={`transaction_${row.id}.csv`}
-                          >
-                            <IconButton>
-                              <CsvIcon />
-                            </IconButton>
-                          </CSVLink>
-                        </TableCell>
+                        <TableCell>{handleCSVDownload(row)}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>
