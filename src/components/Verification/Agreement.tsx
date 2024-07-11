@@ -40,19 +40,6 @@ const AgreementPage = ({ data, onChange }: any) => {
     }
   };
 
-  // const profileData?.data? = {
-  //   name: "Shahriar Kabir",
-  //   phoneNumber: "+1234567890",
-  //   nidNumber: "12345678901234",
-  //   channelName: "JohnDoeMusic",
-  //   channelUrl: "https://youtube.com/johndoemusic",
-  //   companyName: "Hasanuzzaman",
-  //   ownerDesignation: "CEO",
-  //   companyName: "Be Musix Limited",
-  //   companyAddress: "1-2 Holborn, London, EC1N 2LL, United Kingdom",
-  //   createdDate: "2024-05-28",
-  //   artistDesignation: "Owner",
-  // };
   const currentDate = new Date();
   return (
     <Box sx={{ padding: 3 }}>
@@ -132,6 +119,16 @@ const AgreementPage = ({ data, onChange }: any) => {
                 </Typography>
                 <Typography variant="body1">
                   <strong>Designation:</strong> Owner BE Musix
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Reg No:</strong> 15503142
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Legal Representative:</strong> Hasanuzzaman
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Contact:</strong> Email: support@bemusix.com <br />{" "}
+                  Call: +8801970-698456, +447441904447
                 </Typography>
                 <Typography variant="body1">
                   <strong>Date:</strong> {currentDate.toLocaleDateString()}
