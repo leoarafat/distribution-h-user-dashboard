@@ -29,7 +29,7 @@
 //   const fetchFinancialData = async (year) => {
 //     setLoading(true);
 //     try {
-//       let url = `http://api.bemusix.com/statics/financial-analytics`;
+//       let url = `https://api.bemusix.com/statics/financial-analytics`;
 //       const response = await axios.get(url, {
 //         params: {
 //           year,
@@ -152,7 +152,7 @@ const FinancialCharts = () => {
   const fetchFinancialData = async (year) => {
     setLoading(true);
     try {
-      let url = `http://api.bemusix.com/statics/financial-analytics`;
+      let url = `https://api.bemusix.com/statics/financial-analytics`;
       const response = await axios.get(url, {
         params: {
           year,
