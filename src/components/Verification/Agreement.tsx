@@ -68,7 +68,7 @@ const AgreementPage = ({ data, onChange }: any) => {
               variant="h6"
               gutterBottom
             >
-              Artist Information
+              CONTRACTOR
             </Typography>
             <Box
               sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
@@ -103,7 +103,7 @@ const AgreementPage = ({ data, onChange }: any) => {
               variant="h6"
               gutterBottom
             >
-              Company Information
+              DISTRIBUTOR
             </Typography>
             <Box
               sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
