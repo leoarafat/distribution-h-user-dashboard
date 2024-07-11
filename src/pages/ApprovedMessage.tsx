@@ -65,7 +65,7 @@ const PendingApprovalMessage = () => {
       <Paper sx={paperStyle} elevation={3}>
         <Box component="div">
           <Typography variant="h4" sx={titleStyle}>
-            Approval Pending
+            Dear Admin Please Approve
           </Typography>
           <Typography variant="body1" sx={messageStyle}>
             Your account is currently awaiting approval from our admin team.

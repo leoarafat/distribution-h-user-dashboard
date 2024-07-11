@@ -40,19 +40,19 @@ const AgreementPage = ({ data, onChange }: any) => {
     }
   };
 
-  const mockData = {
-    name: "Shahriar Kabir",
-    phoneNumber: "+1234567890",
-    nidNumber: "12345678901234",
-    channelName: "JohnDoeMusic",
-    channelUrl: "https://youtube.com/johndoemusic",
-    companyOwnerName: "Hasanuzzaman",
-    ownerDesignation: "CEO",
-    companyName: "Be Musix Limited",
-    companyAddress: "1-2 Holborn, London, EC1N 2LL, United Kingdom",
-    createdDate: "2024-05-28",
-    artistDesignation: "Owner",
-  };
+  // const profileData?.data? = {
+  //   name: "Shahriar Kabir",
+  //   phoneNumber: "+1234567890",
+  //   nidNumber: "12345678901234",
+  //   channelName: "JohnDoeMusic",
+  //   channelUrl: "https://youtube.com/johndoemusic",
+  //   companyName: "Hasanuzzaman",
+  //   ownerDesignation: "CEO",
+  //   companyName: "Be Musix Limited",
+  //   companyAddress: "1-2 Holborn, London, EC1N 2LL, United Kingdom",
+  //   createdDate: "2024-05-28",
+  //   artistDesignation: "Owner",
+  // };
   const currentDate = new Date();
   return (
     <Box sx={{ padding: 3 }}>
@@ -74,25 +74,25 @@ const AgreementPage = ({ data, onChange }: any) => {
               sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
             >
               <Typography variant="body1">
-                <strong>Name:</strong> {mockData.name}
+                <strong>Name:</strong> {profileData?.data?.name}
               </Typography>
               <Typography variant="body1">
-                <strong>Phone Number:</strong> {mockData.phoneNumber}
+                <strong>Phone Number:</strong> {profileData?.data?.phoneNumber}
               </Typography>
               <Typography variant="body1">
-                <strong>NID Number:</strong> {mockData.nidNumber}
+                <strong>NID Number:</strong> {profileData?.data?.nidNumber}
               </Typography>
               <Typography variant="body1">
-                <strong>Channel Name:</strong> {mockData.channelName}
+                <strong>Channel Name:</strong> {profileData?.data?.channelName}
               </Typography>
               <Typography variant="body1">
                 <strong>Channel URL:</strong>{" "}
                 <a
-                  href={mockData.channelUrl}
+                  href={profileData?.data?.channelUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {mockData.channelUrl}
+                  {profileData?.data?.channelUrl?.slice(0, 30)}
                 </a>
               </Typography>
             </Box>
@@ -109,7 +109,7 @@ const AgreementPage = ({ data, onChange }: any) => {
               sx={{ border: "1px solid black", padding: 2, borderRadius: 1 }}
             >
               <Typography variant="body2" align="center">
-                For and on behalf of {mockData.companyName}
+                For and on behalf of Be Musix
               </Typography>
               <Divider />
               <Box
@@ -128,11 +128,10 @@ const AgreementPage = ({ data, onChange }: any) => {
                 </Typography>
                 <Divider sx={{ width: "100%", marginY: 1 }} />
                 <Typography variant="body1">
-                  <strong>Name:</strong> {mockData.companyOwnerName}
+                  <strong>Name:</strong> Hasanuzzaman
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
-                  {mockData.companyName}
+                  <strong>Designation:</strong> Owner BE Musix
                 </Typography>
                 <Typography variant="body1">
                   <strong>Date:</strong> {currentDate.toLocaleDateString()}
@@ -155,7 +154,7 @@ const AgreementPage = ({ data, onChange }: any) => {
               }}
             >
               <Typography variant="body2" gutterBottom>
-                For and on behalf of {mockData.name}
+                For and on behalf of {profileData?.data?.name}
               </Typography>
               <SignatureCanvas
                 ref={sigCanvas}
@@ -175,10 +174,13 @@ const AgreementPage = ({ data, onChange }: any) => {
                 Clear
               </Button>
               <Typography variant="body1" gutterBottom>
-                <strong>Name:</strong> {mockData.name}
+                <strong>Name:</strong> {profileData?.data?.name}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Designation:</strong> {mockData.artistDesignation}
+                <strong>Designation:</strong> Owner
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                <strong>Label:</strong> {profileData?.data?.channelName}
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Date:</strong> {currentDate.toLocaleString()}
@@ -192,11 +194,11 @@ const AgreementPage = ({ data, onChange }: any) => {
                 padding: 2,
                 borderRadius: 1,
                 textAlign: "center",
-                height: "385px",
+                height: "410px",
               }}
             >
               <Typography variant="body2" gutterBottom>
-                For and on behalf of {mockData.companyName}
+                For and on behalf of BE Musix
               </Typography>
               <div className="flex justify-center items-center flex-col w-full h-[550px]">
                 <img
@@ -204,16 +206,17 @@ const AgreementPage = ({ data, onChange }: any) => {
                   alt="Signature"
                   style={{ width: "160px" }}
                 />
+
                 <Typography variant="body1" gutterBottom>
-                  <strong>Name:</strong> {mockData.companyOwnerName}
+                  <strong>Company:</strong> Be Musix
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  <strong>Designation:</strong> {mockData.ownerDesignation},{" "}
-                  {mockData.companyName}
+                  <strong>Designation:</strong> Owner and CEO Be Musix
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  <strong>Date:</strong> {mockData.createdDate}
+                  <strong>Date:</strong> {currentDate.toLocaleString()}
                 </Typography>
+                <br />
               </div>
             </Box>
           </Grid>

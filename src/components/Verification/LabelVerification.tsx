@@ -68,7 +68,7 @@ const LabelVerification = ({ data, onChange }: any) => {
         <div className="flex justify-around items-center w-full">
           {/* Dashboard Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
-            <h4 className="mb-2 text-sm">Upload Dashboard Image</h4>
+            <h4 className="mb-2 text-sm">Upload Youtube Dashboard Image</h4>
             {dashboardImage || profileData?.data?.dashboardScreenShot ? (
               <div className="relative w-3/4">
                 {typeof dashboardImage === "object" ? (
@@ -117,7 +117,7 @@ const LabelVerification = ({ data, onChange }: any) => {
 
           {/* Copyright Image Uploader */}
           <div className="image_upload flex items-center justify-center flex-col p-3">
-            <h4 className="mb-2 text-sm">Upload Copyright Image</h4>
+            <h4 className="mb-2 text-sm">Upload Youtube Copyright Image</h4>
             {copyRightImage || profileData?.data?.copyrightNoticeImage ? (
               <div className="relative w-3/4">
                 {typeof copyRightImage === "object" ? (
