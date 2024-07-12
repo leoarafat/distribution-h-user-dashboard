@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { TextField, Autocomplete, Container, Grid } from "@mui/material";
+import {
+  TextField,
+  Autocomplete,
+  Container,
+  Grid,
+  Tooltip,
+} from "@mui/material";
 import { allLanguage } from "@/utils/languages";
 
 const TracksInformation = ({ data, onChange }: any) => {
@@ -28,6 +34,11 @@ const TracksInformation = ({ data, onChange }: any) => {
       <form>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={["Audio", "Video"]}
@@ -52,6 +63,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={["Music", "Classic Music", "Jazz Music"]}
@@ -76,6 +92,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={[
@@ -106,6 +127,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={["Yes", "No"]}
@@ -130,6 +156,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.title}
@@ -142,6 +173,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               // required
               fullWidth
@@ -154,6 +190,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Digital Music Stores require full first and last (family) name">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.author}
@@ -166,6 +207,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Digital Music Stores require full first and last (family) name">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.composer}
@@ -178,6 +224,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.arranger}
@@ -190,6 +241,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.producer}
@@ -202,6 +258,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.publisher}
@@ -214,6 +275,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Select as your wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.isrc}
@@ -226,6 +292,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Please specify the price you want for this track.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={[
@@ -252,8 +323,27 @@ const TracksInformation = ({ data, onChange }: any) => {
               )}
             />
           </Grid>
-
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Please indicate when you want the 30 second pre-listen clip on your Player to start for this track. Please fill this field with seconds. i.e.: '180' for 3 minutes or '30' for 30 seconds.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
+            <TextField
+              fullWidth
+              value={data.trackDetails.previewStart}
+              onChange={handleChange}
+              variant="outlined"
+              label="Preview Start"
+              name="previewStart"
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Tooltip title="Choose 'cleaned' if this track is a cleaned-up version of a track originally explicit. If the original track does not contain explicit lyrics, choose no.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={["Yes", "No", "Cleaned"]}
@@ -278,6 +368,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Please indicate the spelling language of the release title.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={allLanguage}
@@ -302,6 +397,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+            <Tooltip title="Please indicate the language your release is in. If the release language is not listed, please select the closest provided.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               fullWidth
               options={allLanguage}
@@ -326,6 +426,11 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Tooltip title="Please enter the track’s lyrics in this field, in UTF8 only. If your text is not accepted, please convert it in the accepted format.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               value={data.trackDetails.lyrics}

@@ -101,3 +101,6 @@ export const allLanguage = [
   "Sesotho sa Leboa",
   "isiZulu",
 ];
+export const years: string[] = Array.from(new Array(50), (val, index) =>
+  String(new Date().getFullYear() - index)
+);

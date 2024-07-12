@@ -8,6 +8,7 @@ import {
   Checkbox,
   FormControlLabel,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -17,11 +18,9 @@ import {
   useGetArtistsQuery,
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
+import { years } from "@/utils/languages";
 
 const formats: string[] = ["Single", "Album", "EP"];
-const years: string[] = Array.from(new Array(50), (val, index) =>
-  String(new Date().getFullYear() - index)
-);
 
 interface ReleaseFormData {
   releaseTitle: string;
@@ -187,18 +186,34 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       <Box sx={{ my: 4 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
+            <Tooltip
+              title="Please enter a title for this release:
+eg.: Appetite for Destruction, Thriller, etc..."
+            >
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               required
               fullWidth
               label="Release Title"
               variant="outlined"
-              placeholder="Please use version field to enter further info for the release"
+              placeholder=" Please enter a title for this release: eg.: Appetite for Destruction, Thriller, etc..."
               name="releaseTitle"
               value={formData.releaseTitle}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip
+              title="Please use version field to enter further information for the release.
+eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
+            >
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               // required
               fullWidth
@@ -221,6 +236,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               spacing={1}
             >
               <Grid item xs={12}>
+                <Tooltip title="Select As Your Wish">
+                  <span className="text-red-600 font-bold  cursor-pointer">
+                    ?
+                  </span>
+                </Tooltip>
                 <Autocomplete
                   options={artistOptions}
                   getOptionLabel={(option) => option.label}
@@ -271,6 +291,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               spacing={1}
             >
               <Grid item xs={12}>
+                <Tooltip title="Select As Your Wish">
+                  <span className="text-red-600 font-bold cursor-pointer">
+                    ?
+                  </span>
+                </Tooltip>
                 <Autocomplete
                   options={artistOptions}
                   getOptionLabel={(option) => option.label}
@@ -323,6 +348,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Select As Your Wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               options={genres?.map((genre: any) => genre.name) || []}
               value={formData.genre}
@@ -340,6 +370,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Select As Your Wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               options={getSubgenres()}
               value={formData.subgenre}
@@ -357,6 +392,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Select As Your Wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               options={labelOptions}
               getOptionLabel={(option) => option.label}
@@ -377,6 +417,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Single: 1-2 Tracks, EP: 3-6 Tracks, Album: Ab 7 Tracks">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               options={formats}
               value={formData.format}
@@ -398,6 +443,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Indicate the original release date. If may be the release date of the physical version for instance. If there is none, use the same day as your digital release date.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               required
               fullWidth
@@ -411,6 +461,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="The producer of the release (℗) is the rightowner that financed the recording of the track.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               required
               fullWidth
@@ -422,6 +477,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="The cover producer (©) is the rightowner that financed the production of the artwork/packaging.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               required
               fullWidth
@@ -433,9 +493,13 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="The year in which the release has been produced and recorded. If more than one, please indicate the final year of production.">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <Autocomplete
               options={years}
-              required
               value={formData.productionYear}
               onChange={(event, newValue) =>
                 setFormData((prevData) => ({
@@ -455,6 +519,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Select As Your Wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               required
               fullWidth
@@ -466,6 +535,11 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+            <Tooltip title="Select As Your Wish">
+              <span className="text-red-600 font-bold pr-2 cursor-pointer">
+                ?
+              </span>
+            </Tooltip>
             <TextField
               fullWidth
               label="Catalog Number"
