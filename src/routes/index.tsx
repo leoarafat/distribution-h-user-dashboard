@@ -47,6 +47,7 @@ import SetPassword from "@/pages/SetPassword";
 import ReleasedSongs from "@/components/MyUploads/SuccessRelease/SuccessRelease";
 import SuccessAlbum from "@/components/MyUploads/SuccessAlbum/SuccessAlbum";
 import PendingApprovalMessage from "@/pages/ApprovedMessage";
+import TermsConditionsPage from "@/pages/TermsConditions";
 
 const router = createBrowserRouter([
   {
@@ -366,6 +367,10 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <Login />,
+      },
+      {
+        path: "/auth/terms-conditions",
+        element: <TermsConditionsPage />,
       },
       {
         path: "/auth/login",

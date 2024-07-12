@@ -428,6 +428,7 @@ const Register = () => {
                 ),
               }}
             />
+
             <FormControlLabel
               control={
                 <Checkbox
@@ -439,6 +440,9 @@ const Register = () => {
               }
               label="I accept the Terms and Conditions"
             />
+            <span className="text-green-600">
+              <Link to={"/auth/terms-conditions"}>See Terms & Conditions</Link>
+            </span>
             <Button
               type="submit"
               fullWidth
