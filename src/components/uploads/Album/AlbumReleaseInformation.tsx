@@ -6,7 +6,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Autocomplete from "@mui/material/Autocomplete";
 import {
   useGetArtistsQuery,
-  useGetLabelsQuery,
+  useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const years = Array.from(
@@ -35,7 +35,7 @@ const AlbumReleaseInformation = ({ data, onChange }: any) => {
     }
   });
 
-  const { data: labelData } = useGetLabelsQuery({});
+  const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =

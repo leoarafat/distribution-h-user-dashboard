@@ -17,7 +17,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { genres } from "@/MockData/MockData";
 import {
   useGetArtistsQuery,
-  useGetLabelsQuery,
+  useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const formats = ["CD", "Vinyl"];
@@ -86,7 +86,7 @@ const AlbumAudioDetails = ({ data, onChange }: any) => {
   useEffect(() => {
     onChange("audios", songs);
   }, [songs]);
-  const { data: labelData } = useGetLabelsQuery({});
+  const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =

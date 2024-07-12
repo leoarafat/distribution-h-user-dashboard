@@ -34,6 +34,22 @@ export const artistLabelApi = baseApi.injectEndpoints({
       },
       providesTags: ["label"],
     }),
+    getApprovedLabels: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `label/my-approved-label`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["label"],
+    }),
     getSingleLabel: build.query({
       query: (id) => ({
         url: `label/single/${id}`,
@@ -101,4 +117,5 @@ export const {
   useGetArtistsQuery,
   useGetLabelsQuery,
   useGetSingleLabelQuery,
+  useGetApprovedLabelsQuery,
 } = artistLabelApi;

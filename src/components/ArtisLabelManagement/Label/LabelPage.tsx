@@ -23,7 +23,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddLabelModal from "./AddLabelModa";
 import {
   useDeleteLabelMutation,
-  useEditLabelMutation,
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import Loader from "@/utils/Loader";
@@ -38,7 +37,6 @@ const LabelManage = () => {
   const [editRowData, setEditRowData] = useState<any>({});
   const { data: labelsData, isLoading } = useGetLabelsQuery({});
   const [deleteLabel] = useDeleteLabelMutation();
-  const [updateLabel] = useEditLabelMutation();
 
   const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
@@ -55,24 +53,6 @@ const LabelManage = () => {
 
   const showModal = () => {
     setOpen(true);
-  };
-
-  const handleEditClick = (id: string, rowData: any) => {
-    setEditMode({ ...editMode, [id]: true });
-    setEditRowData(rowData);
-  };
-
-  const handleSaveClick = async (id: string) => {
-    try {
-      const res = await updateLabel({ id, ...editRowData });
-
-      if (res?.data?.success === true) {
-        toast.success("Label Updated");
-        setEditMode({ ...editMode, [id]: false });
-      }
-    } catch (error: any) {
-      toast.error(error?.message);
-    }
   };
 
   const handleInputChange = (e: any, field: string) => {
@@ -150,6 +130,7 @@ const LabelManage = () => {
               </TableCell>
               <TableCell>Youtube Channel</TableCell>
               <TableCell>Youtube URL</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -169,26 +150,9 @@ const LabelManage = () => {
                       row.labelName
                     )}
                   </TableCell>
-                  <TableCell>
-                    {editMode[row._id] ? (
-                      <TextField
-                        value={editRowData.youtubeChannel}
-                        onChange={(e) => handleInputChange(e, "youtubeChannel")}
-                      />
-                    ) : (
-                      row.youtubeChannel
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editMode[row._id] ? (
-                      <TextField
-                        value={editRowData.youtubeUrl}
-                        onChange={(e) => handleInputChange(e, "youtubeUrl")}
-                      />
-                    ) : (
-                      row.youtubeUrl
-                    )}
-                  </TableCell>
+                  <TableCell>{row.youtubeChannel}</TableCell>
+                  <TableCell>{row.youtubeUrl}</TableCell>
+                  <TableCell>{row.approvedStatus}</TableCell>
                   <TableCell>
                     <IconButton
                       onClick={() => handleDelete(row?._id)}

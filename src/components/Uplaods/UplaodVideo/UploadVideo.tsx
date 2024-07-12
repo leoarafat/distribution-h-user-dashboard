@@ -23,7 +23,7 @@ import { genres } from "@/MockData/MockData";
 import { UploadIcon } from "lucide-react";
 import {
   useGetArtistsQuery,
-  useGetLabelsQuery,
+  useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import { useUploadVideoMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +60,7 @@ const UploadVideo = () => {
   const navigate = useNavigate();
   const [uploadVideo, { isLoading }] = useUploadVideoMutation();
 
-  const { data: labelData } = useGetLabelsQuery({});
+  const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =

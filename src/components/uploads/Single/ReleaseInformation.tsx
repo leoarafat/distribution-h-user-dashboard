@@ -16,7 +16,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { genres } from "@/MockData/MockData";
 import {
   useGetArtistsQuery,
-  useGetLabelsQuery,
+  useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import { years } from "@/utils/languages";
 
@@ -70,7 +70,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       };
     }
   });
-  const { data: labelData } = useGetLabelsQuery({});
+  const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
   const artistOptions =
