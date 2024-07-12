@@ -28,6 +28,7 @@ import {
 import { useUploadVideoMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { allLanguage } from "@/utils/languages";
 
 const UploadVideo = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
@@ -215,6 +216,7 @@ const UploadVideo = () => {
                       }}
                       renderInput={(params) => (
                         <TextField
+                          required
                           {...params}
                           fullWidth
                           label={label}
@@ -365,7 +367,12 @@ const UploadVideo = () => {
                   name="videoType"
                   control={control}
                   render={({ field }) => (
-                    <FormControl fullWidth variant="outlined" margin="normal">
+                    <FormControl
+                      fullWidth
+                      required
+                      variant="outlined"
+                      margin="normal"
+                    >
                       <InputLabel>Video Type</InputLabel>
                       <Select {...field} label="Video Type" required>
                         <MenuItem value="music-video">Music Video</MenuItem>
@@ -465,6 +472,7 @@ const UploadVideo = () => {
                     <TextField
                       {...params}
                       fullWidth
+                      required
                       label="Subgenre"
                       variant="outlined"
                       margin="normal"
@@ -473,7 +481,7 @@ const UploadVideo = () => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Controller
                   name="language"
                   control={control}
@@ -488,6 +496,32 @@ const UploadVideo = () => {
                     />
                   )}
                 />
+              </Grid> */}
+              <Grid item xs={12}>
+                <Controller
+                  name="language"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      select
+                      required
+                      variant="outlined"
+                      label="Language"
+                      InputLabelProps={{ shrink: true }}
+                    >
+                      {!field.value && (
+                        <MenuItem value="">Select a language</MenuItem>
+                      )}
+                      {allLanguage.map((language) => (
+                        <MenuItem key={language} value={language}>
+                          {language}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Controller
@@ -500,7 +534,6 @@ const UploadVideo = () => {
                       label="ISRC"
                       variant="outlined"
                       margin="normal"
-                      required
                     />
                   )}
                 />
@@ -516,7 +549,6 @@ const UploadVideo = () => {
                       label="UPC"
                       variant="outlined"
                       margin="normal"
-                      required
                     />
                   )}
                 />
@@ -547,7 +579,7 @@ const UploadVideo = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="Store Release Date"
+                      label="Release Date"
                       variant="outlined"
                       margin="normal"
                       type="date"
