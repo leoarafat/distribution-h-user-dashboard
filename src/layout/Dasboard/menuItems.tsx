@@ -61,16 +61,17 @@ export const menuItems = [
         title: "Videos",
         icon: <VideoIcon size={18} color="white" />,
       },
+
       {
         path: "/pending-videos",
         title: "Pending Videos",
         icon: <PendingReleaseIcon style={{ fontSize: 18, color: "white" }} />,
       },
-      // {
-      //   path: "/correction-videos",
-      //   title: "Correction Videos",
-      //   icon: <ShieldAlert size={18} style={{ color: "white" }} />,
-      // },
+      {
+        path: "/correction-videos",
+        title: "Correction Videos",
+        icon: <ShieldAlert size={18} style={{ color: "white" }} />,
+      },
     ],
   },
   {

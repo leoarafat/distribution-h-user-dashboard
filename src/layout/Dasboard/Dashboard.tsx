@@ -29,15 +29,15 @@ const Dashboard = () => {
   const userVerifiedInfo = useApproved();
   const isVerifiedUser = userInfo?.isVerified;
   const isApproved = userVerifiedInfo?.isApproved;
-  useEffect(() => {
-    if (!isUser) {
-      navigate("/auth/login");
-    }
+  // useEffect(() => {
+  if (!isUser) {
+    navigate("/auth/login");
+  }
 
-    if (!isApproved) {
-      navigate("/pending");
-    }
-  }, [isUser, isApproved, navigate]);
+  if (!isApproved) {
+    navigate("/pending");
+  }
+  // }, [isUser, isApproved, navigate]);
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
 

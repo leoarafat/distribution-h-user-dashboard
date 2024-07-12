@@ -20,8 +20,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function CorrectionMessageModal({ open, setOpen, data }: any) {
+export default function CorrectionVideoMessageModal({
+  open,
+  setOpen,
+  data,
+}: any) {
   const { data: songs, isLoading } = useGetCorrectionContentQuery(data);
+  console.log(songs);
 
   const handleClose = () => {
     setOpen(false);

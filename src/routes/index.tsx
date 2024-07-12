@@ -48,6 +48,7 @@ import ReleasedSongs from "@/components/MyUploads/SuccessRelease/SuccessRelease"
 import SuccessAlbum from "@/components/MyUploads/SuccessAlbum/SuccessAlbum";
 import PendingApprovalMessage from "@/pages/ApprovedMessage";
 import TermsConditionsPage from "@/pages/TermsConditions";
+import CorrectionVideo from "@/components/MyUploads/CorrectionVideo/CorrectionVideo";
 
 const router = createBrowserRouter([
   {
@@ -165,6 +166,14 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <CorrectionMusic />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/my-uploads/correction-videos",
+        element: (
+          <IsVerifiedRoutes>
+            <CorrectionVideo />
           </IsVerifiedRoutes>
         ),
       },

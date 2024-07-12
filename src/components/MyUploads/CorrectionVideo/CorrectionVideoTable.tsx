@@ -10,21 +10,22 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import { useGetCorrectionSingleSongQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import { useGetCorrectionVideoQuery } from "@/redux/slices/myUploads/myUploadsApi";
 import { imageURL } from "@/redux/api/baseApi";
 import Loader from "@/utils/Loader";
 import { ShieldAlert } from "lucide-react";
 import CorrectionMessageModal from "./CorrectionMessageModa";
-const CorrectionSongsTable = ({ searchQuery }: any) => {
+import CorrectionVideoMessageModal from "./CorrectionMessageModa";
+const CorrectionVideosTable = ({ searchQuery }: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [correctionMessage, setCorrectionMessage] = useState(null);
-  const { data: songsData, isLoading } = useGetCorrectionSingleSongQuery({});
+  const { data: songsData, isLoading } = useGetCorrectionVideoQuery({});
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = (id: any) => {
+  const handleClickOpen = (corrections: any) => {
     setOpen(true);
-    setCorrectionMessage(id);
+    setCorrectionMessage(corrections);
   };
 
   const handleChangePage = (event: any, newPage: any) => {
@@ -41,8 +42,8 @@ const CorrectionSongsTable = ({ searchQuery }: any) => {
 
   const filteredRows = rows?.filter(
     (row: any) =>
-      (row.releaseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        row.releaseTitle.toLowerCase().includes(searchQuery.toLowerCase())) &&
+      (row.videoId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        row.title.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (status === "" || row.isApproved === status)
   );
   if (isLoading) {
@@ -79,12 +80,12 @@ const CorrectionSongsTable = ({ searchQuery }: any) => {
                         alt=""
                       />
                     </TableCell>
-                    <TableCell>{row.releaseId}</TableCell>
-                    <TableCell>{row.songType}</TableCell>
-                    <TableCell>{row.releaseTitle}</TableCell>
+                    <TableCell>{row.videoId}</TableCell>
+                    <TableCell>{row.videoType}</TableCell>
+                    <TableCell>{row.title}</TableCell>
 
                     <TableCell>{row.label?.labelName}</TableCell>
-                    <TableCell>{row.releaseDate}</TableCell>
+                    <TableCell>{row.storeReleaseDate}</TableCell>
                     <TableCell>{row.upc ? row.upc : "-"}</TableCell>
 
                     <TableCell>
@@ -112,7 +113,7 @@ const CorrectionSongsTable = ({ searchQuery }: any) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <CorrectionMessageModal
+      <CorrectionVideoMessageModal
         open={open}
         setOpen={setOpen}
         data={correctionMessage}
@@ -121,4 +122,4 @@ const CorrectionSongsTable = ({ searchQuery }: any) => {
   );
 };
 
-export default CorrectionSongsTable;
+export default CorrectionVideosTable;

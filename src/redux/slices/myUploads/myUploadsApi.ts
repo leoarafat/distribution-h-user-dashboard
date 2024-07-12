@@ -138,6 +138,13 @@ export const myUploadsApi = baseApi.injectEndpoints({
 
       providesTags: ["single-audio"],
     }),
+    getCorrectionContent: build.query({
+      query: (id) => ({
+        url: `catalog-music/correction-data/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["single-audio"],
+    }),
   }),
 });
 
@@ -152,4 +159,5 @@ export const {
   useGetStoredSongQuery,
   useGetCountrySongQuery,
   useGetCorrectionMessageQuery,
+  useGetCorrectionContentQuery,
 } = myUploadsApi;

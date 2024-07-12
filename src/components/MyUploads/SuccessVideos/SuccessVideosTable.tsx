@@ -10,7 +10,11 @@ import {
   Paper,
   TablePagination,
 } from "@mui/material";
-import { useGetSuccessVideoQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import {
+  useGetCountrySongQuery,
+  useGetStoredSongQuery,
+  useGetSuccessVideoQuery,
+} from "@/redux/slices/myUploads/myUploadsApi";
 import { imageURL } from "@/redux/api/baseApi";
 import StoreModal from "../Modal/StoreModal";
 import CountryModal from "../Modal/CountryModal";
@@ -18,6 +22,28 @@ import CountryModal from "../Modal/CountryModal";
 import PublicIcon from "@mui/icons-material/Public";
 import StoreIcon from "@mui/icons-material/Store"; //
 import Loader from "@/utils/Loader";
+
+const StoreDataCell = ({ songId }: { songId: string }) => {
+  const { data: storeData, isLoading, isError } = useGetStoredSongQuery(songId);
+
+  if (isLoading) return <span>Loading...</span>;
+  if (isError) return <span>Empty</span>;
+
+  return <span>{storeData?.data ? storeData.data?.length : "Empty"}</span>;
+};
+const CountryDataCell = ({ songId }: { songId: string }) => {
+  const {
+    data: countryData,
+    isLoading,
+    isError,
+  } = useGetCountrySongQuery(songId);
+
+  if (isLoading) return <span>Loading...</span>;
+  if (isError) return <span>Error fetching store data.</span>;
+
+  return <span>{countryData?.data ? countryData.data?.length : "Empty"}</span>;
+};
+
 const SuccessVideosTable = ({ searchQuery }: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -95,18 +121,19 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
                     <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
                     <TableCell
                       className="cursor-pointer"
-                      onClick={handleCountryModal}
+                      onClick={() => handleCountryModal(row._id)}
                     >
                       <PublicIcon style={{ marginRight: 8 }} />
-                      {row?.countries ? row?.countries : "Empty"}
+
+                      <CountryDataCell songId={row._id} />
                     </TableCell>
+
                     <TableCell
                       className="cursor-pointer"
-                      onClick={handleStoreModal}
+                      onClick={() => handleStoreModal(row)}
                     >
-                      {" "}
-                      <StoreIcon style={{ marginRight: 8 }} />{" "}
-                      {row?.store ? row?.store : "Empty"}
+                      <StoreIcon style={{ marginRight: 8 }} />
+                      <StoreDataCell songId={row._id} />
                     </TableCell>
                   </TableRow>
                 ))}

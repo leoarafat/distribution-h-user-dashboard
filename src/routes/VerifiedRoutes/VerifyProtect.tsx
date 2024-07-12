@@ -8,11 +8,11 @@ const IsVerifiedRoutes = ({ children }: { children: JSX.Element }) => {
   const { isVerified, isLoading, isError } = useVerification();
   const token = localStorage.getItem("accessToken");
   useEffect(() => {
-    if (!token) {
-      navigate("/auth/login");
-    }
     if (!isLoading && !isVerified) {
       navigate("/verify");
+    }
+    if (!token) {
+      navigate("/auth/login");
     }
   }, [isLoading, isVerified, navigate, token]);
 

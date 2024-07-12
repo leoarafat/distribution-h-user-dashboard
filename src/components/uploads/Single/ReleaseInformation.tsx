@@ -19,6 +19,7 @@ import {
   useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import { years } from "@/utils/languages";
+import { useSearchParams } from "react-router-dom";
 
 const formats: string[] = ["Single", "Album", "EP"];
 
@@ -72,8 +73,16 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   });
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
+  const [searchParams] = useSearchParams();
+  const draftId = searchParams.get("id");
 
+  useEffect(() => {
+    if (draftId) {
+      // console.log("ID:", draftId);
+    }
+  }, [draftId]);
   const artistOptions =
+    //@ts-ignore
     artistData?.data?.data?.map((artist: any) => ({
       label: artist.primaryArtistName,
       value: artist._id,
