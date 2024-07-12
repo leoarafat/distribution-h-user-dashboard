@@ -132,7 +132,7 @@ export const menuItems = [
       },
       {
         path: "/facebook-claim-request",
-        title: "Facebook Claims",
+        title: "Facebook Claim Release",
         icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
       },
       {
@@ -142,7 +142,7 @@ export const menuItems = [
       },
       {
         path: "/youtube-claim-request",
-        title: "Youtube Claims",
+        title: "Youtube Claim Release",
         icon: <PendingReleaseIcon style={{ fontSize: 20, color: "white" }} />,
       },
       {

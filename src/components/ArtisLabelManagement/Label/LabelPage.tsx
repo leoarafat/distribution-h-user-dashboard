@@ -190,21 +190,6 @@ const LabelManage = () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {editMode[row._id] ? (
-                      <IconButton
-                        aria-label="save"
-                        onClick={() => handleSaveClick(row._id)}
-                      >
-                        <SaveIcon />
-                      </IconButton>
-                    ) : (
-                      <IconButton
-                        aria-label="edit"
-                        onClick={() => handleEditClick(row._id, row)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    )}
                     <IconButton
                       onClick={() => handleDelete(row?._id)}
                       aria-label="delete"

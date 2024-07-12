@@ -344,6 +344,7 @@ import {
   Bar,
   BarChart,
 } from "recharts";
+import { years } from "@/utils/languages";
 
 const AnalyticsPage = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -569,9 +570,11 @@ const AnalyticsPage = () => {
               <MenuItem value={12}>December</MenuItem>
             </Select>
             <Select value={selectedYear} onChange={handleYearChange}>
-              <MenuItem value={2023}>2023</MenuItem>
-              <MenuItem value={2024}>2024</MenuItem>
-              {/* Add more years as needed */}
+              {years?.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
             </Select>
             <IconButton onClick={handlePDFDownload}>
               <PictureAsPdf />

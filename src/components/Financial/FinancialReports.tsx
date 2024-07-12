@@ -13,6 +13,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  IconButton,
 } from "@mui/material";
 import { Pagination } from "@mui/material";
 import {
@@ -29,6 +30,7 @@ import {
   useGetMyFilesQuery,
 } from "@/redux/slices/financial/financialApi";
 import Loader from "@/utils/Loader";
+import jsPDF from "jspdf";
 
 const FinancialReports = () => {
   const [page, setPage] = useState(0);
@@ -101,6 +103,7 @@ const FinancialReports = () => {
       trackTitle: entry.trackTitle,
       stream_quantity: entry.stream_quantity,
       revenue: entry.revenue,
+      currency: "USD",
       country: entry.country,
       releaseTitle: entry.releaseTitle,
       reportingMonth: entry.reportingMonth,
@@ -118,6 +121,7 @@ const FinancialReports = () => {
       { label: "Track Title", key: "trackTitle" },
       { label: "Stream Quantity", key: "stream_quantity" },
       { label: "Revenue", key: "revenue" },
+      { label: "Currency", key: "currency" },
       { label: "Country", key: "country" },
       { label: "Release Title", key: "releaseTitle" },
       { label: "Reporting Month", key: "reportingMonth" },
@@ -134,11 +138,70 @@ const FinancialReports = () => {
         className="btn btn-primary"
         target="_blank"
       >
-        <CsvIcon /> Download CSV
+        <CsvIcon />
       </CSVLink>
     );
   };
+  const handlePDFDownload = (row: any) => {
+    const pdf = new jsPDF();
+    let y = 20;
 
+    // Header
+    pdf.setFontSize(30);
+    pdf.setFont("helvetica", "bold");
+    pdf.text("Be Musix.", 10, y);
+    y += 10;
+    pdf.setFontSize(14);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("Distribution services", 10, y);
+    y += 20;
+    // Date
+    pdf.setFontSize(12);
+    pdf.text(`Date: ${row.createdAt}`, 10, y);
+    y += 10;
+    // Partner greeting
+    pdf.text("Dear partner,", 10, y);
+    y += 10;
+    pdf.text(
+      "Here is the total amount of royalties credited on your account (BE Musix) regarding",
+      10,
+      y
+    );
+    y += 10;
+    pdf.text("the selected filters:", 10, y);
+    y += 20;
+    // Filter information
+    pdf.text("Transaction Details", 10, y);
+    y += 10;
+    // Table header
+    pdf.setFont("helvetica", "bold");
+    // pdf.text("Store", 10, y);
+    pdf.text("Total", 150, y);
+    y += 10;
+    pdf.setFont("helvetica", "normal");
+    // Data row
+    // pdf.text(row.description, 10, y);
+    // pdf.text(String(currentMonthBalance), 150, y);
+    y += 10;
+    y += 10;
+    // Net revenue
+    pdf.text("NET REVENUE", 10, y);
+    pdf.text(String(currentMonthBalance), 150, y);
+    y += 20;
+    // Footer
+    pdf.text(
+      "For any requests, please contact your local support team.",
+      10,
+      y
+    );
+    y += 10;
+    pdf.text("Very best regards,", 10, y);
+    y += 10;
+    pdf.text("Royalty Accounting Team", 10, y);
+    y += 10;
+    pdf.text("Be Musix", 10, y);
+    pdf.save(`transaction_${row._id?.slice(0, 6)}.pdf`);
+  };
   return (
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
@@ -222,7 +285,12 @@ const FinancialReports = () => {
                                 currency: "USD",
                               })}
                         </TableCell>
-                        <TableCell>{handleCSVDownload(row)}</TableCell>
+                        <TableCell>
+                          <IconButton onClick={() => handlePDFDownload(row)}>
+                            <PdfIcon />
+                          </IconButton>
+                          {handleCSVDownload(row)}
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>

@@ -167,6 +167,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Box, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { years } from "@/utils/languages";
 
 const StoreAnalytics = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
@@ -250,7 +251,7 @@ const StoreAnalytics = () => {
             onChange={handleYearChange}
             label="Select Year"
           >
-            {[2023, 2024].map((year) => (
+            {years?.map((year) => (
               <MenuItem key={year} value={year}>
                 {year}
               </MenuItem>
