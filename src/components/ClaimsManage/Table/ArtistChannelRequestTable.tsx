@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState } from "react";
 import {
   Table,
@@ -27,13 +26,15 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  //@ts-ignore
-  const rows = artistChannelData?.data?.data;
 
-  const filteredRows = rows?.filter(
+  const rows = artistChannelData?.data?.data || [];
+
+  // Filter rows based on searchQuery and statusFilter
+  const filteredRows = rows.filter(
     (row: any) =>
       (row.channel_link.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc_2.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        row.approvedStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.topic_link.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (statusFilter === "" || row.approvedStatus === statusFilter)
   );
@@ -56,7 +57,7 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
             </TableHead>
             <TableBody>
               {filteredRows
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: any) => (
                   <TableRow key={index}>
                     <TableCell>{row._id?.slice(5, 9)}</TableCell>
@@ -74,7 +75,7 @@ const ArtistChannelRequestTable = ({ searchQuery, statusFilter }: any) => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredRows?.length}
+          count={filteredRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

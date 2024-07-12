@@ -28,7 +28,7 @@ const ArtistChannelRequest = () => {
   const handleStatusChange = (event: any) => {
     setStatusFilter(event.target.value);
   };
-
+  console.log(statusFilter);
   return (
     <Container maxWidth="lg">
       <Box sx={{ flexGrow: 1, mt: 4 }}>

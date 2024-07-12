@@ -36,7 +36,7 @@ const TikTokClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.isrc.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (statusFilter === "" || row.status === statusFilter)
+      (statusFilter === "" || row.approvedStatus === statusFilter)
   );
 
   return (

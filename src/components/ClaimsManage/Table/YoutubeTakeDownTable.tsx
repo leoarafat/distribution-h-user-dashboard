@@ -35,7 +35,7 @@ const YoutubeTakeDownRequestTable = ({ searchQuery, statusFilter }: any) => {
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.songTitle.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (statusFilter ? row.status === statusFilter : true)
+      (statusFilter ? row.approvedStatus === statusFilter : true)
   );
 
   return (

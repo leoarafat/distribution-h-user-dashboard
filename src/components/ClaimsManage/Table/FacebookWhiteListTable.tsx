@@ -35,7 +35,7 @@ const FacebookWhiteListTable = ({ searchQuery, statusFilter }: any) => {
     (row: any) =>
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.facebookUrl.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (statusFilter ? row.status === statusFilter : true)
+      (statusFilter ? row.approvedStatus === statusFilter : true)
   );
 
   return (

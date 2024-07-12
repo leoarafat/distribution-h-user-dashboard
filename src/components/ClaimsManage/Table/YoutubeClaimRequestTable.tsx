@@ -38,7 +38,9 @@ const YoutubeClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.songTitle.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    .filter((row: any) => (statusFilter ? row.status === statusFilter : true));
+    .filter((row: any) =>
+      statusFilter ? row.approvedStatus === statusFilter : true
+    );
 
   return (
     <>

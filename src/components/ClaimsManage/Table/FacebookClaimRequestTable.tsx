@@ -35,7 +35,7 @@ const FacebookClaimRequestTable = ({ searchQuery, statusFilter }: any) => {
       (row.labelName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.upc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.email.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (statusFilter ? row.status === statusFilter : true)
+      (statusFilter ? row.approvedStatus === statusFilter : true)
   );
 
   return (

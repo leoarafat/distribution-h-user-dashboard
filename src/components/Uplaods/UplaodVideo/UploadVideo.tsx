@@ -326,6 +326,9 @@ const UploadVideo = () => {
                     <h4 className="mb-2 text-sm font-semibold">
                       Upload Your Video
                     </h4>
+                    <p className="mb-2 text-xs">
+                      We recommended mp4 video format & must be without any logo
+                    </p>
                     {videoFile ? (
                       <div className="relative">
                         <video
