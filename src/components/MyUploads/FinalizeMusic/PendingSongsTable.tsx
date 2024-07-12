@@ -65,7 +65,7 @@ const PendingSongsTable = ({ searchQuery, statusFilter }: any) => {
             <TableBody>
               {filteredRows
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any, index: any) => (
+                ?.map((row: any, index: any) => (
                   <React.Fragment key={index}>
                     {row.songType === "album" ? (
                       <>
