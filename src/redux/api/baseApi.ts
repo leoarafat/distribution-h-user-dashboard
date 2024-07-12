@@ -5,18 +5,19 @@ import { authKey } from "@/constants/storageKey";
 import axios from "axios";
 import { tagsList } from "../tag-types";
 const authToken = getFromLocalStorage(authKey);
-
+// http://localhost:7001
+// http://localhost:7001
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.bemusix.com",
+    baseUrl: "http://localhost:7001",
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
   tagTypes: tagsList,
 });
-export const imageURL = "https://api.bemusix.com";
+export const imageURL = "http://localhost:7001";
 export const baseUrl = axios.create({
-  baseURL: "https://api.bemusix.com",
+  baseURL: "http://localhost:7001",
 });
-export const socketURL = "https://api.bemusix.com";
+export const socketURL = "http://localhost:7001";

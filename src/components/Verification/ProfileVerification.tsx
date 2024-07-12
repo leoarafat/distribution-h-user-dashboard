@@ -9,7 +9,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-  const imageURL = "https://api.bemusix.com/";
+  const imageURL = "http://localhost:7001/";
 
   const { data: profileData } = useProfileQuery({});
   const [initialSetupDone, setInitialSetupDone] = useState(false);

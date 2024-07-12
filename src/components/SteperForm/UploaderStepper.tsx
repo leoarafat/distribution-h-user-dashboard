@@ -259,6 +259,10 @@ const UploaderStepperForm = () => {
         toast.success("Song Upload Successful");
         navigate("/my-uploads/pending-track");
       }
+      if (res?.error) {
+        //@ts-ignore
+        toast.error(res?.error?.data?.message);
+      }
     } catch (error: any) {
       console.error("Error in handleSubmit:", error?.message);
       toast.error(error?.message);
@@ -300,14 +304,27 @@ const UploaderStepperForm = () => {
           </Button>
         )}
         {activeStep === steps.length - 1 && (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            style={{ marginLeft: 10 }}
-          >
-            {isLoading ? "Uploading..." : "Let's Upload"}
-          </Button>
+          <>
+            {" "}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ marginLeft: 10 }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Uploading..." : "Let's Upload"}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ marginLeft: 10 }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Uploading..." : "Drafts"}
+            </Button>
+          </>
         )}
       </div>
     </Grid>

@@ -18,7 +18,7 @@ import {
   useGetLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
-const formats: string[] = ["CD", "Vinyl"];
+const formats: string[] = ["Single", "Album", "EP"];
 const years: string[] = Array.from(new Array(50), (val, index) =>
   String(new Date().getFullYear() - index)
 );
@@ -200,7 +200,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
-              required
+              // required
               fullWidth
               label="Version/Subtitle"
               variant="outlined"
@@ -284,7 +284,6 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
                   }
                   renderInput={(params) => (
                     <TextField
-                      required
                       {...params}
                       label="Featuring"
                       variant="outlined"
@@ -446,6 +445,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   label="Production Year"
                   variant="outlined"
@@ -467,7 +467,6 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
-              required
               fullWidth
               label="Catalog Number"
               variant="outlined"

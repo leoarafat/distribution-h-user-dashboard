@@ -1,7 +1,20 @@
 import React, { useEffect } from "react";
 import { TextField, Autocomplete, Container, Grid } from "@mui/material";
+import { allLanguage } from "@/utils/languages";
 
 const TracksInformation = ({ data, onChange }: any) => {
+  if (!data.trackDetails.contentType) {
+    data.trackDetails.contentType = "Audio";
+  }
+  if (!data.trackDetails.price) {
+    data.trackDetails.price = "Low Digital 45 : 1.29$";
+  }
+  if (!data.trackDetails.primaryTrackType) {
+    data.trackDetails.primaryTrackType = "Music";
+  }
+  if (!data.trackDetails.instrumental) {
+    data.trackDetails.instrumental = "No";
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onChange("trackDetails", { ...data.trackDetails, [name]: value });
@@ -130,7 +143,7 @@ const TracksInformation = ({ data, onChange }: any) => {
 
           <Grid item xs={12}>
             <TextField
-              required
+              // required
               fullWidth
               value={data.trackDetails.remixer}
               onChange={handleChange}
@@ -172,7 +185,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Arranger"
               name="arranger"
-              required
+              // required
             />
           </Grid>
 
@@ -184,7 +197,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Producer"
               name="producer"
-              required
+              // required
             />
           </Grid>
 
@@ -196,7 +209,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="Publisher"
               name="publisher"
-              required
+              // required
             />
           </Grid>
 
@@ -208,43 +221,35 @@ const TracksInformation = ({ data, onChange }: any) => {
               variant="outlined"
               label="ISRC"
               name="isrc"
-              required
+              // required
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <Autocomplete
               fullWidth
-              options={["Yes", "No"]}
-              value={data.trackDetails.askToGenerateISRC}
+              options={[
+                "Back: 0.69$ / 5HK$ / 0.98Sg$ / 15NT$ / 300Rp / 9₹",
+                "Front: 1.29$ / 1.48g$ / 30NT$ / 7000Rp / 15₹",
+                "Low Digital 45 : 1.29$",
+              ]}
+              value={data.trackDetails.price}
               onChange={(e, value) =>
                 onChange("trackDetails", {
                   ...data.trackDetails,
-                  askToGenerateISRC: value,
+                  price: value,
                 })
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
-                  label="Ask to generate an ISRC"
+                  label="Price"
                   variant="outlined"
-                  name="askToGenerateISRC"
-                  required
+                  name="price"
                 />
               )}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              value={data.trackDetails.price}
-              onChange={handleChange}
-              variant="outlined"
-              label="Price"
-              required
-              name="price"
             />
           </Grid>
 
@@ -273,21 +278,9 @@ const TracksInformation = ({ data, onChange }: any) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              value={data.trackDetails.previewStart}
-              onChange={handleChange}
-              variant="outlined"
-              label="Preview Start"
-              name="previewStart"
-              required
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
             <Autocomplete
               fullWidth
-              options={["English", "Spanish", "French", "German"]}
+              options={allLanguage}
               value={data.trackDetails.trackTitleLanguage}
               onChange={(e, value) =>
                 onChange("trackDetails", {
@@ -311,7 +304,7 @@ const TracksInformation = ({ data, onChange }: any) => {
           <Grid item xs={12} sm={6}>
             <Autocomplete
               fullWidth
-              options={["English", "Spanish", "French", "German"]}
+              options={allLanguage}
               value={data.trackDetails.lyricsLanguage}
               onChange={(e, value) =>
                 onChange("trackDetails", {
@@ -341,7 +334,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               label="Lyrics"
               multiline
               rows={4}
-              required
+              // required
               name="lyrics"
             />
           </Grid>

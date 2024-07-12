@@ -1,5 +1,3 @@
-// src/hooks/useVerification.ts
-
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
 
 const useVerification = () => {
