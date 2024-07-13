@@ -332,6 +332,9 @@
 // };
 
 // export default UploaderStepperForm;
+
+//!
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useEffect } from "react";
 import {
@@ -347,7 +350,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AudioDetails from "../uploads/Single/AudioDetails";
 import ReleaseInformation from "../uploads/Single/ReleaseInformation";
 import TracksInformation from "../uploads/Single/TracksInformation";
@@ -358,6 +361,7 @@ import {
   useUploadSingleAudioMutation,
 } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
 import toast from "react-hot-toast";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 interface ReleaseInformation {
   cLine: string;
@@ -470,6 +474,11 @@ const UploaderStepperForm = () => {
     useUploadDraftAudioMutation();
 
   const [openModal, setOpenModal] = useState(false);
+  const [conditionsAccepted, setConditionsAccepted] = useState({
+    condition1: false,
+    condition2: false,
+    condition3: false,
+  });
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -492,7 +501,12 @@ const UploaderStepperForm = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
+  const handleAcceptCondition = (condition: string) => (event: any) => {
+    setConditionsAccepted({
+      ...conditionsAccepted,
+      [condition]: event.target.checked,
+    });
+  };
   const handleSubmit = async () => {
     try {
       const formDataToSend = new FormData();
@@ -733,32 +747,102 @@ const UploaderStepperForm = () => {
           </>
         )}
       </div>
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>Terms and Conditions</DialogTitle>
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Typography variant="h6">Terms & Conditions</Typography>
+          <Typography variant="subtitle1">
+            Please confirm that you have understood and that you agree to the
+            following Terms & Conditions, and delivery guidelines.
+          </Typography>
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please read and accept our terms and conditions before uploading
-            your music.
-            {/* Insert your terms and conditions text here */}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-            tincidunt, nisl eget vestibulum vehicula, nunc mi faucibus urna, eu
-            fringilla lacus orci ac nulla. Etiam at justo non ante bibendum
-            convallis. Nullam vel nulla quis ipsum lobortis lacinia.
-          </DialogContentText>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition1}
+                onChange={handleAcceptCondition("condition1")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the ISRC Terms & Conditions.
+                <Typography variant="body2">
+                  If you asked Be Musix to generate your ISRC codes, you hereby
+                  agree to{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Be Musix's conditions for generating ISRCs.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition2}
+                onChange={handleAcceptCondition("condition2")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the Youtube Content Guidelines.
+                <Typography variant="body2">
+                  Some content cannot be safely distributed and monetized on the
+                  platform. Please be sure you have read and follow the{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Youtube Content Guidelines.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition3}
+                onChange={handleAcceptCondition("condition3")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the Be Musix Content Delivery
+                Guidelines for Audio Stores.
+                <Typography variant="body2">
+                  Some content is not eligible to be distributed on Apple Music,
+                  Spotify, and Youtube Audio Fingerprint. Please be sure you
+                  have read and understand the{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Be Musix Content Delivery Guidelines for Audio Stores.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
+          <Button onClick={handleCloseModal} color="primary" variant="outlined">
             Cancel
           </Button>
           <Button
-            disabled={isLoading}
-            onClick={() => {
-              handleCloseModal();
-              handleSubmit();
-            }}
+            onClick={handleSubmit}
             color="primary"
+            variant="contained"
+            disabled={
+              !conditionsAccepted.condition1 ||
+              !conditionsAccepted.condition2 ||
+              !conditionsAccepted.condition3 ||
+              isLoading
+            }
           >
-            Accept and Upload
+            {isLoading ? "Uploading..." : "Agree and Submit"}
           </Button>
         </DialogActions>
       </Dialog>

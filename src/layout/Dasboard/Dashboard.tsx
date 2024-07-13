@@ -34,9 +34,9 @@ const Dashboard = () => {
     navigate("/auth/login");
   }
 
-  if (!isApproved) {
-    navigate("/pending");
-  }
+  // if (!isApproved) {
+  //   navigate("/pending");
+  // }
   // }, [isUser, isApproved, navigate]);
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;

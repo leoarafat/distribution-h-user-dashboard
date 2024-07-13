@@ -534,7 +534,6 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               </span>
             </Tooltip>
             <TextField
-              required
               fullWidth
               label="UPC"
               variant="outlined"
