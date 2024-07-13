@@ -3,7 +3,7 @@ import axios from "axios";
 export const getArtistsByIds = async (ids: string[]) => {
   try {
     const response = await axios.post(
-      `http://localhost:7001/primary-artist/all-by-ids`,
+      `http://api.bemusix.com/primary-artist/all-by-ids`,
       {
         ids,
       },
