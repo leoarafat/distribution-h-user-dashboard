@@ -104,7 +104,7 @@ const LastSixApproved = () => {
                       />
                     </TableCell>
                     <TableCell>{track.title}</TableCell>
-                    <TableCell>{track.label.labelName}</TableCell>
+                    <TableCell>{track?.label?.labelName}</TableCell>
                     <TableCell>{track.upc}</TableCell>
                   </TableRow>
                 ))}

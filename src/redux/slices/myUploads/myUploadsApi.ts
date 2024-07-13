@@ -145,6 +145,13 @@ export const myUploadsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["single-audio"],
     }),
+    getDraftsSong: build.query({
+      query: (id) => ({
+        url: `single-music/drafts/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["single-audio"],
+    }),
   }),
 });
 
@@ -160,4 +167,5 @@ export const {
   useGetCountrySongQuery,
   useGetCorrectionMessageQuery,
   useGetCorrectionContentQuery,
+  useGetDraftsSongQuery,
 } = myUploadsApi;

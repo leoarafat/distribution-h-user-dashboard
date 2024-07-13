@@ -21,6 +21,7 @@ const TracksInformation = ({ data, onChange }: any) => {
   if (!data.trackDetails.instrumental) {
     data.trackDetails.instrumental = "No";
   }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     onChange("trackDetails", { ...data.trackDetails, [name]: value });

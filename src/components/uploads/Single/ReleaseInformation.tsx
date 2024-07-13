@@ -20,6 +20,7 @@ import {
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import { years } from "@/utils/languages";
 import { useSearchParams } from "react-router-dom";
+import { useGetDraftsSongQuery } from "@/redux/slices/myUploads/myUploadsApi";
 
 const formats: string[] = ["Single", "Album", "EP"];
 
@@ -73,14 +74,15 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   });
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
-  const [searchParams] = useSearchParams();
-  const draftId = searchParams.get("id");
+  // const [searchParams] = useSearchParams();
+  // const draftId = searchParams.get("id");
+  // const { data: draftSong } = useGetDraftsSongQuery(draftId);
 
-  useEffect(() => {
-    if (draftId) {
-      // console.log("ID:", draftId);
-    }
-  }, [draftId]);
+  // useEffect(() => {
+  //   if (draftSong?.data) {
+  //     setFormData(draftSong?.data);
+  //   }
+  // }, [draftSong]);
   const artistOptions =
     //@ts-ignore
     artistData?.data?.data?.map((artist: any) => ({
@@ -234,7 +236,7 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               onChange={handleChange}
             />
           </Grid>
-          {formData.primaryArtists.map((artist, index) => (
+          {formData?.primaryArtists?.map((artist, index) => (
             <Grid
               item
               xs={12}
@@ -277,11 +279,11 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               <Grid item className="flex justify-between">
                 <IconButton
                   onClick={() => removePrimaryArtist(index)}
-                  disabled={formData.primaryArtists.length === 1}
+                  disabled={formData?.primaryArtists?.length === 1}
                 >
                   <RemoveCircleOutlineIcon />
                 </IconButton>
-                {index === formData.primaryArtists.length - 1 && (
+                {index === formData?.primaryArtists?.length - 1 && (
                   <IconButton onClick={addPrimaryArtist}>
                     <AddCircleOutlineIcon />
                   </IconButton>
@@ -289,7 +291,7 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               </Grid>
             </Grid>
           ))}
-          {formData.featuringArtists.map((artist, index) => (
+          {formData?.featuringArtists?.map((artist, index) => (
             <Grid
               item
               xs={12}
@@ -534,6 +536,7 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               </span>
             </Tooltip>
             <TextField
+              required
               fullWidth
               label="UPC"
               variant="outlined"
