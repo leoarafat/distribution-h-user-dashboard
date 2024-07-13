@@ -365,7 +365,7 @@ const AnalyticsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://api.bemusix.com/statics/analytics?month=${month}&year=${year}`,
+        `https://backend.bemusix.com/statics/analytics?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

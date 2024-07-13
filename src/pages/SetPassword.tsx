@@ -54,7 +54,7 @@ const SetPassword = () => {
 
     try {
       const response = await axios.post(
-        `https://api.bemusix.com/auth/reset-password`,
+        `https://backend.bemusix.com/auth/reset-password`,
         { newPassword: password, email },
         {
           headers: {
