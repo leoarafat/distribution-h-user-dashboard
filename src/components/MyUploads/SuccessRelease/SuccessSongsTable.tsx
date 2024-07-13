@@ -16,7 +16,7 @@ import {
   useGetStoredSongQuery,
   useGetSuccessSingleSongQuery,
 } from "@/redux/slices/myUploads/myUploadsApi";
-import { imageURL } from "@/redux/api/baseApi";
+
 import StoreModal from "../Modal/StoreModal";
 import CountryModal from "../Modal/CountryModal";
 
@@ -24,6 +24,10 @@ import PublicIcon from "@mui/icons-material/Public";
 import StoreIcon from "@mui/icons-material/Store"; //
 import Loader from "@/utils/Loader";
 import { countCountryOccurrences } from "@/utils/countCountryOccurrences";
+import { EyeIcon } from "lucide-react";
+import MusicDetailsModal from "./SingleMusicDetailsModa";
+import { imageURL } from "@/redux/api/baseApi";
+import AlbumDetailsModal from "../SuccessAlbum/AlbumDetailsModal";
 
 const StoreDataCell = ({ songId }: { songId: string }) => {
   const { data: storeData, isLoading, isError } = useGetStoredSongQuery(songId);
@@ -52,6 +56,22 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [open, setOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [albumOpenModal, setAlbumOpenModal] = useState(false);
+  const [songData, setSongData] = useState();
+  const [albumData, setAlbumData] = useState();
+
+  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseAlbumModal = () => setAlbumOpenModal(false);
+
+  const handleViewDetails = (data: any) => {
+    setSongData(data);
+    setOpenModal(true);
+  };
+  const handleAlbumViewDetails = (data: any) => {
+    setAlbumData(data);
+    setAlbumOpenModal(true);
+  };
 
   const handleStoreModal = async (payload: any) => {
     setOpen(true);
@@ -109,6 +129,7 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                 <TableCell>ISRC</TableCell>
                 <TableCell>Territories</TableCell>
                 <TableCell>Store</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
 
@@ -151,6 +172,12 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                             <StoreIcon style={{ marginRight: 8 }} />
                             <StoreDataCell songId={row._id} />
                           </TableCell>
+                          <TableCell>
+                            <EyeIcon
+                              className="cursor-pointer"
+                              onClick={() => handleAlbumViewDetails(row)}
+                            />
+                          </TableCell>
                         </TableRow>
                       </>
                     ) : (
@@ -185,6 +212,12 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
                           <StoreIcon style={{ marginRight: 8 }} />
                           <StoreDataCell songId={row._id} />
                         </TableCell>
+                        <TableCell>
+                          <EyeIcon
+                            className="cursor-pointer"
+                            onClick={() => handleViewDetails(row)}
+                          />
+                        </TableCell>
                       </TableRow>
                     )}
                   </React.Fragment>
@@ -207,6 +240,16 @@ const SuccessSongsTable = ({ searchQuery }: any) => {
         open={countryOpen}
         setOpen={setCountryOpen}
         selectedCountry={selectedCountry}
+      />
+      <MusicDetailsModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        data={songData}
+      />
+      <AlbumDetailsModal
+        open={albumOpenModal}
+        onClose={handleCloseAlbumModal}
+        audioDetails={albumData}
       />
     </>
   );
