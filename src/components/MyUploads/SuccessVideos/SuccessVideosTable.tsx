@@ -22,6 +22,8 @@ import CountryModal from "../Modal/CountryModal";
 import PublicIcon from "@mui/icons-material/Public";
 import StoreIcon from "@mui/icons-material/Store"; //
 import Loader from "@/utils/Loader";
+import { EyeIcon } from "lucide-react";
+import VideoDetailsModal from "./VideoDetailsModal";
 
 const StoreDataCell = ({ songId }: { songId: string }) => {
   const { data: storeData, isLoading, isError } = useGetStoredSongQuery(songId);
@@ -51,7 +53,8 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [open, setOpen] = useState(false);
   const [countryOpen, setCountryOpen] = useState(false);
-
+  const [openModal, setOpenModal] = useState(false);
+  const [songData, setSongData] = useState();
   const handleStoreModal = async (payload: any) => {
     setOpen(true);
     setSelectedAlbum(payload);
@@ -59,6 +62,11 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
   const handleCountryModal = async (payload: any) => {
     setCountryOpen(true);
     setSelectedCountry(payload);
+  };
+  const handleCloseModal = () => setOpenModal(false);
+  const handleViewDetails = (data: any) => {
+    setSongData(data);
+    setOpenModal(true);
   };
   const { data: videosData, isLoading } = useGetSuccessVideoQuery({});
 
@@ -98,6 +106,7 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
                 <TableCell>ISRC</TableCell>
                 <TableCell>Territories</TableCell>
                 <TableCell>Store</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -135,6 +144,12 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
                       <StoreIcon style={{ marginRight: 8 }} />
                       <StoreDataCell songId={row._id} />
                     </TableCell>
+                    <TableCell>
+                      <EyeIcon
+                        className="cursor-pointer"
+                        onClick={() => handleViewDetails(row)}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -155,6 +170,11 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
         open={countryOpen}
         setOpen={setCountryOpen}
         selectedCountry={selectedCountry}
+      />
+      <VideoDetailsModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        data={songData}
       />
     </>
   );
