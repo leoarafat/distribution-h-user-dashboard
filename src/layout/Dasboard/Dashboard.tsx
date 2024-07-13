@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Avatar, Badge, Layout, Menu } from "antd";
+import { Avatar, Badge, Drawer, Layout, Menu } from "antd";
 import { Bell, LogOut } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
@@ -9,9 +9,11 @@ import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { imageURL } from "@/redux/api/baseApi";
 import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
-import { menuItems } from "./menuItems";
+import { ListCollapse } from "lucide-react";
 import useApproved from "@/utils/isApproved";
-import { useEffect } from "react";
+import "./Dashboard.css";
+import { menuItems } from "./menuItems";
+import { useEffect, useState } from "react";
 const { Header, Sider, Content } = Layout;
 
 const { SubMenu } = Menu;
@@ -29,15 +31,18 @@ const Dashboard = () => {
   const userVerifiedInfo = useApproved();
   const isVerifiedUser = userInfo?.isVerified;
   const isApproved = userVerifiedInfo?.isApproved;
-  // useEffect(() => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   if (!isUser) {
     navigate("/auth/login");
   }
 
-  // if (!isApproved) {
-  //   navigate("/pending");
-  // }
-  // }, [isUser, isApproved, navigate]);
+  useEffect(() => {
+    if (!isApproved) {
+      navigate("/pending");
+    }
+  }, []);
+
   const { data: userData } = useMyProfileQuery({});
   const myProfile = userData?.data;
 
@@ -45,7 +50,13 @@ const Dashboard = () => {
     removeUserInfo(authKey);
     navigate("/auth/login");
   };
+  const handleToggle = () => {
+    setCollapsed(!collapsed);
+  };
 
+  const handleDrawerToggle = () => {
+    setDrawerVisible(!drawerVisible);
+  };
   // Add the logout item
   const logoutItem = {
     key: "logout",
@@ -75,6 +86,7 @@ const Dashboard = () => {
         <Link to={"/"}>
           <img src={logo} alt="" className="mx-auto  mb-8 mt-5" />
         </Link>
+
         <Menu
           mode="inline"
           style={{ background: "#03008D", color: "white" }}
@@ -183,3 +195,106 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// import { Avatar, Badge, Drawer, Layout, Menu } from "antd";
+// import { Bell, LogOut } from "lucide-react";
+// import { Link, Outlet, useNavigate } from "react-router-dom";
+// import { isLoggedIn, removeUserInfo } from "@/redux/services/auth.service";
+// import { authKey } from "@/constants/storageKey";
+// import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
+// import { imageURL } from "@/redux/api/baseApi";
+// import { CiMusicNote1 } from "react-icons/ci";
+// import useVerification from "@/utils/isVerified";
+// import useApproved from "@/utils/isApproved";
+// import "./Dashboard.css";
+
+// import SideBar from "./Sidebar";
+// const { Header, Content } = Layout;
+
+// const Dashboard = () => {
+//   const navigate = useNavigate();
+//   const isUser = isLoggedIn();
+//   const userInfo = useVerification();
+//   const userVerifiedInfo = useApproved();
+//   const isVerifiedUser = userInfo?.isVerified;
+//   const isApproved = userVerifiedInfo?.isApproved;
+
+//   if (!isUser) {
+//     navigate("/auth/login");
+//   }
+
+//   if (!isApproved) {
+//     navigate("/pending");
+//   }
+
+//   const { data: userData } = useMyProfileQuery({});
+//   const myProfile = userData?.data;
+
+//   const handleLogout = () => {
+//     removeUserInfo(authKey);
+//     navigate("/auth/login");
+//   };
+
+//   const logoutItem = {
+//     key: "logout",
+//     title: "Logout",
+//     icon: <LogOut size={18} />,
+//     onClick: handleLogout,
+//   };
+
+//   return (
+//     <Layout>
+//       <SideBar />
+//       <Layout>
+//         <Header
+//           style={{
+//             background: "#03008D",
+//             height: "80px",
+//             display: "flex",
+//             justifyContent: "flex-end",
+//           }}
+//         >
+//           <div className="flex items-center gap-5">
+//             {isVerifiedUser && (
+//               <>
+//                 <div className="flex items-center gap-2">
+//                   <Link to={"/settings/profile"}>
+//                     <Avatar
+//                       style={{
+//                         width: "40px",
+//                         height: "40px",
+//                         backgroundColor: "#87d068",
+//                       }}
+//                       src={`${imageURL}/${myProfile?.image}`}
+//                     />
+//                   </Link>
+//                   <Link
+//                     className="flex justify-between items-center"
+//                     to={"/settings/profile"}
+//                   >
+//                     <h2 className="text-lg text-white">{myProfile?.name}</h2>
+//                     <p className="text-small text-white">
+//                       ({myProfile?.clientId})
+//                     </p>
+//                   </Link>
+//                 </div>
+//               </>
+//             )}
+//           </div>
+//         </Header>
+//         <Content
+//           style={{
+//             background: "#cec9ff",
+//             height: `calc(100vh - 80px)`,
+//           }}
+//         >
+//           <div className="bg-white h-[calc(100vh-100px)] m-2 rounded p-3 overflow-y-auto">
+//             <Outlet />
+//           </div>
+//         </Content>
+//       </Layout>
+//     </Layout>
+//   );
+// };
+
+// export default Dashboard;

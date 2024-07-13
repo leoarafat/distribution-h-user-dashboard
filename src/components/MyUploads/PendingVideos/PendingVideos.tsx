@@ -21,7 +21,7 @@ const PendingVideos = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <>
       <Box sx={{ flexGrow: 1, mt: 4 }}>
         <Paper elevation={3} sx={{ borderRadius: 2, p: 2 }}>
           <AppBar
@@ -69,7 +69,7 @@ const PendingVideos = () => {
           <PendingVideosTable searchQuery={searchQuery} />
         </Paper>
       </Box>
-    </Container>
+    </>
   );
 };
 
