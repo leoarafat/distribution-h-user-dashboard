@@ -74,15 +74,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   });
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
-  // const [searchParams] = useSearchParams();
-  // const draftId = searchParams.get("id");
-  // const { data: draftSong } = useGetDraftsSongQuery(draftId);
 
-  // useEffect(() => {
-  //   if (draftSong?.data) {
-  //     setFormData(draftSong?.data);
-  //   }
-  // }, [draftSong]);
   const artistOptions =
     //@ts-ignore
     artistData?.data?.data?.map((artist: any) => ({
