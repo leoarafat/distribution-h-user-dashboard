@@ -180,7 +180,7 @@ const StoreAnalytics = () => {
   const fetchData = async (month, year) => {
     try {
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/financial-by-store`,
+        `http://localhost:7001/statics/financial-by-store`,
         {
           params: {
             month,

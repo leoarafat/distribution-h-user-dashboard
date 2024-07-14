@@ -74,6 +74,10 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   });
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
+  const [searchParams] = useSearchParams();
+  const draftId = searchParams.get("id");
+
+  const { data: draftData } = useGetDraftsSongQuery(draftId);
 
   const artistOptions =
     //@ts-ignore
@@ -93,6 +97,9 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
     localStorage.setItem("releaseFormData", JSON.stringify(formData));
     onChange("releaseInformation", formData);
   }, [formData]);
+  // useEffect(() => {
+  //   setFormData(draftData?.data);
+  // }, [draftData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -528,7 +535,6 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               </span>
             </Tooltip>
             <TextField
-              required
               fullWidth
               label="UPC"
               variant="outlined"

@@ -16,6 +16,13 @@ import {
   Box,
   Container,
   Autocomplete,
+  Dialog,
+  DialogTitle,
+  Typography,
+  DialogContent,
+  FormControlLabel,
+  Checkbox,
+  DialogActions,
 } from "@mui/material";
 import { Add, Remove, PhotoCamera, YouTube } from "@mui/icons-material";
 import { MdClose } from "react-icons/md";
@@ -26,7 +33,7 @@ import {
   useGetApprovedLabelsQuery,
 } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 import { useUploadVideoMutation } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { allLanguage } from "@/utils/languages";
 
@@ -51,7 +58,12 @@ const UploadVideo = () => {
       storeReleaseDate: "",
     },
   });
-
+  const [openModal, setOpenModal] = useState(false);
+  const [conditionsAccepted, setConditionsAccepted] = useState({
+    condition1: false,
+    condition2: false,
+    condition3: false,
+  });
   const [thumbnail, setThumbnail] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnailError, setThumbnailError] = useState("");
@@ -76,8 +88,28 @@ const UploadVideo = () => {
       label: label.labelName,
       value: label._id,
     })) || [];
-
+  const handleSubmitWithConditions = (data: any) => {
+    if (
+      conditionsAccepted.condition1 &&
+      conditionsAccepted.condition2 &&
+      conditionsAccepted.condition3
+    ) {
+      onSubmit(data);
+    } else {
+      setOpenModal(true);
+    }
+  };
   const onSubmit = async (data: any) => {
+    if (
+      !conditionsAccepted.condition1 ||
+      !conditionsAccepted.condition2 ||
+      !conditionsAccepted.condition3
+    ) {
+      setOpenModal(true);
+      return;
+    }
+    console.log(conditionsAccepted);
+
     try {
       const formData = new FormData();
       if (videoFile) {
@@ -113,7 +145,19 @@ const UploadVideo = () => {
       console.log(error?.message);
     }
   };
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  const handleAcceptCondition = (condition: string) => (event: any) => {
+    setConditionsAccepted({
+      ...conditionsAccepted,
+      [condition]: event.target.checked,
+    });
+  };
   const handleGenreChange = (event: any, value: any) => {
     setSelectedGenre(value);
     setSelectedSubgenre("");
@@ -270,7 +314,7 @@ const UploadVideo = () => {
     <Container>
       <Card>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleSubmitWithConditions)}>
             <Grid container spacing={3}>
               <div className="flex justify-around items-center w-full p-3">
                 <div className="image_upload flex items-center justify-center flex-col p-3">
@@ -607,6 +651,105 @@ const UploadVideo = () => {
           </form>
         </CardContent>
       </Card>
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Typography variant="h6">Terms & Conditions</Typography>
+          <Typography variant="subtitle1">
+            Please confirm that you have understood and that you agree to the
+            following Terms & Conditions, and delivery guidelines.
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition1}
+                onChange={handleAcceptCondition("condition1")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the ISRC Terms & Conditions.
+                <Typography variant="body2">
+                  If you asked Be Musix to generate your ISRC codes, you hereby
+                  agree to{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Be Musix's conditions for generating ISRCs.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition2}
+                onChange={handleAcceptCondition("condition2")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the Youtube Content Guidelines.
+                <Typography variant="body2">
+                  Some content cannot be safely distributed and monetized on the
+                  platform. Please be sure you have read and follow the{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Youtube Content Guidelines.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={conditionsAccepted.condition3}
+                onChange={handleAcceptCondition("condition3")}
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body1">
+                I understand and agree to the Be Musix Content Delivery
+                Guidelines for Audio Stores.
+                <Typography variant="body2">
+                  Some content is not eligible to be distributed on Apple Music,
+                  Spotify, and Youtube Audio Fingerprint. Please be sure you
+                  have read and understand the{" "}
+                  <Link to="https://bemusix.com/" target="_blank">
+                    Be Musix Content Delivery Guidelines for Audio Stores.
+                  </Link>
+                </Typography>
+              </Typography>
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit(handleSubmitWithConditions)}
+            color="primary"
+            variant="contained"
+            disabled={
+              !conditionsAccepted.condition1 ||
+              !conditionsAccepted.condition2 ||
+              !conditionsAccepted.condition3 ||
+              isLoading
+            }
+          >
+            {isLoading ? "Uploading..." : "Agree and Submit"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

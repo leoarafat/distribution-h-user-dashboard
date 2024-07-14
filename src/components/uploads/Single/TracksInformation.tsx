@@ -362,7 +362,6 @@ const TracksInformation = ({ data, onChange }: any) => {
                   label="Parental Advisory"
                   variant="outlined"
                   name="parentalAdvisory"
-                  required
                 />
               )}
             />
