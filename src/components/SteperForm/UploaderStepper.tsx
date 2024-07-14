@@ -361,7 +361,9 @@ import {
   useUploadSingleAudioMutation,
 } from "@/redux/slices/uploadVideoAudio/uploadVideoAudioApi";
 import toast from "react-hot-toast";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, LinearProgress } from "@mui/material";
+import axios from "axios";
+import { imageURL } from "@/redux/api/baseApi";
 
 interface ReleaseInformation {
   cLine: string;
@@ -469,6 +471,7 @@ const UploaderStepperForm = () => {
     countries: [],
     previewPage: {},
   });
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadAudio, { isLoading }] = useUploadSingleAudioMutation();
   const [uploadDrafts, { isLoading: draftsLoading }] =
     useUploadDraftAudioMutation();
@@ -507,7 +510,9 @@ const UploaderStepperForm = () => {
       [condition]: event.target.checked,
     });
   };
+  //!
   const handleSubmit = async () => {
+    setOpenModal(false);
     try {
       const formDataToSend = new FormData();
 
@@ -592,22 +597,36 @@ const UploaderStepperForm = () => {
 
       formDataToSend.append("countries", formData.countries.join(","));
 
-      const res = await uploadAudio(formDataToSend);
-
-      if (res?.data?.success === true) {
-        localStorage.removeItem("releaseFormData");
-        localStorage.removeItem("tracksInformation");
-        toast.success("Song Upload Successful");
-        navigate("/my-uploads/pending-track");
-      } else if (res?.error) {
-        //@ts-ignore
-        toast.error(res?.error?.data?.message);
-      }
+      // const res = await uploadAudio(formDataToSend);
+      const res = await axios
+        .post(`${imageURL}/single-music/upload`, formDataToSend, {
+          onUploadProgress: (progressEvent) => {
+            const progress = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(progress);
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then(({ data }) => {
+          if (data?.success === true) {
+            localStorage.removeItem("releaseFormData");
+            localStorage.removeItem("tracksInformation");
+            toast.success("Song Upload Successful");
+            navigate("/my-uploads/pending-track");
+          }
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.message);
+        });
     } catch (error: any) {
       console.error("Error in handleSubmit:", error?.message);
       toast.error(error?.message);
     }
   };
+  //!
   const handleDrafts = async () => {
     try {
       const formDataToSend = new FormData();
@@ -726,7 +745,11 @@ const UploaderStepperForm = () => {
         )}
         {activeStep === steps.length - 1 && (
           <>
-            {" "}
+            <LinearProgress
+              className="py-2 my-2"
+              variant="determinate"
+              value={uploadProgress}
+            />{" "}
             <Button
               variant="contained"
               color="primary"

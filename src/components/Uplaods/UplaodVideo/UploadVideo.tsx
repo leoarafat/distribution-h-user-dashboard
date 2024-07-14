@@ -770,7 +770,6 @@ import {
   Card,
   CardContent,
   IconButton,
-  Box,
   Container,
   Autocomplete,
   Dialog,
