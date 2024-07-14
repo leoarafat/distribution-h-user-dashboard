@@ -24,7 +24,7 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["single-audio"],
+      invalidatesTags: ["drafts"],
     }),
     uploadAlbum: build.mutation({
       query: (payload) => ({
@@ -49,7 +49,7 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: ["bank", "mobile-bank", "pioneer"],
+      providesTags: ["video"],
     }),
     getDrafts: build.query({
       query: (arg: Record<string, any>) => {
@@ -65,7 +65,7 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
           meta,
         };
       },
-      providesTags: ["bank", "mobile-bank", "pioneer"],
+      providesTags: ["drafts"],
     }),
   }),
 });

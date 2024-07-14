@@ -35,4 +35,5 @@ export const tagsList = [
   "news",
   "store",
   "note",
+  "drafts",
 ] as const;

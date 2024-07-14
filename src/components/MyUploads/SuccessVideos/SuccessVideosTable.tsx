@@ -130,7 +130,7 @@ const SuccessVideosTable = ({ searchQuery }: any) => {
                     <TableCell>{row.isrc ? row.isrc : "-"}</TableCell>
                     <TableCell
                       className="cursor-pointer"
-                      onClick={() => handleCountryModal(row)}
+                      onClick={() => handleCountryModal(row?._id)}
                     >
                       <PublicIcon style={{ marginRight: 8 }} />
 

@@ -32,7 +32,7 @@ const CountryModal: React.FC<CountryModalProps> = ({
   const [countries, setCountries] = useState([]);
   const { data: countryData, isLoading } =
     useGetCountrySongQuery(selectedCountry);
-
+  console.log(countryData);
   // State to hold the flag data from restcountries API
   const [flagData, setFlagData] = useState([]);
 
