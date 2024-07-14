@@ -82,7 +82,7 @@ const LatestVideo = () => {
                 <TableCell>Thumbnail</TableCell>
                 <TableCell>Video Name</TableCell>
                 <TableCell>Label Name</TableCell>
-                <TableCell>Store</TableCell>
+
                 {/* <TableCell align="right">Actions</TableCell> */}
               </TableRow>
             </TableHead>
@@ -104,7 +104,6 @@ const LatestVideo = () => {
                   </TableCell>
                   <TableCell>{track.title}</TableCell>
                   <TableCell>{track?.label?.labelName}</TableCell>
-                  <TableCell>{track.upc}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

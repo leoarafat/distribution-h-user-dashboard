@@ -84,7 +84,6 @@ const LastSixApproved = () => {
                   <TableCell>Cover Image</TableCell>
                   <TableCell>Song Title</TableCell>
                   <TableCell>Label Name</TableCell>
-                  <TableCell>UPC</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -105,7 +104,6 @@ const LastSixApproved = () => {
                     </TableCell>
                     <TableCell>{track.title}</TableCell>
                     <TableCell>{track?.label?.labelName}</TableCell>
-                    <TableCell>{track.upc}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
