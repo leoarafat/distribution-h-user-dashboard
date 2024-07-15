@@ -798,7 +798,11 @@ const UploaderStepperForm = () => {
                 <Typography variant="body2">
                   If you asked Be Musix to generate your ISRC codes, you hereby
                   agree to{" "}
-                  <Link to="https://bemusix.com/" target="_blank">
+                  <Link
+                    className="text-blue-600 underline"
+                    to="https://bemusix.com/"
+                    target="_blank"
+                  >
                     Be Musix's conditions for generating ISRCs.
                   </Link>
                 </Typography>
@@ -819,7 +823,11 @@ const UploaderStepperForm = () => {
                 <Typography variant="body2">
                   Some content cannot be safely distributed and monetized on the
                   platform. Please be sure you have read and follow the{" "}
-                  <Link to="https://bemusix.com/" target="_blank">
+                  <Link
+                    className="text-blue-600 underline"
+                    to="https://bemusix.com/"
+                    target="_blank"
+                  >
                     Youtube Content Guidelines.
                   </Link>
                 </Typography>
@@ -842,7 +850,11 @@ const UploaderStepperForm = () => {
                   Some content is not eligible to be distributed on Apple Music,
                   Spotify, and Youtube Audio Fingerprint. Please be sure you
                   have read and understand the{" "}
-                  <Link to="https://bemusix.com/" target="_blank">
+                  <Link
+                    className="text-blue-600 underline"
+                    to="https://bemusix.com/"
+                    target="_blank"
+                  >
                     Be Musix Content Delivery Guidelines for Audio Stores.
                   </Link>
                 </Typography>
