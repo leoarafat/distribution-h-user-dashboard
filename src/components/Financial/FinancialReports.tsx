@@ -25,11 +25,7 @@ import {
 } from "@mui/icons-material";
 import { CSVLink } from "react-csv";
 
-import {
-  useGetMyBalanceQuery,
-  useGetMyFilesQuery,
-  useGetMyFullMonthBalanceQuery,
-} from "@/redux/slices/financial/financialApi";
+import { useGetMyFilesQuery } from "@/redux/slices/financial/financialApi";
 import Loader from "@/utils/Loader";
 import jsPDF from "jspdf";
 
@@ -39,24 +35,11 @@ const FinancialReports = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortedColumn, setSortedColumn] = useState("date");
   const [sortDirection, setSortDirection] = useState("asc");
-  const { data: myAllTimeBalance } = useGetMyFullMonthBalanceQuery({});
+
   const { data: filesData } = useGetMyFilesQuery({});
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
-
-  const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
-  // console.log(myAllTimeBalance);
-  useEffect(() => {
-    if (myBalance) {
-      setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
-    }
-    if (myAllTimeBalance) {
-      setFullMonthBalance(myAllTimeBalance.data?.clientTotalBalance);
-    }
-  }, [myAllTimeBalance, myBalance]);
-  const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
-  const [currentFullBalance, setFullMonthBalance] = useState(null);
 
   if (!filesData?.data) {
     return <Loader />;
@@ -192,7 +175,7 @@ const FinancialReports = () => {
     y += 10;
     // Net revenue
     pdf.text("NET REVENUE", 10, y);
-    pdf.text(String(currentMonthBalance), 150, y);
+    pdf.text(String(convertToUSD(row.totalAmount)), 150, y);
     y += 20;
     // Footer
     pdf.text(
@@ -208,6 +191,11 @@ const FinancialReports = () => {
     pdf.text("Be Musix", 10, y);
     pdf.save(`transaction_${row._id?.slice(0, 6)}.pdf`);
   };
+  const EUR_TO_USD_RATE = 1.1;
+  const convertToUSD = (amountInEUR: number) => {
+    return amountInEUR * EUR_TO_USD_RATE;
+  };
+
   return (
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
@@ -259,6 +247,7 @@ const FinancialReports = () => {
                           <ArrowUpwardIcon />
                         ))}
                     </TableCell>
+                    <TableCell>Client Share Rate</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -282,14 +271,23 @@ const FinancialReports = () => {
 
                         <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
-                          <DollarIcon />{" "}
-                          {currentFullBalance === null
-                            ? "0.00"
-                            : //@ts-ignore
-                              currentFullBalance.toLocaleString("en-US", {
+                          <strong>
+                            {" "}
+                            {convertToUSD(row.totalAmount).toLocaleString(
+                              "en-US",
+                              {
                                 style: "currency",
                                 currency: "USD",
-                              })}
+                                maximumFractionDigits: 6,
+                                minimumFractionDigits: 0,
+                              }
+                            )}
+                          </strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong className="pl-8">
+                            {row?.clientShareRate?.slice(0, 4)}%
+                          </strong>
                         </TableCell>
                         <TableCell>
                           <IconButton onClick={() => handlePDFDownload(row)}>
