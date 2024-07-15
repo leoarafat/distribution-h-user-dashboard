@@ -230,6 +230,40 @@ const TermsConditionsPage = () => {
         these terms of use or your violation of any law, rules or regulations or
         the rights of any third party.
       </Typography>
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Typography variant="body1" gutterBottom>
+        <strong>THIRD PARTY SERVICES</strong>
+        <br />
+        The Company may engage third parties to provide certain services
+        including music distribution services accessible through the Website.
+        The Company does not control those third parties or their services, and
+        you agree that the Company shall not be liable to you in any way for
+        your use of such services. These third parties may have their own terms
+        of use and other policies. You must comply with such terms and policies
+        as well as the terms and conditions stated herein when you use these
+        services. If any such terms, conditions or policies conflict with these
+        Terms of Use, music distribution agreement and/or its subsequent
+        addendums or the Company’s policies, you must comply with our Terms of
+        Use, agreements and/or policies, as applicable.
+      </Typography>
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Typography variant="body1" gutterBottom>
+        <strong>COPYRIGHTS AND TRADEMARKS</strong>
+        <br />
+        The trademarks, logos, and service marks (collectively the “Trademarks”)
+        displayed on the Website are registered and unregistered Trademarks of
+        the Company and others. Nothing contained on the Website should be
+        construed as granting, by implication, estoppel, or otherwise, any
+        license or right to use any Trademark displayed on the Website without
+        the written permission of the Company or such third party that may own
+        the Trademarks displayed on the Website. Your misuse of the Trademarks
+        displayed on the Website, or any other content on the Website, is
+        strictly prohibited. You are also advised that the Company will
+        aggressively enforce its intellectual property rights to the fullest
+        extent of the law, including the seeking of criminal prosecution.
+      </Typography>
 
       <Divider style={{ margin: "20px 0" }} />
 
@@ -239,6 +273,72 @@ const TermsConditionsPage = () => {
         These terms of use shall be governed by and construed in accordance with
         the laws of Bangladesh without reference to any conflict of law
         principles thereof.
+      </Typography>
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Typography variant="body1" gutterBottom>
+        <strong>TERMINATION</strong>
+        <br />
+        The Company may suspend or terminate your use of the Website at its sole
+        discretion, without providing any notice, if it believes that you have
+        breached any terms and conditions stated herein. The terms and
+        conditions stated herein shall survive indefinitely unless and until the
+        Company chooses to terminate them. On termination, the Company may
+        delete any Content or other materials relating to your use of the
+        Website, on the servers of the Company or otherwise in its possession.
+        Notwithstanding what is stated herein, the Company may at anytime
+        without notice remove material that the Company believes in good faith
+        or upon notice from any intellectual property right owner, infringes the
+        right of any third party.
+      </Typography>
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Typography variant="body1" gutterBottom>
+        <strong>CLAIMS FOR INTELLECTUAL PROPERTY RIGHT</strong>
+        <br />
+        If you believe that any Content made available on or through our Website
+        or services infringes your intellectual property rights (“Infringing
+        Content”) then kindly sent a notification with respect to the same
+        addressed to Be Musix at email : support@bemusix.com along with your
+        details, the details of the Content and substantial documents to prove
+        your claim. Notwithstanding what is stated herein, at no time the
+        Company shall be liable or obligated, to provide/submit to you, reports
+        received from any music distribution platforms with respect to any
+        Infringing Content and/or revenue earned from use or exploitation of the
+        same.
+      </Typography>
+      <Divider style={{ margin: "20px 0" }} />
+
+      <Typography variant="body1" gutterBottom>
+        <strong>MISCELLANEOUS</strong>
+        <br />
+        These terms and conditions are for the benefit of you and us, and are
+        not intended to benefit any third party or be enforceable by any third
+        party. The exercise of our and your rights in relation to these terms
+        and conditions is not subject to the consent of any third party. These
+        terms and conditions, together with our Privacy Policy, constitute the
+        entire agreement between you and us in relation to your use of the
+        Website, and supersede all previous agreements in respect of your use of
+        this Website. We may transfer, sub-contract or otherwise deal with our
+        rights and/or obligations under these terms and conditions without
+        notifying you or obtaining your consent. You may not transfer,
+        sub-contract or otherwise deal with your rights and/or obligations under
+        these terms and conditions. Any act by you in contravention to this
+        clause shall be considered as null and void. If any provision of these
+        Terms of Use is held to be invalid or unenforceable, then the invalid or
+        unenforceable provision will be replaced by a valid, enforceable
+        provision that most closely matches the intent of the original provision
+        and the remaining provisions shall be enforced. Any failure by the
+        Company to enforce any provision hereof shall not waive the Company’s
+        right to do so. The terms and conditions stated herein shall be governed
+        by, construed and enforced in accordance with the laws of Bangladesh.
+        Any action you, any third party or the Company brings to enforce these
+        terms or in connection with any matters related to this Website or any
+        Content provided by you, the same shall be subject to the exclusive
+        jurisdiction of the courts of Dhaka, and you expressly consent to the
+        jurisdiction of said courts. By submitting our webform, you agree to
+        receive promotional calls on the number shared, and such calls and SMS
+        would be coming from a third party platform.
       </Typography>
 
       <Divider style={{ margin: "20px 0" }} />
