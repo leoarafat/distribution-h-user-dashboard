@@ -44,7 +44,10 @@ const Profile = () => {
       }
     }
   }, [error, isSuccess]);
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   if (profileLoading) {
     return (
       <Box

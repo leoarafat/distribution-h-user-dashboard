@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -19,7 +19,10 @@ const CorrectionVideo = () => {
   const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <>
       <Box sx={{ flexGrow: 1, mt: 4 }}>

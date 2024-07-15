@@ -47,6 +47,15 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
       },
       providesTags: ["financial"],
     }),
+    getMyFullMonthBalance: build.query({
+      query: () => {
+        return {
+          url: `statics/my-full-month-balance`,
+          method: "GET",
+        };
+      },
+      providesTags: ["financial"],
+    }),
     getMyTransaction: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -72,4 +81,5 @@ export const {
   useGetMyBalanceQuery,
   useGetMyAllTimeBalanceQuery,
   useGetMyTransactionQuery,
+  useGetMyFullMonthBalanceQuery,
 } = uploadVideoAudioApi;

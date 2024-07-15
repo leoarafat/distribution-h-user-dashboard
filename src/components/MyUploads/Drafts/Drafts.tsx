@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -14,6 +14,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import DraftsSongsTable from "./DraftsTable";
 
 const Drafts = () => {
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <>
       <Box sx={{ flexGrow: 1, mt: 4 }}>

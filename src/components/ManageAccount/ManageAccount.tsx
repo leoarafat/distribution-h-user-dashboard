@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 
 import Bank from "./Bank/Bank";
@@ -11,7 +11,10 @@ const ManageAccount = () => {
   const handleTabChange = (event: any, newValue: any) => {
     setTabValue(newValue);
   };
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <Box sx={{ width: "100%", maxWidth: 600, margin: "0 auto" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

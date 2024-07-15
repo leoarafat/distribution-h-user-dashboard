@@ -757,7 +757,7 @@
 // export default UploadVideo;
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import {
   Button,
@@ -848,6 +848,10 @@ const UploadVideo = () => {
       label: label.labelName,
       value: label._id,
     })) || [];
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   const handleSubmitWithConditions = (data: any) => {
     if (
       conditionsAccepted.condition1 &&

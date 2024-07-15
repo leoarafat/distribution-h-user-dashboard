@@ -360,12 +360,15 @@ const AnalyticsPage = () => {
   useEffect(() => {
     fetchAnalyticsData(selectedMonth, selectedYear);
   }, [selectedMonth, selectedYear]);
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   const fetchAnalyticsData = async (month, year) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/analytics?month=${month}&year=${year}`,
+        `http://localhost:7001/statics/analytics?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -382,7 +385,7 @@ const AnalyticsPage = () => {
       setLoading(false);
     }
   };
-
+  console.log(analyticsData);
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
@@ -509,7 +512,7 @@ const AnalyticsPage = () => {
   const barChartsProps: BarChartProps = {
     series: [
       {
-        data: currentData.map((d) => d.value),
+        data: currentData.map((d) => d.totalStreams),
         id: "sync",
         highlightScope: { highlighted: "item", faded: "global" },
       },
@@ -594,7 +597,7 @@ const AnalyticsPage = () => {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h4">Total 0.35</Typography>
+          <Typography variant="h4">Total</Typography>
         </Box>
         <Stack
           direction={{ xs: "column", xl: "row" }}
@@ -620,8 +623,8 @@ const AnalyticsPage = () => {
           <BarChart
             data={currentData.map((item) => ({
               name: item.name,
-              stream: item.value, // Adjust based on your data structure
-              revenue: item.value, // Adjust based on your data structure
+              stream: item.totalStreams,
+              revenue: item.value,
             }))}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >

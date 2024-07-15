@@ -64,7 +64,7 @@ const RevenueComponent = () => {
           })}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-          Earned since <b>{earnedSince.format("MMMM, YYYY")}</b>
+          Earned since joined
         </Typography>
       </Paper>
       <Paper

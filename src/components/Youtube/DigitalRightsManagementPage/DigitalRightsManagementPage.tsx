@@ -6,7 +6,7 @@ import {
   CardContent,
   Grid,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TikTokClaim from "@/components/Legal/TikTok/TikTokClaim";
 import YoutubeClaim from "@/components/Legal/Youtube/YoutubeClaim";
 import FacebookClaim from "@/components/Legal/FaceBook/FaceBookClaim";
@@ -19,7 +19,10 @@ import { services } from "@/MockData/MockData";
 
 const DigitalRightsManagementPage = () => {
   const [claimType, setClaimType] = useState("tiktok");
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <Box sx={{ minHeight: "100vh", padding: "2rem 0", color: "#000" }}>
       <Container maxWidth="lg">

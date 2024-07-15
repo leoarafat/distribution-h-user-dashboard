@@ -42,6 +42,10 @@ const TransactionHistory = () => {
     }
   }, [myBalance]);
   console.log(transactionData);
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   const handleSearchChange = (event: any) => {
     setSearchQuery(event.target.value);
   };

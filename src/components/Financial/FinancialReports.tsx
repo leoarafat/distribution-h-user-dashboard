@@ -28,6 +28,7 @@ import { CSVLink } from "react-csv";
 import {
   useGetMyBalanceQuery,
   useGetMyFilesQuery,
+  useGetMyFullMonthBalanceQuery,
 } from "@/redux/slices/financial/financialApi";
 import Loader from "@/utils/Loader";
 import jsPDF from "jspdf";
@@ -38,19 +39,24 @@ const FinancialReports = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortedColumn, setSortedColumn] = useState("date");
   const [sortDirection, setSortDirection] = useState("asc");
+  const { data: myAllTimeBalance } = useGetMyFullMonthBalanceQuery({});
   const { data: filesData } = useGetMyFilesQuery({});
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
   const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
-
+  // console.log(myAllTimeBalance);
   useEffect(() => {
     if (myBalance) {
       setCurrentMonthBalance(myBalance.data?.clientTotalBalance);
     }
-  }, [myBalance]);
+    if (myAllTimeBalance) {
+      setFullMonthBalance(myAllTimeBalance.data?.clientTotalBalance);
+    }
+  }, [myAllTimeBalance, myBalance]);
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
+  const [currentFullBalance, setFullMonthBalance] = useState(null);
 
   if (!filesData?.data) {
     return <Loader />;
@@ -277,10 +283,10 @@ const FinancialReports = () => {
                         <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
                           <DollarIcon />{" "}
-                          {currentMonthBalance === null
+                          {currentFullBalance === null
                             ? "0.00"
                             : //@ts-ignore
-                              currentMonthBalance.toLocaleString("en-US", {
+                              currentFullBalance.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "USD",
                               })}

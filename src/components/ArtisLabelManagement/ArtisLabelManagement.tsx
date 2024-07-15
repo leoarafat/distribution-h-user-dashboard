@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import ColorTabs from "@/utils/Tabs";
 import LabelManage from "./Label/LabelPage";
@@ -10,7 +10,10 @@ const ArtistLabelManagement = () => {
   const handleTabChange = (event: any, newValue: any) => {
     setActiveTab(newValue);
   };
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <div>
       <ColorTabs value={activeTab} handleChange={handleTabChange} />

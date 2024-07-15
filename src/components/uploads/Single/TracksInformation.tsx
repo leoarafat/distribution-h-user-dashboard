@@ -331,6 +331,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               </span>
             </Tooltip>
             <TextField
+              required
               fullWidth
               value={data.trackDetails.previewStart}
               onChange={handleChange}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Paper,
@@ -41,7 +41,10 @@ const HelpPage = () => {
   const handleFeedbackChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFeedbackMessage(event.target.value);
   };
-
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   const handleSendFeedback = async () => {
     try {
       const data = {

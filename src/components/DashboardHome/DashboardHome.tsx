@@ -19,6 +19,10 @@ const DashboardHome = () => {
       navigate("/verify");
     }
   }, [isVerified, navigate]);
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <Box sx={{ padding: 3 }}>
       <RevenueComponent />

@@ -14,12 +14,13 @@ import {
 } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { useEffect, useState } from "react";
-import { getArtistsByIds } from "../Album/fetchArtist";
+import { getArtistsByIds, getFeatureArtistsByIds } from "../Album/fetchArtist";
 import { useGetSingleLabelQuery } from "@/redux/slices/ArtistAndLabel/artistLabelApi";
 
 const SingleTrackReviewPage = ({ data, onChange }: any) => {
   const [audioUrl, setAudioUrl] = useState(null);
   const [artists, setArtists] = useState<any[]>([]);
+  const [featureArtists, setFeatureArtists] = useState<any[]>([]);
 
   const trackDetails = data?.trackDetails;
   const releaseInformation = data?.releaseInformation;
@@ -52,7 +53,9 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
     const fetchArtists = async () => {
       try {
         const artistIds = releaseInformation?.primaryArtists;
+
         const fetchedArtists = await getArtistsByIds(artistIds);
+        // console.log(featureArtists);
         setArtists(fetchedArtists);
       } catch (error) {
         console.error("Error fetching artists:", error);
@@ -61,6 +64,21 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
 
     fetchArtists();
   }, [releaseInformation?.primaryArtists]);
+  useEffect(() => {
+    const fetchArtists = async () => {
+      try {
+        const artistIds = releaseInformation?.featuringArtists;
+
+        const fetchedArtists = await getFeatureArtistsByIds(artistIds);
+        // console.log(featureArtists);
+        setFeatureArtists(fetchedArtists);
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+      }
+    };
+
+    fetchArtists();
+  }, [releaseInformation?.featuringArtists]);
 
   if (!audio || !audio.audioFile) {
     return <div>No audio file selected.</div>;
@@ -112,7 +130,16 @@ const SingleTrackReviewPage = ({ data, onChange }: any) => {
                 <ListItem>
                   <ListItemText
                     primary="Featuring Artists"
-                    secondary={releaseInformation?.featuringArtists?.join(", ")}
+                    secondary={
+                      featureArtists?.data
+                        ? featureArtists.data
+                            .map(
+                              (artist: { primaryArtistName: any }) =>
+                                artist.primaryArtistName
+                            )
+                            .join(", ")
+                        : ""
+                    }
                   />
                 </ListItem>
                 <ListItem>

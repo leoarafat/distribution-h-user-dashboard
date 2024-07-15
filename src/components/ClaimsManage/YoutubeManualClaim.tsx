@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -26,6 +26,10 @@ const YoutubeManualClaim = () => {
   const handleStatusChange = (event: any) => {
     setStatusFilter(event.target.value);
   };
+  useEffect(() => {
+    localStorage.removeItem("releaseFormData");
+    localStorage.removeItem("tracksInformation");
+  }, []);
   return (
     <Container maxWidth="lg">
       <Box sx={{ flexGrow: 1, mt: 4 }}>
