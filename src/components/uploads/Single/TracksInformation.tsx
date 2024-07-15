@@ -331,7 +331,6 @@ const TracksInformation = ({ data, onChange }: any) => {
               </span>
             </Tooltip>
             <TextField
-              required
               fullWidth
               value={data.trackDetails.previewStart}
               onChange={handleChange}
@@ -358,6 +357,7 @@ const TracksInformation = ({ data, onChange }: any) => {
               }
               renderInput={(params) => (
                 <TextField
+                  required
                   {...params}
                   fullWidth
                   label="Parental Advisory"
