@@ -38,8 +38,6 @@ const Countries: React.FC<Props> = ({ onChange }) => {
       const data = await response.json();
       const countriesData: Country[] = data;
       setCountries(countriesData);
-      const allCountryCodes = countriesData.map((country) => country.cca3);
-      setSelectedCountries(allCountryCodes);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching countries: ", error);
@@ -49,13 +47,10 @@ const Countries: React.FC<Props> = ({ onChange }) => {
 
   const handleCountrySelect = (countryCode: string) => {
     setSelectedCountries((prevSelected) => {
-      const countryIndex = prevSelected.indexOf(countryCode);
-      if (countryIndex === -1) {
-        return [...prevSelected, countryCode];
+      if (prevSelected.includes(countryCode)) {
+        return prevSelected.filter((code) => code !== countryCode);
       } else {
-        const updatedCountries = [...prevSelected];
-        updatedCountries.splice(countryIndex, 1);
-        return updatedCountries;
+        return [...prevSelected, countryCode];
       }
     });
   };
@@ -67,13 +62,17 @@ const Countries: React.FC<Props> = ({ onChange }) => {
     const continentCountryCodes = continentCountries.map(
       (country) => country.cca3
     );
+
     setSelectedCountries((prevSelected) => {
-      if (prevSelected.some((code) => continentCountryCodes.includes(code))) {
+      const allSelected = continentCountryCodes.every((code) =>
+        prevSelected.includes(code)
+      );
+      if (allSelected) {
         return prevSelected.filter(
           (code) => !continentCountryCodes.includes(code)
         );
       } else {
-        return [...prevSelected, ...continentCountryCodes];
+        return [...new Set([...prevSelected, ...continentCountryCodes])];
       }
     });
   };
