@@ -94,21 +94,13 @@ const ArtistManage = () => {
   //@ts-ignore
   const artistData = artistsData?.data?.data;
 
-  if (!artistData) {
-    return (
-      <div>
-        <p>Data Is Empty</p>
-      </div>
-    );
+  if (isLoading) {
+    return <Loader />;
   }
 
   const filteredArtistData = artistData?.filter((row: any) =>
     row.primaryArtistName.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div>

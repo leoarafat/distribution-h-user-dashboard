@@ -247,7 +247,7 @@ const FinancialReports = () => {
                           <ArrowUpwardIcon />
                         ))}
                     </TableCell>
-                    <TableCell>Client Share Rate</TableCell>
+                    {/* <TableCell>Client Share Rate</TableCell> */}
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -278,17 +278,17 @@ const FinancialReports = () => {
                               {
                                 style: "currency",
                                 currency: "USD",
-                                maximumFractionDigits: 6,
+                                maximumFractionDigits: 2,
                                 minimumFractionDigits: 0,
                               }
                             )}
                           </strong>
                         </TableCell>
-                        <TableCell>
+                        {/* <TableCell>
                           <strong className="pl-8">
                             {row?.clientShareRate?.slice(0, 4)}%
                           </strong>
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <IconButton onClick={() => handlePDFDownload(row)}>
                             <PdfIcon />

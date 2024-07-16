@@ -345,13 +345,14 @@ import {
   BarChart,
 } from "recharts";
 import { years } from "@/utils/languages";
+import Loader from "@/utils/Loader";
 
 const AnalyticsPage = () => {
   const [analyticsData, setAnalyticsData] = useState({
     monthly: [],
     yearly: [],
   });
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [highlightedItem, setHighlightedItem] =
     useState<HighlightItemData | null>(null);
@@ -385,7 +386,7 @@ const AnalyticsPage = () => {
       setLoading(false);
     }
   };
-  console.log(analyticsData);
+
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
@@ -502,10 +503,9 @@ const AnalyticsPage = () => {
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>; // Display loading indicator while fetching data
+    return <Loader />;
   }
 
-  // Ensure analyticsData.monthly is defined before accessing it
   const currentData = analyticsData.monthly || [];
   const currentLabels = currentData.map((d) => d.name);
 
@@ -624,7 +624,7 @@ const AnalyticsPage = () => {
             data={currentData.map((item) => ({
               name: item.name,
               stream: item.totalStreams,
-              revenue: item.value,
+              revenue: `$ ${item.value?.toFixed(0, 6)}`,
             }))}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >

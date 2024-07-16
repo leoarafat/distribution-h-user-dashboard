@@ -26,7 +26,6 @@ import AccountDetails from "@/components/ManageAccount/AccountDetails/AccountDet
 import PaymentOperations from "@/components/ManageAccount/PaymentOperations/PaymentOperations";
 import TransactionHistory from "@/components/ManageAccount/TransactionHistory/TransactionHistory";
 import UploaderStepperForm from "@/components/SteperForm/UploaderStepper";
-import SuccessRelease from "@/components/MyUploads/SuccessRelease/SuccessRelease";
 import FinalizeMusic from "@/components/MyUploads/FinalizeMusic/FinalizeMusic";
 import Drafts from "@/components/MyUploads/Drafts/Drafts";
 import PendingVideos from "@/components/MyUploads/PendingVideos/PendingVideos";

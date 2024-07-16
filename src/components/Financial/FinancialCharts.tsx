@@ -1,124 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import {
-//   Paper,
-//   Typography,
-//   Box,
-//   CircularProgress,
-//   MenuItem,
-//   FormControl,
-//   Select,
-// } from "@mui/material";
-// import {
-//   ComposedChart,
-//   Line,
-//   Area,
-//   XAxis,
-//   YAxis,
-//   CartesianGrid,
-//   Tooltip,
-//   Legend,
-//   ResponsiveContainer,
-// } from "recharts";
-// import axios from "axios";
-
-// const FinancialCharts = () => {
-//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-//   const [financialData, setFinancialData] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   const fetchFinancialData = async (year) => {
-//     setLoading(true);
-//     try {
-//       let url = `https://backend.bemusix.com/statics/financial-analytics`;
-//       const response = await axios.get(url, {
-//         params: {
-//           year,
-//         },
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-//         },
-//       });
-
-//       if (response && response.data && response.data.data) {
-//         setFinancialData(response.data.data);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching financial data:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchFinancialData(selectedYear);
-//   }, [selectedYear]);
-
-//   if (loading) {
-//     return (
-//       <Box
-//         display="flex"
-//         justifyContent="center"
-//         alignItems="center"
-//         minHeight="100vh"
-//       >
-//         <CircularProgress />
-//       </Box>
-//     );
-//   }
-
-//   return (
-//     <Box m={3}>
-//       <Paper sx={{ padding: 3 }}>
-//         <Box
-//           display="flex"
-//           justifyContent="space-between"
-//           alignItems="center"
-//           mb={2}
-//         >
-//           <Typography variant="h5" gutterBottom>
-//             Financial Analytics for {selectedYear}
-//           </Typography>
-//           <FormControl>
-//             <Select
-//               value={selectedYear}
-//               onChange={(e) => setSelectedYear(e.target.value)}
-//             >
-//               <MenuItem value={2023}>2023</MenuItem>
-//               <MenuItem value={2024}>2024</MenuItem>
-//               {/* Add more years as needed */}
-//             </Select>
-//           </FormControl>
-//         </Box>
-//         <ResponsiveContainer width="100%" height={400}>
-//           <ComposedChart
-//             data={financialData}
-//             margin={{
-//               top: 20,
-//               right: 20,
-//               bottom: 20,
-//               left: 20,
-//             }}
-//           >
-//             <CartesianGrid stroke="#f5f5f5" />
-//             <XAxis dataKey="date" />
-//             <YAxis />
-//             <Tooltip />
-//             <Legend />
-//             <Area
-//               type="monotone"
-//               dataKey="amount"
-//               fill="#8884d8"
-//               stroke="#8884d8"
-//             />
-//             <Line type="monotone" dataKey="amount" stroke="#ff7300" />
-//           </ComposedChart>
-//         </ResponsiveContainer>
-//       </Paper>
-//     </Box>
-//   );
-// };
-
-// export default FinancialCharts;
 import React, { useEffect, useState } from "react";
 import {
   Paper,
@@ -142,6 +21,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import dayjs from "dayjs";
+import Loader from "@/utils/Loader";
 
 const FinancialCharts = () => {
   const currentYear = new Date().getFullYear();
@@ -149,7 +29,7 @@ const FinancialCharts = () => {
   const [financialData, setFinancialData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchFinancialData = async (year) => {
+  const fetchFinancialData = async (year: any) => {
     setLoading(true);
     try {
       let url = `https://backend.bemusix.com/statics/financial-analytics`;
@@ -163,7 +43,6 @@ const FinancialCharts = () => {
       });
 
       if (response && response.data && response.data.data) {
-        // Transform the response data to ensure all months of the year are included
         const fetchedData = response.data.data;
         const dataMap = new Map(
           fetchedData.map((item) => [item.month, item.amount])
@@ -189,16 +68,7 @@ const FinancialCharts = () => {
   }, [selectedYear]);
 
   if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <Loader />;
   }
 
   return (

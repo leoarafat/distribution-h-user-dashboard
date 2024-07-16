@@ -15,9 +15,7 @@ import {
   TableSortLabel,
   TablePagination,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import AddLabelModal from "./AddLabelModa";
@@ -70,23 +68,15 @@ const LabelManage = () => {
       toast.error(error?.message);
     }
   };
-
-  //@ts-ignore
-  const labelData = labelsData?.data?.data;
-  if (!labelData) {
-    return (
-      <div>
-        <h1>Data Is Empty</h1>
-      </div>
-    );
-  }
-  const filteredLabelData = labelData?.filter((row: any) =>
-    row.labelName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   if (isLoading) {
     return <Loader />;
   }
+  //@ts-ignore
+  const labelData = labelsData?.data?.data;
+
+  const filteredLabelData = labelData?.filter((row: any) =>
+    row.labelName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div>

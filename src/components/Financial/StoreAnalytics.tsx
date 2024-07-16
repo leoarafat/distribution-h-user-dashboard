@@ -170,7 +170,7 @@ import { Box, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { years } from "@/utils/languages";
 
 const StoreAnalytics = () => {
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [dataStore, setDataStore] = useState([]);
   const [dataRegion, setDataRegion] = useState([]);
@@ -194,15 +194,13 @@ const StoreAnalytics = () => {
       const { data } = response.data;
 
       setDataStore(data);
-      setDataRegion(data); // Assuming dataRegion structure is similar, adjust as needed
+      setDataRegion(data);
 
-      // Generate colors for charts
       const storeColors = generateColors(data);
       setColorsStore(storeColors);
-      setColorsRegion(storeColors); // Use the same colors for both charts for consistency
+      setColorsRegion(storeColors);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle error state if needed
     }
   };
 
