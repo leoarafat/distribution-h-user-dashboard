@@ -14,7 +14,6 @@ import {
 } from "@/redux/slices/financial/financialApi";
 
 const RevenueComponent = () => {
-  const earnedSince = dayjs("2022-03-01");
   const [modalOpen, setModalOpen] = useState(false);
   const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
   const { data: myAllTimeBalance } = useGetMyAllTimeBalanceQuery({});
@@ -34,7 +33,10 @@ const RevenueComponent = () => {
   };
 
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
-
+  const EUR_TO_USD_RATE = 1.1;
+  const convertToUSD = (amountInEUR: number) => {
+    return amountInEUR * EUR_TO_USD_RATE;
+  };
   return (
     <Box
       m={3}
@@ -58,9 +60,17 @@ const RevenueComponent = () => {
           Revenue of All Time
         </Typography>
         <Typography variant="h3" color="primary" gutterBottom>
-          {myAllTimeBalance?.data?.clientTotalBalance?.toLocaleString("en-US", {
+          {/* {myAllTimeBalance?.data?.clientTotalBalance?.toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
+          })} */}
+          {convertToUSD(
+            myAllTimeBalance?.data?.clientTotalBalance
+          ).toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 0,
           })}
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>

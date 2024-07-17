@@ -199,7 +199,7 @@ const FinancialReports = () => {
   return (
     <Container>
       <Typography variant="h4" align="center" gutterBottom>
-        Financial Overview
+        Financial Reports
       </Typography>
 
       <Grid container spacing={4}>
@@ -271,18 +271,7 @@ const FinancialReports = () => {
 
                         <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
-                          <strong>
-                            {" "}
-                            {convertToUSD(row.totalAmount).toLocaleString(
-                              "en-US",
-                              {
-                                style: "currency",
-                                currency: "USD",
-                                maximumFractionDigits: 2,
-                                minimumFractionDigits: 0,
-                              }
-                            )}
-                          </strong>
+                          <strong> {row.totalAmount}</strong>
                         </TableCell>
                         {/* <TableCell>
                           <strong className="pl-8">

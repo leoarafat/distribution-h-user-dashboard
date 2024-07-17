@@ -32,7 +32,7 @@ const FinancialCharts = () => {
   const fetchFinancialData = async (year: any) => {
     setLoading(true);
     try {
-      let url = `https://backend.bemusix.com/statics/financial-analytics`;
+      let url = `http://localhost:7001/statics/financial-analytics`;
       const response = await axios.get(url, {
         params: {
           year,
@@ -70,6 +70,10 @@ const FinancialCharts = () => {
   if (loading) {
     return <Loader />;
   }
+  // const EUR_TO_USD_RATE = 1.1;
+  // const convertToUSD = (amountInEUR: number) => {
+  //   return amountInEUR * EUR_TO_USD_RATE;
+  // };
 
   return (
     <Box m={3}>
