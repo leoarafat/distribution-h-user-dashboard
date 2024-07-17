@@ -98,7 +98,7 @@ const FinancialReports = () => {
       reportingMonth: entry.reportingMonth,
       salesMonth: entry.salesMonth,
       platForm: entry.platForm,
-      clientShareRate: entry.clientShareRate,
+      // clientShareRate: entry.clientShareRate,
     }));
 
     const headers = [
@@ -116,7 +116,7 @@ const FinancialReports = () => {
       { label: "Reporting Month", key: "reportingMonth" },
       { label: "Sales Month", key: "salesMonth" },
       { label: "Platform", key: "platForm" },
-      { label: "Client Share Rate", key: "clientShareRate" },
+      // { label: "Client Share Rate", key: "clientShareRate" },
     ];
 
     return (
@@ -271,7 +271,7 @@ const FinancialReports = () => {
 
                         <TableCell>{row.filename}</TableCell>
                         <TableCell align="right">
-                          <strong> {row.totalAmount}</strong>
+                          <strong> {row.totalAmount?.toFixed(2)}</strong>
                         </TableCell>
                         {/* <TableCell>
                           <strong className="pl-8">

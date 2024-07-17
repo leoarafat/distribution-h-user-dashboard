@@ -3,7 +3,7 @@ import axios from "axios";
 export const getArtistsByIds = async (ids: string[]) => {
   try {
     const response = await axios.post(
-      `https://backend.bemusix.com/primary-artist/all-by-ids`,
+      `http://localhost:7001/primary-artist/all-by-ids`,
       {
         ids,
       },
@@ -22,7 +22,7 @@ export const getArtistsByIds = async (ids: string[]) => {
 export const getFeatureArtistsByIds = async (ids: string[]) => {
   try {
     const response = await axios.post(
-      `https://backend.bemusix.com/primary-artist/feature-by-ids`,
+      `http://localhost:7001/primary-artist/feature-by-ids`,
       {
         ids,
       },
