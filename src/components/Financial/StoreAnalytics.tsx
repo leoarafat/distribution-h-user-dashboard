@@ -279,9 +279,7 @@ const StoreAnalytics = () => {
           </ResponsiveContainer>
         </Box>
         <Box width="45%">
-          <h2>
-            Revenue by country / region | {`${selectedYear}-${selectedMonth}`}
-          </h2>
+          <h2>Revenue by store | {`${selectedYear}-${selectedMonth}`}</h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Pie

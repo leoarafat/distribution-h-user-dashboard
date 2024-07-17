@@ -36,12 +36,12 @@ const FinancialReports = () => {
   const [sortedColumn, setSortedColumn] = useState("date");
   const [sortDirection, setSortDirection] = useState("asc");
 
-  const { data: filesData } = useGetMyFilesQuery({});
+  const { data: filesData, isLoading } = useGetMyFilesQuery({});
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
 
-  if (!filesData?.data) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -302,7 +302,7 @@ const FinancialReports = () => {
             </TableContainer>
             <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
               <Pagination
-                count={Math.ceil(sortedHistory.length / rowsPerPage)}
+                count={Math.ceil(sortedHistory?.length / rowsPerPage)}
                 page={page}
                 onChange={handleChangePage}
                 variant="outlined"

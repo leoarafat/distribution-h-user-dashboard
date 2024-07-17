@@ -630,6 +630,7 @@ const AnalyticsPage = () => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
+
             <YAxis />
             <Tooltip />
             <Legend />
