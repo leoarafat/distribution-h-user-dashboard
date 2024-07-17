@@ -32,7 +32,7 @@ const FinancialCharts = () => {
   const fetchFinancialData = async (year: any) => {
     setLoading(true);
     try {
-      let url = `http://localhost:7001/statics/financial-analytics`;
+      let url = `https://backend.bemusix.com/statics/financial-analytics`;
       const response = await axios.get(url, {
         params: {
           year,
