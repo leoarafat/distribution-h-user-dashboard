@@ -132,6 +132,7 @@ const FinancialReports = () => {
     );
   };
   const handlePDFDownload = (row: any) => {
+    console.log(row);
     const pdf = new jsPDF();
     let y = 20;
 
@@ -152,12 +153,11 @@ const FinancialReports = () => {
     pdf.text("Dear partner,", 10, y);
     y += 10;
     pdf.text(
-      "Here is the total amount of royalties credited on your account (BE Musix) regarding",
+      "Here is the total amount of royalties credited on your account.",
       10,
       y
     );
-    y += 10;
-    pdf.text("the selected filters:", 10, y);
+
     y += 20;
     // Filter information
     pdf.text("Transaction Details", 10, y);
@@ -173,9 +173,13 @@ const FinancialReports = () => {
     // pdf.text(String(currentMonthBalance), 150, y);
     y += 10;
     y += 10;
+
     // Net revenue
     pdf.text("NET REVENUE", 10, y);
-    pdf.text(String(convertToUSD(row.totalAmount)), 150, y);
+    pdf.text(String(row.totalAmount), 150, y);
+    y += 20;
+    pdf.text("REVENUE MONTH", 10, y);
+    pdf.text(String(row.reportingMonth), 150, y);
     y += 20;
     // Footer
     pdf.text(
@@ -190,10 +194,6 @@ const FinancialReports = () => {
     y += 10;
     pdf.text("Be Musix", 10, y);
     pdf.save(`transaction_${row._id?.slice(0, 6)}.pdf`);
-  };
-  const EUR_TO_USD_RATE = 1.1;
-  const convertToUSD = (amountInEUR: number) => {
-    return amountInEUR * EUR_TO_USD_RATE;
   };
 
   return (

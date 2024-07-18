@@ -173,14 +173,16 @@ const StoreAnalytics = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [dataStore, setDataStore] = useState([]);
+  const [countryDataStore, setcountryDataStore] = useState([]);
   const [dataRegion, setDataRegion] = useState([]);
+  const [countryDataRegion, setcountryDataRegion] = useState([]);
   const [colorsStore, setColorsStore] = useState([]);
   const [colorsRegion, setColorsRegion] = useState([]);
 
   const fetchData = async (month, year) => {
     try {
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/financial-by-store`,
+        `http://localhost:7001/statics/financial-by-store`,
         {
           params: {
             month,
@@ -203,9 +205,36 @@ const StoreAnalytics = () => {
       console.error("Error fetching data:", error);
     }
   };
+  const fetchCountryData = async (month, year) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:7001/statics/financial-analytics-country`,
+        {
+          params: {
+            month,
+            year,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      const { data } = response.data;
+
+      setcountryDataStore(data);
+      setcountryDataRegion(data);
+
+      const storeColors = generateColors(data);
+      setColorsStore(storeColors);
+      setColorsRegion(storeColors);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     fetchData(selectedMonth, selectedYear);
+    fetchCountryData(selectedMonth, selectedYear);
   }, [selectedMonth, selectedYear]);
 
   const generateColors = (data) => {
@@ -279,22 +308,22 @@ const StoreAnalytics = () => {
           </ResponsiveContainer>
         </Box>
         <Box width="45%">
-          <h2>Revenue by store | {`${selectedYear}-${selectedMonth}`}</h2>
+          <h2>Revenue by Country | {`${selectedYear}-${selectedMonth}`}</h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Pie
-                data={dataRegion}
+                data={countryDataStore}
                 dataKey="value"
                 nameKey="name"
                 outerRadius={150}
                 fill="#8884d8"
               >
-                {dataRegion.map((entry, index) => (
+                {countryDataStore.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colorsRegion[index]} />
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              {/* <Legend /> */}
             </PieChart>
           </ResponsiveContainer>
         </Box>

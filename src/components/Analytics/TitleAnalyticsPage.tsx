@@ -26,9 +26,8 @@ import {
 } from "recharts";
 import { years } from "@/utils/languages";
 import Loader from "@/utils/Loader";
-import AnalyticsByTitlePage from "./TitleAnalyticsPage";
 
-const AnalyticsPage = () => {
+const AnalyticsByTitlePage = () => {
   const [analyticsData, setAnalyticsData] = useState({
     monthly: [],
     yearly: [],
@@ -50,7 +49,7 @@ const AnalyticsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:7001/statics/analytics?month=${month}&year=${year}`,
+        `http://localhost:7001/statics/analytics-by-tracks?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -228,103 +227,71 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <>
-      <Box sx={{ padding: 3 }}>
-        <Paper sx={{ padding: 2, marginBottom: 3 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h6">Analytics Visual</Typography>
-            <Stack direction="row" spacing={1}>
-              <Select value={selectedMonth} onChange={handleMonthChange}>
-                <MenuItem value={1}>January</MenuItem>
-                <MenuItem value={2}>February</MenuItem>
-                <MenuItem value={3}>March</MenuItem>
-                <MenuItem value={4}>April</MenuItem>
-                <MenuItem value={5}>May</MenuItem>
-                <MenuItem value={6}>June</MenuItem>
-                <MenuItem value={7}>July</MenuItem>
-                <MenuItem value={8}>August</MenuItem>
-                <MenuItem value={9}>September</MenuItem>
-                <MenuItem value={10}>October</MenuItem>
-                <MenuItem value={11}>November</MenuItem>
-                <MenuItem value={12}>December</MenuItem>
-              </Select>
-              <Select value={selectedYear} onChange={handleYearChange}>
-                {years?.map((year) => (
-                  <MenuItem key={year} value={year}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </Select>
-              <IconButton onClick={handlePDFDownload}>
-                <PictureAsPdf />
-              </IconButton>
-              <IconButton onClick={handleCSVDownload}>
-                <Description />
-              </IconButton>
-            </Stack>
-          </Box>
-          <Typography variant="body2">
-            Total Improvements | {selectedMonth}/1
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h4">Total</Typography>
-          </Box>
-          <Stack
-            direction={{ xs: "column", xl: "row" }}
-            spacing={1}
-            sx={{ width: "100%" }}
-          >
-            <XBarChart
-              {...barChartsProps}
-              highlightedItem={highlightedItem}
-              onHighlightChange={setHighlightedItem}
-            />
-            <PieChart
-              {...pieChartProps}
-              highlightedItem={highlightedItem}
-              onHighlightChange={setHighlightedItem}
-            />
+    <Box sx={{ padding: 3 }}>
+      <Paper sx={{ padding: 2, marginBottom: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Stack direction="row" spacing={1}>
+            <Select value={selectedMonth} onChange={handleMonthChange}>
+              <MenuItem value={1}>January</MenuItem>
+              <MenuItem value={2}>February</MenuItem>
+              <MenuItem value={3}>March</MenuItem>
+              <MenuItem value={4}>April</MenuItem>
+              <MenuItem value={5}>May</MenuItem>
+              <MenuItem value={6}>June</MenuItem>
+              <MenuItem value={7}>July</MenuItem>
+              <MenuItem value={8}>August</MenuItem>
+              <MenuItem value={9}>September</MenuItem>
+              <MenuItem value={10}>October</MenuItem>
+              <MenuItem value={11}>November</MenuItem>
+              <MenuItem value={12}>December</MenuItem>
+            </Select>
+            <Select value={selectedYear} onChange={handleYearChange}>
+              {years?.map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year}
+                </MenuItem>
+              ))}
+            </Select>
+            <IconButton onClick={handlePDFDownload}>
+              <PictureAsPdf />
+            </IconButton>
+            <IconButton onClick={handleCSVDownload}>
+              <Description />
+            </IconButton>
           </Stack>
-        </Paper>
+        </Box>
+      </Paper>
 
-        <Paper sx={{ padding: 2, marginBottom: 3 }}>
-          <Typography variant="h6">Total Stream and Revenue</Typography>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart
-              data={currentData.map((item) => ({
-                name: item.name,
-                stream: item.totalStreams,
-                revenue: `$ ${item.value?.toFixed(0, 6)}`,
-              }))}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+      <Paper sx={{ padding: 2, marginBottom: 3 }}>
+        <Typography variant="h6">Total Stream and Revenue</Typography>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+            data={currentData.map((item) => ({
+              name: item.name,
+              stream: item.totalStreams,
+              revenue: `$ ${item.value?.toFixed(0, 6)}`,
+            }))}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
 
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="stream" fill="#8884d8" />
-              <Bar dataKey="revenue" fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
-        </Paper>
-      </Box>
-      <AnalyticsByTitlePage />
-    </>
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="stream" fill="#8884d8" />
+            <Bar dataKey="revenue" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Paper>
+    </Box>
   );
 };
 
-export default AnalyticsPage;
+export default AnalyticsByTitlePage;
