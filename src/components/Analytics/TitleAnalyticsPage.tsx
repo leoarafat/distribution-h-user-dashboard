@@ -49,7 +49,7 @@ const AnalyticsByTitlePage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:7001/statics/analytics-by-tracks?month=${month}&year=${year}`,
+        `https://backend.bemusix.com/statics/analytics-by-tracks?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
