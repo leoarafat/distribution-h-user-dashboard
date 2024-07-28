@@ -331,8 +331,8 @@ const UploadVideo = () => {
         <CardContent>
           <form onSubmit={handleSubmit(handleSubmitWithConditions)}>
             <Grid container spacing={3}>
-              <div className="flex justify-around items-center w-full p-3">
-                <div className="image_upload flex items-center justify-center flex-col p-3">
+              <div className="flex flex-col lg:flex-row justify-around items-center w-full p-3">
+                <div className="image_upload flex items-center justify-center max-w-full flex-col p-3">
                   <h4 className="mb-2 text-sm font-semibold">Upload Cover</h4>
                   <p className="mb-2 text-xs">
                     Please ensure that your cover meets the following <br />
@@ -380,12 +380,12 @@ const UploadVideo = () => {
                     </p>
                   )}
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div className="image_upload flex items-center justify-center flex-col p-3">
+                <div className="flex flex-col items-center justify-center max-w-full">
+                  <div className="image_upload  flex items-center justify-center max-w-full flex-col p-3">
                     <h4 className="mb-2 text-sm font-semibold">
                       Upload Your Video
                     </h4>
-                    <p className="mb-2 text-xs">
+                    <p className="mb-2 text-xs max-w-full">
                       We recommended mp4 video format & must be without any logo
                     </p>
                     {videoFile ? (

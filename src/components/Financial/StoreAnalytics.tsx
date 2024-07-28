@@ -182,7 +182,7 @@ const StoreAnalytics = () => {
   const fetchData = async (month, year) => {
     try {
       const response = await axios.get(
-        `http://localhost:7001/statics/financial-by-store`,
+        `https://backend.bemusix.com/statics/financial-by-store`,
         {
           params: {
             month,
@@ -208,7 +208,7 @@ const StoreAnalytics = () => {
   const fetchCountryData = async (month, year) => {
     try {
       const response = await axios.get(
-        `http://localhost:7001/statics/financial-analytics-country`,
+        `https://backend.bemusix.com/statics/financial-analytics-country`,
         {
           params: {
             month,

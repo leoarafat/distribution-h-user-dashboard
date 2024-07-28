@@ -4,9 +4,11 @@ import {
   MusicNote as MusicNoteIcon,
   Album as AlbumIcon,
 } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
 
 const Uploads = () => {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   return (
     <Box
@@ -17,16 +19,16 @@ const Uploads = () => {
         justifyContent: "center",
         height: "100vh",
         backgroundColor: "#f5f5f5",
-        padding: 2,
+        padding: isMobile ? 1 : 2,
         boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Box
         sx={{
           backgroundColor: "#f5f5f5",
-          padding: 10,
-          width: "950px",
-          height: "550px",
+          padding: isMobile ? 2 : 10,
+          width: isMobile ? "100%" : "950px",
+          height: isMobile ? "auto" : "550px",
           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
         }}
       >
@@ -46,7 +48,7 @@ const Uploads = () => {
         </Box>
 
         <Grid container spacing={4} justifyContent="center">
-          <Grid item>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Paper
               sx={{
                 padding: 4,
@@ -78,7 +80,7 @@ const Uploads = () => {
               <Typography variant="h6">Upload Single</Typography>
             </Paper>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Paper
               sx={{
                 padding: 4,

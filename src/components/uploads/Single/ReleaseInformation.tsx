@@ -191,6 +191,7 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       label: newValue ? newValue.value : "",
     }));
   };
+
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
