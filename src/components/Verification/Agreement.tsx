@@ -64,7 +64,13 @@ const AgreementPage = ({ data, onChange }: any) => {
                 <strong>Name:</strong> {profileData?.data?.name}
               </Typography>
               <Typography variant="body1">
+                <strong>Email:</strong> {profileData?.data?.email}
+              </Typography>
+              <Typography variant="body1">
                 <strong>Phone Number:</strong> {profileData?.data?.phoneNumber}
+              </Typography>
+              <Typography variant="body1">
+                <strong>Address:</strong> {profileData?.data?.address}
               </Typography>
               <Typography variant="body1">
                 <strong>NID Number:</strong> {profileData?.data?.nidNumber}
@@ -79,8 +85,11 @@ const AgreementPage = ({ data, onChange }: any) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {profileData?.data?.channelUrl?.slice(0, 30)}
+                  {profileData?.data?.channelUrl?.slice(0, 40)}
                 </a>
+              </Typography>
+              <Typography variant="body1">
+                <strong>Date:</strong> {currentDate.toLocaleDateString()}
               </Typography>
             </Box>
           </Grid>

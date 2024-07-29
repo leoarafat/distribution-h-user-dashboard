@@ -26,14 +26,16 @@ import {
 } from "recharts";
 import { years } from "@/utils/languages";
 import Loader from "@/utils/Loader";
-import AnalyticsByTitlePage from "./TitleAnalyticsPage";
 
 const AnalyticsPage = () => {
   const [analyticsData, setAnalyticsData] = useState({
     monthly: [],
     yearly: [],
   });
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
+  const [selectedMonths, setSelectedMonth] = useState(
+    new Date().getMonth() + 1
+  );
+  const selectedMonth = selectedMonths - 1 || 12;
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [highlightedItem, setHighlightedItem] =
     useState<HighlightItemData | null>(null);
@@ -50,7 +52,7 @@ const AnalyticsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/analytics?month=${month}&year=${year}`,
+        `http://localhost:7001/statics/analytics?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -322,7 +324,7 @@ const AnalyticsPage = () => {
           </ResponsiveContainer>
         </Paper>
       </Box>
-      <AnalyticsByTitlePage />
+      {/* <AnalyticsByTitlePage /> */}
     </>
   );
 };
