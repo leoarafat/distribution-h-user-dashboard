@@ -159,7 +159,7 @@ const LabelManage = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={filteredLabelData.length}
+        count={filteredLabelData?.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handlePageChange}
