@@ -34,7 +34,7 @@ export const menuItems = [
   {
     path: "/my-uploads",
     title: "My Uploads",
-    icon: <Music4Icon size={18} color="#fff" />,
+    icon: <RiPlayListAddFill size={18} />,
     subMenu: [
       {
         path: "/success-track",

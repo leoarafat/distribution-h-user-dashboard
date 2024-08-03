@@ -34,8 +34,7 @@ const AnalyticsByTitlePage = () => {
   });
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [highlightedItem, setHighlightedItem] =
-    useState<HighlightItemData | null>(null);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const AnalyticsByTitlePage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/analytics-by-tracks?month=${month}&year=${year}`,
+        `http://localhost:7001/statics/analytics-by-tracks?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -187,44 +186,6 @@ const AnalyticsByTitlePage = () => {
   }
 
   const currentData = analyticsData.monthly || [];
-  const currentLabels = currentData.map((d) => d.name);
-
-  const barChartsProps: BarChartProps = {
-    series: [
-      {
-        data: currentData.map((d) => d.totalStreams),
-        id: "sync",
-        highlightScope: { highlighted: "item", faded: "global" },
-      },
-    ],
-    xAxis: [{ scaleType: "band", data: currentLabels }],
-    height: 300,
-    slotProps: {
-      legend: {
-        hidden: true,
-      },
-    },
-  };
-
-  const pieChartProps: PieChartProps = {
-    series: [
-      {
-        id: "sync",
-        data: currentData.map((d) => ({
-          value: d.value,
-          label: d.name,
-          id: d.name,
-        })),
-        highlightScope: { highlighted: "item", faded: "global" },
-      },
-    ],
-    height: 300,
-    slotProps: {
-      legend: {
-        hidden: true,
-      },
-    },
-  };
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -269,7 +230,7 @@ const AnalyticsByTitlePage = () => {
       </Paper>
 
       <Paper sx={{ padding: 2, marginBottom: 3 }}>
-        <Typography variant="h6">Total Stream and Revenue</Typography>
+        <Typography variant="h6">Total Stream and Revenue By Title</Typography>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart
             data={currentData.map((item) => ({
