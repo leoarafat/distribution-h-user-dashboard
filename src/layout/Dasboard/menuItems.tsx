@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   VideoIcon,
   SendHorizontal,
+  MusicIcon,
 } from "lucide-react";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
@@ -24,7 +25,7 @@ export const menuItems = [
   {
     path: "/upload",
     title: "Upload Music",
-    icon: <RiPlayListAddFill size={18} />,
+    icon: <MusicIcon size={18} />,
   },
   {
     path: "/release-video",
