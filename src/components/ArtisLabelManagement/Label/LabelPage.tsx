@@ -121,7 +121,6 @@ const LabelManage = () => {
               <TableCell>Youtube Channel</TableCell>
               <TableCell>Youtube URL</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -143,14 +142,6 @@ const LabelManage = () => {
                   <TableCell>{row.youtubeChannel}</TableCell>
                   <TableCell>{row.youtubeUrl}</TableCell>
                   <TableCell>{row.approvedStatus}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      onClick={() => handleDelete(row?._id)}
-                      aria-label="delete"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
