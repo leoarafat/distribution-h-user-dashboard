@@ -14,10 +14,10 @@ import {
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const PaymentMethodModal = ({ open, onClose }: any) => {
+const PaymentMethodModal = ({ open, onClose, currentMonthBalance }: any) => {
   const [paymentMethod, setPaymentMethod] = useState();
   const { data: accountData } = useGetMyAccountsQuery({});
-
+  // console.log(paymentMethod);
   //@ts-ignore
   const accounts = accountData?.data?.data;
   const [requestPayment, { isLoading }] = useRequestPaymentMutation();
@@ -31,6 +31,8 @@ const PaymentMethodModal = ({ open, onClose }: any) => {
       const payload = {
         bankId: paymentMethod?._id,
         accountNumber: paymentMethod?.accountNumber,
+        providerName: paymentMethod?.providerName,
+        currentMonthBalance,
       };
       const res = await requestPayment(payload);
 
