@@ -32,7 +32,7 @@ const PaymentMethodModal = ({ open, onClose, currentMonthBalance }: any) => {
         bankId: paymentMethod?._id,
         accountNumber: paymentMethod?.accountNumber,
         providerName: paymentMethod?.providerName,
-        currentMonthBalance,
+        currentMonthBalance: currentMonthBalance && currentMonthBalance,
       };
       const res = await requestPayment(payload);
 
