@@ -117,7 +117,7 @@ const Verify = () => {
           </Typography>
           <Typography variant="body1" className={classes.subTitle}>
             Thank you for registering with us. Please type the OTP as shared on
-            your mobile.
+            your email.
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <div>
