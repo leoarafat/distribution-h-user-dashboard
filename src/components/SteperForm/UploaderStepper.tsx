@@ -599,8 +599,7 @@ const UploaderStepperForm = () => {
 
       formDataToSend.append("countries", formData.countries.join(","));
 
-      // const res = await uploadAudio(formDataToSend);
-      const res = await axios
+      await axios
         .post(`${imageURL}/single-music/upload`, formDataToSend, {
           onUploadProgress: (progressEvent) => {
             const progress = Math.round(
@@ -623,10 +622,12 @@ const UploaderStepperForm = () => {
         })
         .catch((err) => {
           toast.error(err?.response?.data?.message);
+          setIsLoading(false);
         });
     } catch (error: any) {
       console.error("Error in handleSubmit:", error?.message);
       toast.error(error?.message);
+      setIsLoading(false);
     }
   };
   //!
