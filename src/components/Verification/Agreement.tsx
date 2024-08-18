@@ -120,7 +120,7 @@ const AgreementPage = ({ data, onChange }: any) => {
                   variant="body1"
                   sx={{ fontFamily: "cursive", fontSize: 24 }}
                 >
-                  Hasan
+                  BE Musix
                 </Typography>
                 <Divider sx={{ width: "100%", marginY: 1 }} />
                 <Typography variant="body1">
