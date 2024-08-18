@@ -73,8 +73,8 @@ const UploadVideo = () => {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedSubgenre, setSelectedSubgenre] = useState("");
   const navigate = useNavigate();
-  const [uploadVideo, { isLoading }] = useUploadVideoMutation();
-
+  // const [uploadVideo, { isLoading }] = useUploadVideoMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
 
@@ -116,7 +116,7 @@ const UploadVideo = () => {
       return;
     }
     setOpenModal(false);
-
+    setIsLoading(true);
     try {
       const formData = new FormData();
       if (videoFile) {
@@ -157,10 +157,12 @@ const UploadVideo = () => {
 
       if (res?.data?.success === true) {
         toast.success("Video Upload Successful");
+        setIsLoading(false);
         navigate("/my-uploads/pending-videos");
       }
     } catch (error: any) {
       console.log(error?.message);
+      setIsLoading(false);
     }
   };
 
@@ -543,22 +545,6 @@ const UploadVideo = () => {
                 />
               </Grid>
 
-              {/* <Grid item xs={12}>
-                <Controller
-                  name="language"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      fullWidth
-                      label="Language"
-                      variant="outlined"
-                      margin="normal"
-                      required
-                    />
-                  )}
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <Controller
                   name="language"
@@ -662,6 +648,7 @@ const UploadVideo = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  disabled={isLoading}
                 >
                   <UploadIcon className="pr-2" size={40} />
                   {isLoading ? "Uploading..." : "Upload Video"}
@@ -772,6 +759,7 @@ const UploadVideo = () => {
             color="primary"
             variant="contained"
             disabled={
+              isLoading ||
               !conditionsAccepted.condition1 ||
               !conditionsAccepted.condition2 ||
               !conditionsAccepted.condition3 ||

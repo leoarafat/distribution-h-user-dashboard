@@ -472,7 +472,8 @@ const UploaderStepperForm = () => {
     previewPage: {},
   });
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadAudio, { isLoading }] = useUploadSingleAudioMutation();
+  // const [uploadAudio, { isLoading }] = useUploadSingleAudioMutation();
+  const [isLoading, setIsLoading] = useState(false);
   const [uploadDrafts, { isLoading: draftsLoading }] =
     useUploadDraftAudioMutation();
 
@@ -513,6 +514,7 @@ const UploaderStepperForm = () => {
   //!
   const handleSubmit = async () => {
     setOpenModal(false);
+    setIsLoading(true);
     try {
       const formDataToSend = new FormData();
 
@@ -615,6 +617,7 @@ const UploaderStepperForm = () => {
             localStorage.removeItem("releaseFormData");
             localStorage.removeItem("tracksInformation");
             toast.success("Song Upload Successful");
+            setIsLoading(false);
             navigate("/my-uploads/pending-track");
           }
         })
