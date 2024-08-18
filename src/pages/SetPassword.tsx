@@ -13,6 +13,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { imageURL } from "@/redux/api/baseApi";
 
 const SetPassword = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -54,7 +55,7 @@ const SetPassword = () => {
 
     try {
       const response = await axios.post(
-        `https://backend.bemusix.com/auth/reset-password`,
+        `${imageURL}/auth/reset-password`,
         { newPassword: password, email },
         {
           headers: {

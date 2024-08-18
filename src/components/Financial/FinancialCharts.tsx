@@ -149,6 +149,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import Loader from "@/utils/Loader";
 import { useMediaQuery } from "@mui/material";
+import { imageURL } from "@/redux/api/baseApi";
 
 const FinancialCharts = () => {
   const currentYear = new Date().getFullYear();
@@ -160,7 +161,7 @@ const FinancialCharts = () => {
   const fetchFinancialData = async (year: any) => {
     setLoading(true);
     try {
-      let url = `https://backend.bemusix.com/statics/financial-analytics`;
+      let url = `${imageURL}/statics/financial-analytics`;
       const response = await axios.get(url, {
         params: {
           year,

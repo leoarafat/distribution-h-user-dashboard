@@ -11,9 +11,6 @@ import {
 } from "@mui/material";
 import { PictureAsPdf, Description } from "@mui/icons-material";
 import Stack from "@mui/material/Stack";
-import { HighlightItemData } from "@mui/x-charts/context";
-import { BarChart as XBarChart, BarChartProps } from "@mui/x-charts/BarChart";
-import { PieChart, PieChartProps } from "@mui/x-charts/PieChart";
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -26,13 +23,14 @@ import {
 } from "recharts";
 import { years } from "@/utils/languages";
 import Loader from "@/utils/Loader";
+import { imageURL } from "@/redux/api/baseApi";
 
 const AnalyticsByTitlePage = () => {
   const [analyticsData, setAnalyticsData] = useState({
     monthly: [],
     yearly: [],
   });
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const [loading, setLoading] = useState(true);
@@ -48,7 +46,7 @@ const AnalyticsByTitlePage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/analytics-by-tracks?month=${month}&year=${year}`,
+        `${imageURL}/statics/analytics-by-tracks?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

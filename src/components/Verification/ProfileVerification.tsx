@@ -4,12 +4,12 @@ import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
 import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { imageURL } from "@/redux/api/baseApi";
 
 const ProfileVerification = ({ data, onChange }: any) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-  const imageURL = "https://backend.bemusix.com/";
 
   const { data: profileData } = useProfileQuery({});
   const [initialSetupDone, setInitialSetupDone] = useState(false);
@@ -97,7 +97,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}${profileData?.data?.image}`}
+                    src={`${imageURL}/${profileData?.data?.image}`}
                     alt="PROFILE IMAGE"
                     className="w-[300px] h-[200px]"
                   />
@@ -143,7 +143,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}${profileData?.data?.nidFront}`}
+                    src={`${imageURL}/${profileData?.data?.nidFront}`}
                     alt="NID Front"
                     className="w-[300px] h-[200px]"
                   />
@@ -189,7 +189,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}${profileData?.data?.nidBack}`}
+                    src={`${imageURL}/${profileData?.data?.nidBack}`}
                     alt="NID Back"
                     className="w-[300px] h-[200px]"
                   />

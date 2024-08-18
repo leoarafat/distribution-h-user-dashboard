@@ -27,6 +27,7 @@ import {
 import { years } from "@/utils/languages";
 import Loader from "@/utils/Loader";
 import AnalyticsByTitlePage from "./TitleAnalyticsPage";
+import { imageURL } from "../../redux/api/baseApi";
 
 const AnalyticsPage = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -37,7 +38,8 @@ const AnalyticsPage = () => {
   //   new Date().getMonth() + 1
   // );
   // const selectedMonth = selectedMonths - 1 || 12;
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [highlightedItem, setHighlightedItem] =
     useState<HighlightItemData | null>(null);
@@ -54,7 +56,7 @@ const AnalyticsPage = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backend.bemusix.com/statics/analytics?month=${month}&year=${year}`,
+        `${imageURL}/statics/analytics?month=${month}&year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
