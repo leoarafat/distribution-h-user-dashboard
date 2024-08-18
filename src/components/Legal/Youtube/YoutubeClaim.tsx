@@ -9,13 +9,14 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const YoutubeClaim = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
   const [addYoutubeClaim, { isLoading: isAddLoading }] =
     useAddYoutubeClaimRequestMutation();
-
+  const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -31,6 +32,9 @@ const YoutubeClaim = () => {
       });
       if (res?.data?.success === true) {
         toast.success("Success");
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       }
     } catch (error: any) {
       console.error("Failed to submit YouTube claim request:", error);
@@ -89,7 +93,7 @@ const YoutubeClaim = () => {
           </span>
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField

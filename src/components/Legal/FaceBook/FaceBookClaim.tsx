@@ -9,13 +9,14 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const FacebookClaim = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
   const [addFacebookClaim, { isLoading: isAddLoading }] =
     useAddFacebookClaimRequestMutation();
-
+  const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -30,6 +31,9 @@ const FacebookClaim = () => {
       });
       if (res?.data?.success === true) {
         toast.success("Success");
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       }
     } catch (error: any) {
       console.error("Failed to submit Facebook claim request:", error);
@@ -88,7 +92,7 @@ const FacebookClaim = () => {
           </span>
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField

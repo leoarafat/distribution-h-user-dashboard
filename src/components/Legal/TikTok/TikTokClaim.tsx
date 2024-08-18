@@ -9,6 +9,7 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const TikTokClaim = () => {
@@ -16,7 +17,7 @@ const TikTokClaim = () => {
 
   const [addTikTokClaimRequest, { isLoading: isAddLoading }] =
     useAddTikTokClaimRequestMutation();
-
+  const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -33,6 +34,9 @@ const TikTokClaim = () => {
       });
       if (res?.data?.success === true) {
         toast.success("Success");
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       }
     } catch (error: any) {
       console.error("Failed to submit TikTok claim request:", error);
@@ -89,7 +93,7 @@ const TikTokClaim = () => {
           <span className="text-[#FE2C55] font-bold">TikTok claim request</span>
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField

@@ -11,7 +11,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const FacebookWhiteList = () => {
   const { data: profileData, isLoading, isError } = useProfileQuery({});
@@ -19,7 +19,7 @@ const FacebookWhiteList = () => {
     useAddFacebookWhitelistRequestMutation();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-
+  const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -33,6 +33,9 @@ const FacebookWhiteList = () => {
       });
       if (res?.data?.success) {
         setOpenSuccess(true);
+        if (formRef.current) {
+          formRef.current.reset();
+        }
       } else {
         setOpenError(true);
       }
@@ -101,7 +104,7 @@ const FacebookWhiteList = () => {
           </span>
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
