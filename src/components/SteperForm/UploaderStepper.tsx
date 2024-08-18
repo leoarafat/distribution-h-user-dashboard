@@ -755,6 +755,7 @@ const UploaderStepperForm = () => {
               color="primary"
               onClick={handleOpenModal}
               style={{ marginLeft: 10 }}
+              disabled={isLoading}
             >
               Let's Upload
             </Button>

@@ -117,7 +117,7 @@ const AudioDetails = ({ data, onChange }: any) => {
                 Upload Audio
               </Typography>
               <Typography variant="body2" color="textSecondary" gutterBottom>
-                You can upload the following formats: WAV (PCM only), FLAC
+                You can upload the following formats: WAV (PCM only), FLAC, MP3
               </Typography>
               {audioFile ? (
                 <Box position="relative">
