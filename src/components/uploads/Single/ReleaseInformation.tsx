@@ -21,6 +21,12 @@ import {
 import { years } from "@/utils/languages";
 import { useSearchParams } from "react-router-dom";
 import { useGetDraftsSongQuery } from "@/redux/slices/myUploads/myUploadsApi";
+import {
+  AppleIcon,
+  FacebookIcon,
+  InstagramIcon,
+  YoutubeIcon,
+} from "lucide-react";
 
 const formats: string[] = ["Single", "Album", "EP"];
 
@@ -84,6 +90,12 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
     artistData?.data?.data?.map((artist: any) => ({
       label: artist.primaryArtistName,
       value: artist._id,
+      socialLinks: {
+        instagram: artist.primaryArtistInstagramId,
+        facebook: artist.primaryArtistFacebookId,
+        spotify: artist.primaryArtistSpotifyId,
+        apple: artist.primaryArtistAppleId,
+      },
     })) || [];
 
   const labelOptions =
@@ -191,6 +203,58 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
       label: newValue ? newValue.value : "",
     }));
   };
+  const renderSocialIcons = (socialLinks: any) => (
+    <Box sx={{ paddingLeft: 1 }}>
+      {socialLinks.instagram && (
+        <Tooltip title="Instagram">
+          <IconButton
+            component="a"
+            href={socialLinks.instagram}
+            target="_blank"
+          >
+            <img
+              src="https://res.cloudinary.com/arafatleo/image/upload/v1724052864/images_1_itgvfk.jpg"
+              className="w-[20px] pl-[5px]"
+              alt=""
+            />
+          </IconButton>
+        </Tooltip>
+      )}
+      {socialLinks.facebook && (
+        <Tooltip title="Facebook">
+          <IconButton component="a" href={socialLinks.facebook} target="_blank">
+            <img
+              src="https://res.cloudinary.com/arafatleo/image/upload/v1724052864/pngtree-facebook-social-media-icon-png-image_6315968_nsae4o.png"
+              className="w-[20px] pl-[5px]"
+              alt=""
+            />
+          </IconButton>
+        </Tooltip>
+      )}
+      {socialLinks.spotify && (
+        <Tooltip title="Spotify">
+          <IconButton component="a" href={socialLinks.spotify} target="_blank">
+            <img
+              src="https://res.cloudinary.com/arafatleo/image/upload/v1724052702/png-transparent-spotify-logo-spotify-computer-icons-podcast-music-apps-miscellaneous-angle-logo-thumbnail_awrfdl.png"
+              className="w-[20px] pl-[5px]"
+              alt=""
+            />
+          </IconButton>
+        </Tooltip>
+      )}
+      {socialLinks.apple && (
+        <Tooltip title="Apple Music">
+          <IconButton component="a" href={socialLinks.apple} target="_blank">
+            <img
+              src="https://res.cloudinary.com/arafatleo/image/upload/v1724052864/154870_drnt3x.png"
+              className="w-[20px] pl-[5px]"
+              alt=""
+            />
+          </IconButton>
+        </Tooltip>
+      )}
+    </Box>
+  );
 
   return (
     <Container maxWidth="md">
@@ -236,7 +300,7 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               onChange={handleChange}
             />
           </Grid>
-          {formData?.primaryArtists?.map((artist, index) => (
+          {/* {formData?.primaryArtists?.map((artist, index) => (
             <Grid
               item
               xs={12}
@@ -290,17 +354,66 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
                 )}
               </Grid>
             </Grid>
+          ))} */}
+          {formData.primaryArtists.map((artist, index) => (
+            <Grid item xs={12} md={6} key={index} container alignItems="center">
+              <Grid item xs={12}>
+                <Tooltip title="Select As Your Wish">
+                  <span className="text-red-600 font-bold  cursor-pointer">
+                    ?
+                  </span>
+                </Tooltip>
+                <Autocomplete
+                  options={artistOptions}
+                  getOptionLabel={(option) => option.label}
+                  value={
+                    artistOptions.find((option) => option.value === artist) ||
+                    null
+                  }
+                  onChange={(event, newValue) =>
+                    handlePrimaryArtistChange(index, newValue)
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      label="Primary Artist"
+                      variant="outlined"
+                    />
+                  )}
+                  renderOption={(props, option) => (
+                    <Box
+                      {...props}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span>{option.label}</span>
+                      {renderSocialIcons(option.socialLinks)}
+                    </Box>
+                  )}
+                  isOptionEqualToValue={(option, value) =>
+                    option.value === value
+                  }
+                  freeSolo
+                />
+              </Grid>
+              <Grid item className="flex justify-between">
+                <IconButton
+                  onClick={() => removePrimaryArtist(index)}
+                  color="error"
+                >
+                  <RemoveCircleOutlineIcon />
+                </IconButton>
+                <IconButton onClick={addPrimaryArtist} color="primary">
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
           ))}
           {formData?.featuringArtists?.map((artist, index) => (
-            <Grid
-              item
-              xs={12}
-              md={6}
-              key={index}
-              container
-              alignItems="center"
-              spacing={1}
-            >
+            <Grid item xs={12} md={6} key={index} container alignItems="center">
               <Grid item xs={12}>
                 <Tooltip title="Select As Your Wish">
                   <span className="text-red-600 font-bold cursor-pointer">
