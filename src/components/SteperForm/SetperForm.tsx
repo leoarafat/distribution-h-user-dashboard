@@ -199,7 +199,7 @@ const StepperForm = () => {
     }
 
     //@ts-ignore
-    if (activeStep === 3 && formData?.agreement) {
+    if (activeStep === 3 && formData?.agreement?.signature) {
       try {
         const agreementFormData = new FormData();
         //@ts-ignore
@@ -215,6 +215,8 @@ const StepperForm = () => {
       } catch (error: any) {
         toast.error(error?.data?.message);
       }
+    } else {
+      toast.error("Please provide Signature");
     }
   };
 
