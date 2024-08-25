@@ -30,9 +30,17 @@ const AnalyticsByTitlePage = () => {
     monthly: [],
     yearly: [],
   });
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-
+  // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  // const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const currentMonth = new Date().getMonth();
+    return currentMonth === 0 ? 12 : currentMonth;
+  });
+  const [selectedYear, setSelectedYear] = useState(() => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    return currentMonth === 0 ? currentYear - 1 : currentYear;
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

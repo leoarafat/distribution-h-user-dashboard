@@ -5,8 +5,8 @@ import { authKey } from "@/constants/storageKey";
 import axios from "axios";
 import { tagsList } from "../tag-types";
 const authToken = getFromLocalStorage(authKey);
-// http://localhost:7001
 // https://backend.bemusix.com
+// http://localhost:7001
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
