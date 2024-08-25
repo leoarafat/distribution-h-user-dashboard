@@ -242,7 +242,7 @@ const AnalyticsByTitlePage = () => {
             data={currentData.map((item) => ({
               name: item.name,
               stream: item.totalStreams,
-              revenue: `$ ${item.value?.toFixed(0, 6)}`,
+              revenue: `$ ${item.value}`,
             }))}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
