@@ -7,17 +7,18 @@ import { tagsList } from "../tag-types";
 const authToken = getFromLocalStorage(authKey);
 // https://backend.bemusix.com
 // http://localhost:7001
+//https://api.bemusixbackstage.com
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://backend.bemusix.com",
+    baseUrl: "https://api.bemusixbackstage.com",
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
   tagTypes: tagsList,
 });
-export const imageURL = "https://backend.bemusix.com";
+export const imageURL = "https://api.bemusixbackstage.com";
 export const baseUrl = axios.create({
-  baseURL: "https://backend.bemusix.com",
+  baseURL: "https://api.bemusixbackstage.com",
 });
-export const socketURL = "https://backend.bemusix.com";
+export const socketURL = "https://api.bemusixbackstage.com";
