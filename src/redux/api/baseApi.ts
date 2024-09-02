@@ -11,14 +11,14 @@ const authToken = getFromLocalStorage(authKey);
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://139.59.71.81:7001",
+    baseUrl: "https://server.bemusixbackstage.com",
     headers: { Authorization: `Bearer ${authToken}` },
   }),
   endpoints: () => ({}),
   tagTypes: tagsList,
 });
-export const imageURL = "http://139.59.71.81:7001";
+export const imageURL = "https://server.bemusixbackstage.com";
 export const baseUrl = axios.create({
-  baseURL: "http://139.59.71.81:7001",
+  baseURL: "https://server.bemusixbackstage.com",
 });
-export const socketURL = "http://139.59.71.81:7001";
+export const socketURL = "https://server.bemusixbackstage.com";
