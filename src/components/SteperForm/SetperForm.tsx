@@ -271,7 +271,7 @@ const StepperForm = () => {
   return (
     <Grid container direction="column">
       <Typography variant="h4" align="center" gutterBottom>
-        Verification Process..
+        Verification Process
       </Typography>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((step) => (
