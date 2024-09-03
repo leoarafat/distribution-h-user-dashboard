@@ -7,7 +7,7 @@ import { tagsList } from "../tag-types";
 const authToken = getFromLocalStorage(authKey);
 // https://backend.bemusix.com
 // http://localhost:7001
-//https://api.bemusixbackstage.com
+//https://server.bemusixbackstage.com
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({

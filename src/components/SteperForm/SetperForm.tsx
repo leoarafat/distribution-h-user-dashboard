@@ -199,7 +199,30 @@ const StepperForm = () => {
     }
 
     //@ts-ignore
-    if (activeStep === 3 && formData?.agreement?.signature) {
+    // if (activeStep === 3 && formData?.agreement?.signature) {
+    //   try {
+    //     const agreementFormData = new FormData();
+    //     //@ts-ignore
+    //     agreementFormData.append("signature", formData.agreement.signature);
+
+    //     const result = await agreementVerify(agreementFormData).unwrap();
+
+    //     if (result?.success === true) {
+    //       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    //     } else {
+    //       toast.error("Please provide Signature");
+    //     }
+    //   } catch (error: any) {
+    //     toast.error(error?.data?.message);
+    //   }
+    // }
+    if (activeStep === 3) {
+      //@ts-ignore
+      if (!formData?.agreement?.signature) {
+        toast.error("Please provide Signature");
+        return; // Exit the function early since the signature is missing
+      }
+
       try {
         const agreementFormData = new FormData();
         //@ts-ignore
@@ -215,8 +238,6 @@ const StepperForm = () => {
       } catch (error: any) {
         toast.error(error?.data?.message);
       }
-    } else {
-      toast.error("Please provide Signature");
     }
   };
 
