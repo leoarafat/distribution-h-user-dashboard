@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import PaymentMethodModal from "../ManageAccount/PaymentMethodModal/PaymentMethodModal";
 import {
+  useCheckExistPaymentRequestQuery,
   useGetMyAllTimeBalanceQuery,
   useGetMyBalanceQuery,
 } from "@/redux/slices/financial/financialApi";
@@ -16,6 +17,7 @@ const RevenueComponent = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { data: myBalance, isLoading } = useGetMyBalanceQuery({});
   const { data: myAllTimeBalance } = useGetMyAllTimeBalanceQuery({});
+  const { data: existPayment } = useCheckExistPaymentRequestQuery({});
 
   useEffect(() => {
     if (myBalance) {
@@ -32,7 +34,7 @@ const RevenueComponent = () => {
   };
 
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
-  console.log(currentMonthBalance);
+
   return (
     <Box
       m={3}
@@ -107,12 +109,12 @@ const RevenueComponent = () => {
             >
               {currentMonthBalance === null
                 ? "0.00"
-                : `$ ${currentMonthBalance}`}
+                : `$ ${currentMonthBalance?.toFixed(2)}`}
             </Typography>
             <Button
               variant="contained"
               color="primary"
-              disabled={currentMonthBalance < 50}
+              disabled={currentMonthBalance < 50 || existPayment?.data === true}
               onClick={handleRequestPayment}
               sx={{ mt: 2, width: "60%" }}
             >

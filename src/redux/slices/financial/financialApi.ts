@@ -38,6 +38,15 @@ export const uploadVideoAudioApi = baseApi.injectEndpoints({
       },
       providesTags: ["financial"],
     }),
+    checkExistPaymentRequest: build.query({
+      query: () => {
+        return {
+          url: `payment/is-exist`,
+          method: "GET",
+        };
+      },
+      providesTags: ["financial"],
+    }),
     getMyAllTimeBalance: build.query({
       query: () => {
         return {
@@ -82,4 +91,5 @@ export const {
   useGetMyAllTimeBalanceQuery,
   useGetMyTransactionQuery,
   useGetMyFullMonthBalanceQuery,
+  useCheckExistPaymentRequestQuery,
 } = uploadVideoAudioApi;
