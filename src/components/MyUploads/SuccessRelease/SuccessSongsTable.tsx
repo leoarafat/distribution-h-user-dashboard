@@ -43,7 +43,7 @@ const CountryDataCell = ({ songId }: { songId: string }) => {
     isLoading,
     isError,
   } = useGetCountrySongQuery(songId);
-
+  console.log(countryData);
   if (isLoading) return <span>Loading...</span>;
   if (isError) return <span>Error fetching store data.</span>;
 

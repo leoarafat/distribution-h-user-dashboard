@@ -32,7 +32,7 @@ const RevenueComponent = () => {
   };
 
   const [currentMonthBalance, setCurrentMonthBalance] = useState(null);
-
+  console.log(currentMonthBalance);
   return (
     <Box
       m={3}
@@ -107,10 +107,7 @@ const RevenueComponent = () => {
             >
               {currentMonthBalance === null
                 ? "0.00"
-                : currentMonthBalance.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                  })}
+                : `$ ${currentMonthBalance}`}
             </Typography>
             <Button
               variant="contained"
