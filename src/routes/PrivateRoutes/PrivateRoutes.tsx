@@ -7,7 +7,6 @@ const PrivateRoutes = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
   const { isLoggedIn, isLoading, isError } = useLoggedin();
   const token = localStorage.getItem("accessToken");
-
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
       navigate("/verify");
