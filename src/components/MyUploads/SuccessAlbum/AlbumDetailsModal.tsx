@@ -86,7 +86,7 @@ const AlbumDetailsModal = ({ open, onClose, audioDetails }: any) => {
   };
 
   const handleDownload = async (image: string) => {
-    const response = await fetch(`${imageURL}/${image}`);
+    const response = await fetch(`${image}`);
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -127,7 +127,7 @@ const AlbumDetailsModal = ({ open, onClose, audioDetails }: any) => {
                 component="img"
                 alt="Cover Image"
                 height="100%"
-                image={`${imageURL}/${audioDetails.image}`}
+                image={`${audioDetails.image}`}
                 onClick={handleImageClick}
               />
               <IconButton
@@ -204,10 +204,7 @@ const AlbumDetailsModal = ({ open, onClose, audioDetails }: any) => {
                 </CardContent>
                 <div className={classes.audioPlayer}>
                   <audio controls>
-                    <source
-                      src={`${imageURL}${audio.audioFileName}`}
-                      type="audio/mpeg"
-                    />
+                    <source src={`${audio.audioFileName}`} type="audio/mpeg" />
                     Your browser does not support the audio element.
                   </audio>
                 </div>
@@ -229,7 +226,7 @@ const AlbumDetailsModal = ({ open, onClose, audioDetails }: any) => {
         <DialogTitle>Image Preview</DialogTitle>
         <DialogContent>
           <img
-            src={`${imageURL}/${audioDetails.image}`}
+            src={`${audioDetails.image}`}
             alt="Preview"
             className={classes.previewImage}
           />

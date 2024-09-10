@@ -69,7 +69,7 @@ const CorrectionRequest = () => {
                   <TableCell>
                     <img
                       className="w-[70px] h-[40px] rounded-md "
-                      src={`${imageURL}/${row?.image}`}
+                      src={`${row?.image}`}
                       alt=""
                     />
                   </TableCell>

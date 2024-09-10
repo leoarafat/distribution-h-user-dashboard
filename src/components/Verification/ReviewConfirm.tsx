@@ -91,7 +91,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.image}`}
+                  image={`${profileData?.data?.image}`}
                   title="Profile Image"
                 />
                 <CardContent>
@@ -108,7 +108,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.nidFront}`}
+                  image={`${profileData?.data?.nidFront}`}
                   title="NID Front Image"
                 />
                 <CardContent>
@@ -125,7 +125,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.nidBack}`}
+                  image={`${profileData?.data?.nidBack}`}
                   title="NID Back Image"
                 />
                 <CardContent>
@@ -142,7 +142,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.dashboardScreenShot}`}
+                  image={`${profileData?.data?.dashboardScreenShot}`}
                   title="Dashboard Image"
                 />
                 <CardContent>
@@ -159,7 +159,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.copyrightNoticeImage}`}
+                  image={`${profileData?.data?.copyrightNoticeImage}`}
                   title="Copy Right Image"
                 />
                 <CardContent>
@@ -171,7 +171,7 @@ const ReviewConfirm = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
-                  image={`${imageURL}${profileData?.data?.signature}`}
+                  image={`${profileData?.data?.signature}`}
                   title="Signature"
                 />
                 <CardContent>

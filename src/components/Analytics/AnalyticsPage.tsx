@@ -34,13 +34,7 @@ const AnalyticsPage = () => {
     monthly: [],
     yearly: [],
   });
-  // const [selectedMonths, setSelectedMonth] = useState(
-  //   new Date().getMonth() + 1
-  // );
-  // const selectedMonth = selectedMonths - 1 || 12;
-  // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  // // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() - 1);
-  // const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
   const [selectedMonth, setSelectedMonth] = useState(() => {
     const currentMonth = new Date().getMonth();
     return currentMonth === 0 ? 12 : currentMonth;

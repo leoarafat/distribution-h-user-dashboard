@@ -65,7 +65,7 @@ const Profile = () => {
 
   const src = profileData?.data?.image?.startsWith("https")
     ? profileData?.data?.image
-    : `${imageURL}/${profileData?.data?.image}`;
+    : `${profileData?.data?.image}`;
 
   const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
@@ -322,7 +322,7 @@ const Profile = () => {
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 <Box sx={{ margin: 1 }}>
                   <Avatar
-                    src={`${imageURL}/${initialFormValues?.signature}`}
+                    src={`${initialFormValues?.signature}`}
                     alt="Signature"
                     sx={{ width: 100, height: 100 }}
                   />
@@ -330,7 +330,7 @@ const Profile = () => {
                 </Box>
                 <Box sx={{ margin: 1 }}>
                   <Avatar
-                    src={`${imageURL}/${initialFormValues?.nidFront}`}
+                    src={`${initialFormValues?.nidFront}`}
                     alt="NID Front"
                     sx={{ width: 100, height: 100 }}
                   />
@@ -338,7 +338,7 @@ const Profile = () => {
                 </Box>
                 <Box sx={{ margin: 1 }}>
                   <Avatar
-                    src={`${imageURL}/${initialFormValues?.nidBack}`}
+                    src={`${initialFormValues?.nidBack}`}
                     alt="NID Back"
                     sx={{ width: 100, height: 100 }}
                   />
@@ -346,7 +346,7 @@ const Profile = () => {
                 </Box>
                 <Box sx={{ margin: 1 }}>
                   <Avatar
-                    src={`${imageURL}/${initialFormValues?.copyrightNoticeImage}`}
+                    src={`${initialFormValues?.copyrightNoticeImage}`}
                     alt="Copyright Notice"
                     sx={{ width: 100, height: 100 }}
                   />
@@ -354,7 +354,7 @@ const Profile = () => {
                 </Box>
                 <Box sx={{ margin: 1 }}>
                   <Avatar
-                    src={`${imageURL}/${initialFormValues?.dashboardScreenShot}`}
+                    src={`${initialFormValues?.dashboardScreenShot}`}
                     alt="Dashboard Screenshot"
                     sx={{ width: 100, height: 100 }}
                   />

@@ -97,7 +97,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}/${profileData?.data?.image}`}
+                    src={`${profileData?.data?.image}`}
                     alt="PROFILE IMAGE"
                     className="w-[300px] h-[200px]"
                   />
@@ -143,7 +143,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}/${profileData?.data?.nidFront}`}
+                    src={`${profileData?.data?.nidFront}`}
                     alt="NID Front"
                     className="w-[300px] h-[200px]"
                   />
@@ -189,7 +189,7 @@ const ProfileVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}/${profileData?.data?.nidBack}`}
+                    src={`${profileData?.data?.nidBack}`}
                     alt="NID Back"
                     className="w-[300px] h-[200px]"
                   />

@@ -84,7 +84,7 @@ const LabelVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}${profileData?.data?.dashboardScreenShot}`}
+                    src={`${profileData?.data?.dashboardScreenShot}`}
                     alt="Dashboard Picture"
                     className="w-[350px] h-[200px]"
                   />
@@ -133,7 +133,7 @@ const LabelVerification = ({ data, onChange }: any) => {
                   />
                 ) : (
                   <img
-                    src={`${imageURL}${profileData?.data?.copyrightNoticeImage}`}
+                    src={`${profileData?.data?.copyrightNoticeImage}`}
                     alt="Copyright Image"
                     className="w-[350px] h-[200px]"
                   />

@@ -96,7 +96,7 @@ const LastSixApproved = () => {
                       <img
                         className="w-[90px] h-[60px] rounded-md"
                         src={
-                          `${imageURL}/${track?.image}` ||
+                          `${track?.image}` ||
                           "https://via.placeholder.com/90x60"
                         }
                         alt="Album"
