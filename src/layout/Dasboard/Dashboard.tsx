@@ -36,8 +36,6 @@ const Dashboard = () => {
   const isApproved = userVerifiedInfo?.isApproved;
   const location = useLocation();
 
-  // console.log(impersonationToken);
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
