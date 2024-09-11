@@ -10,7 +10,7 @@ import {
 } from "@/redux/services/auth.service";
 import { authKey } from "@/constants/storageKey";
 import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
-import { imageURL } from "@/redux/api/baseApi";
+
 import { CiMusicNote1 } from "react-icons/ci";
 import useVerification from "@/utils/isVerified";
 import useApproved from "@/utils/isApproved";
