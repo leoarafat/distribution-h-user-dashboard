@@ -103,7 +103,10 @@ const Login = () => {
       }
     }
   }, [isSuccess, data, error, navigate]);
-
+  useEffect(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  }, []);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const { email, password } = e.target.elements;

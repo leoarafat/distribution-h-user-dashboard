@@ -61,6 +61,11 @@ const Dashboard = () => {
     removeUserInfo(authKey);
     localStorage.removeItem("releaseFormData");
     localStorage.removeItem("tracksInformation");
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.location.reload();
+
     navigate("/auth/login");
   };
 
