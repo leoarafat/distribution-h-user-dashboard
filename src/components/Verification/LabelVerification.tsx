@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { imageURL } from "@/redux/api/baseApi";
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { Grid, TextField } from "@material-ui/core";
 import { useCallback, useEffect, useState } from "react";
 import { BsCloudUpload } from "react-icons/bs";
@@ -9,8 +9,8 @@ import { MdClose } from "react-icons/md";
 const LabelVerification = ({ data, onChange }: any) => {
   const [dashboardImage, setDashboardImage] = useState(null);
   const [copyRightImage, setCoyRightImage] = useState(null);
-
-  const { data: profileData } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData } = useMyProfileQuery(id);
   const [initialSetupDone, setInitialSetupDone] = useState(false);
 
   useEffect(() => {

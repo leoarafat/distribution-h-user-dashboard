@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import {
   Container,
   Grid,
@@ -8,7 +8,8 @@ import {
   Box,
 } from "@mui/material";
 const ClaimRelease = () => {
-  const { data: profileData } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData } = useMyProfileQuery(id);
   return (
     <div>
       <Container maxWidth="md">

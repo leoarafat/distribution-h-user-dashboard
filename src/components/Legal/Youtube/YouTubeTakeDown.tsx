@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { useAddYoutubeTakeDownMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
@@ -13,7 +13,8 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const YoutubeTakeDown = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
   const [addYoutubeTakeDown, { isLoading: isAddLoading }] =
     useAddYoutubeTakeDownMutation();
   const formRef = useRef<HTMLFormElement>(null);

@@ -1,22 +1,9 @@
-// // src/hooks/useVerification.ts
-
-// import { useProfileQuery } from "@/redux/slices/admin/userApi";
-
-// const useLoggedin = () => {
-//   const { data: profileData, isLoading, isError } = useProfileQuery({});
-//   const isLoggedIn = profileData?.data;
-
-//   return { isLoggedIn, isLoading, isError };
-// };
-
-// export default useLoggedin;
-// src/hooks/useVerification.ts
-
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 
 const useLoggedin = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
-  const isLoggedIn = !!profileData?.data; // Ensure this correctly interprets your profile data
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
+  const isLoggedIn = !!profileData?.data;
 
   return { isLoggedIn, isLoading, isError };
 };

@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { useAddYoutubeManualClaimMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
@@ -13,7 +13,8 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 
 const YouTubeManualClaim = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
   const [addYoutubeManualClaim, { isLoading: isAddLoading }] =
     useAddYoutubeManualClaimMutation();
   const formRef = useRef<HTMLFormElement>(null);

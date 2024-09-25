@@ -91,6 +91,7 @@ const Login = () => {
     if (isSuccess && data) {
       toast.success("Login Successful");
       storeUserInfo({ accessToken: data?.data?.accessToken });
+      localStorage.setItem("id", data?.data?.id);
       navigate("/");
       window.location.reload();
     }

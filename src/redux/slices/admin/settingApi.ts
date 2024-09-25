@@ -83,9 +83,9 @@ export const settingApi = baseApi.injectEndpoints({
       providesTags: ["terms"],
     }),
     myProfile: build.query({
-      query: () => {
+      query: (id) => {
         return {
-          url: `user/profile`,
+          url: `user/profile/${id}`,
           method: "GET",
         };
       },

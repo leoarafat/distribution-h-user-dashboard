@@ -14,7 +14,7 @@ import {
 import { Edit, Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
-import { imageURL } from "@/redux/api/baseApi";
+
 import { useEditProfilePictureMutation } from "@/redux/slices/admin/userApi";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -23,15 +23,15 @@ const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
-
+  const id = localStorage.getItem("id");
   const {
     data: profileData,
     isLoading: profileLoading,
     refetch,
-  } = useMyProfileQuery({});
+  } = useMyProfileQuery(id);
   const initialFormValues = profileData?.data;
 
-  const [editProfilePicture, { isLoading, isSuccess, error }] =
+  const [editProfilePicture, { isSuccess, error }] =
     useEditProfilePictureMutation();
 
   useEffect(() => {
@@ -48,20 +48,20 @@ const Profile = () => {
     localStorage.removeItem("releaseFormData");
     localStorage.removeItem("tracksInformation");
   }, []);
-  if (profileLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
+  // if (profileLoading) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         height: "100vh",
+  //       }}
+  //     >
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   const src = profileData?.data?.image?.startsWith("https")
     ? profileData?.data?.image

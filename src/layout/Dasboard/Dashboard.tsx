@@ -35,6 +35,7 @@ const Dashboard = () => {
   const isVerifiedUser = userInfo?.isVerified;
   const isApproved = userVerifiedInfo?.isApproved;
   const location = useLocation();
+  const id = localStorage.getItem("id");
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -54,7 +55,7 @@ const Dashboard = () => {
   if (!isUser) {
     navigate("/auth/login");
   }
-  const { data: userData } = useMyProfileQuery({});
+  const { data: userData } = useMyProfileQuery(id);
   const myProfile = userData?.data;
 
   const handleLogout = () => {

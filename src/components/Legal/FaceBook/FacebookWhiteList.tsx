@@ -1,4 +1,5 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
+
 import { useAddFacebookWhitelistRequestMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
@@ -14,7 +15,8 @@ import MuiAlert from "@mui/material/Alert";
 import { useRef, useState } from "react";
 
 const FacebookWhiteList = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
   const [addFacebookWhitelistRequest] =
     useAddFacebookWhitelistRequestMutation();
   const [openSuccess, setOpenSuccess] = useState(false);

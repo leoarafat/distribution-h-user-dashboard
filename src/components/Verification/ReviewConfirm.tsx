@@ -6,9 +6,9 @@ import {
   CardMedia,
   makeStyles,
 } from "@material-ui/core";
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
-import { imageURL } from "@/redux/api/baseApi";
+
 import Loader from "@/utils/Loader";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewConfirm = () => {
   const classes = useStyles();
-  const { data: profileData, isLoading } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading } = useMyProfileQuery(id);
 
   if (isLoading) {
     return <Loader />;

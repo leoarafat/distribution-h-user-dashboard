@@ -3,15 +3,15 @@ import { useState, useEffect, useCallback } from "react";
 import { Grid, TextField } from "@material-ui/core";
 import { MdClose } from "react-icons/md";
 import { BsCloudUpload } from "react-icons/bs";
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
-import { imageURL } from "@/redux/api/baseApi";
+
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 
 const ProfileVerification = ({ data, onChange }: any) => {
   const [selectedProfileImage, setSelectedProfileImage] = useState(null);
   const [nidFront, setNidFront] = useState(null);
   const [nidBack, setNidBack] = useState(null);
-
-  const { data: profileData } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData } = useMyProfileQuery(id);
   const [initialSetupDone, setInitialSetupDone] = useState(false);
 
   useEffect(() => {

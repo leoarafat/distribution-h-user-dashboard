@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { useAddArtistChannelRequestMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
@@ -20,7 +20,8 @@ interface FormData {
 }
 
 const ArtistChannelRequest = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
   const [addArtistChannel] = useAddArtistChannelRequestMutation();
 
   const [formData, setFormData] = useState<FormData>({

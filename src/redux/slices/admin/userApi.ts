@@ -73,16 +73,16 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    profile: build.query({
-      query: () => {
-        return {
-          url: `/user/profile`,
-          method: "GET",
-        };
-      },
+    // profile: build.query({
+    //   query: () => {
+    //     return {
+    //       url: `/user/profile`,
+    //       method: "GET",
+    //     };
+    //   },
 
-      providesTags: ["user"],
-    }),
+    //   providesTags: ["user"],
+    // }),
   }),
 });
 
@@ -91,7 +91,7 @@ export const {
   useVerifyMutation,
   useProfileVerifyMutation,
   useLabelVerifyMutation,
-  useProfileQuery,
+
   useAddressVerifyMutation,
   useVerifyUserMutation,
   useUserLoginMutation,

@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import {
   FormControl,
   Grid,
@@ -10,7 +10,8 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 const AddressInformation = ({ data, onChange }: any) => {
-  const { data: profileData } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData } = useMyProfileQuery(id);
   const [initialSetupDone, setInitialSetupDone] = useState(false);
 
   useEffect(() => {

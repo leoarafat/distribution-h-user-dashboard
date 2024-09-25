@@ -1,4 +1,4 @@
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 import { useAddWhitelistRequestMutation } from "@/redux/slices/claims/claimsApi";
 import {
   Container,
@@ -12,7 +12,8 @@ import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 
 const WhiteListRequest = () => {
-  const { data: profileData, isLoading, isError } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData, isLoading, isError } = useMyProfileQuery(id);
   const [addWhiteList] = useAddWhitelistRequestMutation();
 
   const [whitelistUrl, setWhitelistUrl] = useState("");

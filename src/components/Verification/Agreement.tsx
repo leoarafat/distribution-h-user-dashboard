@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Box, Typography, Paper, Grid, Button, Divider } from "@mui/material";
 import SignatureCanvas from "react-signature-canvas";
-import { useProfileQuery } from "@/redux/slices/admin/userApi";
 
 import signatureImageHasan from "../../assets/sign.jpg";
 import AgreementCard from "../cards/AgreementCard";
+import { useMyProfileQuery } from "@/redux/slices/admin/settingApi";
 
 const AgreementPage = ({ data, onChange }: any) => {
   const [signature, setSignature] = useState(null);
   const sigCanvas = useRef<SignatureCanvas>(null);
-  const { data: profileData } = useProfileQuery({});
+  const id = localStorage.getItem("id");
+  const { data: profileData } = useMyProfileQuery(id);
   const [initialSetupDone, setInitialSetupDone] = useState(false);
 
   useEffect(() => {
