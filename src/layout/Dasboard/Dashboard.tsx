@@ -17,6 +17,7 @@ import useApproved from "@/utils/isApproved";
 import "./Dashboard.css";
 import { menuItems } from "./menuItems";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const { Header, Sider, Content } = Layout;
 
 const { SubMenu } = Menu;
@@ -40,9 +41,15 @@ const Dashboard = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
+    const userId = params.get("id");
 
     if (token) {
       storeUserInfo({ accessToken: token });
+      if (userId) {
+        localStorage.setItem("id", userId);
+      } else {
+        toast("Go Back and Try Again");
+      }
     }
   }, [location]);
 
@@ -137,7 +144,12 @@ const Dashboard = () => {
                         background: "#000",
                       }}
                     >
-                      <Link to={`${item.path}${subItem.path}`}>
+                      <Link
+                        to={
+                          //@ts-ignore
+                          `${item.path}${subItem.path}`
+                        }
+                      >
                         {subItem.title}
                       </Link>
                     </Menu.Item>
@@ -153,9 +165,19 @@ const Dashboard = () => {
                   fontSize: "16px",
                   marginBottom: "10px",
                 }}
-                onClick={item.onClick}
+                onClick={
+                  //@ts-ignore
+                  item.onClick
+                }
               >
-                <Link to={item.path}>{item.title}</Link>
+                <Link
+                  to={
+                    //@ts-ignore
+                    item.path
+                  }
+                >
+                  {item.title}
+                </Link>
               </Menu.Item>
             )
           )}
