@@ -73,16 +73,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    // profile: build.query({
-    //   query: () => {
-    //     return {
-    //       url: `/user/profile`,
-    //       method: "GET",
-    //     };
-    //   },
-
-    //   providesTags: ["user"],
-    // }),
   }),
 });
 

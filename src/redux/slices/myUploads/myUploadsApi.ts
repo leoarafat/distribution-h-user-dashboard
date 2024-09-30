@@ -152,6 +152,44 @@ export const myUploadsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["single-audio"],
     }),
+    getMusicDetails: build.query({
+      query: (id) => ({
+        url: `catalog-music/inspect-song/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["single-audio"],
+    }),
+    getVideoDetails: build.query({
+      query: (id) => ({
+        url: `catalog-video/inspect-song/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["video"],
+    }),
+    editVideo: build.mutation({
+      query: (payload) => ({
+        url: `catalog-video/edit-video/${payload.id}`,
+        method: "PATCH",
+        body: payload.data,
+      }),
+      invalidatesTags: ["video"],
+    }),
+    updateVideo: build.mutation({
+      query: (payload) => ({
+        url: `/video/update-video`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["video"],
+    }),
+    editSingleMusic: build.mutation({
+      query: (payload) => ({
+        url: `catalog-music/edit-release/${payload.id}`,
+        method: "PATCH",
+        body: payload.data,
+      }),
+      invalidatesTags: ["single-audio"],
+    }),
   }),
 });
 
@@ -168,4 +206,9 @@ export const {
   useGetCorrectionMessageQuery,
   useGetCorrectionContentQuery,
   useGetDraftsSongQuery,
+  useEditVideoMutation,
+  useGetMusicDetailsQuery,
+  useUpdateVideoMutation,
+  useEditSingleMusicMutation,
+  useGetVideoDetailsQuery,
 } = myUploadsApi;

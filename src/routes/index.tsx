@@ -48,6 +48,8 @@ import SuccessAlbum from "@/components/MyUploads/SuccessAlbum/SuccessAlbum";
 import PendingApprovalMessage from "@/pages/ApprovedMessage";
 import TermsConditionsPage from "@/pages/TermsConditions";
 import CorrectionVideo from "@/components/MyUploads/CorrectionVideo/CorrectionVideo";
+import EditAudio from "@/components/MyUploads/CorrectionMusic/EditAudio";
+import EditVideo from "@/components/MyUploads/CorrectionVideo/EditVideo";
 
 const router = createBrowserRouter([
   {
@@ -181,6 +183,22 @@ const router = createBrowserRouter([
         element: (
           <IsVerifiedRoutes>
             <SuccessVideos />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/edit-audio/:id",
+        element: (
+          <IsVerifiedRoutes>
+            <EditAudio />
+          </IsVerifiedRoutes>
+        ),
+      },
+      {
+        path: "/edit-video/:id",
+        element: (
+          <IsVerifiedRoutes>
+            <EditVideo />
           </IsVerifiedRoutes>
         ),
       },
