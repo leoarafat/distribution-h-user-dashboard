@@ -98,8 +98,6 @@ const EditVideo = () => {
   const { id } = useParams();
   const { data: songs, isLoading } = useGetVideoDetailsQuery(id);
 
-  const [haveVideo, setHaveVideo] = useState(false);
-
   const navigate = useNavigate();
 
   const [editVideo] = useEditVideoMutation();
@@ -276,6 +274,7 @@ const EditVideo = () => {
               />
             )}
           />
+
           <TextField
             fullWidth
             margin="normal"
@@ -397,7 +396,7 @@ const EditVideo = () => {
             <TextField
               fullWidth
               type="date"
-              label="Date / Time"
+              label="Release Date"
               variant="outlined"
               name="releaseDate"
               value={formValues.releaseDate}
