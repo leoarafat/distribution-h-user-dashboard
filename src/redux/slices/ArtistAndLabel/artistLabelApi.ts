@@ -18,6 +18,30 @@ export const artistLabelApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["label"],
     }),
+    addChannel: build.mutation({
+      query: (loginData) => ({
+        url: `channel/add-channel`,
+        method: "POST",
+        body: loginData,
+      }),
+      invalidatesTags: ["channel"],
+    }),
+    getApprovedChannels: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `channel/approved-channel`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["channel"],
+    }),
     getLabels: build.query({
       query: (arg: Record<string, any>) => {
         return {
@@ -73,7 +97,22 @@ export const artistLabelApi = baseApi.injectEndpoints({
       },
       providesTags: ["artist"],
     }),
-
+    getChannels: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `channel/all`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any[], meta: any) => {
+        return {
+          data: response,
+          meta,
+        };
+      },
+      providesTags: ["channel"],
+    }),
     deleteLabel: build.mutation({
       query: (id) => ({
         url: `label/delete/${id}`,
@@ -87,6 +126,13 @@ export const artistLabelApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: ["artist"],
+    }),
+    deleteChannel: build.mutation({
+      query: (id) => ({
+        url: `channel/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["channel"],
     }),
     editLabel: build.mutation({
       query: (data) => ({
@@ -104,6 +150,14 @@ export const artistLabelApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["artist"],
     }),
+    editChannel: build.mutation({
+      query: (data) => ({
+        url: `channel/update/${data?._id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["channel"],
+    }),
   }),
 });
 
@@ -118,4 +172,9 @@ export const {
   useGetLabelsQuery,
   useGetSingleLabelQuery,
   useGetApprovedLabelsQuery,
+  useDeleteChannelMutation,
+  useEditChannelMutation,
+  useGetChannelsQuery,
+  useGetApprovedChannelsQuery,
+  useAddChannelMutation,
 } = artistLabelApi;

@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import ColorTabs from "@/utils/Tabs";
 import LabelManage from "./Label/LabelPage";
 import ArtistManage from "./Artist/ArtistPage";
+import VevoChannelManage from "./ManageVevoChannel/VevoChannelPage";
 
 const ArtistLabelManagement = () => {
   const [activeTab, setActiveTab] = useState("one");
@@ -20,6 +21,7 @@ const ArtistLabelManagement = () => {
       <Box p={3}>
         {activeTab === "one" && <LabelManage />}
         {activeTab === "two" && <ArtistManage />}
+        {activeTab === "three" && <VevoChannelManage />}
       </Box>
     </div>
   );

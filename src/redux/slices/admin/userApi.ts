@@ -81,7 +81,6 @@ export const {
   useVerifyMutation,
   useProfileVerifyMutation,
   useLabelVerifyMutation,
-
   useAddressVerifyMutation,
   useVerifyUserMutation,
   useUserLoginMutation,

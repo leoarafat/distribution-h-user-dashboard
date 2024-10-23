@@ -1,0 +1,42 @@
+export interface IVideoFormInput {
+  video: File | null;
+  thumbnail: File | null;
+  version: string;
+  title: string;
+  primaryArtist: { primaryArtistName: string; _id: string }[];
+  featuringArtists: { featuringArtistName: string }[];
+  writer: string;
+  composer: string;
+  producer: string;
+  editor: string;
+  musicDirector: string;
+  label: string;
+  genre: string;
+  subGenre: string;
+  language: string;
+  isrc: string;
+  audioIsrc: string;
+  vevoChannel: string;
+  keywords: string;
+  copyright: string;
+  copyrightYear: string;
+  territoryPolicy: string;
+  visibility: string;
+  time: string;
+  repertoireOwner: string;
+  upc: string;
+  description: string;
+  storeReleaseDate: string;
+  releaseDate: string;
+  explicit: string;
+  youtubePremiere: string;
+  countdownLength: string;
+  countdownTheme: string;
+
+  isExist: string;
+  isKids: string;
+  alreadyHaveAnVevoChannel: string;
+  videoAlreadyExistOnYoutube: string;
+  videoLink: string;
+  assetId: string;
+}
