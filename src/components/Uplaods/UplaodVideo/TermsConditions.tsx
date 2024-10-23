@@ -41,14 +41,14 @@ const TermsConditions = ({
             <Typography variant="body1">
               I understand and agree to the ISRC Terms & Conditions.
               <Typography variant="body2">
-                If you asked ANS Music to generate your ISRC codes, you hereby
+                If you asked Be Musix to generate your ISRC codes, you hereby
                 agree to{" "}
                 <Link
                   className="text-blue-600 underline"
-                  to="https://ansmusiclimited.com/"
+                  to="https://bemusix.com/"
                   target="_blank"
                 >
-                  ANS Music's conditions for generating ISRCs.
+                  Be Musix's conditions for generating ISRCs.
                 </Link>
               </Typography>
             </Typography>
@@ -70,7 +70,7 @@ const TermsConditions = ({
                 platform. Please be sure you have read and follow the{" "}
                 <Link
                   className="text-blue-600 underline"
-                  to="https://ansmusiclimited.com/"
+                  to="https://bemusix.com/"
                   target="_blank"
                 >
                   Youtube Content Guidelines.
@@ -89,18 +89,18 @@ const TermsConditions = ({
           }
           label={
             <Typography variant="body1">
-              I understand and agree to the ANS Music Content Delivery
-              Guidelines for Audio Stores.
+              I understand and agree to the Be Musix Content Delivery Guidelines
+              for Audio Stores.
               <Typography variant="body2">
                 Some content is not eligible to be distributed on Apple Music,
                 Spotify, and Youtube Audio Fingerprint. Please be sure you have
                 read and understand the{" "}
                 <Link
                   className="text-blue-600 underline"
-                  to="https://ansmusiclimited.com/"
+                  to="https://bemusix.com/"
                   target="_blank"
                 >
-                  ANS Music Content Delivery Guidelines for Audio Stores.
+                  Be Musix Content Delivery Guidelines for Audio Stores.
                 </Link>
               </Typography>
             </Typography>
