@@ -59,9 +59,11 @@ const Dashboard = () => {
     }
   }, []);
 
-  if (!isUser) {
-    navigate("/auth/login");
-  }
+  useEffect(() => {
+    if (!isUser) {
+      navigate("/auth/login");
+    }
+  }, []);
   const { data: userData } = useMyProfileQuery(id);
   const myProfile = userData?.data;
 
