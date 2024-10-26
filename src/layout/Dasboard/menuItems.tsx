@@ -77,7 +77,7 @@ export const menuItems = [
   },
   {
     path: "/artist-management",
-    title: "VEVO Channel & Others",
+    title: "Channel, Artist & Label",
     icon: <Settings2Icon size={18} />,
   },
   {
