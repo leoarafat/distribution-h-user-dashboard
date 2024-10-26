@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   IconButton,
   Tooltip,
+  Button,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -27,6 +28,9 @@ import {
   InstagramIcon,
   YoutubeIcon,
 } from "lucide-react";
+import { AddCircleOutline } from "@material-ui/icons";
+import AddLabelModal from "@/components/ArtisLabelManagement/Label/AddLabelModa";
+import AddArtistModal from "@/components/ArtisLabelManagement/Artist/AddArtistModal";
 
 const formats: string[] = ["Single", "Album", "EP"];
 
@@ -81,9 +85,9 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
   const { data: labelData } = useGetApprovedLabelsQuery({});
   const { data: artistData } = useGetArtistsQuery({});
   const [searchParams] = useSearchParams();
-  const draftId = searchParams.get("id");
 
-  const { data: draftData } = useGetDraftsSongQuery(draftId);
+  const [open, setOpen] = useState(false);
+  const [openArtist, setOpenArtist] = useState(false);
 
   const artistOptions =
     //@ts-ignore
@@ -147,7 +151,12 @@ const ReleaseInformation: React.FC<Props> = ({ data, onChange }) => {
     const genreObj = genres.find((genre) => genre.name === formData.genre);
     return genreObj ? genreObj.subgenres : [];
   };
-
+  const showModal = () => {
+    setOpen(true);
+  };
+  const showArtistModal = () => {
+    setOpenArtist(true);
+  };
   const addPrimaryArtist = () =>
     setFormData((prevData) => ({
       ...prevData,
@@ -300,61 +309,7 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
               onChange={handleChange}
             />
           </Grid>
-          {/* {formData?.primaryArtists?.map((artist, index) => (
-            <Grid
-              item
-              xs={12}
-              md={6}
-              key={index}
-              container
-              alignItems="center"
-              spacing={1}
-            >
-              <Grid item xs={12}>
-                <Tooltip title="Select As Your Wish">
-                  <span className="text-red-600 font-bold  cursor-pointer">
-                    ?
-                  </span>
-                </Tooltip>
-                <Autocomplete
-                  options={artistOptions}
-                  getOptionLabel={(option) => option.label}
-                  value={
-                    artistOptions.find((option) => option.value === artist) ||
-                    null
-                  }
-                  onChange={(event, newValue) =>
-                    handlePrimaryArtistChange(index, newValue)
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Primary Artist"
-                      variant="outlined"
-                    />
-                  )}
-                  isOptionEqualToValue={(option, value) =>
-                    option.value === value
-                  }
-                  freeSolo
-                />
-              </Grid>
-              <Grid item className="flex justify-between">
-                <IconButton
-                  onClick={() => removePrimaryArtist(index)}
-                  disabled={formData?.primaryArtists?.length === 1}
-                >
-                  <RemoveCircleOutlineIcon />
-                </IconButton>
-                {index === formData?.primaryArtists?.length - 1 && (
-                  <IconButton onClick={addPrimaryArtist}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                )}
-              </Grid>
-            </Grid>
-          ))} */}
+
           {formData.primaryArtists.map((artist, index) => (
             <Grid item xs={12} md={6} key={index} container alignItems="center">
               <Grid item xs={12}>
@@ -367,8 +322,9 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
                   options={artistOptions}
                   getOptionLabel={(option) => option.label}
                   value={
-                    artistOptions.find((option) => option.value === artist) ||
-                    null
+                    artistOptions.find(
+                      (option: any) => option.value === artist
+                    ) || null
                   }
                   onChange={(event, newValue) =>
                     handlePrimaryArtistChange(index, newValue)
@@ -409,6 +365,29 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
                 <IconButton onClick={addPrimaryArtist} color="primary">
                   <AddCircleOutlineIcon />
                 </IconButton>
+                <Button
+                  sx={{
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    "& .MuiFilledInput-root": {
+                      backgroundColor: "rgba(255, 255, 255, 0.85)",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.9)",
+                      },
+                      "&.Mui-focused": {
+                        backgroundColor: "rgba(255, 255, 255, 1)",
+                      },
+                    },
+                    "& .MuiFormLabel-root": {
+                      color: "#333",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "#333",
+                    },
+                  }}
+                  onClick={showArtistModal}
+                >
+                  Create Artist
+                </Button>
               </Grid>
             </Grid>
           ))}
@@ -539,6 +518,12 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
                 />
               )}
             />
+            <div className="py-1" onClick={showModal}>
+              <IconButton>
+                <AddCircleOutline />
+              </IconButton>
+              <Button>Create Label</Button>
+            </div>
           </Grid>
           <Grid item xs={12} md={6}>
             <Tooltip title="Single: 1-2 Tracks, EP: 3-6 Tracks, Album: Ab 7 Tracks">
@@ -674,6 +659,8 @@ eg.: Limited Edition, 25th Anniversary Edition, Karaoke Version, etc..."
           </Grid>
         </Grid>
       </Box>
+      <AddLabelModal open={open} setOpen={setOpen} />
+      <AddArtistModal open={openArtist} setOpen={setOpenArtist} />
     </Container>
   );
 };
