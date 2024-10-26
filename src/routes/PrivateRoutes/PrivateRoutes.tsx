@@ -7,7 +7,7 @@ import { storeUserInfo } from "@/redux/services/auth.service";
 const PrivateRoutes = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
   const { isLoggedIn, isLoading, isError } = useLoggedin();
-  const token = localStorage.getItem("accessToken");
+  const tokens = localStorage.getItem("accessToken");
   const location = useLocation();
 
   useEffect(() => {
@@ -22,10 +22,10 @@ const PrivateRoutes = ({ children }: { children: JSX.Element }) => {
     if (!isLoading && !isLoggedIn) {
       navigate("/verify");
     }
-    if (!token) {
+    if (!tokens) {
       navigate("/auth/login");
     }
-  }, [isLoading, isLoggedIn, navigate, token]);
+  }, [isLoading, isLoggedIn, navigate, tokens]);
 
   if (isLoading) {
     return <Loader />;
