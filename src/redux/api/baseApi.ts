@@ -21,4 +21,3 @@ export const imageURL = "https://server.bemusixbackstage.com";
 export const baseUrl = axios.create({
   baseURL: "https://server.bemusixbackstage.com",
 });
-export const socketURL = "https://server.bemusixbackstage.com";
